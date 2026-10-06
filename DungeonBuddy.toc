@@ -1,0 +1,34 @@
+## Interface: 16001, 16000, 120100
+## Title: DungeonBuddy
+## Author: Wicked
+## Version: 1.0.0
+## Category: Miscellaneous
+## SavedVariables: DungeonBuddyDB
+## DefaultState: enabled
+## OptionalDeps: LibSharedMedia-3.0, SharedMedia_MyMedia, TomTom
+
+## Libraries
+Libs\LibStub\LibStub.lua
+Libs\AceAddon-3.0\AceAddon-3.0.lua
+Libs\AceDB-3.0\AceDB-3.0.xml
+Libs\AceGUI-3.0\AceGUI-3.0.xml
+Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
+Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua
+Libs\AceEvent-3.0\AceEvent-3.0.lua
+Libs\AceConsole-3.0\AceConsole-3.0.lua
+
+## Core
+Core\Core.lua
+Core\Globals.lua
+Core\Database.lua
+Core\MinimapButton.lua
+Core\API.lua
+
+Data\Dungeons.lua
+Data\Quests.lua
+Data\Theme.lua
+
+Modules\Notification.lua
+Modules\QuestLog.lua
+Modules\AutoReminder.lua
+Modules\Settings.lua
