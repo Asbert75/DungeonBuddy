@@ -445,8 +445,8 @@ end
 
 function Notification:OnDisable()
     self:UnregisterEvent("PLAYER_LEVEL_UP", "LevelUpEventHandler")
-    self.queue = nil
-    self.queueIndex = nil
+    self.queue = {}
+    self.queueIndex = 1
 
     if self.frame then
         self.frame.FadeIn:Stop()
