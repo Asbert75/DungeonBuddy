@@ -1330,7 +1330,7 @@ Q.Quests = {
             type = "npc", 
             name = "Morbin Lightbane", 
             zone = "Undercity", 
-            location = { mapId = 1458, x = 0.578, y = 0.897 } 
+            location = { mapId = 1458, x = 0.578, y = 0.897 }
         }
     },
     {
@@ -1343,7 +1343,7 @@ Q.Quests = {
             type = "npc", 
             name = "Theodore Griffs", 
             zone = "Undercity", 
-            location = { mapId = 1458, x = 0.467, y = 0.719 } 
+            location = { mapId = 1458, x = 0.467, y = 0.719 }
         }
     },
     {

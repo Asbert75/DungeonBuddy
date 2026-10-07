@@ -25,10 +25,14 @@ local SharedDefaults = {
         X = -250,
         Y = 0,
     },
-    ShowRemindersOnLevelUp = true,
+    -- Settings
+    ShowNotificationOnLevelUp = true,
+    ShowNotificationForAllQuests = false,
     RemindOnZoneChange = true,
     HideCompletedQuests = false,
     AutoWaypoint = false,
+
+    -- Tracking Data
     CollapsedDungeons = {},
     CollapsedQuests = {},
 

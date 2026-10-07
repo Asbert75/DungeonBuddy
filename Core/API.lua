@@ -161,7 +161,7 @@ function Q.API:GetRelevantQuestsForZone()
             not self:IsQuestCompleted(quest.id) and 
             self:IsQuestAvailableToLevel(quest.id) and 
             self:IsQuestAvailableToFaction(quest.id) and 
-            self:IsQuestAvailableToClass(quest.id) and quest.source.zone == zone 
+            self:IsQuestAvailableToClass(quest.id) and quest.source.zone == zone
         then
             table.insert(quests, quest)
         end

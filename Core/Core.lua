@@ -98,7 +98,7 @@ local function PrintHelpCommands()
     Q:PrettyPrint("/db minimap - Toggle the minimap button")
     Q:PrettyPrint("/db settings - Open the settings window")
     Q:PrettyPrint("/db notification on|off - Enable or disable level-up notifications")
-    Q:PrettyPrint("/db questlog - Toggle the quest log")
+    Q:PrettyPrint("/db tracker - Toggle the quest tracker")
 end
 
 function Addon:HandleCommand(input)
@@ -112,18 +112,18 @@ function Addon:HandleCommand(input)
         Q:OpenSettings()
     elseif command == "notification" then
         if args == "on" then
-            Q:SetSetting("ShowRemindersOnLevelUp", true)
+            Q:SetSetting("ShowNotificationOnLevelUp", true)
             Q.Notification:Enable()
             Q.Settings:UpdateReminderOptions()
             Q:PrettyPrint("Level-up notifications enabled.")
         end
         if args == "off" then
-            Q:SetSetting("ShowRemindersOnLevelUp", false)
+            Q:SetSetting("ShowNotificationOnLevelUp", false)
             Q.Notification:Disable()
             Q.Settings:UpdateReminderOptions()
             Q:PrettyPrint("Level-up notifications disabled.")
         end
-    elseif command == "questlog" then
+    elseif command == "tracker" then
         Q.QuestLog:Toggle()
     else
         PrintHelpCommands()

@@ -105,7 +105,6 @@ function QuestLog:Create()
         Q:SetPixelPerfectPoint(scrollBar, "TOPRIGHT", contentContainer, "TOPRIGHT", -1, -20)
         Q:SetPixelPerfectPoint(scrollBar, "BOTTOMRIGHT", contentContainer, "BOTTOMRIGHT", -1, 20)
 
-        -- Replace the template artwork with plain theme colored regions.
         for _, arrow in ipairs({
             { suffix = "ScrollUpButton" },
             { suffix = "ScrollDownButton" },
@@ -373,7 +372,6 @@ function QuestLog:RefreshAndPopulate()
             frame.titleFrame.level:SetTextColor(levelColor.r, levelColor.g, levelColor.b, 1)
         else
             frame.titleFrame.level:SetText("")
-            -- frame.titleFrame.title:SetText(string.format("[%s] %s", row.requiredLevel, row.name))
         end
 
         -- Determine title color

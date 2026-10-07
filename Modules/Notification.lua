@@ -49,7 +49,7 @@ function Notification:LevelUpEventHandler()
     self.queueIndex = 1
 
     for _, quest in ipairs(quests) do
-        if Q.API:IsDungeonQuestChainStart(quest.id) and quest.requiredLevel == playerLevel and Q.API:IsQuestAvailable(quest.id) then
+        if (Q:GetSetting("ShowNotificationForAllQuests") or Q.API:IsDungeonQuestChainStart(quest.id)) and quest.requiredLevel == playerLevel and Q.API:IsQuestAvailable(quest.id) then
             local dungeonRelationships = Q.API:GetDungeonRelationshipsForQuest(quest.id)
             table.insert(self.queue, { quest = quest, dungeonRelationships = dungeonRelationships })
 
@@ -458,7 +458,7 @@ function Notification:OnDisable()
 end
 
 function Notification:OnEnable()
-    if not Q:GetSetting("ShowRemindersOnLevelUp") then
+    if not Q:GetSetting("ShowNotificationOnLevelUp") then
         return
     end
     self:RegisterEvent("PLAYER_LEVEL_UP", "LevelUpEventHandler")
