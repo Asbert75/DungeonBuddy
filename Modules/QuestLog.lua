@@ -373,7 +373,6 @@ function QuestLog:RefreshAndPopulate()
             frame.titleFrame.level:SetTextColor(levelColor.r, levelColor.g, levelColor.b, 1)
         else
             frame.titleFrame.level:SetText("")
-            -- frame.titleFrame.title:SetText(string.format("[%s] %s", row.requiredLevel, row.name))
         end
 
         -- Determine title color

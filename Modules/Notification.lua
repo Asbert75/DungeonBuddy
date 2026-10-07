@@ -458,7 +458,7 @@ function Notification:OnDisable()
 end
 
 function Notification:OnEnable()
-    if not Q:GetSetting("ShowRemindersOnLevelUp") then
+    if not Q:GetSetting("ShowNotificationOnLevelUp") then
         return
     end
     self:RegisterEvent("PLAYER_LEVEL_UP", "LevelUpEventHandler")

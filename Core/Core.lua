@@ -112,13 +112,13 @@ function Addon:HandleCommand(input)
         Q:OpenSettings()
     elseif command == "notification" then
         if args == "on" then
-            Q:SetSetting("ShowRemindersOnLevelUp", true)
+            Q:SetSetting("ShowNotificationOnLevelUp", true)
             Q.Notification:Enable()
             Q.Settings:UpdateReminderOptions()
             Q:PrettyPrint("Level-up notifications enabled.")
         end
         if args == "off" then
-            Q:SetSetting("ShowRemindersOnLevelUp", false)
+            Q:SetSetting("ShowNotificationOnLevelUp", false)
             Q.Notification:Disable()
             Q.Settings:UpdateReminderOptions()
             Q:PrettyPrint("Level-up notifications disabled.")

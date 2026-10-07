@@ -2,7 +2,7 @@
 ## Title: DungeonBuddy
 ## Author: Wicked
 ## Version: 1.0.0
-## Category: Miscellaneous
+## Category: Quests & Leveling
 ## SavedVariables: DungeonBuddyDB
 ## DefaultState: enabled
 ## OptionalDeps: LibSharedMedia-3.0, SharedMedia_MyMedia, TomTom
