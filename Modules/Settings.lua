@@ -7,15 +7,15 @@ local AceGUI = LibStub("AceGUI-3.0")
 local PANEL_WIDTH = 1000
 local CONTENT_WIDTH = PANEL_WIDTH - (2 * Q.Theme.Padding.M)
 local Sections = {
-    General = "General",
-    Notifications = "Notifications",
-    QuestLog = "QuestLog",
+    General = { name = "General", title = "General" },
+    Notifications = { name = "Notifications", title = "Notifications" },
+    QuestLog = { name = "QuestLog", title = "Dungeon Buddy Tracker" },
 }
 
 local function GetSectionSettings(sectionName)
         local allSettings = {
         {
-            section = Sections.General,
+            section = Sections.General.name,
             type = "checkbox",
             path = "MinimapButton.Hide",
             title = "Hide minimap button",
@@ -30,7 +30,7 @@ local function GetSectionSettings(sectionName)
             end,
         },
         {
-            section = Sections.Notifications,
+            section = Sections.Notifications.name,
             type = "checkbox",
             path = "ShowNotificationOnLevelUp",
             title = "Show notifications on level up",
@@ -44,25 +44,25 @@ local function GetSectionSettings(sectionName)
             end,
         },
         {
-            section = Sections.Notifications,
+            section = Sections.Notifications.name,
             type = "checkbox",
             path = "ShowNotificationForAllQuests",
             title = "Show notifications for all quests",
-            description = "Enable notifications for all quests, not just the first quest in a chain leading to a dungeon quest."
+            description = "Enable notifications for all dungeon quests, not just the first quest in a chain."
         },
         {
-            section = Sections.Notifications,
+            section = Sections.Notifications.name,
             type = "checkbox",
             path = "AutoWaypoint",
             title = "Automatic quest giver waypoints",
             description = "Automatically adds a TomTom waypoint to the quest giver when a quest notification appears.",
         },
         {
-            section = Sections.Notifications,
+            section = Sections.Notifications.name,
             type = "checkbox",
             path = "RemindOnZoneChange",
-            title = "Reminders on zone change",
-            description = "Show an extra notification when entering a new zone if there are relevant quests available.",
+            title = "Reminders when switching to a new zone",
+            description = "Show a notification when switching to a new zone if there are relevant quests available (not just chain starters).",
             onChange = function(value)
                 if value then
                     Q.AutoReminder:OnEnable()
@@ -72,7 +72,7 @@ local function GetSectionSettings(sectionName)
             end,
         },
         {
-            section = Sections.QuestLog,
+            section = Sections.QuestLog.name,
             type = "checkbox",
             path = "HideCompletedQuests",
             title = "Hide completed quests",
@@ -94,7 +94,7 @@ local function GetSectionSettings(sectionName)
     return sectionSettings
 end
 
-function Settings:CreateSection(sectionName, anchorFrame)
+function Settings:CreateSection(sectionName, sectionTitle, anchorFrame)
     local paddingL, paddingM, paddingS = Q.Theme.Padding.L, Q.Theme.Padding.M, Q.Theme.Padding.S
     local fontL = Q.Theme.Font.L
 
@@ -105,7 +105,7 @@ function Settings:CreateSection(sectionName, anchorFrame)
     local sectionFrame = Q:CreateBackdropFrame("DungeonBuddy_"..sectionName.."SettingsFrame", anchorFrame == self.scrollChild and anchorFrame or anchorFrame:GetParent(), CONTENT_WIDTH, sectionHeight, "HIGH", "Primary", "Default")
     local anchorPoint = anchorFrame == self.scrollChild and "TOPLEFT" or "BOTTOMLEFT"
     Q:SetPixelPerfectPoint(sectionFrame, "TOPLEFT", anchorFrame, anchorPoint, 0, -paddingM)
-    local sectionTitle = Q:CreateText(sectionName.."SettingsTitle", sectionFrame, sectionName, fontL, "Accent", 1)
+    local sectionTitle = Q:CreateText(sectionName.."SettingsTitle", sectionFrame, sectionTitle, fontL, "Accent", 1)
     Q:SetPixelPerfectPoint(sectionTitle, "TOPLEFT", sectionFrame, "TOPLEFT", paddingM, -paddingM)
 
     for index, setting in ipairs(GetSectionSettings(sectionName)) do
@@ -139,7 +139,7 @@ function Settings:Create()
         return self.frame
     end
 
-    local paddingM, paddingL = Q.Theme.Padding.M, Q.Theme.Padding.L
+    local paddingS, paddingM, paddingL = Q.Theme.Padding.S, Q.Theme.Padding.M, Q.Theme.Padding.L
     local frame = Q:CreateBackdropFrame("DungeonBuddy_SettingsFrame", UIParent, PANEL_WIDTH, 700, "HIGH", "Primary", "Default")
     self.frame = frame
     Q:SetPixelPerfectPoint(frame, "CENTER", UIParent, "CENTER", 0, 0)
@@ -163,7 +163,7 @@ function Settings:Create()
     local contentContainer = CreateFrame("ScrollFrame", "DungeonBuddy_SettingsScrollFrame", frame, "UIPanelScrollFrameTemplate")
     self.contentContainer = contentContainer
     Q:SetPixelPerfectPoint(contentContainer, "TOPLEFT", title, "BOTTOMLEFT", 0, -Q.Theme.Padding.S)
-    Q:SetPixelPerfectPoint(contentContainer, "BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 0)
+    Q:SetPixelPerfectPoint(contentContainer, "BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 2)
     contentContainer:EnableMouseWheel(true)
 
     local scrollChild = CreateFrame("Frame", "DungeonBuddy_SettingsScrollChild", contentContainer)
@@ -221,33 +221,33 @@ function Settings:Create()
     --------------------------------------------------
     -- General Settings
     --------------------------------------------------
-    local generalSettingsFrame = self:CreateSection(Sections.General, scrollChild)
+    local generalSettingsFrame = self:CreateSection(Sections.General.name, Sections.General.title, scrollChild)
 
     --------------------------------------------------
     -- Notification Settings
     --------------------------------------------------
-    local notificationSettingsFrame = self:CreateSection(Sections.Notifications, generalSettingsFrame)
+    local notificationSettingsFrame = self:CreateSection(Sections.Notifications.name, Sections.Notifications.title, generalSettingsFrame)
 
     --------------------------------------------------
     -- Quest Log Settings
     --------------------------------------------------
-    local questLogSettingsFrame = self:CreateSection(Sections.QuestLog, notificationSettingsFrame)
+    local questLogSettingsFrame = self:CreateSection(Sections.QuestLog.name, Sections.QuestLog.title, notificationSettingsFrame)
 
     -- Setting: Quest Colors
     local anchorFrame = _G["Setting_HideCompletedQuests"]
-    local questColorContainer = Q:CreateBackdropFrame("QuestColorContainer", questLogSettingsFrame, CONTENT_WIDTH - (2 * paddingM), 128, "HIGH", "Secondary", "Default")
+    local questColorContainer = Q:CreateBackdropFrame("QuestColorContainer", questLogSettingsFrame, CONTENT_WIDTH - (2 * paddingM), 128, "HIGH", "Secondary", "Default", 0.6, 0.6)
     Q:SetPixelPerfectPoint(questColorContainer, "TOPLEFT", anchorFrame, "BOTTOMLEFT", 0, -paddingM)
 
     local label = Q:CreateText(nil, questColorContainer, "Quest Colors", Q.Theme.Font.M, "Accent")
-    Q:SetPixelPerfectPoint(label, "TOPLEFT", questColorContainer, "TOPLEFT", 12, -8)
+    Q:SetPixelPerfectPoint(label, "TOPLEFT", questColorContainer, "TOPLEFT", paddingS, -13)
     local description = Q:CreateText(nil, questColorContainer, "Customize the colors for different quest states.", Q.Theme.Font.S, "Primary")
     Q:SetPixelPerfectPoint(description, "TOPLEFT", label, "BOTTOMLEFT", 0, -4)
 
     local colorSettings = {
-        { path = "QuestColorAvailable", label = "Available", x = 470, y = 48 },
-        { path = "QuestColorUnavailable", label = "Unavailable", x = 12, y = 48 },
-        { path = "QuestColorInProgress", label = "In Quest Log", x = 12, y = 88 },
-        { path = "QuestColorCompleted", label = "Completed", x = 470, y = 88 },
+        { path = "QuestColorAvailable", label = "Available", x = 270, y = 48 },
+        { path = "QuestColorUnavailable", label = "Unavailable", x = paddingS, y = 48 },
+        { path = "QuestColorInProgress", label = "In Quest Log", x = paddingS, y = 88 },
+        { path = "QuestColorCompleted", label = "Completed", x = 270, y = 88 },
     }
 
     self.colorPickers = {}
@@ -276,7 +276,7 @@ function Settings:Create()
         + notificationSettingsFrame:GetHeight()
         + questLogSettingsFrame:GetHeight()
         + Q:PixelPerfect(paddingM * 4)
-        - 5
+        - Q:PixelPerfect(2)
     )
 
     self.frame:Hide()

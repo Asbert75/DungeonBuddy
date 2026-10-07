@@ -11,12 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Some stuff
+- Updated the settings pane to include sections for each type of setting
 
 ### Added
 
-- v1.1 German translation.
-
-### Fixed
-
-- Improve French translation.
+- Added a new setting that allows users to determine if they want notifications for all dungeon quests, not just ones that start a quest chain. Off by default.
