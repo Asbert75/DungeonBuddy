@@ -3,13 +3,15 @@ local AutoReminder = Q.Addon:NewModule("AutoReminder", "AceEvent-3.0")
 Q.AutoReminder = AutoReminder
 AutoReminder.lastNotifiedAt = {}
 
+local REMINDER_COOLDOWN_SECONDS = 60
+
 function AutoReminder:ZoneChangedEventHandler()
     local now = GetTime()
     local questsToNotify = {}
 
     for _, quest in ipairs(Q.API:GetRelevantQuestsForZone()) do
         local lastNotifiedAt = self.lastNotifiedAt[quest.id]
-        if not lastNotifiedAt or now - lastNotifiedAt >= Q:GetSetting("ReminderCooldown") then
+        if not lastNotifiedAt or now - lastNotifiedAt >= REMINDER_COOLDOWN_SECONDS then
             table.insert(questsToNotify, quest)
             self.lastNotifiedAt[quest.id] = now
         end

@@ -105,7 +105,6 @@ function QuestLog:Create()
         Q:SetPixelPerfectPoint(scrollBar, "TOPRIGHT", contentContainer, "TOPRIGHT", -1, -20)
         Q:SetPixelPerfectPoint(scrollBar, "BOTTOMRIGHT", contentContainer, "BOTTOMRIGHT", -1, 20)
 
-        -- Replace the template artwork with plain theme colored regions.
         for _, arrow in ipairs({
             { suffix = "ScrollUpButton" },
             { suffix = "ScrollDownButton" },
