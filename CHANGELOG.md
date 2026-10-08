@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Fixed
 
-- Updated an issue where the count for a chain quest would not display properly if the chain was collapsed when logging in
+- Corrected an issue where the count for a chain quest would not display properly if the chain was collapsed when logging in
 
 
 ## [1.1.0] - 2026-10-07
