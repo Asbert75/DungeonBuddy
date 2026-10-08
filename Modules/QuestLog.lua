@@ -192,37 +192,32 @@ function QuestLog:RefreshAndPopulate()
             if not isCollapsed then
                 for _, quest in ipairs(quests) do
                     local questIsCollapsed = Q:GetSetting("CollapsedQuests")[quest.id] or false
+                    
+                    local chain = {}
+                    local seenQuestIds = { [quest.id] = true }
+                    local prevQuest = Q.API:GetQuestById(quest.previousQuestId)
+                    while prevQuest and not seenQuestIds[prevQuest.id] do
+                        seenQuestIds[prevQuest.id] = true
+                        table.insert(chain, prevQuest)
+                        prevQuest = Q.API:GetQuestById(prevQuest.previousQuestId)
+                    end
 
-                    if not questIsCollapsed then
-                        local chain = {}
-                        local seenQuestIds = { [quest.id] = true }
-                        local prevQuest = Q.API:GetQuestById(quest.previousQuestId)
-                        while prevQuest and not seenQuestIds[prevQuest.id] do
-                            seenQuestIds[prevQuest.id] = true
-                            table.insert(chain, prevQuest)
-                            prevQuest = Q.API:GetQuestById(prevQuest.previousQuestId)
-                        end
+                    local chainLength = #chain + 1
+                    quest.isMainQuest = true
+                    quest.chainStep = #chain > 0 and chainLength or nil
+                    quest.chainLength = #chain > 0 and chainLength or nil
+                    if not Q:GetSetting("HideCompletedQuests") or not Q.API:IsQuestCompleted(quest.id) then
+                        table.insert(self.rows, quest);
+                    end
 
-                        local chainLength = #chain + 1
-                        quest.isMainQuest = true
-                        quest.chainStep = #chain > 0 and chainLength or nil
-                        quest.chainLength = #chain > 0 and chainLength or nil
-                        if not Q:GetSetting("HideCompletedQuests") or not Q.API:IsQuestCompleted(quest.id) then
-                            table.insert(self.rows, quest);
+                    for chainIndex = 1, #chain do
+                        local chainQuest = chain[chainIndex]
+                        chainQuest.isChainQuest = true
+                        chainQuest.chainStep = chainLength - chainIndex
+                        chainQuest.chainLength = chainLength
+                        if (not Q:GetSetting("HideCompletedQuests") or not Q.API:IsQuestCompleted(chainQuest.id)) and not questIsCollapsed then
+                            table.insert(self.rows, chainQuest)
                         end
-
-                        for chainIndex = 1, #chain do
-                            local chainQuest = chain[chainIndex]
-                            chainQuest.isChainQuest = true
-                            chainQuest.chainStep = chainLength - chainIndex
-                            chainQuest.chainLength = chainLength
-                            if not Q:GetSetting("HideCompletedQuests") or not Q.API:IsQuestCompleted(chainQuest.id) then
-                                table.insert(self.rows, chainQuest)
-                            end
-                        end
-                    else
-                        quest.isMainQuest = true
-                        table.insert(self.rows, quest)
                     end
                 end
             end
