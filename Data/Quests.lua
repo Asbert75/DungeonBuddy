@@ -412,14 +412,6 @@ Q.Quests = {
         },
     },
     {
-        id = 153,
-        faction = "Alliance",
-        name = "Red Leather Bandanas",
-        suggestedLevel = 15,
-        requiredLevel = 14,
-        source = { type = "npc", name = "Scout Galiaan", zone = "Westfall", location = { mapId = 1436, x = 0.56, y = 0.47 } }
-    },
-    {
         id = 65,
         faction = "Alliance",
         name = "The Defias Brotherhood",
@@ -1105,7 +1097,6 @@ Q.Quests = {
         name = "Amongst the Ruins",
         suggestedLevel = 24,
         requiredLevel = 21,
-        previousQuestId = 6563,
         source = { 
             type = "npc", 
             name = "Je'neu Sancrea", 
@@ -1114,25 +1105,11 @@ Q.Quests = {
         },
     },
     {
-        id = 6562,
-        faction = "Horde",
-        name = "Trouble in the Deeps",
-        suggestedLevel = 22,
-        requiredLevel = 17,
-        source = { 
-            type = "npc", 
-            name = "Tsunaman", 
-            zone = "Stonetalon Mountains", 
-            location = { mapId = 1442, x = 0.47, y = 0.61 } 
-        },
-    },
-    {
         id = 6563,
         faction = "Horde",
         name = "The Essence of Aku'Mai",
         suggestedLevel = 22,
         requiredLevel = 17,
-        previousQuestId = 6562,
         source = { 
             type = "npc", 
             name = "Je'neu Sancrea", 

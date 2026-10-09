@@ -7,11 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-10-10
+
+### Added
+
+- Added a "View Previous Quest" button on the notification view when multiple quests are available in one single popup
+
 ## [1.3.0] - 2026-10-09
 
-## Changed
+### Changed
 
 - Updated minimap icon to use the weapon chain enchant icon
+- Updated quest tracker to hide dungeons if all quests are completed when "Hide completed quests" is checked
+
+### Added
+
+- Added City of Dalaran quests
+
+### Fixed
+
+- Updated the "No Quests Found" text to properly hide/show when refreshing tracker
 
 ## [1.2.0] - 2026-10-08
 

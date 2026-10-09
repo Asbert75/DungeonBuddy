@@ -74,7 +74,7 @@ function Notification:Create()
     --------------------------------------------------
     -- Create Notification Frame
     --------------------------------------------------
-    self.frame = Q:CreateBackdropFrame('DungeonBuddy_NotificationFrame', UIParent, 450, 300, "MEDIUM", "Primary", "Accent")
+    self.frame = Q:CreateBackdropFrame('DungeonBuddy_NotificationFrame', UIParent, 480, 300, "MEDIUM", "Primary", "Accent")
 
     self.frame:SetMovable(true)
     self.frame:EnableMouse(true)
@@ -174,7 +174,7 @@ function Notification:Create()
     self.waypointButton = CreateFrame("Button", nil, self.frame, "BackdropTemplate")
     self.waypointButton:EnableMouse(true)
     self.waypointButton:SetFrameLevel(self.frame:GetFrameLevel() + 1)
-    Q:SetPixelPerfectSize(self.waypointButton, 160, 40)
+    Q:SetPixelPerfectSize(self.waypointButton, 140, 40)
     Q:SetPixelPerfectPoint(self.waypointButton, "BOTTOMLEFT", self.frame, "BOTTOMLEFT", paddingM, paddingM)
     self.waypointButton:SetBackdrop({
         bgFile = "Interface\\Buttons\\WHITE8x8",
@@ -188,7 +188,7 @@ function Notification:Create()
     self.waypointButton.text:SetText("Set Waypoint")
     self.waypointButton.text:SetTextColor(unpack(Q.Theme.Text.Accent))
 
-    local function updatewaypointButtonStyle(isHovered)
+    local function updateWaypointButtonStyle(isHovered)
         local trackColor = self.trackWaypointSet and Q.Theme.Status.Success or Q.Theme.Text.Accent
         local r, g, b = unpack(trackColor)
 
@@ -201,13 +201,13 @@ function Notification:Create()
         end
     end
 
-    updatewaypointButtonStyle(false)
+    updateWaypointButtonStyle(false)
 
     self.waypointButton:SetScript("OnEnter", function()
-        updatewaypointButtonStyle(true)
+        updateWaypointButtonStyle(true)
     end)
     self.waypointButton:SetScript("OnLeave", function()
-        updatewaypointButtonStyle(false)
+        updateWaypointButtonStyle(false)
     end)
     self.waypointButton:SetScript("OnClick", function()
         if not self.quest then
@@ -218,16 +218,16 @@ function Notification:Create()
 
         self.trackWaypointSet = true
         self.waypointButton.text:SetText("Waypoint Set")
-        updatewaypointButtonStyle(self.waypointButton:IsMouseOver())
+        updateWaypointButtonStyle(self.waypointButton:IsMouseOver())
     end)
 
     --------------------------------------------------------
-    -- Dismiss button
+    -- Dismiss / View Next button
     --------------------------------------------------------
     self.dismissButton = CreateFrame("Button", nil, self.frame, "BackdropTemplate")
     self.dismissButton:EnableMouse(true)
     self.dismissButton:SetFrameLevel(self.frame:GetFrameLevel() + 1)
-    Q:SetPixelPerfectSize(self.dismissButton, 160, 40)
+    Q:SetPixelPerfectSize(self.dismissButton, 120, 40)
     Q:SetPixelPerfectPoint(self.dismissButton, "BOTTOMRIGHT", self.frame, "BOTTOMRIGHT", -paddingM, paddingM)
 
     self.dismissButton:SetBackdrop({
@@ -264,8 +264,55 @@ function Notification:Create()
     end)
     self.dismissButton:SetScript("OnClick", function()
         updateDismissButtonStyle(false)
-        updatewaypointButtonStyle(false)
+        updateWaypointButtonStyle(false)
         self:Dismiss()
+    end)
+
+    --------------------------------------------------
+    -- View Previous Button
+    --------------------------------------------------
+    self.previousQuestButton = CreateFrame("Button", nil, self.frame, "BackdropTemplate")
+    self.previousQuestButton:EnableMouse(true)
+    self.previousQuestButton:SetFrameLevel(self.frame:GetFrameLevel() + 1)
+    Q:SetPixelPerfectSize(self.previousQuestButton, 120, 40)
+    Q:SetPixelPerfectPoint(self.previousQuestButton, "RIGHT", self.dismissButton, "LEFT", -paddingS, 0)
+
+    self.previousQuestButton:SetBackdrop({
+        bgFile = "Interface\\Buttons\\WHITE8x8",
+        edgeFile = "Interface\\Buttons\\WHITE8x8",
+        edgeSize = pixelPerfect,
+        insets = { left = pixelPerfect, right = pixelPerfect, top = pixelPerfect, bottom = pixelPerfect, },
+    })
+    local colorR, colorG, colorB = unpack(Q.Theme.Text.Secondary)
+
+    self.previousQuestButton.text = self.previousQuestButton:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    self.previousQuestButton.text:SetPoint("CENTER")
+    self.previousQuestButton.text:SetText("< Previous")
+    self.previousQuestButton.text:SetTextColor(colorR, colorG, colorB)
+
+    local function updatePreviousQuestButtonStyle(isHovered)
+        self.previousQuestButton:SetBackdropColor(colorR, colorG, colorB, isHovered and Q.Theme.Alpha.ButtonBackgroundHover or Q.Theme.Alpha.ButtonBackground)
+        self.previousQuestButton:SetBackdropBorderColor(colorR, colorG, colorB, isHovered and Q.Theme.Alpha.ButtonBorderHover or Q.Theme.Alpha.ButtonBorder)
+
+        if isHovered then
+            self.previousQuestButton.text:SetTextColor(unpack(Q.Theme.Text.Primary))
+        else
+            self.previousQuestButton.text:SetTextColor(colorR, colorG, colorB)
+        end
+    end
+
+    updatePreviousQuestButtonStyle(false)
+
+    self.previousQuestButton:SetScript("OnEnter", function()
+        updatePreviousQuestButtonStyle(true)
+    end)
+    self.previousQuestButton:SetScript("OnLeave", function()
+        updatePreviousQuestButtonStyle(false)
+    end)
+    self.previousQuestButton:SetScript("OnClick", function()
+        updatePreviousQuestButtonStyle(false)
+        updateWaypointButtonStyle(false)
+        Notification:DisplayPreviousInQueue()
     end)
 end
 
@@ -302,6 +349,14 @@ function Notification:AddToQueue(quests)
 
     self.queueIndex = 1
     self:DisplayNextInQueue()
+end
+
+function Notification:DisplayPreviousInQueue()
+    if self.queueIndex > 1 then
+        self.queueIndex = self.queueIndex - 1
+        local queuedQuest = self.queue and self.queue[self.queueIndex]
+        self:DisplayQuest(queuedQuest.quest, queuedQuest.dungeonRelationships, true)
+    end
 end
 
 function Notification:DisplayNextInQueue()
@@ -362,9 +417,15 @@ local function UpdateActionButtons()
     Notification.waypointButton.text:SetTextColor(trackColorR, trackColorG, trackColorB)
 
     if Notification.queueIndex ~= #Notification.queue then
-        Notification.dismissButton.text:SetText("View Next")
+        Notification.dismissButton.text:SetText("Next >")
     else
         Notification.dismissButton.text:SetText("Dismiss")
+    end
+
+    if Notification.queueIndex == 1 then
+        Notification.previousQuestButton:Hide()
+    else
+        Notification.previousQuestButton:Show()
     end
 
     local colorR, colorG, colorB = unpack(Q.Theme.Text.Secondary)
@@ -388,7 +449,7 @@ local function UpdateActionButtons()
     end
 end
 
-function Notification:DisplayQuest(quest, dungeonRelationships)
+function Notification:DisplayQuest(quest, dungeonRelationships, isPrevious)
     self.quest = quest
 
     local playerInfo = Q.API:GetPlayerInfo()
@@ -416,7 +477,7 @@ function Notification:DisplayQuest(quest, dungeonRelationships)
         self.notificationProgress:SetText("")
     end
 
-    if self.queueIndex == 1 then
+    if not isPrevious and self.queueIndex == 1 then
         self.frame:Show()
         self.frame.FadeIn:Play()
     end
