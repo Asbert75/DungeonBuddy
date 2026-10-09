@@ -21,11 +21,10 @@ local function GetSectionSettings(sectionName)
             title = "Hide minimap button",
             description = "Hide the minimap button. Can also be toggled using /db minimap.",
             onChange = function(value)
-                local icon = LibStub("LibDBIcon-1.0")
                 if value then
-                    icon:Hide("DungeonBuddy")
+                    Q.MinimapButton:Hide("DungeonBuddy")
                 else
-                    icon:Show("DungeonBuddy")
+                    Q.MinimapButton:Show("DungeonBuddy")
                 end
             end,
         },
