@@ -1209,7 +1209,7 @@ Q.Quests = {
     },
     {
         id = 96403,
-        faction = nil,
+        faction = "Alliance",
         name = "Important Heirlooms",
         suggestedLevel = 15,
         requiredLevel = 10,
@@ -1235,7 +1235,7 @@ Q.Quests = {
     },
     {
         id = 96393,
-        faction = nil,
+        faction = "Alliance",
         name = "Old Ironforge Incursion",
         suggestedLevel = 16,
         requiredLevel = 9,

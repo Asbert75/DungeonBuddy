@@ -39,13 +39,8 @@ Q.Theme = {
         ButtonBackgroundHover = 0.45,
         ButtonBorder = 0.75,
         ButtonBorderHover = 1,
-        DismissBackground = 0.15,
-        DismissBackgroundHover = 0.25,
-        DismissBorder = 0.8,
-        DismissBorderHover = 1,
         Hover = 0.1,
         Pressed = 0.2,
-        Highlight = 0.25,
     },
     Padding = {
         S  = 9,

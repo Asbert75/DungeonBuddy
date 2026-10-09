@@ -90,21 +90,19 @@ function Notification:Create()
 
         local x, y = self:GetCenter()
         local centerX, centerY = UIParent:GetCenter()
-        Q:SetSetting("NotificationFrame.X", x - centerX)
-        Q:SetSetting("NotificationFrame.Y", y - centerY)
+        Q:SetSetting("NotificationFrame.x", x - centerX)
+        Q:SetSetting("NotificationFrame.y", y - centerY)
     end)
 
-    local savedX = Q:GetSetting("NotificationFrame.X")
-    local savedY = Q:GetSetting("NotificationFrame.Y")
+    local savedX = Q:GetSetting("NotificationFrame.x")
+    local savedY = Q:GetSetting("NotificationFrame.y")
     frame:SetPoint("CENTER", UIParent, "CENTER", savedX or 0, savedY or 0)
     Q:ClampFrameToScreen(frame)
 
-    -- Older versions saved the frame's absolute screen center as an offset.
-    -- Clamp that restored position and persist the corrected relative offset.
     local x, y = frame:GetCenter()
     local centerX, centerY = UIParent:GetCenter()
-    Q:SetSetting("NotificationFrame.X", x - centerX)
-    Q:SetSetting("NotificationFrame.Y", y - centerY)
+    Q:SetSetting("NotificationFrame.x", x - centerX)
+    Q:SetSetting("NotificationFrame.y", y - centerY)
     frame:SetAlpha(0)
     frame:Hide()
 
@@ -417,10 +415,6 @@ function Notification:DisplayQuest(quest, dungeonRelationships)
             self.sourceIcon:SetTexture("Interface\\Icons\\inv_scroll_10")
         end
     end
-    
-    -- self.frame.FadeIn:Stop()
-    -- self.frame.FadeOut:Stop()
-    -- self.frame:SetAlpha(0)
     
     if self.queueIndex == 1 then
         self.frame:Show()

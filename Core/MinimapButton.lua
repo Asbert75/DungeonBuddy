@@ -1,7 +1,7 @@
 local _, Q = ...
-
 local LDB = LibStub("LibDataBroker-1.1")
 local LibDBIcon = LibStub("LibDBIcon-1.0")
+Q.MinimapButton = LibDBIcon
 
 function Q:CreateMinimapButton()
     local primaryFontColor = Q.Theme.Text.Primary;
@@ -9,7 +9,7 @@ function Q:CreateMinimapButton()
     self.dataObject = LDB:NewDataObject("DungeonBuddy", {
         type = "launcher",
         text = "DungeonBuddy",
-        icon = "Interface\\Addons\\DungeonBuddy\\Media\\Icons\\Minimap.png",
+        icon = "Interface\\Icons\\inv_misc_steelweaponchain",
 
         OnClick = function(_, button)
             if button == "LeftButton" then
@@ -39,7 +39,7 @@ function Q:CreateMinimapButton()
     end
 end
 
-function Q:ToggleMinimapButton()
+function Q.MinimapButton:Toggle()
     if Q:GetSetting("MinimapButton.Hide") then
         Q:SetSetting("MinimapButton.Hide", false)
         LibDBIcon:Show("DungeonBuddy")

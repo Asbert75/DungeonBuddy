@@ -2,6 +2,14 @@ local _, Q = ...
 local QuestLog = Q.Addon:NewModule("QuestLog", "AceEvent-3.0", "AceConsole-3.0")
 Q.QuestLog = QuestLog
 
+local function IsRowCollapsed(row)
+    if row.isDungeon then
+        return Q:GetSetting("CollapsedDungeons")[row.id] or false
+    else
+        return Q:GetSetting("CollapsedQuests")[row.id] or false
+    end
+end
+
 local function SetQuestStatusColor(fontString, settingPath, fallbackKey)
     local color = Q:GetSetting(settingPath)
     if color and color.r and color.g and color.b then
@@ -84,13 +92,13 @@ function QuestLog:Create()
     --------------------------------------------------
     -- QuestLog Content Container
     --------------------------------------------------
-    local contentContainer = CreateFrame("ScrollFrame", "ContentContainer", frame, "UIPanelScrollFrameTemplate")
+    local contentContainer = CreateFrame("ScrollFrame", "DungeonBuddy_QuestLogContentContainer", frame, "UIPanelScrollFrameTemplate")
     self.contentContainer = contentContainer
     Q:SetPixelPerfectPoint(contentContainer, "TOPLEFT", headerContainer, "BOTTOMLEFT", 0, -Q.Theme.Padding.S)
     Q:SetPixelPerfectPoint(contentContainer, "BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 0)
     contentContainer:EnableMouseWheel(true)
 
-    local scrollChild = CreateFrame("Frame", "ContentContainerChild", contentContainer)
+    local scrollChild = CreateFrame("Frame", "DungeonBuddy_QuestLogContentContainerChild", contentContainer)
     Q:SetPixelPerfectSize(scrollChild, containerWidth, 1)
     contentContainer:SetScrollChild(scrollChild)
     contentContainer:SetScript("OnSizeChanged", function(self, width)
@@ -149,7 +157,7 @@ function QuestLog:Create()
 end
 
 function QuestLog:RefreshAndPopulate()
-    self.rows = {} -- Always recalculate rows on refresh
+    self.rows = {}
     self._frames = self._frames or {}
 
     local fontM = Q.Theme.Font.M
@@ -163,31 +171,36 @@ function QuestLog:RefreshAndPopulate()
     local pixelPerfect = Q:PixelPerfect(1)
 
     if Q.API:GetPlayerLevel() < 9 then
-        local noQuestsFound = self.noQuestsFound or CreateFrame("Frame", "NoQuestsFound", self.scrollChild)
-        self.noQuestsFound = noQuestsFound
-        noQuestsFound:SetAllPoints()
-        local text = noQuestsFound:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-        text:SetFont("Fonts\\FRIZQT__.TTF", fontM * pixelPerfect)
-        text:SetTextColor(unpack(Q.Theme.Text.Primary))
-        text:SetPoint("CENTER")
-        Q:SetPixelPerfectPoint(text, "CENTER", self.scrollChild, "CENTER", -7.5, -30)
-        text:SetText("No quests available.")
+        if not self.noQuestsFound then
+            self.noQuestsFound = CreateFrame("Frame", "DungeonBuddy_NoQuestsFound", self.scrollChild)
+            self.noQuestsFound:SetAllPoints()
+            self.noQuestsFoundText = self.noQuestsFound:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+            self.noQuestsFoundText:SetFont("Fonts\\FRIZQT__.TTF", fontM * pixelPerfect)
+            self.noQuestsFoundText:SetTextColor(unpack(Q.Theme.Text.Primary))
+            self.noQuestsFoundText:SetPoint("CENTER")
+            Q:SetPixelPerfectPoint(self.noQuestsFoundText, "CENTER", self.scrollChild, "CENTER", -7.5, -30)
+            self.noQuestsFoundText:SetText("No quests available.")
+        end
+
+        self.noQuestsFound:Show()
         return
+    end
+    if self.noQuestsFound then
+        self.noQuestsFound:Hide()
     end
 
     local dungeons = Q.API:GetDungeons()
-    table.sort(dungeons, function(a, b) return a.minLevel < b.minLevel or (a.minLevel == b.minLevel and a.maxLevel < b.maxLevel) end)
+    local playerInfo = Q.API:GetPlayerInfo()
 
     -- First build the rows table with all dungeons, quests, and chain quests, only adding rows that are not hidden
     for _, dungeon in ipairs(dungeons) do
-        if Q.API:HasAvailableQuestsForDungeon(dungeon.id) == true and Q.API:GetPlayerLevel() < dungeon.maxLevel then
+        if Q.API:HasAvailableQuestsForDungeon(dungeon.id, playerInfo) and playerInfo.level < dungeon.maxLevel then
             local isCollapsed = Q:GetSetting("CollapsedDungeons")[dungeon.id] or false
             dungeon.isDungeon = true
-
-            local quests = Q.API:GetQuestsForDungeon(dungeon.id)
+            local quests = Q.API:GetQuestsForDungeon(dungeon.id, playerInfo)
             table.sort(quests, function(a, b) return a.id > b.id end)
 
-            table.insert(self.rows, dungeon);
+            table.insert(self.rows, dungeon)
             
             if not isCollapsed then
                 for _, quest in ipairs(quests) do
@@ -207,7 +220,7 @@ function QuestLog:RefreshAndPopulate()
                     quest.chainStep = #chain > 0 and chainLength or nil
                     quest.chainLength = #chain > 0 and chainLength or nil
                     if not Q:GetSetting("HideCompletedQuests") or not Q.API:IsQuestCompleted(quest.id) then
-                        table.insert(self.rows, quest);
+                        table.insert(self.rows, quest)
                     end
 
                     for chainIndex = 1, #chain do
@@ -231,7 +244,7 @@ function QuestLog:RefreshAndPopulate()
         -- Create Row Frame
         --------------------------------------------------
         if not frame then
-            frame = CreateFrame("Frame", "Frame"..index, self.scrollChild)
+            frame = CreateFrame("Frame", "DungeonBuddy_QuestLogRow"..index, self.scrollChild)
             self._frames[index] = frame
             frame:SetWidth(self.scrollChild:GetWidth())
             Q:SetPixelPerfectHeight(frame, rowHeight)
@@ -253,12 +266,12 @@ function QuestLog:RefreshAndPopulate()
             Q:SetPixelPerfectHeight(titleFrame, rowHeight)
             Q:SetPixelPerfectPoint(titleFrame, "TOPLEFT", frame, "TOPLEFT", 0, 0)
 
-            local title = Q:CreateText("Title", titleFrame, row.name, row.isDungeon and fontXL or fontM)
+            local title = Q:CreateText(nil, titleFrame, row.name, row.isDungeon and fontXL or fontM)
             frame.titleFrame.title = title
             Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", titleFrame, "LEFT", paddingS, 0)
             frame.titleFrame.title:SetJustifyH("LEFT")
 
-            local level = Q:CreateText("Level", titleFrame, "", fontL)
+            local level = Q:CreateText(nil, titleFrame, "", fontL)
             frame.titleFrame.level = level
             Q:SetPixelPerfectPoint(level, "LEFT", title, "RIGHT", 2, 0)
             level:SetJustifyH("LEFT")
@@ -272,10 +285,9 @@ function QuestLog:RefreshAndPopulate()
             --------------------------------------------------
             -- Create Action Buttons
             --------------------------------------------------
-            local rowFrame = frame
             local collapseHandlers = {
                 OnClick = function()
-                    local clickedRow = rowFrame.row
+                    local clickedRow = frame.row
                     if not clickedRow then
                         return
                     end
@@ -300,7 +312,7 @@ function QuestLog:RefreshAndPopulate()
                     GameTooltip:Hide()
                 end
             }
-            frame.collapseButton = Q:CreateButton("CollapseButton", frame, "+", rowHeight, rowHeight, Q.Theme.Font.M, collapseHandlers)
+            frame.collapseButton = Q:CreateButton(nil, frame, "+", rowHeight, rowHeight, Q.Theme.Font.M, collapseHandlers)
             frame.collapseButton:SetPoint("RIGHT", titleFrame, "RIGHT", -paddingL, 0)
             
             local waypointHandlers = {
@@ -309,12 +321,12 @@ function QuestLog:RefreshAndPopulate()
                         return
                     end
                     
-                    if not rowFrame.row then
+                    if not frame.row then
                         return
                     end
 
                     self.isDisabled = true
-                    Q.API:SetQuestWaypoint(rowFrame.row)
+                    Q.API:SetQuestWaypoint(frame.row)
 
                     C_Timer.After(2, function()
                         self.isDisabled = false
@@ -335,7 +347,7 @@ function QuestLog:RefreshAndPopulate()
                     GameTooltip:Hide()
                 end
             }
-            frame.waypointButton = Q:CreateButton("WaypointButton", frame, "D", rowHeight, rowHeight, Q.Theme.Font.M, waypointHandlers)
+            frame.waypointButton = Q:CreateButton(nil, frame, "D", rowHeight, rowHeight, Q.Theme.Font.M, waypointHandlers)
             frame.waypointButton:SetPoint("RIGHT", titleFrame, "RIGHT", -paddingL * 2, 0)
         end
 
@@ -362,8 +374,7 @@ function QuestLog:RefreshAndPopulate()
         if row.isDungeon then
             frame.titleFrame.level:SetText(string.format("(%s-%s)", row.minLevel, row.maxLevel))
 
-            local level = Q.API:GetPlayerLevel()
-            local levelColor = Q.API:GetDifficultyColor(level, row.minLevel)
+            local levelColor = Q.API:GetDifficultyColor(playerInfo.level, row.minLevel)
             frame.titleFrame.level:SetTextColor(levelColor.r, levelColor.g, levelColor.b, 1)
         else
             frame.titleFrame.level:SetText("")
@@ -414,7 +425,7 @@ function QuestLog:RefreshAndPopulate()
             frame.waypointButton:Hide()
         end
 
-        if self:IsRowCollapsed(row) then
+        if IsRowCollapsed(row) then
             frame.collapseButton.label:SetText("+")
         else
             frame.collapseButton.label:SetText("-")
@@ -439,14 +450,6 @@ function QuestLog:RefreshAndPopulate()
     end
 
     Q:SetPixelPerfectHeight(self.scrollChild, math.max(1, totalOffset + rowHeight + 10))
-end
-
-function QuestLog:IsRowCollapsed(row)
-    if row.isDungeon then
-        return Q:GetSetting("CollapsedDungeons")[row.id] or false
-    else
-        return Q:GetSetting("CollapsedQuests")[row.id] or false
-    end
 end
 
 function QuestLog:Toggle()
@@ -478,6 +481,7 @@ function QuestLog:OnDisable()
     self:UnregisterEvent("QUEST_TURNED_IN")
     self:UnregisterEvent("QUEST_ACCEPTED")
     self:UnregisterEvent("PLAYER_LEVEL_UP")
+
     if self.frame then
         self.frame:Hide()
     end
@@ -488,6 +492,7 @@ function QuestLog:OnEnable()
     self:RegisterEvent("QUEST_TURNED_IN", "OnQuestStateChanged")
     self:RegisterEvent("QUEST_ACCEPTED", "OnQuestStateChanged")
     self:RegisterEvent("PLAYER_LEVEL_UP", "OnQuestStateChanged")
+
     if not self.frame then
         self:Create()
     elseif self.frame then

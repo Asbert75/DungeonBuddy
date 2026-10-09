@@ -5,6 +5,7 @@ Q.Addon = {}
 Q.API = {}
 Q.DB = {}
 
+Q.MinimapButton = {}
 Q.Notification = {}
 Q.QuestLog = {}
 Q.Settings = {}
@@ -27,10 +28,8 @@ Q.Debug = {
 function Addon:OnInitialize()
     Q.DB = LibStub("AceDB-3.0"):New("DungeonBuddyDB", Q.GetDefaultDB(), true)
 
-    -- Register chat commands
     Addon:RegisterChatCommand("db", "HandleCommand")
     Addon:RegisterChatCommand("dungeonbuddy", "HandleCommand")
-
     Addon:RegisterChatCommand("dbdebug", "HandleDebugCommand")
 
     Q:CreateMinimapButton()
@@ -107,20 +106,18 @@ function Addon:HandleCommand(input)
     if command == "help" then
         PrintHelpCommands()
     elseif command == "minimap" then
-        Q:ToggleMinimapButton()
+        Q.MinimapButton:Toggle()
     elseif command == "settings" then
         Q:OpenSettings()
     elseif command == "notification" then
         if args == "on" then
             Q:SetSetting("ShowNotificationOnLevelUp", true)
             Q.Notification:Enable()
-            Q.Settings:UpdateReminderOptions()
             Q:PrettyPrint("Level-up notifications enabled.")
         end
         if args == "off" then
             Q:SetSetting("ShowNotificationOnLevelUp", false)
             Q.Notification:Disable()
-            Q.Settings:UpdateReminderOptions()
             Q:PrettyPrint("Level-up notifications disabled.")
         end
     elseif command == "tracker" then
