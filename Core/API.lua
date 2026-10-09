@@ -77,15 +77,15 @@ function Q.API:BuildLookupTables()
 end
 
 function Q.API:GetPlayerLevel()
-    return 55--Q.Debug.Enabled and Q.Debug.Level or UnitLevel("player")
+    return Q.Debug.Enabled and Q.Debug.Level or UnitLevel("player")
 end
 
 function Q.API:GetPlayerFaction()
-    return "horde"--Q.Debug.Enabled and Q.Debug.Faction or UnitFactionGroup("player")
+    return Q.Debug.Enabled and Q.Debug.Faction or UnitFactionGroup("player")
 end
 
 function Q.API:GetPlayerClass()
-    return "PALADIN"--Q.Debug.Enabled and Q.Debug.Class or select(2, UnitClass("player"))
+    return Q.Debug.Enabled and Q.Debug.Class or select(2, UnitClass("player"))
 end
 
 function Q.API:GetPlayerInfo()
@@ -303,7 +303,7 @@ function Q.API:GetRandomQuest()
 end
 
 function Q.API:SetQuestWaypoint(quest)
-    local mapId, = quest.source.location.mapId
+    local mapId = quest.source.location.mapId
     local x = quest.source.location.x
     local y = quest.source.location.y
     if not (mapId and x and y) then

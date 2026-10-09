@@ -109,7 +109,7 @@ Q.Dungeons = {
         minLevel = 28,
         suggestedLevel = 30,
         maxLevel = 34,
-        questIds = { 96986, 96987, 96984, 92457 },
+        questIds = { 96986, 96987, 96984, 92457, 92489, 92459, 92456 },
     },
     {
         id = 11,
