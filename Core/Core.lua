@@ -23,6 +23,7 @@ Q.Debug = {
     Enabled = false,
     Level = nil,
     Faction = nil,
+    Class = nil
 }
 
 function Addon:OnInitialize()
@@ -50,6 +51,7 @@ end
 function Addon:HandleDebugCommand(input)
     local arg1, arg2 = input:match("^(%S*)%s*(.-)$")
 
+    print("arg1 ".. tostring(arg1) .. " arg2 " .. tostring(arg2))
     if arg1 == "quest" then
         TestNotificationQuest()
     elseif arg1 == "debug" then
@@ -57,6 +59,7 @@ function Addon:HandleDebugCommand(input)
             Q:PrettyPrint("Debug mode is currently enabled")
             Q:PrettyPrint("Level: " .. tostring(Q.Debug.Level))
             Q:PrettyPrint("Faction: " .. tostring(Q.Debug.Faction))
+            Q:PrettyPrint("Class: " .. tostring(Q.Debug.Class))
         elseif arg2 == "status" then
             Q:PrettyPrint("Debug mode is currently disabled")
         elseif Q.Debug.Enabled == false then
@@ -64,6 +67,7 @@ function Addon:HandleDebugCommand(input)
                 Enabled = true,
                 Level = tonumber(arg1) or 10,
                 Faction = (arg2 and arg2:lower() == "horde") and "Horde" or "Alliance",
+                Class = "PALADIN",
             }
             Q:PrettyPrint("Debug mode enabled")
         else
@@ -71,6 +75,7 @@ function Addon:HandleDebugCommand(input)
                 Enabled = false,
                 Level = nil,
                 Faction = nil,
+                Class = nil,
             }
             Q:PrettyPrint("Debug mode disabled")
         end

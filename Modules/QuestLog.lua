@@ -169,8 +169,9 @@ function QuestLog:RefreshAndPopulate()
     local totalOffset = 0
 
     local pixelPerfect = Q:PixelPerfect(1)
+    local playerInfo = Q.API:GetPlayerInfo()
 
-    if Q.API:GetPlayerLevel() < 9 then
+    if playerInfo.level < 9 then
         if not self.noQuestsFound then
             self.noQuestsFound = CreateFrame("Frame", "DungeonBuddy_NoQuestsFound", self.scrollChild)
             self.noQuestsFound:SetAllPoints()
@@ -190,7 +191,6 @@ function QuestLog:RefreshAndPopulate()
     end
 
     local dungeons = Q.API:GetDungeons()
-    local playerInfo = Q.API:GetPlayerInfo()
 
     -- First build the rows table with all dungeons, quests, and chain quests, only adding rows that are not hidden
     for _, dungeon in ipairs(dungeons) do
