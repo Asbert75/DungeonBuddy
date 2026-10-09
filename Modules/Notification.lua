@@ -341,6 +341,8 @@ function Notification:DisplayQuest(quest, dungeonRelationships)
     local paddingS = Q.Theme.Padding.S
     self.quest = quest
 
+    local playerInfo = Q.API:GetPlayerInfo()
+
     if not dungeonRelationships then
         dungeonRelationships = Q.API:GetDungeonRelationshipsForQuest(quest.id)
     end
@@ -376,7 +378,7 @@ function Notification:DisplayQuest(quest, dungeonRelationships)
     -- Update Quest Title
     local questTitle = quest.suggestedLevel and string.format("[%d] %s", quest.suggestedLevel, quest.name) or quest.name
     self.questName:SetText(questTitle)
-    local color = Q.API:GetDifficultyColor(Q.API:GetPlayerLevel(), quest.suggestedLevel)
+    local color = Q.API:GetDifficultyColor(playerInfo.level, quest.suggestedLevel)
     if color then
         self.questName:SetTextColor(color.r, color.g, color.b)
     end
@@ -397,7 +399,7 @@ function Notification:DisplayQuest(quest, dungeonRelationships)
         self.questSourceText:SetText(quest.source.text)
 
         if quest.source.type == "npc" then
-            if Q.API:GetPlayerFaction() == "Alliance" then
+            if playerInfo.faction == "Alliance" then
                 self.sourceIcon:SetTexture("Interface\\Icons\\achievement_character_human_male")
             else
                 self.sourceIcon:SetTexture("Interface\\Icons\\achievement_character_orc_male")

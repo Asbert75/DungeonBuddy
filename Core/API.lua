@@ -77,19 +77,22 @@ function Q.API:BuildLookupTables()
 end
 
 function Q.API:GetPlayerLevel()
-    return Q.Debug.Enabled and Q.Debug.Level or UnitLevel("player")
+    return 55--Q.Debug.Enabled and Q.Debug.Level or UnitLevel("player")
 end
 
 function Q.API:GetPlayerFaction()
-    return Q.Debug.Enabled and Q.Debug.Faction or UnitFactionGroup("player")
+    return "horde"--Q.Debug.Enabled and Q.Debug.Faction or UnitFactionGroup("player")
+end
+
+function Q.API:GetPlayerClass()
+    return "PALADIN"--Q.Debug.Enabled and Q.Debug.Class or select(2, UnitClass("player"))
 end
 
 function Q.API:GetPlayerInfo()
-    local _, class = UnitClass("player")
     return {
         level = self:GetPlayerLevel(),
         faction = self:GetPlayerFaction(),
-        class = class,
+        class = self:GetPlayerClass(),
     }
 end
 
@@ -135,22 +138,12 @@ end
 function Q.API:GetQuestWaypointText(questId)
     local quest = self:GetQuestById(questId)
     if not quest then
-        return "Quest waypoint"
+        return "Unknown"
     end
 
     local sourceName = quest.source and quest.source.name
-    local dungeonNames = {}
-    for _, relationship in ipairs(self:GetDungeonRelationshipsForQuest(questId)) do
-        local dungeonName = relationship.dungeon and relationship.dungeon.name
-        if dungeonName then
-            table.insert(dungeonNames, dungeonName)
-        end
-    end
 
-    local title = quest.name or "Quest"
-    if #dungeonNames > 0 then
-        title = string.format("%s (%s)", title, table.concat(dungeonNames, ", "))
-    end
+    local title = quest.name
     if sourceName then
         return string.format("%s (%s)", sourceName, title)
     end
@@ -181,13 +174,14 @@ function Q.API:GetRelevantQuestsForZone()
     local quests = {}
     local mapID = C_Map.GetBestMapForUnit("player")
     local zone = C_Map.GetMapInfo(mapID).name
+    local playerInfo = Q.API:GetPlayerInfo()
 
     for _, quest in ipairs(Q.Quests) do
         if  not self:IsQuestInQuestLog(quest.id) and 
             not self:IsQuestCompleted(quest.id) and 
-            self:IsQuestAvailableToLevel(quest.id) and 
-            self:IsQuestAvailableToFaction(quest.id) and 
-            self:IsQuestAvailableToClass(quest.id) and quest.source.zone == zone
+            self:IsQuestAvailableToLevel(quest.id, playerInfo) and 
+            self:IsQuestAvailableToFaction(quest.id, playerInfo) and 
+            self:IsQuestAvailableToClass(quest.id, playerInfo) and quest.source.zone == zone
         then
             table.insert(quests, quest)
         end
@@ -272,10 +266,6 @@ function Q.API:IsQuestAvailableToClass(questId, playerInfo)
     end
 
     local playerClass = playerInfo and playerInfo.class
-    if not playerClass then
-        local _, class = UnitClass("player")
-        playerClass = class
-    end
     return quest.class == playerClass
 end
 
@@ -284,11 +274,13 @@ function Q.API:IsQuestAvailable(questId)
         return false
     end
 
+    local playerInfo = Q.API:GetPlayerInfo()
+
     return
         not self:IsQuestCompleted(questId)
-        and self:IsQuestAvailableToLevel(questId)
-        and self:IsQuestAvailableToFaction(questId)
-        and self:IsQuestAvailableToClass(questId)
+        and self:IsQuestAvailableToLevel(questId, playerInfo)
+        and self:IsQuestAvailableToFaction(questId, playerInfo)
+        and self:IsQuestAvailableToClass(questId, playerInfo)
         and self:IsPrerequisiteSatisfied(questId)
 end
 
@@ -311,7 +303,7 @@ function Q.API:GetRandomQuest()
 end
 
 function Q.API:SetQuestWaypoint(quest)
-    local mapId = quest.source.location.mapId
+    local mapId, = quest.source.location.mapId
     local x = quest.source.location.x
     local y = quest.source.location.y
     if not (mapId and x and y) then
@@ -320,7 +312,6 @@ function Q.API:SetQuestWaypoint(quest)
     end
     
     local title = self:GetQuestWaypointText(quest.id)
-
     local tomtom = rawget(_G, "TomTom")
     if tomtom and tomtom.AddWaypoint then
         tomtom:AddWaypoint(tonumber(mapId), tonumber(x), tonumber(y), {
