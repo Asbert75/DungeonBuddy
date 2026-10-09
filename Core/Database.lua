@@ -18,12 +18,12 @@ local SharedDefaults = {
         MinimapPos = 225,
     },
     NotificationFrame = {
-        X = 0,
-        Y = 0,
+        x = 0,
+        y = 0,
     },
     QuestLogFrame = {
-        X = -250,
-        Y = 0,
+        x = -250,
+        y = 0,
     },
     -- Settings
     ShowNotificationOnLevelUp = true,

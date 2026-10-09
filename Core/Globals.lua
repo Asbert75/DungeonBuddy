@@ -5,13 +5,6 @@ local function SetThemeTint(frame, color, alpha)
     frame:SetBackdropColor(r, g, b, alpha)
 end
 
-function Q:TruncateText(text, maxLength)
-    if #text > maxLength then
-        return text:sub(1, maxLength) .. "..."
-    end
-    return text
-end
-
 function Q:PrettyPrint(message)
     DEFAULT_CHAT_FRAME:AddMessage("|cfff0c25a"..ADDON_NAME..":|r " .. tostring(message))
 end
@@ -44,14 +37,6 @@ end
 function Q:SetTextColor(frame, textKey, textAlpha)
     local textR, textG, textB, textA = unpack(Q.Theme.Text[textKey or "Primary"])
     frame:SetTextColor(textR, textG, textB, textAlpha or textA)
-end
-
-function Q:AddHighlight(frame, r, g, b, a)
-    local highlight = frame:CreateTexture(nil, "HIGHLIGHT")
-    highlight:SetAllPoints()
-    local primaryR, primaryG, primaryB = unpack(Q.Theme.Text.Primary)
-    highlight:SetColorTexture(r or primaryR, g or primaryG, b or primaryB, a or Q.Theme.Alpha.Highlight)
-    frame:SetHighlightTexture(highlight, "ADD")
 end
 
 function Q:SetPixelPerfectSize(frame, width, height)
