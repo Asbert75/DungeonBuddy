@@ -181,13 +181,14 @@ function Q.API:GetRelevantQuestsForZone()
     local quests = {}
     local mapID = C_Map.GetBestMapForUnit("player")
     local zone = C_Map.GetMapInfo(mapID).name
+    local playerInfo = Q.API:GetPlayerInfo()
 
     for _, quest in ipairs(Q.Quests) do
         if  not self:IsQuestInQuestLog(quest.id) and 
             not self:IsQuestCompleted(quest.id) and 
-            self:IsQuestAvailableToLevel(quest.id) and 
-            self:IsQuestAvailableToFaction(quest.id) and 
-            self:IsQuestAvailableToClass(quest.id) and quest.source.zone == zone
+            self:IsQuestAvailableToLevel(quest.id, playerInfo) and 
+            self:IsQuestAvailableToFaction(quest.id, playerInfo) and 
+            self:IsQuestAvailableToClass(quest.id, playerInfo) and quest.source.zone == zone
         then
             table.insert(quests, quest)
         end
@@ -272,10 +273,6 @@ function Q.API:IsQuestAvailableToClass(questId, playerInfo)
     end
 
     local playerClass = playerInfo and playerInfo.class
-    if not playerClass then
-        local _, class = UnitClass("player")
-        playerClass = class
-    end
     return quest.class == playerClass
 end
 
@@ -284,11 +281,13 @@ function Q.API:IsQuestAvailable(questId)
         return false
     end
 
+    local playerInfo = Q.API:GetPlayerInfo()
+
     return
         not self:IsQuestCompleted(questId)
-        and self:IsQuestAvailableToLevel(questId)
-        and self:IsQuestAvailableToFaction(questId)
-        and self:IsQuestAvailableToClass(questId)
+        and self:IsQuestAvailableToLevel(questId, playerInfo)
+        and self:IsQuestAvailableToFaction(questId, playerInfo)
+        and self:IsQuestAvailableToClass(questId, playerInfo)
         and self:IsPrerequisiteSatisfied(questId)
 end
 

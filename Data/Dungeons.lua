@@ -43,7 +43,7 @@ Q.Dungeons = {
         minLevel = 18,
         suggestedLevel = 17,
         maxLevel = 24,
-        questIds = { 168, 167, 2040, 214, 166, 1654 },
+        questIds = { 95036, 168, 167, 2040, 214, 166, 1654 },
     },
     {
         id = 5,
@@ -65,7 +65,7 @@ Q.Dungeons = {
         minLevel = 23,
         suggestedLevel = 22,
         maxLevel = 29,
-        questIds = { 1013, 1098, 1014, 1058 },
+        questIds = { 95036, 1013, 1098, 1014, 1058, 1654, 1740 },
     },
     {
         id = 7,
@@ -76,7 +76,7 @@ Q.Dungeons = {
         minLevel = 24,
         suggestedLevel = 24,
         maxLevel = 29,
-        questIds = { 95697, 95664, 98815, 95772, 95646, 95647, 95810 },
+        questIds = { 95697, 95664, 98815, 95772, 95646, 95647, 95810, 95682 },
     },
     {
         id = 8,
@@ -87,7 +87,7 @@ Q.Dungeons = {
         minLevel = 25,
         suggestedLevel = 24,
         maxLevel = 31,
-        questIds = { 971, 1275, 1199, 6565, 6921, 1200, 6561, 6922, 1740, 1442 },
+        questIds = { 95036, 971, 1275, 1199, 6565, 6921, 1200, 6561, 6922, 1740, 1442, 1654 },
     },
     {
         id = 9,
@@ -102,6 +102,17 @@ Q.Dungeons = {
     },
     {
         id = 10,
+        name = "City of Dalaran",
+        continent = "Eastern Kingdoms",
+        zone = "Silverpine Forest",
+        location = { mapId = 1421, x = 0.693, y = 0.455 },
+        minLevel = 28,
+        suggestedLevel = 30,
+        maxLevel = 34,
+        questIds = { 96986, 96987, 96984, 92457 },
+    },
+    {
+        id = 11,
         name = "Razorfen Kraul",
         continent = "Kalimdor",
         zone = "The Barrens",
@@ -112,7 +123,7 @@ Q.Dungeons = {
         questIds = { 1101, 1102, 1221, 1142, 1144, 1701, 1838 }
     },
     {
-        id = 11,
+        id = 12,
         name = "Gnomeregan",
         continent = "Eastern Kingdoms",
         zone = "Dun Morogh",
@@ -120,10 +131,10 @@ Q.Dungeons = {
         minLevel = 31,
         suggestedLevel = 30,
         maxLevel = 37,
-        questIds = { 2841, 2842, 2962, 2922, 2929, 2928, 2843, 2904 },
+        questIds = { 2841, 2842, 2962, 2922, 2929, 2928, 2843, 2904, 2924, 2930, 2945 },
     },
     {
-        id = 12,
+        id = 13,
         name = "SM: Graveyard",
         continent = "Eastern Kingdoms",
         zone = "Tirisfal Glades",
@@ -131,10 +142,10 @@ Q.Dungeons = {
         minLevel = 31,
         suggestedLevel = 30,
         maxLevel = 37,
-        questIds = { 1048, 1051, 1113 },
+        questIds = { 1051, 1113 },
     },
     {
-        id = 13,
+        id = 14,
         name = "SM: Library",
         continent = "Eastern Kingdoms",
         zone = "Tirisfal Glades",
@@ -142,10 +153,10 @@ Q.Dungeons = {
         minLevel = 34,
         suggestedLevel = 33,
         maxLevel = 40,
-        questIds = { 1048, 1053, 1113, 1049, 1160, 1050 },
+        questIds = { 1048, 1053, 1113, 1049, 1160, 1050, 1951 },
     },
     {
-        id = 14,
+        id = 15,
         name = "SM: Armory",
         continent = "Eastern Kingdoms",
         zone = "Tirisfal Glades",
@@ -156,7 +167,7 @@ Q.Dungeons = {
         questIds = { 1048, 1053, 1113 },
     },
     {
-        id = 15,
+        id = 16,
         name = "Razorfen Downs",
         continent = "Kalimdor",
         zone = "The Barrens",
@@ -167,7 +178,7 @@ Q.Dungeons = {
         questIds = { 3341, 6521, 3636, 6626, 3525 },
     },
     {
-        id = 16,
+        id = 17,
         name = "SM: Cathedral",
         continent = "Eastern Kingdoms",
         zone = "Tirisfal Glades",
@@ -178,7 +189,7 @@ Q.Dungeons = {
         questIds = { 1048, 1053, 1113 },
     },
     {
-        id = 17,
+        id = 18,
         name = "Uldaman",
         continent = "Eastern Kingdoms",
         zone = "Badlands",
@@ -186,10 +197,10 @@ Q.Dungeons = {
         minLevel = 44,
         suggestedLevel = 43,
         maxLevel = 50,
-        questIds = { 2342, 2241, 2202, 721, 2278, 2201 },
+        questIds = { 17, 2418, 2342, 2202, 2278, 2201, 1360, 704, 722, 2240, 1139, 2202, 2339, 1956  },
     },
     {
-        id = 18,
+        id = 19,
         name = "Zul'Farrak",
         continent = "Kalimdor",
         zone = "Tanaris",
@@ -200,7 +211,7 @@ Q.Dungeons = {
         questIds = { 2936, 3042, 2768, 2865, 2770, 3527 },
     },
     {
-        id = 19,
+        id = 20,
         name = "Maraudon: Purple", -- Wicked Grotto
         continent = "Kalimdor",
         zone = "Desolace",
@@ -211,7 +222,7 @@ Q.Dungeons = {
         questIds = { 7067, 7068, 7029, 7044 },
     },
     {
-        id = 20,
+        id = 21,
         name = "Maraudon: Orange", -- Foulspore Cavern
         continent = "Kalimdor",
         zone = "Desolace",
@@ -222,7 +233,7 @@ Q.Dungeons = {
         questIds = { 7028, 7044 },
     },
     {
-        id = 21,
+        id = 22,
         name = "Maraudon: Princess", -- Earth Song Falls
         continent = "Kalimdor",
         zone = "Desolace",
@@ -233,7 +244,7 @@ Q.Dungeons = {
         questIds = { 7069, 7044 },
     },
     {
-        id = 22,
+        id = 23,
         name = "Temple of Atal'Hakkar",
         continent = "Eastern Kingdoms",
         zone = "Swamp of Sorrows",
@@ -241,10 +252,10 @@ Q.Dungeons = {
         minLevel = 52,
         suggestedLevel = 51,
         maxLevel = 58,
-        questIds = { 1445, 3445, 3446, 4787, 3447 },
+        questIds = { 1446, 1445, 3445, 3446, 4787, 3447 },
     },
     {
-        id = 23,
+        id = 24,
         name = "Blackrock Depths",
         continent = "Eastern Kingdoms",
         zone = "Blackrock Mountain",
@@ -252,10 +263,10 @@ Q.Dungeons = {
         minLevel = 52,
         suggestedLevel = 55,
         maxLevel = 60,
-        questIds = { 4081, 4082, 4241, 7848, 3802, 5125 },
+        questIds = { 7201, 4126, 4286, 4123, 4082, 4241, 7848, 3802, 5125, 4136, 4134 },
     },
     {
-        id = 24,
+        id = 25,
         name = "Dire Maul: East",
         continent = "Kalimdor",
         zone = "Feralas",
@@ -266,7 +277,7 @@ Q.Dungeons = {
         questIds = { 7489, 7481 },
     },
     {
-        id = 25,
+        id = 26,
         name = "Dire Maul: West",
         continent = "Kalimdor",
         zone = "Feralas",
@@ -277,7 +288,7 @@ Q.Dungeons = {
         questIds = { 7461, 7482 },
     },
     {
-        id = 26,
+        id = 27,
         name = "Lower Blackrock Spire",
         continent = "Eastern Kingdoms",
         zone = "Blackrock Mountain",
@@ -288,7 +299,7 @@ Q.Dungeons = {
         questIds = { 4724, 4701, 4702, 4729, 4742 },
     },
     {
-        id = 27,
+        id = 28,
         name = "Scholomance",
         continent = "Eastern Kingdoms",
         zone = "Western Plaguelands",
@@ -299,7 +310,7 @@ Q.Dungeons = {
         questIds = { 5341, 5382, 5533, 5537, 5529, 5384 },
     },
     {
-        id = 28,
+        id = 29,
         name = "Dire Maul: North",
         continent = "Kalimdor",
         zone = "Feralas",
@@ -310,7 +321,7 @@ Q.Dungeons = {
         questIds = { 5527, 7701 },
     },
     {
-        id = 29,
+        id = 30,
         name = "Upper Blackrock Spire",
         continent = "Eastern Kingdoms",
         zone = "Blackrock Mountain",
@@ -321,7 +332,7 @@ Q.Dungeons = {
         questIds = { 4981 },
     },
     {
-        id = 30,
+        id = 31,
         name = "Stratholme",
         continent = "Eastern Kingdoms",
         zone = "Eastern Plaguelands",
