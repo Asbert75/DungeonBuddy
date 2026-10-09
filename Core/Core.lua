@@ -16,7 +16,6 @@ Q.DungeonById = {}
 Q.QuestById = {}
 Q.DungeonsByQuestId = {}
 Q.DungeonRelationshipsByQuestId = {}
-Q.DungeonQuestChainStartsByQuestId = {}
 
 Q.Theme = {}
 Q.Debug = {

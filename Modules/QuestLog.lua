@@ -36,17 +36,16 @@ function QuestLog:Create()
     --------------------------------------------------
     -- Create QuestLog Frame
     --------------------------------------------------
-    local frame = Q:CreateBackdropFrame('DungeonBuddy_QuestLogFrame', UIParent, containerWidth, 600, "MEDIUM", "Primary", "Default")
-    self.frame = frame
+    self.frame = Q:CreateBackdropFrame('DungeonBuddy_QuestLogFrame', UIParent, containerWidth, 600, "MEDIUM", "Primary", "Default")
 
-    frame:SetMovable(true)
-    frame:EnableMouse(true)
-    frame:RegisterForDrag("LeftButton")
+    self.frame:SetMovable(true)
+    self.frame:EnableMouse(true)
+    self.frame:RegisterForDrag("LeftButton")
 
-    frame:SetScript("OnDragStart", function(self)
+    self.frame:SetScript("OnDragStart", function(self)
         self:StartMoving()
     end)
-    frame:SetScript("OnDragStop", function(self)
+    self.frame:SetScript("OnDragStop", function(self)
         self:StopMovingOrSizing()
         Q:ClampFrameToScreen(self)
 
@@ -56,62 +55,54 @@ function QuestLog:Create()
         Q:SetSetting("QuestLogFrame.Y", y - centerY)
     end)
 
-    local savedX = Q:GetSetting("QuestLogFrame.X")
-    local savedY = Q:GetSetting("QuestLogFrame.Y")
-    frame:SetPoint("CENTER", UIParent, "CENTER", savedX or 0, savedY or 0)
-    Q:ClampFrameToScreen(frame)
+    self.frame:SetPoint("CENTER", UIParent, "CENTER", Q:GetSetting("QuestLogFrame.X") or 0, Q:GetSetting("QuestLogFrame.Y") or 0)
+    Q:ClampFrameToScreen(self.frame)
 
-    -- Older versions saved the frame's absolute screen center as an offset.
-    -- Clamp that restored position and persist the corrected relative offset.
-    local x, y = frame:GetCenter()
+    local x, y = self.frame:GetCenter()
     local centerX, centerY = UIParent:GetCenter()
     Q:SetSetting("QuestLogFrame.X", x - centerX)
     Q:SetSetting("QuestLogFrame.Y", y - centerY)
 
-    Q:CreateCloseButton(frame)
+    Q:CreateCloseButton(self.frame)
 
     --------------------------------------------------
     -- QuestLog Header
     --------------------------------------------------
-    local headerContainer = Q:CreateFrame("QuestLogHeader", frame, containerWidth, 50, "MEDIUM")
-    self.header = headerContainer
-    Q:SetPixelPerfectPoint(headerContainer, "TOP", frame, "TOP", 0, 0)
-    Q:SetPixelPerfectPoint(headerContainer, "LEFT", frame, "LEFT", Q.Theme.Padding.S, 0)
-    Q:SetPixelPerfectPoint(headerContainer, "RIGHT", frame, "RIGHT", -Q.Theme.Padding.L, 0)
+    self.header = Q:CreateFrame("QuestLogHeader", self.frame, containerWidth, 50, "MEDIUM")
+    Q:SetPixelPerfectPoint(self.header, "TOP", self.frame, "TOP", 0, 0)
+    Q:SetPixelPerfectPoint(self.header, "LEFT", self.frame, "LEFT", Q.Theme.Padding.S, 0)
+    Q:SetPixelPerfectPoint(self.header, "RIGHT", self.frame, "RIGHT", -Q.Theme.Padding.L, 0)
 
-    local border = headerContainer:CreateTexture(nil, "OVERLAY")
+    local border = self.header:CreateTexture(nil, "OVERLAY")
     border:SetColorTexture(unpack(Q.Theme.Border.Accent))
     border:SetHeight(Q:PixelPerfect(1))
-    Q:SetPixelPerfectPoint(border, "BOTTOMLEFT", headerContainer, "BOTTOMLEFT", 0, 0)
-    Q:SetPixelPerfectPoint(border, "BOTTOMRIGHT", headerContainer, "BOTTOMRIGHT", 0, 0)
+    Q:SetPixelPerfectPoint(border, "BOTTOMLEFT", self.header, "BOTTOMLEFT", 0, 0)
+    Q:SetPixelPerfectPoint(border, "BOTTOMRIGHT", self.header, "BOTTOMRIGHT", 0, 0)
 
-    local headerText = Q:CreateText("QuestLogHeaderText", headerContainer, "Dungeon Buddy", Q.Theme.Font.XXL, "Accent", 1)
-    headerText:SetJustifyH("LEFT")
-    Q:SetPixelPerfectPoint(headerText, "LEFT", headerContainer, "LEFT", 0, 0)
+    self.header.text = Q:CreateText("QuestLogHeaderText", self.header, "Dungeon Buddy", Q.Theme.Font.XXL, "Accent", 1)
+    self.header.text:SetJustifyH("LEFT")
+    Q:SetPixelPerfectPoint(self.header.text, "LEFT", self.header, "LEFT", 0, 0)
 
     --------------------------------------------------
     -- QuestLog Content Container
     --------------------------------------------------
-    local contentContainer = CreateFrame("ScrollFrame", "DungeonBuddy_QuestLogContentContainer", frame, "UIPanelScrollFrameTemplate")
-    self.contentContainer = contentContainer
-    Q:SetPixelPerfectPoint(contentContainer, "TOPLEFT", headerContainer, "BOTTOMLEFT", 0, -Q.Theme.Padding.S)
-    Q:SetPixelPerfectPoint(contentContainer, "BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 0)
-    contentContainer:EnableMouseWheel(true)
+    self.contentContainer = CreateFrame("ScrollFrame", "DungeonBuddy_QuestLogContentContainer", self.frame, "UIPanelScrollFrameTemplate")
+    Q:SetPixelPerfectPoint(self.contentContainer, "TOPLEFT", self.header, "BOTTOMLEFT", 0, -Q.Theme.Padding.S)
+    Q:SetPixelPerfectPoint(self.contentContainer, "BOTTOMRIGHT", self.frame, "BOTTOMRIGHT", 0, 0)
+    self.contentContainer:EnableMouseWheel(true)
 
-    local scrollChild = CreateFrame("Frame", "DungeonBuddy_QuestLogContentContainerChild", contentContainer)
-    Q:SetPixelPerfectSize(scrollChild, containerWidth, 1)
-    contentContainer:SetScrollChild(scrollChild)
-    contentContainer:SetScript("OnSizeChanged", function(self, width)
-        -- OnSizeChanged already provides the width in UI-scaled units; don't scale it again.
-        scrollChild:SetWidth(width)
+   self.scrollChild = CreateFrame("Frame", "DungeonBuddy_QuestLogContentContainerChild", self.contentContainer)
+    Q:SetPixelPerfectSize(self.scrollChild, containerWidth, 1)
+    self.contentContainer:SetScrollChild(self.scrollChild)
+    self.contentContainer:SetScript("OnSizeChanged", function(self, width)
+        QuestLog.scrollChild:SetWidth(width)
     end)
-    self.scrollChild = scrollChild
 
-    local scrollBar = _G[contentContainer:GetName() .. "ScrollBar"]
+    local scrollBar = _G[self.contentContainer:GetName() .. "ScrollBar"]
     if scrollBar then
         scrollBar:ClearAllPoints()
-        Q:SetPixelPerfectPoint(scrollBar, "TOPRIGHT", contentContainer, "TOPRIGHT", -1, -20)
-        Q:SetPixelPerfectPoint(scrollBar, "BOTTOMRIGHT", contentContainer, "BOTTOMRIGHT", -1, 20)
+        Q:SetPixelPerfectPoint(scrollBar, "TOPRIGHT", self.contentContainer, "TOPRIGHT", -1, -20)
+        Q:SetPixelPerfectPoint(scrollBar, "BOTTOMRIGHT", self.contentContainer, "BOTTOMRIGHT", -1, 20)
 
         for _, arrow in ipairs({
             { suffix = "ScrollUpButton" },
@@ -144,16 +135,27 @@ function QuestLog:Create()
         end
     end
 
-    contentContainer:SetScript("OnMouseWheel", function(self, delta)
+    self.contentContainer:SetScript("OnMouseWheel", function(self, delta)
         local step = 10
-        local maxScroll = math.max(0, scrollChild:GetHeight() - self:GetHeight())
+        local maxScroll = math.max(0, QuestLog.scrollChild:GetHeight() - self:GetHeight())
         self:SetVerticalScroll(math.max(0, math.min(maxScroll, self:GetVerticalScroll() - delta * step)))
     end)
 
     QuestLog:RefreshAndPopulate()
 
-    frame:Hide()
-    return frame
+    self.frame:Hide()
+    return self.frame
+end
+
+local function UpdateClassIcon(frame, row)
+    local classIcon = frame.titleFrame.classIcon
+    local classIconTexture = not row.isDungeon and Q.API:GetClassIconTexture(row.class)
+    if classIconTexture then
+        classIcon:SetTexture(classIconTexture)
+        classIcon:Show()
+    else
+        classIcon:Hide()
+    end
 end
 
 function QuestLog:RefreshAndPopulate()
@@ -192,7 +194,7 @@ function QuestLog:RefreshAndPopulate()
 
     -- First build the rows table with all dungeons, quests, and chain quests, only adding rows that are not hidden
     for _, dungeon in ipairs(dungeons) do
-        if Q.API:HasAvailableQuestsForDungeon(dungeon.id, playerInfo) and playerInfo.level <= dungeon.maxLevel then
+        if Q.API:DungeonHasAvailableQuests(dungeon.id, playerInfo) and playerInfo.level <= dungeon.maxLevel then
             local isCollapsed = Q:GetSetting("CollapsedDungeons")[dungeon.id] or false
             dungeon.isDungeon = true
             local quests = Q.API:GetQuestsForDungeon(dungeon.id, playerInfo)
@@ -258,27 +260,23 @@ function QuestLog:RefreshAndPopulate()
             --------------------------------------------------
             -- Create Title
             --------------------------------------------------
-            local titleFrame = CreateFrame("Frame", nil, frame)
-            frame.titleFrame = titleFrame
-            titleFrame:SetWidth(self.scrollChild:GetWidth())
-            Q:SetPixelPerfectHeight(titleFrame, rowHeight)
-            Q:SetPixelPerfectPoint(titleFrame, "TOPLEFT", frame, "TOPLEFT", 0, 0)
+            frame.titleFrame = CreateFrame("Frame", nil, frame)
+            frame.titleFrame:SetWidth(self.scrollChild:GetWidth())
+            Q:SetPixelPerfectHeight(frame.titleFrame, rowHeight)
+            Q:SetPixelPerfectPoint(frame.titleFrame, "TOPLEFT", frame, "TOPLEFT", 0, 0)
 
-            local title = Q:CreateText(nil, titleFrame, row.name, row.isDungeon and fontXL or fontM)
-            frame.titleFrame.title = title
-            Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", titleFrame, "LEFT", paddingS, 0)
+            frame.titleFrame.title = Q:CreateText(nil, frame.titleFrame, row.name, row.isDungeon and fontXL or fontM)
+            Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", paddingS, 0)
             frame.titleFrame.title:SetJustifyH("LEFT")
 
-            local level = Q:CreateText(nil, titleFrame, "", fontL)
-            frame.titleFrame.level = level
-            Q:SetPixelPerfectPoint(level, "LEFT", title, "RIGHT", 2, 0)
-            level:SetJustifyH("LEFT")
+            frame.titleFrame.level = Q:CreateText(nil, frame.titleFrame, "", fontL)
+            Q:SetPixelPerfectPoint(frame.titleFrame.level, "LEFT", frame.titleFrame.title, "RIGHT", 2, 0)
+            frame.titleFrame.level:SetJustifyH("LEFT")
 
-            local classIcon = titleFrame:CreateTexture(nil, "ARTWORK")
-            frame.titleFrame.classIcon = classIcon
-            Q:SetPixelPerfectPoint(classIcon, "LEFT", title, "RIGHT", paddingS, 0)
-            Q:SetPixelPerfectSize(classIcon, 16, 16)
-            classIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+            frame.titleFrame.classIcon = frame.titleFrame:CreateTexture(nil, "ARTWORK")
+            Q:SetPixelPerfectPoint(frame.titleFrame.classIcon, "LEFT", frame.titleFrame.title, "RIGHT", paddingS, 0)
+            Q:SetPixelPerfectSize(frame.titleFrame.classIcon, 16, 16)
+            frame.titleFrame.classIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 
             --------------------------------------------------
             -- Create Action Buttons
@@ -311,7 +309,7 @@ function QuestLog:RefreshAndPopulate()
                 end
             }
             frame.collapseButton = Q:CreateButton(nil, frame, "+", rowHeight, rowHeight, Q.Theme.Font.M, collapseHandlers)
-            frame.collapseButton:SetPoint("RIGHT", titleFrame, "RIGHT", -paddingL, 0)
+            frame.collapseButton:SetPoint("RIGHT", frame.titleFrame, "RIGHT", -paddingL, 0)
             
             local waypointHandlers = {
                 OnClick = function(self)
@@ -346,7 +344,7 @@ function QuestLog:RefreshAndPopulate()
                 end
             }
             frame.waypointButton = Q:CreateButton(nil, frame, "D", rowHeight, rowHeight, Q.Theme.Font.M, waypointHandlers)
-            frame.waypointButton:SetPoint("RIGHT", titleFrame, "RIGHT", -paddingL * 2, 0)
+            frame.waypointButton:SetPoint("RIGHT", frame.titleFrame, "RIGHT", -paddingL * 2, 0)
         end
 
         --------------------------------------------------
@@ -354,14 +352,8 @@ function QuestLog:RefreshAndPopulate()
         --------------------------------------------------
         frame:Show()
         frame.row = row
-        local classIcon = frame.titleFrame.classIcon
-        local classIconTexture = not row.isDungeon and Q.API:GetClassIconTexture(row.class)
-        if classIconTexture then
-            classIcon:SetTexture(classIconTexture)
-            classIcon:Show()
-        else
-            classIcon:Hide()
-        end
+        
+        UpdateClassIcon(frame, row)
 
         local title = row.name
         if row.chainStep then

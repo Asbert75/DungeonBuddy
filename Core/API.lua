@@ -2,6 +2,8 @@ local _, Q = ...
 
 Q.API = {}
 
+-- Working mainly in SQL server professionaly these days I've gotten used to being able to JOIN tables together to build complex relationships between data,
+-- and seeing how LUA does not seem to expose JS-like higher-order functions such as .map(), .find() etc I've decided this is as close as it'll get
 function Q.API:BuildLookupTables()
     for _, quest in ipairs(Q.Quests) do
         Q.QuestById[quest.id] = quest
@@ -59,11 +61,6 @@ function Q.API:BuildLookupTables()
             local prerequisiteQuest = Q.QuestById[quest.previousQuestId]
             if prerequisiteQuest then
                 addRelationship(quest.previousQuestId, dungeon, "leadsTo")
- 
-                if not prerequisiteQuest.previousQuestId then
-                    Q.DungeonQuestChainStartsByQuestId[quest.previousQuestId] = true
-                end
-
                 addPrerequisiteRelationships(quest.previousQuestId, dungeon, visited)
             end
         end
@@ -167,7 +164,7 @@ function Q.API:GetDungeonRelationshipsForQuest(questId)
 end
 
 function Q.API:IsDungeonQuestChainStart(questId)
-    return Q.DungeonQuestChainStartsByQuestId[questId] == true
+    return not self:GetQuestById(questId).previousQuestId
 end
 
 function Q.API:GetRelevantQuestsForZone()
@@ -205,10 +202,15 @@ function Q.API:GetQuestsForDungeon(dungeonId, playerInfo)
     return quests
 end
 
-function Q.API:HasAvailableQuestsForDungeon(dungeonId, playerInfo)
+function Q.API:DungeonHasAvailableQuests(dungeonId, playerInfo)
     for questId, relationships in pairs(Q.DungeonRelationshipsByQuestId) do
         for _, relationship in ipairs(relationships) do
-            if relationship.dungeon.id == dungeonId and self:IsQuestAvailableToFaction(questId, playerInfo) and self:IsQuestAvailableToClass(questId, playerInfo) and self:IsQuestAvailableToLevel(questId, playerInfo) then
+            if relationship.dungeon.id == dungeonId and 
+                self:IsQuestAvailableToFaction(questId, playerInfo) and 
+                self:IsQuestAvailableToClass(questId, playerInfo) and 
+                self:IsQuestAvailableToLevel(questId, playerInfo) and 
+                (Q:GetSetting("HideCompletedQuests") == false or not self:IsQuestCompleted(questId))
+            then
                 return true
             end
         end
@@ -265,7 +267,7 @@ function Q.API:IsQuestAvailableToClass(questId, playerInfo)
         return true
     end
 
-    local playerClass = playerInfo and playerInfo.class
+    local playerClass = playerInfo and playerInfo.class or Q.API:GetPlayerClass()
     return quest.class == playerClass
 end
 

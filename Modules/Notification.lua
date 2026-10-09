@@ -74,17 +74,16 @@ function Notification:Create()
     --------------------------------------------------
     -- Create Notification Frame
     --------------------------------------------------
-    local frame = Q:CreateBackdropFrame('DungeonBuddy_NotificationFrame', UIParent, 450, 300, "MEDIUM", "Primary", "Accent")
-    self.frame = frame
+    self.frame = Q:CreateBackdropFrame('DungeonBuddy_NotificationFrame', UIParent, 450, 300, "MEDIUM", "Primary", "Accent")
 
-    frame:SetMovable(true)
-    frame:EnableMouse(true)
-    frame:RegisterForDrag("LeftButton")
+    self.frame:SetMovable(true)
+    self.frame:EnableMouse(true)
+    self.frame:RegisterForDrag("LeftButton")
 
-    frame:SetScript("OnDragStart", function(self)
+    self.frame:SetScript("OnDragStart", function(self)
         self:StartMoving()
     end)
-    frame:SetScript("OnDragStop", function(self)
+    self.frame:SetScript("OnDragStop", function(self)
         self:StopMovingOrSizing()
         Q:ClampFrameToScreen(self)
 
@@ -94,19 +93,17 @@ function Notification:Create()
         Q:SetSetting("NotificationFrame.y", y - centerY)
     end)
 
-    local savedX = Q:GetSetting("NotificationFrame.x")
-    local savedY = Q:GetSetting("NotificationFrame.y")
-    frame:SetPoint("CENTER", UIParent, "CENTER", savedX or 0, savedY or 0)
-    Q:ClampFrameToScreen(frame)
+    self.frame:SetPoint("CENTER", UIParent, "CENTER", Q:GetSetting("NotificationFrame.x") or 0, Q:GetSetting("NotificationFrame.y") or 0)
+    Q:ClampFrameToScreen(self.frame)
 
-    local x, y = frame:GetCenter()
+    local x, y = self.frame:GetCenter()
     local centerX, centerY = UIParent:GetCenter()
     Q:SetSetting("NotificationFrame.x", x - centerX)
     Q:SetSetting("NotificationFrame.y", y - centerY)
-    frame:SetAlpha(0)
-    frame:Hide()
+    self.frame:SetAlpha(0)
+    self.frame:Hide()
 
-    local closeButton = Q:CreateCloseButton(frame)
+    local closeButton = Q:CreateCloseButton(self.frame)
     closeButton:SetScript("OnClick", function()
         self:Dismiss(true)
     end)
@@ -114,169 +111,105 @@ function Notification:Create()
     --------------------------------------------------
     -- Fade In/Out Animation
     --------------------------------------------------
-    frame.FadeIn = Q:AddFadeInAnimation(frame, 0.3)
-    frame.FadeOut = Q:AddFadeOutAnimation(frame, 0.3)
+    self.frame.FadeIn = Q:AddFadeInAnimation(self.frame, 0.3)
+    self.frame.FadeOut = Q:AddFadeOutAnimation(self.frame, 0.3)
 
     --------------------------------------------------
     -- Notification Window Title
     --------------------------------------------------
-    local notificationIcon = Q:CreateTexture("NotificationIcon", frame, 40, 40, "UI-QuestPoiLegendary-QuestBang")
-    self.notificationIcon = notificationIcon
-    Q:SetPixelPerfectPoint(notificationIcon, "TOPLEFT", frame, "TOPLEFT", paddingM, -paddingS)
+    self.notificationIcon = Q:CreateTexture("NotificationIcon", self.frame, 40, 40, "UI-QuestPoiLegendary-QuestBang")
+    Q:SetPixelPerfectPoint(self.notificationIcon, "TOPLEFT", self.frame, "TOPLEFT", paddingM, -paddingS)
 
-    local notificationTitle = Q:CreateText("notificationTitle", frame, "A NEW QUEST IS AVAILABLE", fontL, "Accent")
-    self.notificationTitle = notificationTitle
-    Q:SetPixelPerfectPoint(notificationTitle, "LEFT", notificationIcon, "RIGHT", paddingS, -2)
+    self.notificationTitle = Q:CreateText("notificationTitle", self.frame, "A NEW QUEST IS AVAILABLE", fontL, "Accent")
+    Q:SetPixelPerfectPoint(self.notificationTitle, "LEFT", self.notificationIcon, "RIGHT", paddingS, -2)
 
-    local notificationProgress = Q:CreateText("NotificationProgress", frame, "", fontM, "Accent")
-    self.notificationProgress = notificationProgress
-    Q:SetPixelPerfectPoint(notificationProgress, "LEFT", notificationTitle, "RIGHT", 5, 0)
+    self.notificationProgress = Q:CreateText("NotificationProgress", self.frame, "", fontM, "Accent")
+    Q:SetPixelPerfectPoint(self.notificationProgress, "LEFT", self.notificationTitle, "RIGHT", 5, 0)
 
     --------------------------------------------------
     -- Dungeon Name
     --------------------------------------------------
-    local dungeonName = Q:CreateText("DungeonName", frame, "DUNGEON NAME", fontS, "Accent")
-    self.dungeonName = dungeonName
-    Q:SetPixelPerfectPoint(dungeonName, "TOPLEFT", notificationIcon, "BOTTOMLEFT", 0, -paddingM)
+    self.dungeonName = Q:CreateText("DungeonName", self.frame, "DUNGEON NAME", fontS, "Accent")
+    Q:SetPixelPerfectPoint(self.dungeonName, "TOPLEFT", self.notificationIcon, "BOTTOMLEFT", 0, -paddingM)
 
     --------------------------------------------------
     -- Quest Name
     --------------------------------------------------
-    local questName = Q:CreateText("QuestName", frame, "QUEST NAME", fontXL, "Primary")
-    self.questName = questName
-    Q:SetPixelPerfectPoint(questName, "TOPLEFT", dungeonName, "BOTTOMLEFT", 0, -paddingS)
+    self.questName = Q:CreateText("QuestName", self.frame, "QUEST NAME", fontXL, "Primary")
+    Q:SetPixelPerfectPoint(self.questName, "TOPLEFT", self.dungeonName, "BOTTOMLEFT", 0, -paddingS)
 
-    local questClassIcon = Q:CreateTexture("QuestClassIcon", frame, 20, 20)
-    self.questClassIcon = questClassIcon
-    questClassIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-    Q:SetPixelPerfectPoint(questClassIcon, "TOPLEFT", dungeonName, "BOTTOMLEFT", 0, -paddingS)
+    self.questClassIcon = Q:CreateTexture("QuestClassIcon", self.frame, 20, 20)
+    self.questClassIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+    Q:SetPixelPerfectPoint(self.questClassIcon, "TOPLEFT", self.dungeonName, "BOTTOMLEFT", 0, -paddingS)
 
     --------------------------------------------------
     -- Quest Source Label
     --------------------------------------------------
-    local questSourceLabel = Q:CreateText("QuestSourceLabel", frame, "QUEST STARTED BY", fontS, "Accent")
-    self.questSourceLabel = questSourceLabel
-    Q:SetPixelPerfectPoint(questSourceLabel, "TOPLEFT", questClassIcon, "BOTTOMLEFT", 0, -paddingM)
+    self.questSourceLabel = Q:CreateText("QuestSourceLabel", self.frame, "QUEST STARTED BY", fontS, "Accent")
+    Q:SetPixelPerfectPoint(self.questSourceLabel, "TOPLEFT", self.questClassIcon, "BOTTOMLEFT", 0, -paddingM)
 
     --------------------------------------------------
     -- Quest Source Information
     --------------------------------------------------
-    local sourceIcon = Q:CreateTexture("SourceIcon", frame, 20, 20)
-    self.sourceIcon = sourceIcon
-    sourceIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-    Q:SetPixelPerfectPoint(sourceIcon, "TOPLEFT", questSourceLabel, "BOTTOMLEFT", 0, -paddingS)
+    self.sourceIcon = Q:CreateTexture("SourceIcon", self.frame, 20, 20)
+    self.sourceIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+    Q:SetPixelPerfectPoint(self.sourceIcon, "TOPLEFT", self.questSourceLabel, "BOTTOMLEFT", 0, -paddingS)
     
-    local questSourceName = Q:CreateText("QuestSourceName", frame, "Name", fontM, "Primary")
-    self.questSourceName = questSourceName
-    Q:SetPixelPerfectPoint(questSourceName, "LEFT", sourceIcon, "RIGHT", paddingS, 0)
-    questSourceName:SetTextColor(unpack(Q.Theme.Status.Success))
+    self.questSourceName = Q:CreateText("QuestSourceName", self.frame, "Name", fontM, "Primary")
+    Q:SetPixelPerfectPoint(self.questSourceName, "LEFT", self.sourceIcon, "RIGHT", paddingS, 0)
+    self.questSourceName:SetTextColor(unpack(Q.Theme.Status.Success))
 
-    local questSourceZoneName = Q:CreateText("QuestSourceZoneName", frame, "- Orgrimmar", fontM, "Primary")
-    self.questSourceZoneName = questSourceZoneName
-    Q:SetPixelPerfectPoint(questSourceZoneName, "LEFT", questSourceName, "RIGHT", 0, 0)
+    self.questSourceZoneName = Q:CreateText("QuestSourceZoneName", self.frame, "- Orgrimmar", fontM, "Primary")
+    Q:SetPixelPerfectPoint(self.questSourceZoneName, "LEFT", self.questSourceName, "RIGHT", 0, 0)
 
-    local questSourceText = Q:CreateText("QuestSourceText", frame, "Additional information about the quest source.", fontM, "Secondary")
-    self.questSourceText = questSourceText
-    Q:SetPixelPerfectPoint(questSourceText, "TOPLEFT", questSourceName, "BOTTOMLEFT", 0, -paddingS)
-    Q:SetPixelPerfectWidth(questSourceText, frame:GetWidth() - paddingM * 2)
-    questSourceText:SetJustifyH("LEFT")
-    questSourceText:SetWordWrap(true)
+    self.questSourceText = Q:CreateText("QuestSourceText", self.frame, "Additional information about the quest source.", fontM, "Secondary")
+    Q:SetPixelPerfectPoint(self.questSourceText, "TOPLEFT", self.questSourceName, "BOTTOMLEFT", 0, -paddingS)
+    Q:SetPixelPerfectWidth(self.questSourceText, self.frame:GetWidth() - paddingM * 2)
+    self.questSourceText:SetJustifyH("LEFT")
+    self.questSourceText:SetWordWrap(true)
 
     --------------------------------------------------
-    -- Set Waypoint Button
+    -- Create Waypoint/Directions Button
     --------------------------------------------------
-    local trackButton = CreateFrame("Button", nil, frame, "BackdropTemplate")
-    self.trackButton = trackButton
-    trackButton:EnableMouse(true)
-    trackButton:SetFrameLevel(frame:GetFrameLevel() + 1)
-    Q:SetPixelPerfectSize(trackButton, 160, 40)
-    Q:SetPixelPerfectPoint(trackButton, "BOTTOMLEFT", frame, "BOTTOMLEFT", paddingM, paddingM)
-    trackButton:SetBackdrop({
+    self.waypointButton = CreateFrame("Button", nil, self.frame, "BackdropTemplate")
+    self.waypointButton:EnableMouse(true)
+    self.waypointButton:SetFrameLevel(self.frame:GetFrameLevel() + 1)
+    Q:SetPixelPerfectSize(self.waypointButton, 160, 40)
+    Q:SetPixelPerfectPoint(self.waypointButton, "BOTTOMLEFT", self.frame, "BOTTOMLEFT", paddingM, paddingM)
+    self.waypointButton:SetBackdrop({
         bgFile = "Interface\\Buttons\\WHITE8x8",
         edgeFile = "Interface\\Buttons\\WHITE8x8",
         edgeSize = pixelPerfect,
         insets = { left = pixelPerfect, right = pixelPerfect, top = pixelPerfect, bottom = pixelPerfect, },
     })
 
-    local trackText = trackButton:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-    trackButton.text = trackText
-    trackText:SetPoint("CENTER")
-    trackText:SetText("Set Waypoint")
-    trackText:SetTextColor(unpack(Q.Theme.Text.Accent))
+    self.waypointButton.text = self.waypointButton:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    self.waypointButton.text:SetPoint("CENTER")
+    self.waypointButton.text:SetText("Set Waypoint")
+    self.waypointButton.text:SetTextColor(unpack(Q.Theme.Text.Accent))
 
-    local function updateTrackButtonStyle(isHovered)
-        local trackColor = Q.Theme.Text.Accent
-        if self.trackWaypointSet then
-            trackColor = Q.Theme.Status.Success
-        end
+    local function updatewaypointButtonStyle(isHovered)
+        local trackColor = self.trackWaypointSet and Q.Theme.Status.Success or Q.Theme.Text.Accent
         local r, g, b = unpack(trackColor)
 
-        trackButton:SetBackdropColor(r, g, b, isHovered and Q.Theme.Alpha.ButtonBackgroundHover or Q.Theme.Alpha.ButtonBackground)
-        trackButton:SetBackdropBorderColor(r, g, b, isHovered and Q.Theme.Alpha.ButtonBorderHover or Q.Theme.Alpha.ButtonBorder)
+        self.waypointButton:SetBackdropColor(r, g, b, isHovered and Q.Theme.Alpha.ButtonBackgroundHover or Q.Theme.Alpha.ButtonBackground)
+        self.waypointButton:SetBackdropBorderColor(r, g, b, isHovered and Q.Theme.Alpha.ButtonBorderHover or Q.Theme.Alpha.ButtonBorder)
         if isHovered then
-            trackButton.text:SetTextColor(unpack(Q.Theme.Text.Primary))
+            self.waypointButton.text:SetTextColor(unpack(Q.Theme.Text.Primary))
         else
-            trackButton.text:SetTextColor(r, g, b)
+            self.waypointButton.text:SetTextColor(r, g, b)
         end
     end
 
-    updateTrackButtonStyle(false)
+    updatewaypointButtonStyle(false)
 
-    trackButton:SetScript("OnEnter", function()
-        updateTrackButtonStyle(true)
+    self.waypointButton:SetScript("OnEnter", function()
+        updatewaypointButtonStyle(true)
     end)
-    trackButton:SetScript("OnLeave", function()
-        updateTrackButtonStyle(false)
+    self.waypointButton:SetScript("OnLeave", function()
+        updatewaypointButtonStyle(false)
     end)
-
-    --------------------------------------------------------
-    -- Dismiss button
-    --------------------------------------------------------
-    local dismissButton = CreateFrame("Button", nil, frame, "BackdropTemplate")
-    self.dismissButton = dismissButton
-    dismissButton:EnableMouse(true)
-    dismissButton:SetFrameLevel(frame:GetFrameLevel() + 1)
-    Q:SetPixelPerfectSize(dismissButton, 160, 40)
-    Q:SetPixelPerfectPoint(dismissButton, "BOTTOMRIGHT", frame, "BOTTOMRIGHT", -paddingM, paddingM)
-
-    dismissButton:SetBackdrop({
-        bgFile = "Interface\\Buttons\\WHITE8x8",
-        edgeFile = "Interface\\Buttons\\WHITE8x8",
-        edgeSize = pixelPerfect,
-        insets = { left = pixelPerfect, right = pixelPerfect, top = pixelPerfect, bottom = pixelPerfect, },
-    })
-    local colorR, colorG, colorB = unpack(Q.Theme.Text.Secondary)
-
-    local dismissText = dismissButton:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-    dismissButton.text = dismissText
-    dismissText:SetPoint("CENTER")
-    dismissText:SetText("Dismiss")
-    dismissText:SetTextColor(colorR, colorG, colorB)
-
-    local function updateDismissButtonStyle(isHovered)
-        dismissButton:SetBackdropColor(colorR, colorG, colorB, isHovered and Q.Theme.Alpha.ButtonBackgroundHover or Q.Theme.Alpha.ButtonBackground)
-        dismissButton:SetBackdropBorderColor(colorR, colorG, colorB, isHovered and Q.Theme.Alpha.ButtonBorderHover or Q.Theme.Alpha.ButtonBorder)
-
-        if isHovered then
-            dismissButton.text:SetTextColor(unpack(Q.Theme.Text.Primary))
-        else
-            dismissButton.text:SetTextColor(colorR, colorG, colorB)
-        end
-    end
-
-    updateDismissButtonStyle(false)
-
-    dismissButton:SetScript("OnEnter", function()
-        updateDismissButtonStyle(true)
-    end)
-    dismissButton:SetScript("OnLeave", function()
-        updateDismissButtonStyle(false)
-    end)
-
-    --------------------------------------------------------
-    -- Button actions
-    --------------------------------------------------------
-    trackButton:SetScript("OnClick", function()
+    self.waypointButton:SetScript("OnClick", function()
         if not self.quest then
             return
         end
@@ -284,13 +217,54 @@ function Notification:Create()
         Q.API:SetQuestWaypoint(self.quest)
 
         self.trackWaypointSet = true
-        self.trackButton.text:SetText("Waypoint Set")
-        updateTrackButtonStyle(self.trackButton:IsMouseOver())
+        self.waypointButton.text:SetText("Waypoint Set")
+        updatewaypointButtonStyle(self.waypointButton:IsMouseOver())
     end)
 
-    dismissButton:SetScript("OnClick", function()
+    --------------------------------------------------------
+    -- Dismiss button
+    --------------------------------------------------------
+    self.dismissButton = CreateFrame("Button", nil, self.frame, "BackdropTemplate")
+    self.dismissButton:EnableMouse(true)
+    self.dismissButton:SetFrameLevel(self.frame:GetFrameLevel() + 1)
+    Q:SetPixelPerfectSize(self.dismissButton, 160, 40)
+    Q:SetPixelPerfectPoint(self.dismissButton, "BOTTOMRIGHT", self.frame, "BOTTOMRIGHT", -paddingM, paddingM)
+
+    self.dismissButton:SetBackdrop({
+        bgFile = "Interface\\Buttons\\WHITE8x8",
+        edgeFile = "Interface\\Buttons\\WHITE8x8",
+        edgeSize = pixelPerfect,
+        insets = { left = pixelPerfect, right = pixelPerfect, top = pixelPerfect, bottom = pixelPerfect, },
+    })
+    local colorR, colorG, colorB = unpack(Q.Theme.Text.Secondary)
+
+    self.dismissButton.text = self.dismissButton:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    self.dismissButton.text:SetPoint("CENTER")
+    self.dismissButton.text:SetText("Dismiss")
+    self.dismissButton.text:SetTextColor(colorR, colorG, colorB)
+
+    local function updateDismissButtonStyle(isHovered)
+        self.dismissButton:SetBackdropColor(colorR, colorG, colorB, isHovered and Q.Theme.Alpha.ButtonBackgroundHover or Q.Theme.Alpha.ButtonBackground)
+        self.dismissButton:SetBackdropBorderColor(colorR, colorG, colorB, isHovered and Q.Theme.Alpha.ButtonBorderHover or Q.Theme.Alpha.ButtonBorder)
+
+        if isHovered then
+            self.dismissButton.text:SetTextColor(unpack(Q.Theme.Text.Primary))
+        else
+            self.dismissButton.text:SetTextColor(colorR, colorG, colorB)
+        end
+    end
+
+    updateDismissButtonStyle(false)
+
+    self.dismissButton:SetScript("OnEnter", function()
+        updateDismissButtonStyle(true)
+    end)
+    self.dismissButton:SetScript("OnLeave", function()
         updateDismissButtonStyle(false)
-        updateTrackButtonStyle(false)
+    end)
+    self.dismissButton:SetScript("OnClick", function()
+        updateDismissButtonStyle(false)
+        updatewaypointButtonStyle(false)
         self:Dismiss()
     end)
 end
@@ -337,105 +311,114 @@ function Notification:DisplayNextInQueue()
     end
 end
 
+local function UpdateSourceData(playerFaction)
+    local quest = Notification.quest
+    if not quest.source then
+        return
+    end
+
+    Notification.questSourceName:SetText(quest.source.name)
+    Notification.questSourceZoneName:SetText(" - " .. quest.source.zone)
+    Notification.questSourceText:SetText(quest.source.text)
+
+    if quest.source.type == "npc" then
+        if playerFaction == "Alliance" then
+            Notification.sourceIcon:SetTexture("Interface\\Icons\\achievement_character_human_male")
+        else
+            Notification.sourceIcon:SetTexture("Interface\\Icons\\achievement_character_orc_male")
+        end
+    elseif quest.source.type == "item" then
+        local itemIcon
+        if quest.source.itemId then
+            if C_Item and C_Item.GetItemIconByID then
+                itemIcon = C_Item.GetItemIconByID(quest.source.itemId)
+            end
+        end
+
+        Notification.sourceIcon:SetTexture(itemIcon or "Interface\\Icons\\INV_Scroll_03")
+    elseif quest.source.type == "object" then
+        Notification.sourceIcon:SetTexture("Interface\\Icons\\inv_scroll_10")
+    end
+end
+
+local function UpdateClassIcon(questClass)
+    local classIconTexture = Q.API:GetClassIconTexture(questClass)
+    if classIconTexture then
+        Notification.questClassIcon:SetTexture(classIconTexture)
+        Notification.questClassIcon:Show()
+        Q:SetPixelPerfectPoint(Notification.questName, "TOPLEFT", Notification.questClassIcon, "TOPRIGHT", Q.Theme.Padding.S, 0)
+    else
+        Notification.questClassIcon:Hide()
+        Q:SetPixelPerfectPoint(Notification.questName, "TOPLEFT", Notification.dungeonName, "BOTTOMLEFT", 0, -Q.Theme.Padding.S)
+    end
+end
+
+local function UpdateActionButtons()
+    Notification.trackWaypointSet = false
+    Notification.waypointButton.text:SetText("Set Waypoint")
+    local trackColorR, trackColorG, trackColorB = unpack(Q.Theme.Text.Accent)
+    Notification.waypointButton:SetBackdropColor(trackColorR, trackColorG, trackColorB, Q.Theme.Alpha.ButtonBackground)
+    Notification.waypointButton:SetBackdropBorderColor(trackColorR, trackColorG, trackColorB, Q.Theme.Alpha.ButtonBorder)
+    Notification.waypointButton.text:SetTextColor(trackColorR, trackColorG, trackColorB)
+
+    if Notification.queueIndex ~= #Notification.queue then
+        Notification.dismissButton.text:SetText("View Next")
+    else
+        Notification.dismissButton.text:SetText("Dismiss")
+    end
+
+    local colorR, colorG, colorB = unpack(Q.Theme.Text.Secondary)
+    Notification.dismissButton:SetBackdropColor(colorR, colorG, colorB, Q.Theme.Alpha.ButtonBackground)
+    Notification.dismissButton:SetBackdropBorderColor(colorR, colorG, colorB, Q.Theme.Alpha.ButtonBorder)
+    Notification.dismissButton.text:SetTextColor(colorR, colorG, colorB)
+
+    if Q:GetSetting("AutoWaypoint") then
+        Notification.trackWaypointSet = true
+        Notification.waypointButton.text:SetText("Waypoint Set")
+
+        local trackColor = Q.Theme.Text.Accent
+        if Notification.trackWaypointSet then
+            trackColor = Q.Theme.Status.Success
+        end
+        local r, g, b = unpack(trackColor)
+
+        Notification.waypointButton:SetBackdropColor(r, g, b, Q.Theme.Alpha.ButtonBackground)
+        Notification.waypointButton:SetBackdropBorderColor(r, g, b, Q.Theme.Alpha.ButtonBorder)
+        Notification.waypointButton.text:SetTextColor(r, g, b)
+    end
+end
+
 function Notification:DisplayQuest(quest, dungeonRelationships)
-    local paddingS = Q.Theme.Padding.S
     self.quest = quest
 
     local playerInfo = Q.API:GetPlayerInfo()
 
+    -- Update Dungeon Name Text
     if not dungeonRelationships then
         dungeonRelationships = Q.API:GetDungeonRelationshipsForQuest(quest.id)
     end
-    local dungeonsText = FormatDungeonRelationships(dungeonRelationships)
-    self.dungeonNameValue = dungeonsText
-
-    self.trackWaypointSet = false
-    self.trackButton.text:SetText("Set Waypoint")
-    local trackColorR, trackColorG, trackColorB = unpack(Q.Theme.Text.Accent)
-    self.trackButton:SetBackdropColor(trackColorR, trackColorG, trackColorB, Q.Theme.Alpha.ButtonBackground)
-    self.trackButton:SetBackdropBorderColor(trackColorR, trackColorG, trackColorB, Q.Theme.Alpha.ButtonBorder)
-    self.trackButton.text:SetTextColor(trackColorR, trackColorG, trackColorB)
-
-    if self.queueIndex ~= #self.queue then
-        self.dismissButton.text:SetText("View Next")
-    else
-        self.dismissButton.text:SetText("Dismiss")
-    end
-
-    local colorR, colorG, colorB = unpack(Q.Theme.Text.Secondary)
-    self.dismissButton:SetBackdropColor(colorR, colorG, colorB, Q.Theme.Alpha.ButtonBackground)
-    self.dismissButton:SetBackdropBorderColor(colorR, colorG, colorB, Q.Theme.Alpha.ButtonBorder)
-    self.dismissButton.text:SetTextColor(colorR, colorG, colorB)
-
-    -- Update Dungeon Name
-    self.dungeonName:SetText(dungeonsText)
-    if #self.queue > 1 then
-        self.notificationProgress:SetText(string.format("(%d/%d)", self.queueIndex, #self.queue))
-    else
-        self.notificationProgress:SetText("")
-    end
+    self.dungeonName:SetText(FormatDungeonRelationships(dungeonRelationships))
     
     -- Update Quest Title
     local questTitle = quest.suggestedLevel and string.format("[%d] %s", quest.suggestedLevel, quest.name) or quest.name
     self.questName:SetText(questTitle)
     local color = Q.API:GetDifficultyColor(playerInfo.level, quest.suggestedLevel)
-    if color then
-        self.questName:SetTextColor(color.r, color.g, color.b)
-    end
+    self.questName:SetTextColor(color.r, color.g, color.b)
 
-    local classIconTexture = Q.API:GetClassIconTexture(quest.class)
-    if classIconTexture then
-        self.questClassIcon:SetTexture(classIconTexture)
-        self.questClassIcon:Show()
-        Q:SetPixelPerfectPoint(self.questName, "TOPLEFT", self.questClassIcon, "TOPRIGHT", paddingS, 0)
-    else
-        self.questClassIcon:Hide()
-        Q:SetPixelPerfectPoint(self.questName, "TOPLEFT", self.dungeonName, "BOTTOMLEFT", 0, -paddingS)
-    end
-
-    if quest.source then
-        self.questSourceName:SetText(quest.source.name)
-        self.questSourceZoneName:SetText(" - " .. quest.source.zone)
-        self.questSourceText:SetText(quest.source.text)
-
-        if quest.source.type == "npc" then
-            if playerInfo.faction == "Alliance" then
-                self.sourceIcon:SetTexture("Interface\\Icons\\achievement_character_human_male")
-            else
-                self.sourceIcon:SetTexture("Interface\\Icons\\achievement_character_orc_male")
-            end
-        elseif quest.source.type == "item" then
-            local itemIcon
-            if quest.source.itemId then
-                if C_Item and C_Item.GetItemIconByID then
-                    itemIcon = C_Item.GetItemIconByID(quest.source.itemId)
-                end
-            end
-
-            self.sourceIcon:SetTexture(itemIcon or "Interface\\Icons\\INV_Scroll_03")
-        elseif quest.source.type == "object" then
-            self.sourceIcon:SetTexture("Interface\\Icons\\inv_scroll_10")
-        end
-    end
+    UpdateClassIcon(quest.class)
+    UpdateSourceData(playerInfo.faction)
+    UpdateActionButtons()
     
+    -- Update Queue State / Text
+    if #self.queue > 1 then
+        self.notificationProgress:SetText(string.format("(%d/%d)", self.queueIndex, #self.queue))
+    else
+        self.notificationProgress:SetText("")
+    end
+
     if self.queueIndex == 1 then
         self.frame:Show()
         self.frame.FadeIn:Play()
-    end
-
-    if Q:GetSetting("AutoWaypoint") then
-        self.trackWaypointSet = true
-        self.trackButton.text:SetText("Waypoint Set")
-
-        local trackColor = Q.Theme.Text.Accent
-        if self.trackWaypointSet then
-            trackColor = Q.Theme.Status.Success
-        end
-        local r, g, b = unpack(trackColor)
-
-        self.trackButton:SetBackdropColor(r, g, b, Q.Theme.Alpha.ButtonBackground)
-        self.trackButton:SetBackdropBorderColor(r, g, b, Q.Theme.Alpha.ButtonBorder)
-        self.trackButton.text:SetTextColor(r, g, b)
     end
 end
 

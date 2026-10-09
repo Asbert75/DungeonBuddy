@@ -3653,9 +3653,9 @@ Q.Quests = {
         requiredLevel = 24,
         source = { 
             type = "npc", 
-            name = "Rexxie Copperclutch", -- TODO: Verify, source is confusing, WoWhead claims the same quest is started both by a NPC in UC and in the dungeon
+            name = "Rexxie Copperclutch",
             zone = "City of Dalaran", 
-            -- location = { mapId = 1424, x = 0.626, y = 0.206 }
+            location = { mapId = 1421, x = 0.686, y = 0.452 }
         }
     },
     {
@@ -3677,7 +3677,7 @@ Q.Quests = {
         faction = "Horde",
         name = "Blood in the Streets", -- TODO: wowhead comment says you need to complete all of Magus Wordeens quests to pick this up, verify in-game.
         suggestedLevel = 33,
-        requiredLevel = 30, -- TODO: Wowhead says 30, but next 2 quests say 24? Finish leveling shaman to figure out...
+        requiredLevel = 24, -- TODO: Wowhead says 30, but next 2 quests say 24? Finish leveling shaman to figure out...
         source = { 
             type = "npc", 
             name = "Magus Wordeen Voidglare", 
