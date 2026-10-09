@@ -21,11 +21,7 @@ local function GetSectionSettings(sectionName)
             title = "Hide minimap button",
             description = "Hide the minimap button. Can also be toggled using /db minimap.",
             onChange = function(value)
-                if value then
-                    Q.MinimapButton:Hide("DungeonBuddy")
-                else
-                    Q.MinimapButton:Show("DungeonBuddy")
-                end
+                Q.MinimapButton:Toggle()
             end,
         },
         {
