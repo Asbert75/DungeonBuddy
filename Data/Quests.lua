@@ -3701,10 +3701,77 @@ Q.Quests = {
     },
     {
         id = 92457,
-        faction = nil,
+        faction = "Alliance",
         name = "Starving Arcane",
         suggestedLevel = 33,
         requiredLevel = 24,
+        source = { 
+            type = "npc", 
+            name = "Image of Archmage Modera", 
+            zone = "City of Dalaran", 
+            location = { mapId = 1421, x = 0.686, y = 0.452 }
+        }
+    },
+    {
+        id = 92489,
+        faction = "Alliance",
+        name = "Power Overwhelming",
+        suggestedLevel = 33,
+        requiredLevel = 24,
+        source = { 
+            type = "npc", 
+            name = "High Sorcerer Andromath", 
+            zone = "Stormwind City", 
+            location = { mapId = 1453, x = 0.376, y = 0.816 }
+        }
+    },
+    {
+        id = 92456,
+        faction = "Alliance",
+        name = "A Green Sample",
+        suggestedLevel = 33,
+        requiredLevel = 24,
+        source = { 
+            type = "npc", 
+            name = "Shylamiir", 
+            zone = "Stormwind City", 
+            location = { mapId = 1453, x = 0.313, y = 0.629 }
+        }
+    },
+    {
+        id = 92432,
+        faction = "Alliance",
+        name = "An Alarming Request",
+        suggestedLevel = 33,
+        requiredLevel = 24,
+        source = { 
+            type = "npc", 
+            name = "Emissary Jacques", 
+            zone = "Hillsbrad Foothills", 
+            location = { mapId = 1424, x = 0.483, y = 0.601 }
+        }
+    },
+    {
+        id = 92458,
+        faction = "Alliance",
+        name = "Heart of Disruption",
+        suggestedLevel = 33,
+        requiredLevel = 24,
+        previousQuestId = 92432,
+        source = { 
+            type = "npc", 
+            name = "Image of Archmage Modera", 
+            zone = "City of Dalaran", 
+            location = { mapId = 1421, x = 0.686, y = 0.452 }
+        }
+    },
+    {
+        id = 92459,
+        faction = "Alliance",
+        name = "Friend of the Kirin Tor",
+        suggestedLevel = 33,
+        requiredLevel = 24,
+        previousQuestId = 92458,
         source = { 
             type = "npc", 
             name = "Image of Archmage Modera", 

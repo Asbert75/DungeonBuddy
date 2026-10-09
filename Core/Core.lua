@@ -51,35 +51,31 @@ end
 function Addon:HandleDebugCommand(input)
     local arg1, arg2 = input:match("^(%S*)%s*(.-)$")
 
-    print("arg1 ".. tostring(arg1) .. " arg2 " .. tostring(arg2))
     if arg1 == "quest" then
         TestNotificationQuest()
-    elseif arg1 == "debug" then
-        if arg2 == "status" and Q.Debug.Enabled then
+    elseif arg1 == "status" then
+        if Q.Debug.Enabled then
             Q:PrettyPrint("Debug mode is currently enabled")
             Q:PrettyPrint("Level: " .. tostring(Q.Debug.Level))
             Q:PrettyPrint("Faction: " .. tostring(Q.Debug.Faction))
             Q:PrettyPrint("Class: " .. tostring(Q.Debug.Class))
-        elseif arg2 == "status" then
-            Q:PrettyPrint("Debug mode is currently disabled")
-        elseif Q.Debug.Enabled == false then
-            Q.Debug = {
-                Enabled = true,
-                Level = tonumber(arg1) or 10,
-                Faction = (arg2 and arg2:lower() == "horde") and "Horde" or "Alliance",
-                Class = "PALADIN",
-            }
-            Q:PrettyPrint("Debug mode enabled")
         else
-            Q.Debug = {
-                Enabled = false,
-                Level = nil,
-                Faction = nil,
-                Class = nil,
-            }
-            Q:PrettyPrint("Debug mode disabled")
+            Q:PrettyPrint("Debug mode is currently disabled")
         end
-
+    elseif arg1 == "level" then
+        Q.Debug.Level = tonumber(arg2) or Q.Debug.Level
+        Q:PrettyPrint("Debug level set to " .. tostring(Q.Debug.Level))
+    elseif arg1 == "faction" then
+        Q.Debug.Faction = (arg2 and arg2:lower() == "horde") and "Horde" or "Alliance"
+        Q:PrettyPrint("Debug faction set to " .. tostring(Q.Debug.Faction))
+    elseif arg1 == "class" then
+        Q.Debug.Class = arg2 or Q.Debug.Class
+        Q:PrettyPrint("Debug class set to " .. tostring(Q.Debug.Class))
+    else
+        Q.Debug.Enabled = not Q.Debug.Enabled
+        Q:PrettyPrint("Debug mode " .. (Q.Debug.Enabled and "enabled" or "disabled"))
+    end
+    if arg1 ~= "status" then
         Q.QuestLog:Reload()
     end
 end

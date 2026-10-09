@@ -184,9 +184,7 @@ function QuestLog:RefreshAndPopulate()
         end
 
         self.noQuestsFound:Show()
-        return
-    end
-    if self.noQuestsFound then
+    elseif self.noQuestsFound then
         self.noQuestsFound:Hide()
     end
 
@@ -194,7 +192,7 @@ function QuestLog:RefreshAndPopulate()
 
     -- First build the rows table with all dungeons, quests, and chain quests, only adding rows that are not hidden
     for _, dungeon in ipairs(dungeons) do
-        if Q.API:HasAvailableQuestsForDungeon(dungeon.id, playerInfo) and playerInfo.level < dungeon.maxLevel then
+        if Q.API:HasAvailableQuestsForDungeon(dungeon.id, playerInfo) and playerInfo.level <= dungeon.maxLevel then
             local isCollapsed = Q:GetSetting("CollapsedDungeons")[dungeon.id] or false
             dungeon.isDungeon = true
             local quests = Q.API:GetQuestsForDungeon(dungeon.id, playerInfo)
