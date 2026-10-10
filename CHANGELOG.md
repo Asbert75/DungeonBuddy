@@ -13,6 +13,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added a "View Previous Quest" button on the notification view when multiple quests are available in one single popup
 
+### Changed
+
+- A quest may not correctly have multiple sources (Class quests for example that can be started in all major cities)
+- Updated how quest/dungeon relations are built in an attempt to simplify both usage but also updates going forward
+
 ## [1.3.0] - 2026-10-09
 
 ### Changed

@@ -3875,10 +3875,11 @@ Q.Quests = {
         suggestedLevel = 20,
         requiredLevel = 20,
         source = { 
-            type = "npc", 
-            name = "Duthorian Rall", 
+            type = "item", 
+            name = "Tome of Valor", 
             zone = "Stormwind City", 
             location = { mapId = 1453, x = 0.40, y = 0.29 } },
+            text = "Speak to Duthorian Rall to receive the tome and start the quest"
     },
     {
         id = 1650,
