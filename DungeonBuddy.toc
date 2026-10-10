@@ -9,17 +9,18 @@
 ## DefaultState: enabled
 ## OptionalDeps: LibDBIcon-1.0, LibSharedMedia-3.0, SharedMedia_MyMedia, TomTom
 
-## Libraries
+# Libraries
 Libs\LibStub\LibStub.lua
+Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
 Libs\AceAddon-3.0\AceAddon-3.0.lua
+Libs\AceEvent-3.0\AceEvent-3.0.lua
+Libs\AceConsole-3.0\AceConsole-3.0.lua
 Libs\AceDB-3.0\AceDB-3.0.xml
 Libs\AceGUI-3.0\AceGUI-3.0.xml
 Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
 Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua
-Libs\AceEvent-3.0\AceEvent-3.0.lua
-Libs\AceConsole-3.0\AceConsole-3.0.lua
 
-## Core
+# Core
 Core\Core.lua
 Core\Globals.lua
 Core\Database.lua
