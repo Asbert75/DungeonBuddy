@@ -1977,8 +1977,7 @@ Q.Quests = {
             zone = "Razorfen Downs", 
             location = { mapId = 1413, x = 0.49, y = 0.92 },
             text = "Located inside the dungeon"
-        },
-        dungeons = { Q.Dungeons["Razorfen Downs"] },
+        }
     },
     --#endregion
 

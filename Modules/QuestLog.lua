@@ -10,6 +10,14 @@ local function IsRowCollapsed(row)
     end
 end
 
+local function CopyRow(row)
+    local copy = {}
+    for key, value in pairs(row) do
+        copy[key] = value
+    end
+    return copy
+end
+
 local function SetQuestStatusColor(fontString, settingPath, fallbackKey)
     local color = Q:GetSetting(settingPath)
     if color and color.r and color.g and color.b then
@@ -216,15 +224,16 @@ function QuestLog:RefreshAndPopulate()
                     end
 
                     local chainLength = #chain + 1
-                    quest.isMainQuest = true
-                    quest.chainStep = #chain > 0 and chainLength or nil
-                    quest.chainLength = #chain > 0 and chainLength or nil
+                    local questRow = CopyRow(quest)
+                    questRow.isMainQuest = true
+                    questRow.chainStep = #chain > 0 and chainLength or nil
+                    questRow.chainLength = #chain > 0 and chainLength or nil
                     if not Q:GetSetting("HideCompletedQuests") or not Q.API:IsQuestCompleted(quest.id) then
-                        table.insert(self.rows, quest)
+                        table.insert(self.rows, questRow)
                     end
 
                     for chainIndex = 1, #chain do
-                        local chainQuest = chain[chainIndex]
+                        local chainQuest = CopyRow(chain[chainIndex])
                         chainQuest.isChainQuest = true
                         chainQuest.chainStep = chainLength - chainIndex
                         chainQuest.chainLength = chainLength
