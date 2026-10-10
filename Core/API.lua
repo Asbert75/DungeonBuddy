@@ -2,73 +2,61 @@ local _, Q = ...
 
 Q.API = {}
 
--- Working mainly in SQL server professionaly these days I've gotten used to being able to JOIN tables together to build complex relationships between data,
--- and seeing how LUA does not seem to expose JS-like higher-order functions such as .map(), .find() etc I've decided this is as close as it'll get
 function Q.API:BuildLookupTables()
     for _, quest in ipairs(Q.Quests) do
         Q.QuestById[quest.id] = quest
-    end
-
-    local relationshipIndex = {}
-
-    local function addRelationship(questId, dungeon, relation)
-        local relationships = Q.DungeonRelationshipsByQuestId[questId]
-        if not relationships then
-            relationships = {}
-            Q.DungeonRelationshipsByQuestId[questId] = relationships
-            relationshipIndex[questId] = {}
-        end
-
-        local indexByDungeonId = relationshipIndex[questId]
-        local existingIndex = indexByDungeonId[dungeon.id]
-        if existingIndex then
-            if relation == "direct" then
-                relationships[existingIndex].relation = "direct"
+        for _, dungeon in ipairs(quest.dungeons or {}) do
+            local quests = Q.QuestsByDungeonId[dungeon.id]
+            if not quests then
+                quests = {}
+                Q.QuestsByDungeonId[dungeon.id] = quests
             end
-            return
+            table.insert(quests, quest)
         end
-
-        table.insert(relationships, { dungeon = dungeon, relation = relation })
-        indexByDungeonId[dungeon.id] = #relationships
     end
 
-    for _, dungeon in ipairs(Q.Dungeons) do
+    for _, dungeon in pairs(Q.Dungeons) do
         Q.DungeonById[dungeon.id] = dungeon
+    end
 
-        for _, questId in ipairs(dungeon.questIds) do
-            local dungeons = Q.DungeonsByQuestId[questId] 
-            if not dungeons then
-                dungeons = {}
-                Q.DungeonsByQuestId[questId] = dungeons
+    local function addQuestDungeon(questId, dungeon)
+        local dungeons = Q.DungeonByQuestId[questId]
+        if not dungeons then
+            dungeons = {}
+            Q.DungeonByQuestId[questId] = dungeons
+        end
+
+        for _, existingDungeon in ipairs(dungeons) do
+            if existingDungeon.id == dungeon.id then
+                return
             end
-            table.insert(dungeons, dungeon)
-            addRelationship(questId, dungeon, "direct")
+        end
+        table.insert(dungeons, dungeon)
+    end
+
+    -- A dungeon quest makes its preceding chain quests relevant to that dungeon too.
+    for _, quest in ipairs(Q.Quests) do
+        for _, dungeon in ipairs(quest.dungeons or {}) do
+            local previousQuestId = quest.previousQuestId
+            local visited = { [quest.id] = true }
+
+            while previousQuestId and not visited[previousQuestId] do
+                visited[previousQuestId] = true
+                local previousQuest = Q.QuestById[previousQuestId]
+                if not previousQuest then
+                    break
+                end
+
+                addQuestDungeon(previousQuest.id, dungeon)
+                previousQuestId = previousQuest.previousQuestId
+            end
         end
     end
 
-    local function addPrerequisiteRelationships(questId, dungeon, visited)
-        if visited[questId] then
-            return
-        end
-        visited[questId] = true
-
-        local quest = Q.QuestById[questId]
-        if not quest then
-            return
-        end
-
-        if quest.previousQuestId then
-            local prerequisiteQuest = Q.QuestById[quest.previousQuestId]
-            if prerequisiteQuest then
-                addRelationship(quest.previousQuestId, dungeon, "leadsTo")
-                addPrerequisiteRelationships(quest.previousQuestId, dungeon, visited)
-            end
-        end
-    end
-
-    for _, dungeon in ipairs(Q.Dungeons) do
-        for _, questId in ipairs(dungeon.questIds) do
-            addPrerequisiteRelationships(questId, dungeon, {})
+    -- Include direct dungeon membership as well as inherited chain membership.
+    for _, quest in ipairs(Q.Quests) do
+        for _, dungeon in ipairs(quest.dungeons or {}) do
+            addQuestDungeon(quest.id, dungeon)
         end
     end
 end
@@ -132,12 +120,13 @@ function Q.API:GetDifficultyColor(playerLevel, comparisonLevel)
     end
 end
 
-function Q.API:GetQuestWaypointText(questId)
-    local quest = self:GetQuestById(questId)
-    if not quest then
-        return "Unknown"
+function Q.API:GetWaypointText(entityId, isDungeon)
+    if isDungeon then
+        local dungeon = self:GetDungeonById(entityId)
+        return dungeon.name .." (Entrance)"
     end
 
+    local quest = self:GetQuestById(entityId)
     local sourceName = quest.source and quest.source.name
 
     local title = quest.name
@@ -147,7 +136,7 @@ function Q.API:GetQuestWaypointText(questId)
     return title
 end
 
-function Q.API:GetAllQuests()
+function Q.API:GetQuests()
     return Q.Quests
 end
 
@@ -155,12 +144,18 @@ function Q.API:GetQuestById(questId)
     return Q.QuestById[questId]
 end
 
-function Q.API:GetDungeons()
-    return Q.Dungeons
+function Q.API:GetDungeonById(dungeonId)
+    return Q.DungeonById[dungeonId]
 end
 
-function Q.API:GetDungeonRelationshipsForQuest(questId)
-    return Q.DungeonRelationshipsByQuestId[questId] or {}
+function Q.API:GetDungeons()
+    local dungeons = {}
+    for _, dungeon in pairs(Q.Dungeons) do
+        table.insert(dungeons, dungeon)
+    end
+
+    table.sort(dungeons, function(a, b) return a.minLevel < b.minLevel or (a.minLevel == b.minLevel and a.maxLevel < b.maxLevel) end)
+    return dungeons
 end
 
 function Q.API:IsDungeonQuestChainStart(questId)
@@ -173,7 +168,7 @@ function Q.API:GetRelevantQuestsForZone()
     local zone = C_Map.GetMapInfo(mapID).name
     local playerInfo = Q.API:GetPlayerInfo()
 
-    for _, quest in ipairs(Q.Quests) do
+    for _, quest in ipairs(self:GetQuests()) do
         if  self:IsQuestAvailable(quest.id) and
             not self:IsQuestInQuestLog(quest.id) and
             quest.source.zone == zone and
@@ -185,16 +180,35 @@ function Q.API:GetRelevantQuestsForZone()
     return quests
 end
 
-function Q.API:GetQuestsForDungeon(dungeonId, playerInfo)
-    local dungeon = Q.DungeonById[dungeonId]
-    if not dungeon then
-        return {}
+function Q.API:GetQuestsByDungeonId(dungeonId)
+    return Q.QuestsByDungeonId[dungeonId] or {}
+end
+
+function Q.API:GetDungeonsForQuest(questId)
+    return Q.DungeonByQuestId[questId] or {}
+end
+
+function Q.API:IsQuestRelatedToDungeon(questId, dungeonId)
+    if not questId or not dungeonId then
+        return false
     end
 
+    local quests = Q.QuestsByDungeonId[dungeonId] or {}
+    for _, quest in ipairs(quests) do
+        if quest.id == questId then
+            return true
+        end
+    end
+    return false
+end
+
+function Q.API:GetAvailableQuestsByDungeonId(dungeonId, playerInfo)
     local quests = {}
-    for _, questId in ipairs(dungeon.questIds or {}) do
-        local quest = Q.QuestById[questId]
-        if quest and self:IsQuestAvailableToFaction(questId, playerInfo) and self:IsQuestAvailableToClass(questId, playerInfo) and self:IsQuestAvailableToLevel(questId, playerInfo) then
+    for _, quest in ipairs(self:GetQuestsByDungeonId(dungeonId) or {}) do
+        if  self:IsQuestAvailableToFaction(quest.id, playerInfo) and 
+            self:IsQuestAvailableToClass(quest.id, playerInfo) and 
+            self:IsQuestAvailableToLevel(quest.id, playerInfo) 
+        then
             table.insert(quests, quest)
         end
     end
@@ -202,16 +216,14 @@ function Q.API:GetQuestsForDungeon(dungeonId, playerInfo)
 end
 
 function Q.API:DungeonHasAvailableQuests(dungeonId, playerInfo)
-    for questId, relationships in pairs(Q.DungeonRelationshipsByQuestId) do
-        for _, relationship in ipairs(relationships) do
-            if relationship.dungeon.id == dungeonId and 
-                self:IsQuestAvailableToFaction(questId, playerInfo) and 
-                self:IsQuestAvailableToClass(questId, playerInfo) and 
-                self:IsQuestAvailableToLevel(questId, playerInfo) and 
-                (Q:GetSetting("HideCompletedQuests") == false or not self:IsQuestCompleted(questId))
-            then
-                return true
-            end
+    for _, quest in ipairs(self:GetQuests() or {}) do
+        if  self:IsQuestRelatedToDungeon(quest.id, dungeonId) and 
+            self:IsQuestAvailableToFaction(quest.id, playerInfo) and 
+            self:IsQuestAvailableToClass(quest.id, playerInfo) and 
+            self:IsQuestAvailableToLevel(quest.id, playerInfo) and 
+            (Q:GetSetting("HideCompletedQuests") == false or not self:IsQuestCompleted(quest.id))
+        then
+            return true
         end
     end
 
@@ -231,12 +243,10 @@ function Q.API:IsPrerequisiteSatisfied(questId)
     return true
 end
 
--- Returns true if the player has turned in the quest
 function Q.API:IsQuestCompleted(questId)
     return C_QuestLog.IsQuestFlaggedCompleted(questId)
 end
 
--- Returns true if the quest is currently active in the player's quest log
 function Q.API:IsQuestInQuestLog(questId)
     return C_QuestLog.IsOnQuest(questId)
 end
@@ -287,7 +297,7 @@ end
 
 function Q.API:GetRandomQuest()
     local chainStartQuests = {}
-    for _, quest in ipairs(Q.Quests) do
+    for _, quest in ipairs(self:GetQuests()) do
         if self:IsDungeonQuestChainStart(quest.id) then
             table.insert(chainStartQuests, quest)
         end
@@ -298,21 +308,26 @@ function Q.API:GetRandomQuest()
     end
 
     local quest = chainStartQuests[math.random(#chainStartQuests)]
-    local dungeonRelationships = self:GetDungeonRelationshipsForQuest(quest.id)
 
-    return quest, dungeonRelationships
+    return quest
 end
 
-function Q.API:SetQuestWaypoint(quest)
-    local mapId = quest.source.location.mapId
-    local x = quest.source.location.x
-    local y = quest.source.location.y
-    if not (mapId and x and y) then
-        Q:PrettyPrint("No waypoint location is available for this quest.")
-        return
+function Q.API:SetWaypoint(entity, isDungeon)
+    local mapId, x, y
+    if isDungeon then
+        mapId = entity.location.mapId
+        x = entity.location.x
+        y = entity.location.y
+    else
+        mapId = entity.source.location.mapId
+        x = entity.source.location.x
+        y = entity.source.location.y
+        if not (mapId and x and y) then
+            Q:PrettyPrint("No waypoint location is available for this quest.")
+            return
+        end
     end
-    
-    local title = self:GetQuestWaypointText(quest.id)
+    local title = self:GetWaypointText(entity.id, isDungeon)
     local tomtom = rawget(_G, "TomTom")
     if tomtom and tomtom.AddWaypoint then
         tomtom:AddWaypoint(tonumber(mapId), tonumber(x), tonumber(y), {

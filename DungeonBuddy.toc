@@ -5,8 +5,9 @@
 ## X-Curse-Project-ID: 1730648
 ## Category: Quests & Leveling
 ## SavedVariables: DungeonBuddyDB
+## IconTexture: Interface\Icons\inv_misc_steelweaponchain
 ## DefaultState: enabled
-## OptionalDeps: LibSharedMedia-3.0, SharedMedia_MyMedia, TomTom
+## OptionalDeps: LibDBIcon-1.0, LibSharedMedia-3.0, SharedMedia_MyMedia, TomTom
 
 ## Libraries
 Libs\LibStub\LibStub.lua

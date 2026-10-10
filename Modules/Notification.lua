@@ -4,12 +4,11 @@ Notification.queue = {}
 Notification.queueIndex = 1
 Q.Notification = Notification
 
-local function FormatDungeonRelationships(relationships)
+local function FormatDungeonRelationships(quest)
     local groups = {}
     local groupOrder = {}
 
-    for _, relationship in ipairs(relationships or {}) do
-        local dungeon = relationship.dungeon
+    for _, dungeon in ipairs(Q.API:GetDungeonsForQuest(quest.id)) do
         if dungeon then
             local instance, wing = dungeon.name:match("^(.+):%s*(.+)$")
             local groupName = instance or dungeon.name
@@ -44,17 +43,16 @@ end
 
 function Notification:LevelUpEventHandler()
     local playerLevel = Q.API:GetPlayerLevel()
-    local quests = Q.API:GetAllQuests()
+    local quests = Q.API:GetQuests()
     self.queue = {}
     self.queueIndex = 1
 
     for _, quest in ipairs(quests) do
         if (Q:GetSetting("ShowNotificationForAllQuests") or Q.API:IsDungeonQuestChainStart(quest.id)) and quest.requiredLevel == playerLevel and Q.API:IsQuestAvailable(quest.id) then
-            local dungeonRelationships = Q.API:GetDungeonRelationshipsForQuest(quest.id)
-            table.insert(self.queue, { quest = quest, dungeonRelationships = dungeonRelationships })
+            table.insert(self.queue, quest)
 
             if Q:GetSetting("AutoWaypoint") then
-                Q.API:SetQuestWaypoint(quest)
+                Q.API:SetWaypoint(quest)
             end
         end
     end
@@ -214,7 +212,7 @@ function Notification:Create()
             return
         end
 
-        Q.API:SetQuestWaypoint(self.quest)
+        Q.API:SetWaypoint(self.quest)
 
         self.trackWaypointSet = true
         self.waypointButton.text:SetText("Waypoint Set")
@@ -333,17 +331,16 @@ function Notification:AddToQueue(quests)
     if not quests or #quests == 0 then return end
 
     for _, quest in ipairs(quests) do
-        local dungeonRelationships = Q.API:GetDungeonRelationshipsForQuest(quest.id)
         for index, existingQuest in ipairs(self.queue) do
-            if existingQuest.quest.id == quest.id then
+            if existingQuest.id == quest.id then
                 table.remove(self.queue, index)
                 break
             end
         end
-        table.insert(self.queue, { quest = quest, dungeonRelationships = dungeonRelationships })
+        table.insert(self.queue, quest)
 
         if Q:GetSetting("AutoWaypoint") then
-            Q.API:SetQuestWaypoint(quest)
+            Q.API:SetWaypoint(quest)
         end
     end
 
@@ -355,14 +352,14 @@ function Notification:DisplayPreviousInQueue()
     if self.queueIndex > 1 then
         self.queueIndex = self.queueIndex - 1
         local queuedQuest = self.queue and self.queue[self.queueIndex]
-        self:DisplayQuest(queuedQuest.quest, queuedQuest.dungeonRelationships, true)
+        self:DisplayQuest(queuedQuest, true)
     end
 end
 
 function Notification:DisplayNextInQueue()
     local queuedQuest = self.queue and self.queue[self.queueIndex]
     if queuedQuest then
-        self:DisplayQuest(queuedQuest.quest, queuedQuest.dungeonRelationships)
+        self:DisplayQuest(queuedQuest)
     end
 end
 
@@ -449,16 +446,13 @@ local function UpdateActionButtons()
     end
 end
 
-function Notification:DisplayQuest(quest, dungeonRelationships, isPrevious)
+function Notification:DisplayQuest(quest, isPrevious)
     self.quest = quest
 
     local playerInfo = Q.API:GetPlayerInfo()
 
     -- Update Dungeon Name Text
-    if not dungeonRelationships then
-        dungeonRelationships = Q.API:GetDungeonRelationshipsForQuest(quest.id)
-    end
-    self.dungeonName:SetText(FormatDungeonRelationships(dungeonRelationships))
+    self.dungeonName:SetText(FormatDungeonRelationships(quest))
     
     -- Update Quest Title
     local questTitle = quest.suggestedLevel and string.format("[%d] %s", quest.suggestedLevel, quest.name) or quest.name
