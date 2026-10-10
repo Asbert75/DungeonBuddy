@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-10-11
+
+### Added
+- Added character-specific settings instead of account-wide. 
+
+### Fixed
+
+- Fixed an issue where level up event handler returned quests for your previous level because UnitLevel did not update before trigger"
+
 ## [1.4.1] - 2026-10-10
 
 ### Fixed
