@@ -163,12 +163,15 @@ function Q.API:GetRelevantQuestsForZone()
     local playerInfo = Q.API:GetPlayerInfo()
 
     for _, quest in ipairs(self:GetQuests()) do
-        if  self:IsQuestAvailable(quest.id) and
-            not self:IsQuestInQuestLog(quest.id) and
-            quest.source.zone == zone and
-            playerInfo.level <= quest.suggestedLevel + 3 -- Allow a buffer of 3 levels above the suggested level before it doesn't count as "relevant" anymore
-        then
-            table.insert(quests, quest)
+        for _, source in ipairs(quest.sources or { quest.source }) do
+            if  self:IsQuestAvailable(quest.id) and
+                not self:IsQuestInQuestLog(quest.id) and
+                source.faction == playerInfo.faction and
+                source.zone == zone and
+                playerInfo.level <= quest.suggestedLevel + 3 -- Allow a buffer of 3 levels above the suggested level before it doesn't count as "relevant" anymore
+            then
+                table.insert(quests, quest)
+            end
         end
     end
     return quests

@@ -2137,7 +2137,7 @@ Q.Quests = {
         name = "Prospect of Faith",
         suggestedLevel = 40,
         requiredLevel = 35,
-        previousQuestId = 722,
+        previousQuestId = 723,
         source = { 
             type = "npc", 
             name = "Prospector Ryedol", 
@@ -2439,7 +2439,7 @@ Q.Quests = {
         name = "Translating the Journal",
         suggestedLevel = 42,
         requiredLevel = 37,
-        previousQuestId = 2284,
+        previousQuestId = 2318,
         source = { 
             type = "npc", 
             name = "Jarkal Mossmeld", 
@@ -2473,6 +2473,7 @@ Q.Quests = {
         source = { 
             type = "item", 
             name = "Venom Bottle", 
+            itemId = 9321,
             zone = "The Hinterlands", 
             location = { mapId = 1425, x = 0.236, y = 0.587 },
             text = "Can spawn in multiple locations throughout the zone" 
@@ -2611,6 +2612,7 @@ Q.Quests = {
         name = "Thadius Grimshade",
         suggestedLevel = 47,
         requiredLevel = 40,
+        previousQuestId = 2989,
         source = { 
             type = "npc", 
             name = "Gryphon Master Talonaxe", 
@@ -2624,6 +2626,7 @@ Q.Quests = {
         name = "Nekrum's Medallion",
         suggestedLevel = 47,
         requiredLevel = 40,
+        previousQuestId = 2990,
         source = { 
             type = "npc", 
             name = "Thadius Grimshade", 
@@ -2772,7 +2775,7 @@ Q.Quests = {
             name = "Celebras the Redeemed", 
             zone = "Desolace", 
             location = { mapId = 1443, x = 0.38, y = 0.58 },
-            text = "Inside the dungeons, spawns after killing Celebras the Cursed"
+            text = "Inside the dungeon, spawns after killing Celebras the Cursed"
         },
         dungeons = { Q.Dungeons["Maraudon"] },
     },
@@ -2787,7 +2790,7 @@ Q.Quests = {
             name = "Zaetar's Spirit", 
             zone = "Desolace", 
             location = { mapId = 1443, x = 0.38, y = 0.58 },
-            text = "Inside the dungeons, spawns after killing Princess Theradras"
+            text = "Inside the dungeon, spawns after killing Princess Theradras"
         },
         dungeons = { Q.Dungeons["Maraudon"] },
     },
@@ -2862,7 +2865,8 @@ Q.Quests = {
             name = "Fel'zerul", 
             zone = "Swamp of Sorrows", 
             location = { mapId = 1435, x = 0.47, y = 0.54 } 
-        }
+        },
+        dungeons = { Q.Dungeons["Temple of Atal'Hakkar"] },
     },
     {
         id = 4143,
@@ -3037,7 +3041,7 @@ Q.Quests = {
         name = "Into The Temple of Atal'Hakkar",
         suggestedLevel = 50,
         requiredLevel = 38,
-        previousQuestId = 1452,
+        previousQuestId = 1469,
         source = { 
             type = "npc", 
             name = "Brohann Caskbelly", 
@@ -3832,34 +3836,6 @@ Q.Quests = {
 
     --#region Paladin Quests
     {
-        id = 1442,
-        faction = "Alliance",
-        class = "PALADIN",
-        name = "Seeking the Kor Gem",
-        suggestedLevel = 22,
-        requiredLevel = 20,
-        source = { 
-            type = "npc", 
-            name = "Thundris Windweaver", 
-            zone = "Darkshore", 
-            location = { mapId = 1439, x = 0.37, y = 0.44 } 
-        }
-    },
-    {
-        id = 95034,
-        faction = "Horde",
-        class = "PALADIN",
-        name = "The Debt",
-        suggestedLevel = 25,
-        requiredLevel = 18,
-        source = {
-            type = "npc",
-            name = "Lumina Windsinger",
-            zone = "The Sepulcher",
-            location = { mapId = 1421, x = 0.432, y = 0.41 },
-        },
-    },
-    {
         id = 95036,
         faction = "Horde",
         class = "PALADIN",
@@ -4151,19 +4127,6 @@ Q.Quests = {
                 location = { mapId = 1455, x = 0.27, y = 0.082 }
             }
         }
-    },
-    {
-        id = 1948,
-        class = "MAGE",
-        name = "Items of Power",
-        suggestedLevel = 40,
-        requiredLevel = 30,
-        source = {
-            type = "npc",
-            name = "Tabetha",
-            zone = "Dustwallow Marsh",
-            location = { mapId = 1445, x = 0.460, y = 0.570 }
-        },
     },
     {
         id = 1949,
