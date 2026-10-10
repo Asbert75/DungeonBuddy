@@ -120,14 +120,8 @@ function Q.API:GetDifficultyColor(playerLevel, comparisonLevel)
     end
 end
 
-function Q.API:GetWaypointText(entityId, isDungeon)
-    if isDungeon then
-        local dungeon = self:GetDungeonById(entityId)
-        return dungeon.name .." (Entrance)"
-    end
-
-    local quest = self:GetQuestById(entityId)
-    local sourceName = quest.source and quest.source.name
+function Q.API:GetWaypointText(quest, source)
+    local sourceName = source and source.name
 
     local title = quest.name
     if sourceName then
@@ -169,12 +163,15 @@ function Q.API:GetRelevantQuestsForZone()
     local playerInfo = Q.API:GetPlayerInfo()
 
     for _, quest in ipairs(self:GetQuests()) do
-        if  self:IsQuestAvailable(quest.id) and
-            not self:IsQuestInQuestLog(quest.id) and
-            quest.source.zone == zone and
-            playerInfo.level <= quest.suggestedLevel + 3 -- Allow a buffer of 3 levels above the suggested level before it doesn't count as "relevant" anymore
-        then
-            table.insert(quests, quest)
+        for _, source in ipairs(quest.sources or { quest.source }) do
+            if  self:IsQuestAvailable(quest.id) and
+                not self:IsQuestInQuestLog(quest.id) and
+                source.faction == playerInfo.faction and
+                source.zone == zone and
+                playerInfo.level <= quest.suggestedLevel + 3 -- Allow a buffer of 3 levels above the suggested level before it doesn't count as "relevant" anymore
+            then
+                table.insert(quests, quest)
+            end
         end
     end
     return quests
@@ -312,31 +309,47 @@ function Q.API:GetRandomQuest()
     return quest
 end
 
-function Q.API:SetWaypoint(entity, isDungeon)
-    local mapId, x, y
-    if isDungeon then
-        mapId = entity.location.mapId
-        x = entity.location.x
-        y = entity.location.y
-    else
-        mapId = entity.source.location.mapId
-        x = entity.source.location.x
-        y = entity.source.location.y
-        if not (mapId and x and y) then
-            Q:PrettyPrint("No waypoint location is available for this quest.")
-            return
-        end
-    end
-    local title = self:GetWaypointText(entity.id, isDungeon)
+local function AddWaypoint(location, title)
     local tomtom = rawget(_G, "TomTom")
-    if tomtom and tomtom.AddWaypoint then
-        tomtom:AddWaypoint(tonumber(mapId), tonumber(x), tonumber(y), {
-            title = title,
-            from = "Dungeon Buddy",
-            persistent = true,
-        })
+    if not tomtom or not tomtom.AddWaypoint then
+        Q:PrettyPrint("Waypoints requires the TomTom addon to be enabled.")
         return
     end
 
-    Q:PrettyPrint("Waypoints requires the TomTom addon to be enabled.")
+    if not (location and location.mapId and location.x and location.y) then
+        Q:PrettyPrint("No waypoint location is available.")
+        return
+    end
+
+    tomtom:AddWaypoint(tonumber(location.mapId), tonumber(location.x), tonumber(location.y), {
+        title = title,
+        from = "Dungeon Buddy",
+        persistent = true,
+    })
+end
+
+function Q.API:SetWaypoint(entity, isDungeon)
+    local tomtom = rawget(_G, "TomTom")
+    if not tomtom or not tomtom.AddWaypoint then
+        Q:PrettyPrint("Waypoints requires the TomTom addon to be enabled.")
+        return
+    end
+
+    if isDungeon then
+        AddWaypoint(entity.location, entity.name.." (Entrance)")
+    else
+        local playerInfo = Q.API:GetPlayerInfo()
+        if entity.source then
+            local title = self:GetWaypointText(entity, entity.source)
+            AddWaypoint(entity.location, title)  
+        else
+            for _, source in ipairs(entity.sources or {}) do
+                if source.faction and source.faction ~= playerInfo.faction then
+                    break
+                end
+                local title = self:GetWaypointText(entity, source)
+                AddWaypoint(source.location, title)
+            end
+        end
+    end
 end

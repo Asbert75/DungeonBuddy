@@ -42,7 +42,8 @@ end
 local function TestNotificationQuest()
     local quest = Q.API:GetRandomQuest()
     local quest2 = Q.API:GetRandomQuest()
-    local quests = { quest, quest2 }
+    local quest3 = Q.API:GetQuestById(1947)
+    local quests = { quest, quest2, quest3, Q.API:GetQuestById(4082), Q.API:GetQuestById(7046) }
 
     Q.Notification:AddToQueue(quests)
 end
@@ -68,7 +69,7 @@ function Addon:HandleDebugCommand(input)
         Q.Debug.Faction = (arg2 and arg2:lower() == "horde") and "Horde" or "Alliance"
         Q:PrettyPrint("Debug faction set to " .. tostring(Q.Debug.Faction))
     elseif arg1 == "class" then
-        Q.Debug.Class = arg2 or Q.Debug.Class
+        Q.Debug.Class = arg2:upper() or Q.Debug.Class
         Q:PrettyPrint("Debug class set to " .. tostring(Q.Debug.Class))
     else
         Q.Debug.Enabled = not Q.Debug.Enabled

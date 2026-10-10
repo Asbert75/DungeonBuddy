@@ -72,7 +72,7 @@ function Notification:Create()
     --------------------------------------------------
     -- Create Notification Frame
     --------------------------------------------------
-    self.frame = Q:CreateBackdropFrame('DungeonBuddy_NotificationFrame', UIParent, 480, 300, "MEDIUM", "Primary", "Accent")
+    self.frame = Q:CreateBackdropFrame('DungeonBuddy_NotificationFrame', UIParent, 500, 300, "MEDIUM", "Primary", "Accent")
 
     self.frame:SetMovable(true)
     self.frame:EnableMouse(true)
@@ -365,15 +365,24 @@ end
 
 local function UpdateSourceData(playerFaction)
     local quest = Notification.quest
-    if not quest.source then
-        return
+
+    local hasMultipleSources = false
+    local zoneText = " - "
+    if quest.sources and #quest.sources > 1 then
+        hasMultipleSources = true
+
+        for index, source in ipairs(quest.sources) do
+            if source.faction == playerFaction then
+                zoneText = (index ~= 1 and zoneText .. '/' or zoneText) .. source.zone
+            end
+        end
     end
 
-    Notification.questSourceName:SetText(quest.source.name)
-    Notification.questSourceZoneName:SetText(" - " .. quest.source.zone)
-    Notification.questSourceText:SetText(quest.source.text)
+    Notification.questSourceName:SetText(hasMultipleSources and "Multiple Sources" or quest.source.name)
+    Notification.questSourceZoneName:SetText(hasMultipleSources and zoneText or " - " .. quest.source.zone)
+    Notification.questSourceText:SetText(hasMultipleSources and "" or quest.source.text)
 
-    if quest.source.type == "npc" then
+    if hasMultipleSources or quest.source.type == "npc" then
         if playerFaction == "Alliance" then
             Notification.sourceIcon:SetTexture("Interface\\Icons\\achievement_character_human_male")
         else

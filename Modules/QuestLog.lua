@@ -342,7 +342,7 @@ function QuestLog:RefreshAndPopulate()
                     GameTooltip:SetText("Get directions", 1, 1, 1)
                     local tomtom = rawget(_G, "TomTom")
                     if tomtom and tomtom.AddWaypoint then
-                        GameTooltip:AddLine(string.format("Add a TomTom waypoint at this %s.", frame.row.isDungeon and "dungeon entrance" or "quest's source"), 0.85, 0.85, 0.85, true)
+                        GameTooltip:AddLine(string.format("Add a TomTom waypoint at this %s.", frame.row.isDungeon and "dungeon entrance" or "quests source(s)"), 0.85, 0.85, 0.85, true)
                     else
                         GameTooltip:AddLine("TomTom required for waypoint directions.", 0.85, 0.85, 0.85, true)
                     end
