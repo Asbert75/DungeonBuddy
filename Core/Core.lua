@@ -68,7 +68,7 @@ function Addon:HandleDebugCommand(input)
         Q.Debug.Faction = (arg2 and arg2:lower() == "horde") and "Horde" or "Alliance"
         Q:PrettyPrint("Debug faction set to " .. tostring(Q.Debug.Faction))
     elseif arg1 == "class" then
-        Q.Debug.Class = arg2 or Q.Debug.Class
+        Q.Debug.Class = arg2:upper() or Q.Debug.Class
         Q:PrettyPrint("Debug class set to " .. tostring(Q.Debug.Class))
     else
         Q.Debug.Enabled = not Q.Debug.Enabled

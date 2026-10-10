@@ -1,5 +1,10 @@
 local _, Q = ...
 
+--[[
+    The "dungeons" property on a quest only tells the addon which dungeons that this particular quest
+    should be displayed as a "main" quest, that is; which dungeon in the quest tracker it is displayed
+    on the "main" level.
+]]
 Q.Quests = {
     --#region Hall of Thanes
     {
@@ -1349,8 +1354,7 @@ Q.Quests = {
             zone = "Orgrimmar", 
             location = { mapId = 1454, x = 0.76, y = 0.25 },
             text = "You must pick up the quest 'Rig Wars' right beside Sovik first."
-        },
-        dungeons = { Q.Dungeons["Gnomeregan"] },
+        }
     },
     {
         id = 2924,
@@ -1541,8 +1545,7 @@ Q.Quests = {
             name = "Image of Archmage Modera", 
             zone = "City of Dalaran", 
             location = { mapId = 1421, x = 0.686, y = 0.452 }
-        },
-        dungeons = { Q.Dungeons["City of Dalaran"] },
+        }
     },
     {
         id = 92457,
@@ -3765,7 +3768,6 @@ Q.Quests = {
             zone = "Eastern Plaguelands", 
             location = { mapId = 1423, x = 0.81, y = 0.59 } 
         },
-        dungeons = { Q.Dungeons["Stratholme"] }
     },
     {
         id = 5282,
@@ -3815,13 +3817,14 @@ Q.Quests = {
         name = "The Truth Comes Crashing Down",
         suggestedLevel = 60,
         requiredLevel = 55,
+        previousQuestId = 5251,
         source = { 
             type = "item", 
             name = "Head of Balnazzar", 
             itemId = 13250, 
             zone = "Stratholme", 
             location = { mapId = 1423, x = 0.30, y = 0.27 },
-            text = "Dropped by Balnazzar after completing the quest The Archivist" 
+            text = "Dropped by Balnazzar in Stratholme" 
         },
         dungeons = { Q.Dungeons["Stratholme"] }
     },
@@ -4050,11 +4053,25 @@ Q.Quests = {
         name = "Speak with Ruga",
         suggestedLevel = 20,
         requiredLevel = 20,
-        source = { 
-            type = "npc", 
-            name = "Sorek", 
-            zone = "Orgrimmar", 
-            location = { mapId = 1454, x = 0.80, y = 0.32 } 
+        sources = {
+            { 
+                type = "npc", 
+                name = "Sorek", 
+                zone = "Orgrimmar", 
+                location = { mapId = 1454, x = 0.804, y = 0.314 } 
+            },
+            { 
+                type = "npc", 
+                name = "Torm Ragetotem", 
+                zone = "Thunder Bluff", 
+                location = { mapId = 1456, x = 0.576, y = 0.876 } 
+            },
+            { 
+                type = "npc", 
+                name = "Baltus Fowler", 
+                zone = "Undercity", 
+                location = { mapId = 1458, x = 0.476, y = 0.168 } 
+            }
         },
     },
     {
@@ -4096,12 +4113,44 @@ Q.Quests = {
         name = "Journey to the Marsh",
         suggestedLevel = 38,
         requiredLevel = 30,
-        source = {
-            type = "npc",
-            name = "TODO: Mage Trainer", -- TODO: Update with multiple start sources
-            zone = "Dustwallow Marsh",
-            -- location = { mapId = 1445, x = 0.460, y = 0.570 }
-        },
+        sources = {
+            { 
+                type = "npc",
+                faction = "Horde",
+                name = "Ursyn Ghull",
+                zone = "Thunder Bluff",
+                location = { mapId = 1456, x = 0.256, y = 0.156 }
+            },
+            { 
+                type = "npc",
+                faction = "Horde",
+                name = "Anastasia Hartwell",
+                zone = "Undercity",
+                location = { mapId = 1458, x = 0.85, y = 0.102 }
+            },
+            { 
+                type = "npc",
+                faction = "Horde",
+                name = "Deino",
+                zone = "Orgrimmar",
+                location = { mapId = 1454, x = 0.386, y = 0.852 }
+            },
+            { 
+                type = "npc",
+                faction = "Alliance",
+                name = "Jennea Cannon",
+                zone = "Stormwind City",
+                location = { mapId = 1453, x = 0.386, y = 0.796 }
+            }
+            ,
+            { 
+                type = "npc",
+                faction = "Alliance",
+                name = "Bink",
+                zone = "Ironforge",
+                location = { mapId = 1455, x = 0.27, y = 0.082 }
+            }
+        }
     },
     {
         id = 1948,
@@ -4150,12 +4199,44 @@ Q.Quests = {
         name = "Return to the Marsh",
         suggestedLevel = 40,
         requiredLevel = 35,
-        source = {
-            type = "npc",
-            name = "TODO: Mage Trainer", -- TODO: Update with multiple start sources
-            zone = "Dustwallow Marsh",
-            -- location = { mapId = 1445, x = 0.460, y = 0.570 }
-        },
+        sources = {
+            { 
+                type = "npc",
+                faction = "Horde",
+                name = "Ursyn Ghull",
+                zone = "Thunder Bluff",
+                location = { mapId = 1456, x = 0.256, y = 0.156 }
+            },
+            { 
+                type = "npc",
+                faction = "Horde",
+                name = "Anastasia Hartwell",
+                zone = "Undercity",
+                location = { mapId = 1458, x = 0.85, y = 0.102 }
+            },
+            { 
+                type = "npc",
+                faction = "Horde",
+                name = "Deino",
+                zone = "Orgrimmar",
+                location = { mapId = 1454, x = 0.386, y = 0.852 }
+            },
+            { 
+                type = "npc",
+                faction = "Alliance",
+                name = "Jennea Cannon",
+                zone = "Stormwind City",
+                location = { mapId = 1453, x = 0.386, y = 0.796 }
+            }
+            ,
+            { 
+                type = "npc",
+                faction = "Alliance",
+                name = "Bink",
+                zone = "Ironforge",
+                location = { mapId = 1455, x = 0.27, y = 0.082 }
+            }
+        }
     },
     {
         id = 1954,
