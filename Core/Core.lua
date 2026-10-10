@@ -26,7 +26,7 @@ Q.Debug = {
 }
 
 function Addon:OnInitialize()
-    Q.DB = LibStub("AceDB-3.0"):New("DungeonBuddyDB", Q.GetDefaultDB(), true)
+    Q.DB = LibStub("AceDB-3.0"):New("DungeonBuddyCharDB", Q.GetDefaultDB())
 
     Addon:RegisterChatCommand("db", "HandleCommand")
     Addon:RegisterChatCommand("dungeonbuddy", "HandleCommand")

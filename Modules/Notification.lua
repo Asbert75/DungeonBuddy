@@ -42,7 +42,7 @@ local function FormatDungeonRelationships(quest)
 end
 
 function Notification:LevelUpEventHandler()
-    local playerLevel = Q.API:GetPlayerLevel()
+    local playerLevel = Q.API:GetPlayerLevel() + 1
     local quests = Q.API:GetQuests()
     self.queue = {}
     self.queueIndex = 1
@@ -57,6 +57,7 @@ function Notification:LevelUpEventHandler()
         end
     end
 
+    Q:DumpTable(self.queue)
     self:DisplayNextInQueue()
 end
 
