@@ -202,7 +202,7 @@ function QuestLog:RefreshAndPopulate()
 
     -- First build the rows table with all dungeons, quests, and chain quests, only adding rows that are not hidden
     for _, dungeon in pairs(dungeons) do
-        -- if Q.API:DungeonHasAvailableQuests(dungeon.id, playerInfo) and playerInfo.level <= dungeon.maxLevel then
+        if Q.API:DungeonHasAvailableQuests(dungeon.id, playerInfo) and playerInfo.level <= dungeon.maxLevel then
             local isCollapsed = Q:GetSetting("CollapsedDungeons")[dungeon.id] or false
             local quests = Q.API:GetAvailableQuestsByDungeonId(dungeon.id, playerInfo)
             table.sort(quests, function(a, b) return a.name < b.name end)
@@ -243,7 +243,7 @@ function QuestLog:RefreshAndPopulate()
                     end
                 end
             end
-        -- end
+        end
     end
 
     for index, row in ipairs(self.rows) do
