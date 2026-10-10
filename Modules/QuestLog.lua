@@ -10,6 +10,14 @@ local function IsRowCollapsed(row)
     end
 end
 
+local function CopyRow(row)
+    local copy = {}
+    for key, value in pairs(row) do
+        copy[key] = value
+    end
+    return copy
+end
+
 local function SetQuestStatusColor(fontString, settingPath, fallbackKey)
     local color = Q:GetSetting(settingPath)
     if color and color.r and color.g and color.b then
@@ -23,6 +31,17 @@ local function SetBorderTextureColor(frame, settingPath)
     local color = Q:GetSetting(settingPath)
     if color and color.r and color.g and color.b then
         frame:SetColorTexture(color.r, color.g, color.b)
+    end
+end
+
+local function UpdateClassIcon(frame, row)
+    local classIcon = frame.titleFrame.classIcon
+    local classIconTexture = not row.isDungeon and Q.API:GetClassIconTexture(row.class)
+    if classIconTexture then
+        classIcon:SetTexture(classIconTexture)
+        classIcon:Show()
+    else
+        classIcon:Hide()
     end
 end
 
@@ -147,17 +166,6 @@ function QuestLog:Create()
     return self.frame
 end
 
-local function UpdateClassIcon(frame, row)
-    local classIcon = frame.titleFrame.classIcon
-    local classIconTexture = not row.isDungeon and Q.API:GetClassIconTexture(row.class)
-    if classIconTexture then
-        classIcon:SetTexture(classIconTexture)
-        classIcon:Show()
-    else
-        classIcon:Hide()
-    end
-end
-
 function QuestLog:RefreshAndPopulate()
     self.rows = {}
     self._frames = self._frames or {}
@@ -189,16 +197,16 @@ function QuestLog:RefreshAndPopulate()
     elseif self.noQuestsFound then
         self.noQuestsFound:Hide()
     end
-
+    
     local dungeons = Q.API:GetDungeons()
 
     -- First build the rows table with all dungeons, quests, and chain quests, only adding rows that are not hidden
-    for _, dungeon in ipairs(dungeons) do
+    for _, dungeon in pairs(dungeons) do
         if Q.API:DungeonHasAvailableQuests(dungeon.id, playerInfo) and playerInfo.level <= dungeon.maxLevel then
             local isCollapsed = Q:GetSetting("CollapsedDungeons")[dungeon.id] or false
+            local quests = Q.API:GetAvailableQuestsByDungeonId(dungeon.id, playerInfo)
+            table.sort(quests, function(a, b) return a.name < b.name end)
             dungeon.isDungeon = true
-            local quests = Q.API:GetQuestsForDungeon(dungeon.id, playerInfo)
-            table.sort(quests, function(a, b) return a.id > b.id end)
 
             table.insert(self.rows, dungeon)
             
@@ -216,15 +224,16 @@ function QuestLog:RefreshAndPopulate()
                     end
 
                     local chainLength = #chain + 1
-                    quest.isMainQuest = true
-                    quest.chainStep = #chain > 0 and chainLength or nil
-                    quest.chainLength = #chain > 0 and chainLength or nil
+                    local questRow = CopyRow(quest)
+                    questRow.isMainQuest = true
+                    questRow.chainStep = #chain > 0 and chainLength or nil
+                    questRow.chainLength = #chain > 0 and chainLength or nil
                     if not Q:GetSetting("HideCompletedQuests") or not Q.API:IsQuestCompleted(quest.id) then
-                        table.insert(self.rows, quest)
+                        table.insert(self.rows, questRow)
                     end
 
                     for chainIndex = 1, #chain do
-                        local chainQuest = chain[chainIndex]
+                        local chainQuest = CopyRow(chain[chainIndex])
                         chainQuest.isChainQuest = true
                         chainQuest.chainStep = chainLength - chainIndex
                         chainQuest.chainLength = chainLength
@@ -322,7 +331,7 @@ function QuestLog:RefreshAndPopulate()
                     end
 
                     self.isDisabled = true
-                    Q.API:SetQuestWaypoint(frame.row)
+                    Q.API:SetWaypoint(frame.row, frame.row.isDungeon)
 
                     C_Timer.After(2, function()
                         self.isDisabled = false
@@ -333,7 +342,7 @@ function QuestLog:RefreshAndPopulate()
                     GameTooltip:SetText("Get directions", 1, 1, 1)
                     local tomtom = rawget(_G, "TomTom")
                     if tomtom and tomtom.AddWaypoint then
-                        GameTooltip:AddLine("Add a TomTom waypoint at this quest's source.", 0.85, 0.85, 0.85, true)
+                        GameTooltip:AddLine(string.format("Add a TomTom waypoint at this %s.", frame.row.isDungeon and "dungeon entrance" or "quest's source"), 0.85, 0.85, 0.85, true)
                     else
                         GameTooltip:AddLine("TomTom required for waypoint directions.", 0.85, 0.85, 0.85, true)
                     end
@@ -362,19 +371,19 @@ function QuestLog:RefreshAndPopulate()
         frame.titleFrame.title:SetText(title)
 
         if row.isDungeon then
-            frame.titleFrame.level:SetText(string.format("(%s-%s)", row.minLevel, row.maxLevel))
-
             local levelColor = Q.API:GetDifficultyColor(playerInfo.level, row.minLevel)
+            frame.titleFrame.level:SetText(string.format("(%s-%s)", row.minLevel, row.maxLevel))
             frame.titleFrame.level:SetTextColor(levelColor.r, levelColor.g, levelColor.b, 1)
-        else
-            frame.titleFrame.level:SetText("")
-        end
 
-        -- Determine title color
-        if row.isDungeon then
             Q:SetTextColor(frame.titleFrame.title, "Primary")
             frame.leftBorder:SetColorTexture(unpack(Q.Theme.Text.Primary))
+
+            frame.collapseButton:Show()
+            frame.titleFrame.title:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * fontXL)
+            Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", paddingS, 0)
         else
+            frame.titleFrame.level:SetText("")
+
             if Q.API:IsQuestCompleted(row.id) then
                 SetQuestStatusColor(frame.titleFrame.title, "QuestColorCompleted", "Disabled")
                 SetBorderTextureColor(frame.leftBorder, "QuestColorCompleted")
@@ -388,30 +397,25 @@ function QuestLog:RefreshAndPopulate()
                 SetQuestStatusColor(frame.titleFrame.title, "QuestColorUnavailable", "Emphasized")
                 SetBorderTextureColor(frame.leftBorder, "QuestColorUnavailable")
             end
-        end
 
-        if row.isDungeon then
-            frame.collapseButton:Show()
-            frame.waypointButton:Hide()
-            frame.titleFrame.title:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * fontXL)
-            Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", paddingS, 0)
-        elseif row.isMainQuest then
-            if row.previousQuestId then
-                frame.collapseButton:Show()
+            if row.isMainQuest then
+                if row.previousQuestId then
+                    frame.collapseButton:Show()
+                else
+                    frame.collapseButton:Hide()
+                end
+                frame.titleFrame.title:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * fontM)
+                Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", 2 * paddingS, 0)
             else
                 frame.collapseButton:Hide()
+                frame.titleFrame.title:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * fontM)
+                Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", 3 * paddingS, 0)
             end
-            frame.titleFrame.title:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * fontM)
-            Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", 2 * paddingS, 0)
-        else
-            frame.collapseButton:Hide()
-            frame.titleFrame.title:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * fontM)
-            Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", 3 * paddingS, 0)
         end
 
-        if not row.isDungeon and not row.previousQuestId then
+        if not row.previousQuestId then
             frame.waypointButton:Show()
-        elseif not row.isDungeon then
+        else
             frame.waypointButton:Hide()
         end
 

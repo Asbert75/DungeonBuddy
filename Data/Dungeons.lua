@@ -1,7 +1,7 @@
 local _, Q = ...
 
 Q.Dungeons = {
-    {
+    ["Hall of Thanes"] = {
         id = 1,
         name = "Hall of Thanes",
         continent = "Eastern Kingdoms",
@@ -9,10 +9,9 @@ Q.Dungeons = {
         location = { mapId = 1455, x = 0.614, y = 0.892 },
         minLevel = 13,
         suggestedLevel = 14,
-        maxLevel = 18,
-        questIds = { 96395, 96403, 96394, 96393, 98423 },
+        maxLevel = 18
     },
-    {
+    ["Ragefire Chasm"] = {
         id = 2,
         name = "Ragefire Chasm",
         continent = "Kalimdor",
@@ -20,10 +19,9 @@ Q.Dungeons = {
         location = { mapId = 1454, x = 0.53, y = 0.50 },
         minLevel = 13,
         suggestedLevel = 12,
-        maxLevel = 19,
-        questIds = { 5730, 5725, 5723, 5724, 5761 }
+        maxLevel = 19
     },
-    {
+    ["Ruins of Lordaeron"] = {
         id = 3,
         name = "Ruins of Lordaeron",
         continent = "Eastern Kingdoms",
@@ -31,10 +29,9 @@ Q.Dungeons = {
         location = { mapId = 1420, x = 0.61, y = 0.60 },
         minLevel = 15,
         suggestedLevel = 17,
-        maxLevel = 20,
-        questIds = { 92401, 95204, 95189, 92421, 95216, 92422, 97288, 95250, 92415, 95195 },
+        maxLevel = 20
     },
-    {
+    ["The Deadmines"] = {
         id = 4,
         name = "The Deadmines",
         continent = "Eastern Kingdoms",
@@ -42,21 +39,19 @@ Q.Dungeons = {
         location = { mapId = 1436, x = 0.42, y = 0.71 },
         minLevel = 18,
         suggestedLevel = 17,
-        maxLevel = 24,
-        questIds = { 95036, 168, 167, 2040, 214, 166, 1654 },
+        maxLevel = 24
     },
-    {
+    ["Wailing Caverns"] = {
         id = 5,
         name = "Wailing Caverns",
         continent = "Kalimdor",
         zone = "The Barrens",
-        location = { mapId = 1413, x = 0.52, y = 0.55 },
+        location = { mapId = 1413, x = 0.465, y = 0.36 },
         minLevel = 19,
         suggestedLevel = 18,
-        maxLevel = 25,
-        questIds = { 1486, 1487, 959, 1491, 962, 914, 3369 },
+        maxLevel = 25
     },
-    {
+    ["Shadowfang Keep"] = {
         id = 6,
         name = "Shadowfang Keep",
         continent = "Eastern Kingdoms",
@@ -64,43 +59,39 @@ Q.Dungeons = {
         location = { mapId = 1421, x = 0.45, y = 0.68 },
         minLevel = 23,
         suggestedLevel = 22,
-        maxLevel = 29,
-        questIds = { 95036, 1013, 1098, 1014, 1058, 1654, 1740 },
+        maxLevel = 29
     },
-    {
+    ["Excavation Site: Wetlands"] = {
         id = 7,
         name = "Excavation Site: Wetlands",
         continent = "Eastern Kingdoms",
         zone = "Wetlands",
         location = { mapId = 1437, x = 0.385, y = 0.470 },
         minLevel = 24,
-        suggestedLevel = 24,
-        maxLevel = 29,
-        questIds = { 95697, 95664, 98815, 95772, 95646, 95647, 95810, 95682 },
+        suggestedLevel = 26,
+        maxLevel = 29
     },
-    {
+    ["Blackfathom Deeps"] = {
         id = 8,
         name = "Blackfathom Deeps",
         continent = "Kalimdor",
         zone = "Ashenvale",
         location = { mapId = 1440, x = 0.14, y = 0.15 },
         minLevel = 25,
-        suggestedLevel = 24,
-        maxLevel = 31,
-        questIds = { 95036, 971, 1275, 1199, 6565, 6921, 1200, 6561, 6922, 1740, 1442, 1654 },
+        suggestedLevel = 27,
+        maxLevel = 31
     },
-    {
+    ["The Stockade"] = {
         id = 9,
         name = "The Stockade",
         continent = "Eastern Kingdoms",
         zone = "Stormwind City",
-        location = { mapId = 1453, x = 0.42, y = 0.58 },
+        location = { mapId = 1453, x = 0.524, y = 0.695 },
         minLevel = 26,
-        suggestedLevel = 25,
-        maxLevel = 32,
-        questIds = { 386, 377, 387, 388, 378, 391 },
+        suggestedLevel = 26,
+        maxLevel = 32
     },
-    {
+    ["City of Dalaran"] = {
         id = 10,
         name = "City of Dalaran",
         continent = "Eastern Kingdoms",
@@ -108,10 +99,9 @@ Q.Dungeons = {
         location = { mapId = 1421, x = 0.693, y = 0.455 },
         minLevel = 28,
         suggestedLevel = 30,
-        maxLevel = 34,
-        questIds = { 96986, 96987, 96984, 92457, 92489, 92459, 92456 },
+        maxLevel = 34
     },
-    {
+    ["Razorfen Kraul"] = {
         id = 11,
         name = "Razorfen Kraul",
         continent = "Kalimdor",
@@ -119,10 +109,9 @@ Q.Dungeons = {
         location = { mapId = 1413, x = 0.43, y = 0.90 },
         minLevel = 30,
         suggestedLevel = 29,
-        maxLevel = 36,
-        questIds = { 1101, 1102, 1221, 1142, 1144, 1701, 1838 }
+        maxLevel = 36
     },
-    {
+    ["Gnomeregan"] = {
         id = 12,
         name = "Gnomeregan",
         continent = "Eastern Kingdoms",
@@ -130,10 +119,9 @@ Q.Dungeons = {
         location = { mapId = 1426, x = 0.30, y = 0.36 },
         minLevel = 31,
         suggestedLevel = 30,
-        maxLevel = 37,
-        questIds = { 2841, 2842, 2962, 2922, 2929, 2928, 2843, 2904, 2924, 2930, 2945 },
+        maxLevel = 37
     },
-    {
+    ["SM: Graveyard"] = {
         id = 13,
         name = "SM: Graveyard",
         continent = "Eastern Kingdoms",
@@ -141,10 +129,9 @@ Q.Dungeons = {
         location = { mapId = 1420, x = 0.84, y = 0.32 },
         minLevel = 31,
         suggestedLevel = 30,
-        maxLevel = 37,
-        questIds = { 1051, 1113 },
+        maxLevel = 37
     },
-    {
+    ["SM: Library"] = {
         id = 14,
         name = "SM: Library",
         continent = "Eastern Kingdoms",
@@ -152,10 +139,9 @@ Q.Dungeons = {
         location = { mapId = 1420, x = 0.84, y = 0.32 },
         minLevel = 34,
         suggestedLevel = 33,
-        maxLevel = 40,
-        questIds = { 1048, 1053, 1113, 1049, 1160, 1050, 1951 },
+        maxLevel = 40
     },
-    {
+    ["SM: Armory"] = {
         id = 15,
         name = "SM: Armory",
         continent = "Eastern Kingdoms",
@@ -163,10 +149,9 @@ Q.Dungeons = {
         location = { mapId = 1420, x = 0.84, y = 0.32 },
         minLevel = 37,
         suggestedLevel = 36,
-        maxLevel = 43,
-        questIds = { 1048, 1053, 1113 },
+        maxLevel = 43
     },
-    {
+    ["Razorfen Downs"] = {
         id = 16,
         name = "Razorfen Downs",
         continent = "Kalimdor",
@@ -174,10 +159,9 @@ Q.Dungeons = {
         location = { mapId = 1413, x = 0.49, y = 0.92 },
         minLevel = 38,
         suggestedLevel = 37,
-        maxLevel = 44,
-        questIds = { 3341, 6521, 3636, 6626, 3525 },
+        maxLevel = 44
     },
-    {
+    ["SM: Cathedral"] = {
         id = 17,
         name = "SM: Cathedral",
         continent = "Eastern Kingdoms",
@@ -185,10 +169,9 @@ Q.Dungeons = {
         location = { mapId = 1420, x = 0.84, y = 0.32 },
         minLevel = 39,
         suggestedLevel = 38,
-        maxLevel = 45,
-        questIds = { 1048, 1053, 1113 },
+        maxLevel = 45
     },
-    {
+    ["Uldaman"] = {
         id = 18,
         name = "Uldaman",
         continent = "Eastern Kingdoms",
@@ -196,150 +179,116 @@ Q.Dungeons = {
         location = { mapId = 15, x = 0.42, y = 0.10 },
         minLevel = 44,
         suggestedLevel = 43,
-        maxLevel = 50,
-        questIds = { 17, 2418, 2342, 2202, 2278, 2201, 1360, 704, 722, 2240, 1139, 2202, 2339, 1956  },
+        maxLevel = 50
     },
-    {
+    ["Zul'Farrak"] = {
         id = 19,
         name = "Zul'Farrak",
         continent = "Kalimdor",
         zone = "Tanaris",
-        location = { mapId = 440, x = 0.39, y = 0.21 },
+        location = { mapId = 1446, x = 0.39, y = 0.21 },
         minLevel = 45,
         suggestedLevel = 44,
-        maxLevel = 51,
-        questIds = { 2936, 3042, 2768, 2865, 2770, 3527 },
+        maxLevel = 51
     },
-    {
+    ["Maraudon"] = {
         id = 20,
-        name = "Maraudon: Purple", -- Wicked Grotto
+        name = "Maraudon",
         continent = "Kalimdor",
         zone = "Desolace",
-        location = { mapId = 405, x = 0.29, y = 0.62 },
+        location = { mapId = 1443, x = 0.29, y = 0.62 },
         minLevel = 48,
-        suggestedLevel = 47,
-        maxLevel = 54,
-        questIds = { 7067, 7068, 7029, 7044 },
+        suggestedLevel = 48,
+        maxLevel = 54
     },
-    {
+    ["Temple of Atal'Hakkar"] = {
         id = 21,
-        name = "Maraudon: Orange", -- Foulspore Cavern
-        continent = "Kalimdor",
-        zone = "Desolace",
-        location = { mapId = 405, x = 0.29, y = 0.62 },
-        minLevel = 48,
-        suggestedLevel = 48,
-        maxLevel = 54,
-        questIds = { 7028, 7044 },
-    },
-    {
-        id = 22,
-        name = "Maraudon: Princess", -- Earth Song Falls
-        continent = "Kalimdor",
-        zone = "Desolace",
-        location = { mapId = 405, x = 0.29, y = 0.62 },
-        minLevel = 48,
-        suggestedLevel = 48,
-        maxLevel = 54,
-        questIds = { 7069, 7044 },
-    },
-    {
-        id = 23,
         name = "Temple of Atal'Hakkar",
         continent = "Eastern Kingdoms",
         zone = "Swamp of Sorrows",
         location = { mapId = 1435, x = 0.69, y = 0.54 },
         minLevel = 52,
         suggestedLevel = 51,
-        maxLevel = 58,
-        questIds = { 1446, 1445, 3445, 3446, 4787, 3447 },
+        maxLevel = 58
     },
-    {
-        id = 24,
+    ["Blackrock Depths"] = {
+        id = 22,
         name = "Blackrock Depths",
         continent = "Eastern Kingdoms",
         zone = "Blackrock Mountain",
-        location = { mapId = 1428, x = 0.48, y = 0.62 },
+        location = { mapId = 1428, x = 0.284, y = 0.285 },
         minLevel = 52,
         suggestedLevel = 55,
-        maxLevel = 60,
-        questIds = { 7201, 4126, 4286, 4123, 4082, 7848, 3802, 5125, 4136, 4134 },
+        maxLevel = 60
     },
-    {
-        id = 25,
+    ["Dire Maul: East"] = {
+        id = 23,
         name = "Dire Maul: East",
         continent = "Kalimdor",
         zone = "Feralas",
-        location = { mapId = 1448, x = 0.59, y = 0.45 },
+        location = { mapId = 1444, x = 0.59, y = 0.45 },
         minLevel = 55,
         suggestedLevel = 54,
-        maxLevel = 60,
-        questIds = { 7489, 7481 },
+        maxLevel = 60
     },
-    {
-        id = 26,
+    ["Dire Maul: West"] = {
+        id = 24,
         name = "Dire Maul: West",
         continent = "Kalimdor",
         zone = "Feralas",
-        location = { mapId = 1448, x = 0.59, y = 0.45 },
+        location = { mapId = 1444, x = 0.59, y = 0.45 },
         minLevel = 58,
         suggestedLevel = 57,
-        maxLevel = 60,
-        questIds = { 7461, 7482 },
+        maxLevel = 60
     },
-    {
-        id = 27,
+    ["Lower Blackrock Spire"] = {
+        id = 25,
         name = "Lower Blackrock Spire",
         continent = "Eastern Kingdoms",
         zone = "Blackrock Mountain",
-        location = { mapId = 1428, x = 0.48, y = 0.62 },
+        location = { mapId = 1428, x = 0.284, y = 0.285 },
         minLevel = 57,
         suggestedLevel = 56,
-        maxLevel = 60,
-        questIds = { 4724, 4701, 4702, 4729, 4742 },
+        maxLevel = 60
     },
-    {
-        id = 28,
+    ["Scholomance"] = {
+        id = 26,
         name = "Scholomance",
         continent = "Eastern Kingdoms",
         zone = "Western Plaguelands",
         location = { mapId = 1422, x = 0.69, y = 0.73 },
         minLevel = 58,
         suggestedLevel = 58,
-        maxLevel = 60,
-        questIds = { 5341, 5382, 5533, 5537, 5529, 5384 },
+        maxLevel = 60
     },
-    {
-        id = 29,
+    ["Dire Maul: North"] = {
+        id = 27,
         name = "Dire Maul: North",
         continent = "Kalimdor",
         zone = "Feralas",
-        location = { mapId = 1448, x = 0.59, y = 0.45 },
+        location = { mapId = 1444, x = 0.59, y = 0.45 },
         minLevel = 59,
         suggestedLevel = 58,
-        maxLevel = 60,
-        questIds = { 5527, 7701 },
+        maxLevel = 60
     },
-    {
-        id = 30,
+    ["Upper Blackrock Spire"] = {
+        id = 28,
         name = "Upper Blackrock Spire",
         continent = "Eastern Kingdoms",
         zone = "Blackrock Mountain",
-        location = { mapId = 1428, x = 0.48, y = 0.62 },
+        location = { mapId = 1428, x = 0.284, y = 0.285 },
         minLevel = 59,
         suggestedLevel = 58,
-        maxLevel = 60,
-        questIds = { 4981 },
+        maxLevel = 60
     },
-    {
-        id = 31,
+    ["Stratholme"] = {
+        id = 29,
         name = "Stratholme",
         continent = "Eastern Kingdoms",
         zone = "Eastern Plaguelands",
-        location = { mapId = 1423, x = 0.30, y = 0.27 },
+        location = { mapId = 1423, x = 0.26, y = 0.102 },
         minLevel = 59,
         suggestedLevel = 58,
-        maxLevel = 60,
-        questIds = { 5214, 5251, 5282, 5122, 5243, 5127 },
+        maxLevel = 60
     },
 }

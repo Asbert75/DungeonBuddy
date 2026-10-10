@@ -14,8 +14,8 @@ Q.Dungeons = {}
 Q.Quests = {}
 Q.DungeonById = {}
 Q.QuestById = {}
-Q.DungeonsByQuestId = {}
-Q.DungeonRelationshipsByQuestId = {}
+Q.QuestsByDungeonId = {}
+Q.DungeonByQuestId =  {}
 
 Q.Theme = {}
 Q.Debug = {
@@ -74,7 +74,7 @@ function Addon:HandleDebugCommand(input)
         Q.Debug.Enabled = not Q.Debug.Enabled
         Q:PrettyPrint("Debug mode " .. (Q.Debug.Enabled and "enabled" or "disabled"))
     end
-    if arg1 ~= "status" then
+    if arg1 ~= "status" and arg1 ~= "quest" then
         Q.QuestLog:Reload()
     end
 end
