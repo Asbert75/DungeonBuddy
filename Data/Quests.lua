@@ -1595,6 +1595,10 @@ Q.Quests = {
         name = "Source of Power",
         suggestedLevel = 33,
         requiredLevel = 30,
+        prerequisites = {
+            any = {556, 93680},
+            all = {}
+        },
         source = { 
             type = "npc", 
             name = "Doctor Martin Felben", 

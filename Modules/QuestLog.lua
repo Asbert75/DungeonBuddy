@@ -2,6 +2,8 @@ local _, Q = ...
 local QuestLog = Q.Addon:NewModule("QuestLog", "AceEvent-3.0", "AceConsole-3.0")
 Q.QuestLog = QuestLog
 
+local ROW_HEIGHT = Q.Theme.Font.XL + 6
+
 local function IsRowCollapsed(row)
     if row.isDungeon then
         return Q:GetSetting("CollapsedDungeons")[row.id] or false
@@ -34,7 +36,7 @@ local function AppendLineageRows(rows, quest, path, depth)
         local dependency = Q.API:GetQuestById(questId)
         local row = dependency and CopyRow(dependency) or {
             id = questId,
-            name = "Quest " .. tostring(questId),
+            name = "Missing Quest Id [" .. tostring(questId) .. "]",
         }
         row.isChainQuest = dependencyType == "chain"
         row.isPrerequisite = dependencyType ~= "chain"
@@ -89,6 +91,22 @@ local function UpdateClassIcon(frame, row)
     end
 end
 
+local function UpdateRowColors(frame, row)
+    if Q.API:IsQuestCompleted(row.id) then
+        SetQuestStatusColor(frame.titleFrame.title, "QuestColorCompleted", "Disabled")
+        SetBorderTextureColor(frame.leftBorder, "QuestColorCompleted")
+    elseif Q.API:IsQuestInQuestLog(row.id) then
+        SetQuestStatusColor(frame.titleFrame.title, "QuestColorInProgress", "Success")
+        SetBorderTextureColor(frame.leftBorder, "QuestColorInProgress")
+    elseif Q.API:IsQuestAvailable(row.id) then
+        SetQuestStatusColor(frame.titleFrame.title, "QuestColorAvailable", "Accent")
+        SetBorderTextureColor(frame.leftBorder, "QuestColorAvailable")
+    else
+        SetQuestStatusColor(frame.titleFrame.title, "QuestColorUnavailable", "Emphasized")
+        SetBorderTextureColor(frame.leftBorder, "QuestColorUnavailable")
+    end
+end
+
 function QuestLog:Create()
     if self.frame then
         return self.frame
@@ -121,7 +139,7 @@ function QuestLog:Create()
     self.frame:SetPoint("CENTER", UIParent, "CENTER", Q:GetSetting("QuestLogFrame.X") or 0, Q:GetSetting("QuestLogFrame.Y") or 0)
     Q:ClampFrameToScreen(self.frame)
 
-    Q:CreateCloseButton(self.frame)
+    local closeButton = Q:CreateCloseButton(self.frame, "DungeonBuddy_QuestLogCloseButton")
 
     --------------------------------------------------
     -- QuestLog Header
@@ -145,14 +163,14 @@ function QuestLog:Create()
     -- Action Buttons
     --------------------------------------------------
     local actionHandlers = {
-        OnClick = function()
-            print("Collapsing/Expanding")
+        OnClick = function(self)
             if #Q:GetSetting("CollapsedQuests") > 0 or #Q:GetSetting("CollapsedDungeons") > 0 then
                 Q:SetSetting("CollapsedQuests", {})
                 Q:SetSetting("CollapsedDungeons", {})
                 Q.QuestLog:RefreshAndPopulate()
+
+                self.label:SetText("-")
             else
-                -- Insert all dungeons/quests into CollapsedQuests and CollapsedDungeons
                 local quests = {}
                 local dungeons = {}
 
@@ -167,13 +185,25 @@ function QuestLog:Create()
                 Q:SetSetting("CollapsedQuests", quests)
                 Q:SetSetting("CollapsedDungeons", dungeons)
                 Q.QuestLog:RefreshAndPopulate()
+
+                self.label:SetText("+")
             end
+        end,
+        OnMouseEnter = function(self)
+            GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+            GameTooltip:SetText("Expand/Collapse All", 1, 1, 1)
+            GameTooltip:AddLine("Click to expand/collapse all rows.", 0.85, 0.85, 0.85, true)
+            GameTooltip:Show()
+        end,
+        OnMouseLeave = function()
+            GameTooltip:Hide()
         end
     }
-    local collapseAndExpandButton = Q:CreateButton(nil, self.frame, "+", Q.Theme.Font.XL + 10, Q.Theme.Font.XL + 10, Q.Theme.Font.M, actionHandlers)
-    collapseAndExpandButton:SetPoint("RIGHT", self.header, "RIGHT", -Q.Theme.Padding.L, 0)
 
-
+    local initialText = (#Q:GetSetting("CollapsedQuests") > 0 or #Q:GetSetting("CollapsedDungeons") > 0) and "+" or "-"
+    local collapseAndExpandButton = Q:CreateButton("DungeonBuddy_CollapseAndExpandButton", self.frame, initialText, 24, 24, Q.Theme.Font.M, actionHandlers)
+    collapseAndExpandButton:SetPoint("RIGHT", closeButton, "LEFT", -2, 0)
+    
     --------------------------------------------------
     -- QuestLog Content Container
     --------------------------------------------------
@@ -182,7 +212,7 @@ function QuestLog:Create()
     Q:SetPixelPerfectPoint(self.contentContainer, "BOTTOMRIGHT", self.frame, "BOTTOMRIGHT", 0, 0)
     self.contentContainer:EnableMouseWheel(true)
 
-   self.scrollChild = CreateFrame("Frame", "DungeonBuddy_QuestLogContentContainerChild", self.contentContainer)
+    self.scrollChild = CreateFrame("Frame", "DungeonBuddy_QuestLogContentContainerChild", self.contentContainer)
     Q:SetPixelPerfectSize(self.scrollChild, containerWidth, 1)
     self.contentContainer:SetScrollChild(self.scrollChild)
     self.contentContainer:SetScript("OnSizeChanged", function(self, width)
@@ -192,6 +222,8 @@ function QuestLog:Create()
     local scrollBar = _G[self.contentContainer:GetName() .. "ScrollBar"]
     if scrollBar then
         scrollBar:ClearAllPoints()
+        scrollBar:SetValueStep(Q:PixelPerfect(ROW_HEIGHT))
+        scrollBar:SetObeyStepOnDrag(true)
         Q:SetPixelPerfectPoint(scrollBar, "TOPRIGHT", self.contentContainer, "TOPRIGHT", -1, -20)
         Q:SetPixelPerfectPoint(scrollBar, "BOTTOMRIGHT", self.contentContainer, "BOTTOMRIGHT", -1, 20)
 
@@ -221,7 +253,7 @@ function QuestLog:Create()
         end
         if thumb then
             thumb:SetTexture(nil)
-            thumb:SetColorTexture(unpack(Q.Theme.Border.Default))
+            thumb:SetColorTexture(unpack(Q.Theme.Text.Accent))
             Q:SetPixelPerfectWidth(thumb, 4)
         end
     end
@@ -245,7 +277,7 @@ function QuestLog:RefreshAndPopulate()
     local fontM = Q.Theme.Font.M
     local fontXL = Q.Theme.Font.XL
     local fontL = Q.Theme.Font.L
-    local rowHeight = Q.Theme.Font.XL + 6
+    local rowHeight = ROW_HEIGHT
     local paddingS = Q.Theme.Padding.S
     local paddingL = Q.Theme.Padding.L
     local totalOffset = 0
@@ -398,7 +430,7 @@ function QuestLog:RefreshAndPopulate()
                 end,
                 OnMouseEnter = function(self)
                     GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-                    GameTooltip:SetText("Get directions", 1, 1, 1)
+                    GameTooltip:SetText("Get Directions", 1, 1, 1)
                     local tomtom = rawget(_G, "TomTom")
                     if tomtom and tomtom.AddWaypoint then
                         GameTooltip:AddLine(string.format("Add a TomTom waypoint at this %s.", frame.row.isDungeon and "dungeon entrance" or "quests source(s)"), 0.85, 0.85, 0.85, true)
@@ -425,11 +457,14 @@ function QuestLog:RefreshAndPopulate()
 
         local title = row.name
         if row.isChainQuest then
-            title = "Series: " .. title
+            title = "Chain: " .. title
         end
         frame.titleFrame.title:SetText(title)
 
         if row.isDungeon then
+            frame.background:SetAlpha(0)
+            frame.leftBorder:SetAlpha(0)
+
             local levelColor = Q.API:GetDifficultyColor(playerInfo.level, row.minLevel)
             frame.titleFrame.level:SetText(string.format("(%s-%s)", row.minLevel, row.maxLevel))
             frame.titleFrame.level:SetTextColor(levelColor.r, levelColor.g, levelColor.b, 1)
@@ -439,23 +474,14 @@ function QuestLog:RefreshAndPopulate()
 
             frame.collapseButton:Show()
             frame.titleFrame.title:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * fontXL)
-            Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", paddingS, 0)
+            Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", 0, 0)
         else
+            frame.background:SetAlpha(0.2)
+            frame.leftBorder:SetAlpha(1)
+
             frame.titleFrame.level:SetText("")
 
-            if Q.API:IsQuestCompleted(row.id) then
-                SetQuestStatusColor(frame.titleFrame.title, "QuestColorCompleted", "Disabled")
-                SetBorderTextureColor(frame.leftBorder, "QuestColorCompleted")
-            elseif Q.API:IsQuestInQuestLog(row.id) then
-                SetQuestStatusColor(frame.titleFrame.title, "QuestColorInProgress", "Success")
-                SetBorderTextureColor(frame.leftBorder, "QuestColorInProgress")
-            elseif Q.API:IsQuestAvailable(row.id) then
-                SetQuestStatusColor(frame.titleFrame.title, "QuestColorAvailable", "Accent")
-                SetBorderTextureColor(frame.leftBorder, "QuestColorAvailable")
-            else
-                SetQuestStatusColor(frame.titleFrame.title, "QuestColorUnavailable", "Emphasized")
-                SetBorderTextureColor(frame.leftBorder, "QuestColorUnavailable")
-            end
+            UpdateRowColors(frame, row)
 
             if row.isMainQuest then
                 frame.titleFrame.title:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * fontM)
@@ -485,22 +511,10 @@ function QuestLog:RefreshAndPopulate()
         end
 
         if row.isPrerequisite then
-            local groupLabel = row.prerequisiteType == "any" and "Optional (Requires Any)" or "Required"
-            frame.titleFrame.title:SetText(string.format("%s: %s", groupLabel, row.name))
+            local groupLabel = row.prerequisiteType == "any" and "*" or ""
+            frame.titleFrame.title:SetText(string.format("%s%s", groupLabel, row.name))
             frame.titleFrame.level:SetText("")
-            if Q.API:IsQuestCompleted(row.id) then
-                SetQuestStatusColor(frame.titleFrame.title, "QuestColorCompleted", "Disabled")
-                SetBorderTextureColor(frame.leftBorder, "QuestColorCompleted")
-            elseif Q.API:IsQuestInQuestLog(row.id) then
-                SetQuestStatusColor(frame.titleFrame.title, "QuestColorInProgress", "Success")
-                SetBorderTextureColor(frame.leftBorder, "QuestColorInProgress")
-            elseif Q.API:IsQuestAvailable(row.id) then
-                SetQuestStatusColor(frame.titleFrame.title, "QuestColorAvailable", "Accent")
-                SetBorderTextureColor(frame.leftBorder, "QuestColorAvailable")
-            else
-                SetQuestStatusColor(frame.titleFrame.title, "QuestColorUnavailable", "Emphasized")
-                SetBorderTextureColor(frame.leftBorder, "QuestColorUnavailable")
-            end
+            UpdateRowColors(frame, row)
         end
 
         local rowOffset

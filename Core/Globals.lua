@@ -60,8 +60,8 @@ function Q:SetPixelPerfectPoint(frame, point, relativeTo, relativePoint, x, y)
 end
 
 --#region UI Creation Functions
-function Q:CreateCloseButton(parent)
-    local button = CreateFrame("Button", nil, parent, "BackdropTemplate")
+function Q:CreateCloseButton(parent, name)
+    local button = CreateFrame("Button", name, parent, "BackdropTemplate")
     Q:SetPixelPerfectSize(button, 24, 24)
     Q:SetPixelPerfectPoint(button, "TOPRIGHT", parent, "TOPRIGHT", -4, -4)
     button:SetBackdrop({
@@ -71,9 +71,9 @@ function Q:CreateCloseButton(parent)
         insets = { left = 0, right = 0, top = 0, bottom = 0 },
     })
 
-    local text = Q:CreateText(nil, button, "×", Q.Theme.Font.L, "Accent")
+    local text = Q:CreateText(nil, button, "x", Q.Theme.Font.L, "Accent")
     button.cross = text
-    Q:SetPixelPerfectPoint(text, "CENTER", button, "CENTER", 0, 1)
+    Q:SetPixelPerfectPoint(text, "CENTER", button, "CENTER", 1, 1)
 
     local function ApplyStyle(isHovered, isPressed)
         local r, g, b = unpack(Q.Theme.Background.Tertiary)
@@ -168,7 +168,7 @@ function Q:CreateButton(frameName, parent, text, width, height, fontSize, handle
     local label = Q:CreateText(nil, button, text, fontSize, "Accent")
     button.label = label
     label:SetJustifyH("CENTER")
-    Q:SetPixelPerfectPoint(label, "CENTER", button, "CENTER", 1, 0)
+    Q:SetPixelPerfectPoint(label, "CENTER", button, "CENTER", 0, 0)
 
     local function ApplyStyle(isHovered, isPressed)
         local r, g, b = unpack(Q.Theme.Background.Tertiary)
