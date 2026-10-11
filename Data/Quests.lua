@@ -1510,7 +1510,7 @@ Q.Quests = {
         faction = "Horde",
         name = "The Grave Knight",
         suggestedLevel = 33,
-        requiredLevel = 24,
+        requiredLevel = 30,
         source = { 
             type = "npc", 
             name = "Melisara", 
@@ -1524,7 +1524,7 @@ Q.Quests = {
         faction = "Horde",
         name = "Opportunistic Education",
         suggestedLevel = 33,
-        requiredLevel = 24,
+        requiredLevel = 30,
         source = { 
             type = "npc", 
             name = "Rexxie Copperclutch",
@@ -1538,7 +1538,7 @@ Q.Quests = {
         faction = "Horde",
         name = "Heart of Disruption",
         suggestedLevel = 33,
-        requiredLevel = 24,
+        requiredLevel = 30,
         previousQuestId = 92434,
         source = { 
             type = "npc", 
@@ -1552,7 +1552,7 @@ Q.Quests = {
         faction = "Alliance",
         name = "Starving Arcane",
         suggestedLevel = 33,
-        requiredLevel = 24,
+        requiredLevel = 30,
         source = { 
             type = "npc", 
             name = "Image of Archmage Modera", 
@@ -1566,7 +1566,7 @@ Q.Quests = {
         faction = "Alliance",
         name = "Power Overwhelming",
         suggestedLevel = 33,
-        requiredLevel = 24,
+        requiredLevel = 30,
         source = { 
             type = "npc", 
             name = "High Sorcerer Andromath", 
@@ -1580,7 +1580,7 @@ Q.Quests = {
         faction = "Alliance",
         name = "Heart of Disruption",
         suggestedLevel = 33,
-        requiredLevel = 24,
+        requiredLevel = 30,
         previousQuestId = 92432,
         source = { 
             type = "npc", 
@@ -1595,7 +1595,7 @@ Q.Quests = {
         faction = "Horde",
         name = "Source of Power",
         suggestedLevel = 33,
-        requiredLevel = 24,
+        requiredLevel = 30,
         source = { 
             type = "npc", 
             name = "Doctor Martin Felben", 
@@ -1609,7 +1609,7 @@ Q.Quests = {
         faction = "Horde",
         name = "Shrewd Negotiations",
         suggestedLevel = 33,
-        requiredLevel = 24,
+        requiredLevel = 30,
         previousQuestId = 96984,
         source = { 
             type = "npc", 
@@ -1619,12 +1619,84 @@ Q.Quests = {
         },
         dungeons = { Q.Dungeons["City of Dalaran"] },
     },
+
+    { 
+        id = 93680,
+        faction = "Horde",
+        name = "Key to the City",
+        suggestedLevel = 33,
+        requiredLevel = 30,
+        source = { 
+            type = "npc", 
+            name = "Magus Wordeen Voidglare", 
+            zone = "Hillsbrad Foothills", 
+            location = { mapId = 1424, x = 0.616, y = 0.208 }
+        }
+    },
+    { 
+        id = 556,
+        faction = "Horde",
+        name = "Stone Tokens",
+        suggestedLevel = 33,
+        requiredLevel = 30,
+        source = { 
+            type = "npc", 
+            name = "Keeper Bel'varil", 
+            zone = "Hillsbrad Foothills", 
+            location = { mapId = 1424, x = 0.614, y = 0.208 }
+        }
+    },
+    { 
+        id = 544,
+        faction = "Horde",
+        name = "Prison Break In",
+        suggestedLevel = 33,
+        requiredLevel = 30,
+        source = { 
+            type = "npc", 
+            name = "Magus Wordeen Voidglare", 
+            zone = "Hillsbrad Foothills", 
+            location = { mapId = 1424, x = 0.616, y = 0.208 }
+        }
+    },
+    { 
+        id = 545,
+        faction = "Horde",
+        name = "Dalaran Patrols",
+        suggestedLevel = 33,
+        requiredLevel = 30,
+        previousQuestId = 544,
+        source = { 
+            type = "npc", 
+            name = "Magus Wordeen Voidglare", 
+            zone = "Hillsbrad Foothills", 
+            location = { mapId = 1424, x = 0.616, y = 0.208 }
+        }
+    },
+    { 
+        id = 557,
+        faction = "Horde",
+        name = "Bracers of Binding",
+        suggestedLevel = 33,
+        requiredLevel = 30,
+        previousQuestId = 556,
+        source = { 
+            type = "npc", 
+            name = "Keeper Bel'varil", 
+            zone = "Hillsbrad Foothills", 
+            location = { mapId = 1424, x = 0.614, y = 0.208 }
+        }
+    },
     {
         id = 92434,
         faction = "Horde",
         name = "Blood in the Streets", -- TODO: wowhead comment says you need to complete all of Magus Wordeens quests to pick this up, verify in-game.
         suggestedLevel = 33,
-        requiredLevel = 24, -- TODO: Wowhead says 30, but next 2 quests say 24? Finish leveling shaman to figure out...
+        requiredLevel = 30,
+        prerequisites = {
+            all = {557, 545, 556},
+            any = {},
+        },
         source = { 
             type = "npc", 
             name = "Magus Wordeen Voidglare", 
@@ -1637,7 +1709,7 @@ Q.Quests = {
         faction = "Alliance",
         name = "A Green Sample",
         suggestedLevel = 33,
-        requiredLevel = 24,
+        requiredLevel = 30,
         source = { 
             type = "npc", 
             name = "Shylamiir", 
@@ -1651,7 +1723,7 @@ Q.Quests = {
         faction = "Alliance",
         name = "An Alarming Request",
         suggestedLevel = 33,
-        requiredLevel = 24,
+        requiredLevel = 30,
         source = { 
             type = "npc", 
             name = "Emissary Jacques", 
@@ -2594,7 +2666,7 @@ Q.Quests = {
     },
     {
         id = 2989,
-        faction = nil,
+        faction = "Alliance",
         name = "The Altar of Zul",
         suggestedLevel = 48,
         requiredLevel = 40,
@@ -2608,7 +2680,7 @@ Q.Quests = {
     },
     {
         id = 2990,
-        faction = nil,
+        faction = "Alliance",
         name = "Thadius Grimshade",
         suggestedLevel = 47,
         requiredLevel = 40,
@@ -2622,7 +2694,7 @@ Q.Quests = {
     },
     {
         id = 2991,
-        faction = nil,
+        faction = "Alliance",
         name = "Nekrum's Medallion",
         suggestedLevel = 47,
         requiredLevel = 40,
@@ -3200,22 +3272,7 @@ Q.Quests = {
         name = "Secret of the Circle",
         suggestedLevel = 51,
         requiredLevel = 46,
-        previousQuestId = 3445,
-        source = { 
-            type = "npc", 
-            name = "Marvon Rivetseeker", 
-            zone = "Tanaris", 
-            location = { mapId = 1446, x = 0.526, y = 0.458 } 
-        },
-        dungeons = { Q.Dungeons["Temple of Atal'Hakkar"] },
-    },
-    {
-        id = 3447,
-        faction = "Horde",
-        name = "Secret of the Circle",
-        suggestedLevel = 51,
-        requiredLevel = 46,
-        previousQuestId = 3380,
+        previousQuestId = 3444,
         source = { 
             type = "npc", 
             name = "Marvon Rivetseeker", 

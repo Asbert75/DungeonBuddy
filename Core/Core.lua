@@ -76,6 +76,7 @@ function Addon:HandleDebugCommand(input)
         Q:PrettyPrint("Debug mode " .. (Q.Debug.Enabled and "enabled" or "disabled"))
     end
     if arg1 ~= "status" and arg1 ~= "quest" then
+        Q.API:BuildLookupTables()
         Q.QuestLog:Reload()
     end
 end

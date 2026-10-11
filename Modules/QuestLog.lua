@@ -18,6 +18,55 @@ local function CopyRow(row)
     return copy
 end
 
+local function HasLineageDependencies(quest)
+    local prerequisites = quest.prerequisites or {}
+    return quest.previousQuestId ~= nil
+        or #(prerequisites.all or {}) > 0
+        or #(prerequisites.any or {}) > 0
+end
+
+local function AppendLineageRows(rows, quest, path, depth)
+    if not quest or path[quest.id] then
+        return
+    end
+
+    path[quest.id] = true
+    depth = depth or 0
+
+    local function AddDependency(questId, dependencyType)
+        if path[questId] then
+            return
+        end
+
+        local dependency = Q.API:GetQuestById(questId)
+        local row = dependency and CopyRow(dependency) or {
+            id = questId,
+            name = "Quest " .. tostring(questId),
+        }
+        row.isChainQuest = dependencyType == "chain"
+        row.isPrerequisite = dependencyType ~= "chain"
+        row.prerequisiteType = dependencyType
+        row.lineageDepth = depth + 1
+
+        if not Q:GetSetting("HideCompletedQuests") or not Q.API:IsQuestCompleted(questId) then
+            table.insert(rows, row)
+        end
+        AppendLineageRows(rows, dependency, path, depth + 1)
+    end
+
+    if quest.previousQuestId then
+        AddDependency(quest.previousQuestId, "chain")
+    end
+    for _, questId in ipairs((quest.prerequisites and quest.prerequisites.all) or {}) do
+        AddDependency(questId, "all")
+    end
+    for _, questId in ipairs((quest.prerequisites and quest.prerequisites.any) or {}) do
+        AddDependency(questId, "any")
+    end
+
+    path[quest.id] = nil
+end
+
 local function SetQuestStatusColor(fontString, settingPath, fallbackKey)
     local color = Q:GetSetting(settingPath)
     if color and color.r and color.g and color.b then
@@ -50,7 +99,7 @@ function QuestLog:Create()
         return self.frame
     end
 
-    local containerWidth = 450
+    local containerWidth = 500
 
     --------------------------------------------------
     -- Create QuestLog Frame
@@ -214,32 +263,15 @@ function QuestLog:RefreshAndPopulate()
                 for _, quest in ipairs(quests) do
                     local questIsCollapsed = Q:GetSetting("CollapsedQuests")[quest.id] or false
                     
-                    local chain = {}
-                    local seenQuestIds = { [quest.id] = true }
-                    local prevQuest = Q.API:GetQuestById(quest.previousQuestId)
-                    while prevQuest and not seenQuestIds[prevQuest.id] do
-                        seenQuestIds[prevQuest.id] = true
-                        table.insert(chain, prevQuest)
-                        prevQuest = Q.API:GetQuestById(prevQuest.previousQuestId)
-                    end
-
-                    local chainLength = #chain + 1
                     local questRow = CopyRow(quest)
                     questRow.isMainQuest = true
-                    questRow.chainStep = #chain > 0 and chainLength or nil
-                    questRow.chainLength = #chain > 0 and chainLength or nil
+                    questRow.hasChildren = HasLineageDependencies(quest)
                     if not Q:GetSetting("HideCompletedQuests") or not Q.API:IsQuestCompleted(quest.id) then
                         table.insert(self.rows, questRow)
                     end
 
-                    for chainIndex = 1, #chain do
-                        local chainQuest = CopyRow(chain[chainIndex])
-                        chainQuest.isChainQuest = true
-                        chainQuest.chainStep = chainLength - chainIndex
-                        chainQuest.chainLength = chainLength
-                        if (not Q:GetSetting("HideCompletedQuests") or not Q.API:IsQuestCompleted(chainQuest.id)) and not questIsCollapsed then
-                            table.insert(self.rows, chainQuest)
-                        end
+                    if not questIsCollapsed and (not Q:GetSetting("HideCompletedQuests") or not Q.API:IsQuestCompleted(quest.id)) then
+                        AppendLineageRows(self.rows, quest, {}, 0)
                     end
                 end
             end
@@ -365,8 +397,8 @@ function QuestLog:RefreshAndPopulate()
         UpdateClassIcon(frame, row)
 
         local title = row.name
-        if row.chainStep then
-            title = string.format("%s (%d/%d)", title, row.chainStep, row.chainLength)
+        if row.isChainQuest then
+            title = "Series: " .. title
         end
         frame.titleFrame.title:SetText(title)
 
@@ -399,21 +431,25 @@ function QuestLog:RefreshAndPopulate()
             end
 
             if row.isMainQuest then
-                if row.previousQuestId then
+                if row.hasChildren then
                     frame.collapseButton:Show()
                 else
                     frame.collapseButton:Hide()
                 end
                 frame.titleFrame.title:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * fontM)
                 Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", 2 * paddingS, 0)
+            elseif row.isPrerequisite then
+                frame.collapseButton:Hide()
+                frame.titleFrame.title:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * fontM)
+                Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", (3 + math.min(row.lineageDepth or 0, 4)) * paddingS, 0)
             else
                 frame.collapseButton:Hide()
                 frame.titleFrame.title:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * fontM)
-                Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", 3 * paddingS, 0)
+                Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", (3 + math.min(row.lineageDepth or 0, 4)) * paddingS, 0)
             end
         end
 
-        if not row.previousQuestId then
+        if not row.previousQuestId and not row.isPrerequisite then
             frame.waypointButton:Show()
         else
             frame.waypointButton:Hide()
@@ -423,6 +459,26 @@ function QuestLog:RefreshAndPopulate()
             frame.collapseButton.label:SetText("+")
         else
             frame.collapseButton.label:SetText("-")
+        end
+
+        if row.isPrerequisite then
+            local groupLabel = row.prerequisiteType == "any" and "Requires any: " or ""
+            frame.titleFrame.title:SetText(string.format("%s%s", groupLabel, row.name))
+            frame.titleFrame.level:SetText("")
+            frame.collapseButton:Hide()
+            if Q.API:IsQuestCompleted(row.id) then
+                SetQuestStatusColor(frame.titleFrame.title, "QuestColorCompleted", "Disabled")
+                SetBorderTextureColor(frame.leftBorder, "QuestColorCompleted")
+            elseif Q.API:IsQuestInQuestLog(row.id) then
+                SetQuestStatusColor(frame.titleFrame.title, "QuestColorInProgress", "Success")
+                SetBorderTextureColor(frame.leftBorder, "QuestColorInProgress")
+            elseif Q.API:IsQuestAvailable(row.id) then
+                SetQuestStatusColor(frame.titleFrame.title, "QuestColorAvailable", "Accent")
+                SetBorderTextureColor(frame.leftBorder, "QuestColorAvailable")
+            else
+                SetQuestStatusColor(frame.titleFrame.title, "QuestColorUnavailable", "Emphasized")
+                SetBorderTextureColor(frame.leftBorder, "QuestColorUnavailable")
+            end
         end
 
         local rowOffset
