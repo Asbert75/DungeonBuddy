@@ -114,17 +114,12 @@ function QuestLog:Create()
 
         local x, y = self:GetCenter()
         local centerX, centerY = UIParent:GetCenter()
-        Q:SetSetting("QuestLogFrame.X", x - centerX)
-        Q:SetSetting("QuestLogFrame.Y", y - centerY)
+        Q:SetSetting("QuestLogFrame.X", Q:PixelPerfect(x - centerX))
+        Q:SetSetting("QuestLogFrame.Y", Q:PixelPerfect(y - centerY))
     end)
 
     self.frame:SetPoint("CENTER", UIParent, "CENTER", Q:GetSetting("QuestLogFrame.X") or 0, Q:GetSetting("QuestLogFrame.Y") or 0)
     Q:ClampFrameToScreen(self.frame)
-
-    local x, y = self.frame:GetCenter()
-    local centerX, centerY = UIParent:GetCenter()
-    Q:SetSetting("QuestLogFrame.X", x - centerX)
-    Q:SetSetting("QuestLogFrame.Y", y - centerY)
 
     Q:CreateCloseButton(self.frame)
 
@@ -151,9 +146,28 @@ function QuestLog:Create()
     --------------------------------------------------
     local actionHandlers = {
         OnClick = function()
-            Q:SetSetting("CollapsedQuests", {})
-            Q:SetSetting("CollapsedDungeons", {})
-            Q.QuestLog:RefreshAndPopulate()
+            print("Collapsing/Expanding")
+            if #Q:GetSetting("CollapsedQuests") > 0 or #Q:GetSetting("CollapsedDungeons") > 0 then
+                Q:SetSetting("CollapsedQuests", {})
+                Q:SetSetting("CollapsedDungeons", {})
+                Q.QuestLog:RefreshAndPopulate()
+            else
+                -- Insert all dungeons/quests into CollapsedQuests and CollapsedDungeons
+                local quests = {}
+                local dungeons = {}
+
+                for _, row in ipairs(Q.API:GetQuests()) do
+                    table.insert(quests, row.id)
+                end
+
+                for _, row in ipairs(Q.API:GetDungeons()) do
+                    table.insert(dungeons, row.id)
+                end
+                
+                Q:SetSetting("CollapsedQuests", quests)
+                Q:SetSetting("CollapsedDungeons", dungeons)
+                Q.QuestLog:RefreshAndPopulate()
+            end
         end
     }
     local collapseAndExpandButton = Q:CreateButton(nil, self.frame, "+", Q.Theme.Font.XL + 10, Q.Theme.Font.XL + 10, Q.Theme.Font.M, actionHandlers)
