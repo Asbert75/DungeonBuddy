@@ -2,7 +2,34 @@ local _, Q = ...
 
 Q.API = {}
 
+local function FilterArray(table, predicate)
+    local writeIndex = 1
+
+    for readIndex = 1, #table do
+        local value = table[readIndex]
+
+        if predicate(value) then
+            table[writeIndex] = value
+            writeIndex = writeIndex + 1
+        end
+    end
+
+    for i = #table, writeIndex, -1 do
+        table[i] = nil
+    end
+end
+
 function Q.API:BuildLookupTables()
+    wipe(Q.QuestById)
+    wipe(Q.QuestsByDungeonId)
+    wipe(Q.DungeonById)
+    wipe(Q.DungeonByQuestId)
+
+    -- Filter out quests that do not match the player's faction and class, we do this when building lookups so that we can completely ignore faction/class in all other functions
+    FilterArray(Q.Quests, function(quest)
+        return quest and (quest.faction == self:GetPlayerFaction() or not quest.faction) and (quest.class == self:GetPlayerClass() or not quest.class)
+    end)
+
     for _, quest in ipairs(Q.Quests) do
         Q.QuestById[quest.id] = quest
         for _, dungeon in ipairs(quest.dungeons or {}) do
@@ -34,29 +61,32 @@ function Q.API:BuildLookupTables()
         table.insert(dungeons, dungeon)
     end
 
-    -- A dungeon quest makes its preceding chain quests relevant to that dungeon too.
-    for _, quest in ipairs(Q.Quests) do
-        for _, dungeon in ipairs(quest.dungeons or {}) do
-            local previousQuestId = quest.previousQuestId
-            local visited = { [quest.id] = true }
+    -- Dungeon relevance follows every unlock path back to its starting quests.
+    local function AddDungeonToLineage(quest, dungeon, visited)
+        if not quest or visited[quest.id] then
+            return
+        end
+        visited[quest.id] = true
+        addQuestDungeon(quest.id, dungeon)
 
-            while previousQuestId and not visited[previousQuestId] do
-                visited[previousQuestId] = true
-                local previousQuest = Q.QuestById[previousQuestId]
-                if not previousQuest then
-                    break
-                end
-
-                addQuestDungeon(previousQuest.id, dungeon)
-                previousQuestId = previousQuest.previousQuestId
-            end
+        local dependencyIds = {}
+        if quest.previousQuestId then
+            table.insert(dependencyIds, quest.previousQuestId)
+        end
+        for _, questId in ipairs((quest.prerequisites and quest.prerequisites.all) or {}) do
+            table.insert(dependencyIds, questId)
+        end
+        for _, questId in ipairs((quest.prerequisites and quest.prerequisites.any) or {}) do
+            table.insert(dependencyIds, questId)
+        end
+        for _, questId in ipairs(dependencyIds) do
+            AddDungeonToLineage(self:GetQuestById(questId), dungeon, visited)
         end
     end
 
-    -- Include direct dungeon membership as well as inherited chain membership.
     for _, quest in ipairs(Q.Quests) do
         for _, dungeon in ipairs(quest.dungeons or {}) do
-            addQuestDungeon(quest.id, dungeon)
+            AddDungeonToLineage(quest, dungeon, {})
         end
     end
 end
@@ -153,7 +183,27 @@ function Q.API:GetDungeons()
 end
 
 function Q.API:IsDungeonQuestChainStart(questId)
-    return not self:GetQuestById(questId).previousQuestId
+    local quest = self:GetQuestById(questId)
+    return quest ~= nil and not quest.previousQuestId
+end
+
+function Q.API:IsQuestLineageStart(questId)
+    local quest = self:GetQuestById(questId)
+    if not quest or quest.previousQuestId then
+        return false
+    end
+    local prerequisites = quest.prerequisites or {}
+    if #(prerequisites.all or {}) > 0 or #(prerequisites.any or {}) > 0 then
+        return false
+    end
+    return true
+end
+
+function Q.API:IsDungeonQuestLineageStart(questId)
+    if not self:IsQuestLineageStart(questId) then
+        return false
+    end
+    return #self:GetDungeonsForQuest(questId) > 0
 end
 
 function Q.API:GetRelevantQuestsForZone()
@@ -202,10 +252,7 @@ end
 function Q.API:GetAvailableQuestsByDungeonId(dungeonId, playerInfo)
     local quests = {}
     for _, quest in ipairs(self:GetQuestsByDungeonId(dungeonId) or {}) do
-        if  self:IsQuestAvailableToFaction(quest.id, playerInfo) and 
-            self:IsQuestAvailableToClass(quest.id, playerInfo) and 
-            self:IsQuestAvailableToLevel(quest.id, playerInfo) 
-        then
+        if self:IsQuestAvailableToLevel(quest.id, playerInfo) then
             table.insert(quests, quest)
         end
     end
@@ -215,8 +262,6 @@ end
 function Q.API:DungeonHasAvailableQuests(dungeonId, playerInfo)
     for _, quest in ipairs(self:GetQuests() or {}) do
         if  self:IsQuestRelatedToDungeon(quest.id, dungeonId) and 
-            self:IsQuestAvailableToFaction(quest.id, playerInfo) and 
-            self:IsQuestAvailableToClass(quest.id, playerInfo) and 
             self:IsQuestAvailableToLevel(quest.id, playerInfo) and 
             (Q:GetSetting("HideCompletedQuests") == false or not self:IsQuestCompleted(quest.id))
         then
@@ -235,6 +280,29 @@ function Q.API:IsPrerequisiteSatisfied(questId)
     
     if quest.previousQuestId and not self:IsQuestCompleted(quest.previousQuestId) then
         return false
+    end
+
+    local prerequisites = quest.prerequisites
+    if prerequisites then
+        for _, requiredQuestId in ipairs(prerequisites.all or {}) do
+            if not self:IsQuestCompleted(requiredQuestId) then
+                return false
+            end
+        end
+
+        local anyPrerequisites = prerequisites.any or {}
+        if #anyPrerequisites > 0 then
+            local hasCompletedAny = false
+            for _, requiredQuestId in ipairs(anyPrerequisites) do
+                if self:IsQuestCompleted(requiredQuestId) then
+                    hasCompletedAny = true
+                    break
+                end
+            end
+            if not hasCompletedAny then
+                return false
+            end
+        end
     end
 
     return true
@@ -257,26 +325,6 @@ function Q.API:IsQuestAvailableToLevel(questId, playerInfo)
     return true
 end
 
-function Q.API:IsQuestAvailableToFaction(questId, playerInfo)
-    local quest = self:GetQuestById(questId)
-    if not quest.faction then
-        return true
-    end
-
-    local playerFaction = playerInfo and playerInfo.faction or Q.API:GetPlayerFaction()
-    return quest.faction == playerFaction
-end
-
-function Q.API:IsQuestAvailableToClass(questId, playerInfo)
-    local quest = self:GetQuestById(questId)
-    if not quest.class then
-        return true
-    end
-
-    local playerClass = playerInfo and playerInfo.class or Q.API:GetPlayerClass()
-    return quest.class == playerClass
-end
-
 function Q.API:IsQuestAvailable(questId)
     if not self:GetQuestById(questId) then
         return false
@@ -287,15 +335,13 @@ function Q.API:IsQuestAvailable(questId)
     return
         not self:IsQuestCompleted(questId)
         and self:IsQuestAvailableToLevel(questId, playerInfo)
-        and self:IsQuestAvailableToFaction(questId, playerInfo)
-        and self:IsQuestAvailableToClass(questId, playerInfo)
         and self:IsPrerequisiteSatisfied(questId)
 end
 
 function Q.API:GetRandomQuest()
     local chainStartQuests = {}
     for _, quest in ipairs(self:GetQuests()) do
-        if self:IsDungeonQuestChainStart(quest.id) then
+        if self:IsQuestLineageStart(quest.id) then
             table.insert(chainStartQuests, quest)
         end
     end
