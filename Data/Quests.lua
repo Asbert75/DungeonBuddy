@@ -1406,7 +1406,6 @@ Q.Quests = {
         name = "Grime-Encrusted Ring",
         suggestedLevel = 34,
         requiredLevel = 28,
-        previousQuestId = 2926,
         source = { 
             type = "item", 
             name = "Grime-Encrusted Ring", 
@@ -3330,7 +3329,7 @@ Q.Quests = {
         dungeons = { Q.Dungeons["Blackrock Depths"] }
     },
     {
-        id = 3906,
+        id = 3907,
         faction = "Horde",
         name = "Disharmony of Fire",
         suggestedLevel = 56,
