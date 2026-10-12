@@ -1595,10 +1595,6 @@ Q.Quests = {
         name = "Source of Power",
         suggestedLevel = 33,
         requiredLevel = 30,
-        prerequisites = {
-            any = {556, 93680},
-            all = {}
-        },
         source = { 
             type = "npc", 
             name = "Doctor Martin Felben", 
@@ -3195,8 +3191,7 @@ Q.Quests = {
             name = "Witch Doctor Uzer'i", 
             zone = "Feralas", 
             location = { mapId = 1444, x = 0.744, y = 0.434 } 
-        },
-        dungeons = { Q.Dungeons["Temple of Atal'Hakkar"] },
+        }
     },
     {
         id = 3445,
@@ -3217,7 +3212,10 @@ Q.Quests = {
         name = "The Stone Circle",
         suggestedLevel = 51,
         requiredLevel = 46,
-        previousQuestId = 3445,
+        prerequisites = {
+            all = { 3445, 3380 },
+            any = {}
+        },
         source = { 
             type = "npc", 
             name = "Marvon Rivetseeker", 
@@ -3271,7 +3269,7 @@ Q.Quests = {
     },
     {
         id = 3447,
-        faction = "Alliance",
+        faction = nil,
         name = "Secret of the Circle",
         suggestedLevel = 51,
         requiredLevel = 46,
@@ -3329,8 +3327,7 @@ Q.Quests = {
             name = "Thunderheart", 
             zone = "Badlands", 
             location = { mapId = 1418, x = 0.036, y = 0.48 }
-        },
-        dungeons = { Q.Dungeons["Blackrock Depths"] }
+        }
     },
     {
         id = 3907,
