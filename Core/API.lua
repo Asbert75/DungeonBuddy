@@ -20,6 +20,12 @@ local function FilterArray(table, predicate)
 end
 
 function Q.API:BuildLookupTables()
+    if not Q.API.QuestsBackup then
+        Q.API.QuestsBackup = { unpack(Q.Quests) }
+    else
+        Q.Quests = { unpack(Q.API.QuestsBackup) }
+    end
+
     wipe(Q.QuestById)
     wipe(Q.QuestsByDungeonId)
     wipe(Q.DungeonById)
@@ -277,29 +283,39 @@ function Q.API:IsPrerequisiteSatisfied(questId)
     if not quest then
         return false
     end
+
+    local function IsRequiredQuestCompleted(requiredQuestId)
+        -- Quest definitions filtered by faction or class are not requirements
+        -- for this character, so do not query their completion state.
+        return not self:GetQuestById(requiredQuestId) or self:IsQuestCompleted(requiredQuestId)
+    end
     
-    if quest.previousQuestId and not self:IsQuestCompleted(quest.previousQuestId) then
+    if quest.previousQuestId and not IsRequiredQuestCompleted(quest.previousQuestId) then
         return false
     end
 
     local prerequisites = quest.prerequisites
     if prerequisites then
         for _, requiredQuestId in ipairs(prerequisites.all or {}) do
-            if not self:IsQuestCompleted(requiredQuestId) then
+            if not IsRequiredQuestCompleted(requiredQuestId) then
                 return false
             end
         end
 
         local anyPrerequisites = prerequisites.any or {}
         if #anyPrerequisites > 0 then
+            local hasKnownPrerequisite = false
             local hasCompletedAny = false
             for _, requiredQuestId in ipairs(anyPrerequisites) do
-                if self:IsQuestCompleted(requiredQuestId) then
-                    hasCompletedAny = true
-                    break
+                if self:GetQuestById(requiredQuestId) then
+                    hasKnownPrerequisite = true
+                    if self:IsQuestCompleted(requiredQuestId) then
+                        hasCompletedAny = true
+                        break
+                    end
                 end
             end
-            if not hasCompletedAny then
+            if hasKnownPrerequisite and not hasCompletedAny then
                 return false
             end
         end

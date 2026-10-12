@@ -1195,8 +1195,7 @@ Q.Quests = {
             name = "Motley Garmason", 
             zone = "Wetlands", 
             location = { mapId = 1437, x = 0.49, y = 0.18 } 
-        },
-        dungeons = { Q.Dungeons["The Stockade"] },
+        }
     },
     {
         id = 389,
@@ -1689,11 +1688,11 @@ Q.Quests = {
     {
         id = 92434,
         faction = "Horde",
-        name = "Blood in the Streets", -- TODO: wowhead comment says you need to complete all of Magus Wordeens quests to pick this up, verify in-game.
+        name = "Blood in the Streets",
         suggestedLevel = 33,
         requiredLevel = 30,
         prerequisites = {
-            all = {557, 545, 556},
+            all = {93680, 545},
             any = {},
         },
         source = { 
@@ -1817,7 +1816,8 @@ Q.Quests = {
             type = "npc", 
             name = "Vorrel Sengutz", 
             zone = "Scarlet Monastery", 
-            location = { mapId = 1420, x = 0.84, y = 0.32 }
+            location = { mapId = 1420, x = 0.84, y = 0.32 },
+            text = "Vorrel is found in the first room after the corridor, inside the dungeon."
         },
         dungeons = { Q.Dungeons["SM: Graveyard"] },
     },
@@ -2790,8 +2790,7 @@ Q.Quests = {
             name = "Cavindra", 
             zone = "Maraudon", 
             location = { mapId = 1443, x = 0.29, y = 0.62 }
-        },
-        dungeons = { Q.Dungeons["Maraudon"] },
+        }
     },
     {
         id = 7029,
@@ -2841,6 +2840,7 @@ Q.Quests = {
         name = "The Scepter of Celebras",
         suggestedLevel = 49,
         requiredLevel = 41,
+        previousQuestId = 7044,
         source = { 
             type = "npc", 
             name = "Celebras the Redeemed", 
@@ -3208,12 +3208,12 @@ Q.Quests = {
     },
     {
         id = 3444,
-        faction = "Alliance",
+        faction = nil,
         name = "The Stone Circle",
         suggestedLevel = 51,
         requiredLevel = 46,
         prerequisites = {
-            all = { 3445, 3380 },
+            all = { 3380, 3445 },
             any = {}
         },
         source = { 
@@ -3224,37 +3224,8 @@ Q.Quests = {
         }
     },
     {
-        id = 3444,
-        faction = "Horde",
-        name = "The Stone Circle",
-        suggestedLevel = 51,
-        requiredLevel = 46,
-        previousQuestId = 3380,
-        source = { 
-            type = "npc", 
-            name = "Marvon Rivetseeker", 
-            zone = "Tanaris", 
-            location = { mapId = 1446, x = 0.526, y = 0.458 } 
-        }
-    },
-    {
         id = 3446,
-        faction = "Alliance",
-        name = "Into the Depths",
-        suggestedLevel = 51,
-        requiredLevel = 46,
-        previousQuestId = 3444,
-        source = { 
-            type = "npc", 
-            name = "Marvon Rivetseeker", 
-            zone = "Tanaris", 
-            location = { mapId = 1446, x = 0.526, y = 0.458 } 
-        },
-        dungeons = { Q.Dungeons["Temple of Atal'Hakkar"] },
-    },
-    {
-        id = 3446,
-        faction = "Horde",
+        faction = nil,
         name = "Into the Depths",
         suggestedLevel = 51,
         requiredLevel = 46,
@@ -4192,7 +4163,9 @@ Q.Quests = {
         name = "Hidden Secrets",
         suggestedLevel = 38,
         requiredLevel = 30,
-        previousQuestId = 1947,
+        prerequisites = {
+            any = { 1947 }
+        },
         source = {
             type = "npc",
             name = "Tabetha",
