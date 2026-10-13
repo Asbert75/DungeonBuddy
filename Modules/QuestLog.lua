@@ -183,12 +183,49 @@ local function CopyRow(row)
     return copy
 end
 
-local function AppendRelatedRows(quest, depth)
+-- Counts the unique quests that lead up to the given quest, ignoring optional breadcrumbs.
+local function CountLineage(quest, seen)
+    for _, prerequisite in ipairs(quest.prerequisites or {}) do
+        local prerequisiteQuest = Q.API:GetQuestById(prerequisite.id)
+        if  prerequisiteQuest and
+            prerequisite.type ~= Q.PrerequisiteType.BREADCRUMB and
+            not seen[prerequisite.id]
+        then
+            seen[prerequisite.id] = true
+            CountLineage(prerequisiteQuest, seen)
+        end
+    end
+    return seen
+end
+
+local function CountRemainingLineage(quest)
+    local count = 0
+    for questId in pairs(CountLineage(quest, {})) do
+        if not Q:GetSetting("HideCompletedQuests") or not Q.API:IsQuestCompleted(questId) then
+            count = count + 1
+        end
+    end
+    return count
+end
+
+local function HasLineage(quest)
+    for _, prerequisite in ipairs(quest.prerequisites or {}) do
+        if prerequisite.type ~= Q.PrerequisiteType.BREADCRUMB and Q.API:GetQuestById(prerequisite.id) then
+            return true
+        end
+    end
+    return false
+end
+
+-- `visited` holds every quest already listed under the current main quest, so a chain shared by
+-- several alternatives is only expanded once and referenced with a summary row afterwards.
+local function AppendRelatedRows(quest, depth, visited)
     if not quest then
         return
     end
 
     depth = depth or 0
+    visited = visited or { [quest.id] = true }
 
     local function AddDependency(questId, dependencyType)
         local dependency = Q.API:GetQuestById(questId)
@@ -201,12 +238,28 @@ local function AppendRelatedRows(quest, depth)
         row.prerequisiteType = dependencyType
         row.lineageDepth = depth + 1
 
-        if not Q:GetSetting("HideCompletedQuests") or not Q.API:IsQuestCompleted(questId) then
+        local isHidden = Q:GetSetting("HideCompletedQuests") and Q.API:IsQuestCompleted(questId)
+        if not isHidden then
             table.insert(QuestLog.rows, row)
         end
-    
-        if not IsRowCollapsed(row) then
-            AppendRelatedRows(dependency, depth + 1)
+
+        if IsRowCollapsed(row) or not dependency then
+            return
+        end
+
+        if not visited[questId] then
+            visited[questId] = true
+            AppendRelatedRows(dependency, depth + 1, visited)
+        elseif HasLineage(dependency) and not isHidden then
+            local count = CountRemainingLineage(dependency)
+            if count > 0 then
+                table.insert(QuestLog.rows, {
+                    id = "shared:" .. questId .. ":" .. #QuestLog.rows,
+                    name = string.format("Shared (%d %s, listed above)", count, count == 1 and "quest" or "quests"),
+                    isSharedSummary = true,
+                    lineageDepth = depth + 2,
+                })
+            end
         end
     end
 
@@ -245,7 +298,10 @@ local function UpdateClassIcon(frame)
 end
 
 local function UpdateRowAppearance(frame, playerInfo)
-    if frame.row.isDungeon then
+    if frame.row.isSharedSummary then
+        Q:SetTextColor(frame.titleFrame.title, "Disabled")
+        frame.leftBorder:SetColorTexture(unpack(Q.Theme.Border.Accent))
+    elseif frame.row.isDungeon then
         local levelColor = Q.API:GetDifficultyColor(playerInfo.level, frame.row.minLevel)
         frame.titleFrame.level:SetTextColor(levelColor.r, levelColor.g, levelColor.b, 1)
 
@@ -269,12 +325,15 @@ end
 local function UpdateCollapseButton(frame)
     local row = frame.row
 
-    if row.isDungeon or #(row.prerequisites or {}) > 0 then
+    if row.isDungeon or (not row.isSharedSummary and #(row.prerequisites or {}) > 0) then
         frame.collapseButton:Show()
     else
         frame.collapseButton:Hide()
     end
 
+    if row.isSharedSummary then
+        return
+    end
     if IsRowCollapsed(row) then
         frame.collapseButton.label:SetText("+")
     else
@@ -283,7 +342,7 @@ local function UpdateCollapseButton(frame)
 end
 
 local function UpdateWaypointButton(frame)
-    if frame.row.isDungeon or Q.API:IsQuestAvailable(frame.row.id) then
+    if not frame.row.isSharedSummary and (frame.row.isDungeon or Q.API:IsQuestAvailable(frame.row.id)) then
         frame.waypointButton:Show()
     else
         frame.waypointButton:Hide()
@@ -317,7 +376,7 @@ local function UpdateRowText(frame)
     -- elseif row.prerequisiteType and row.prerequisiteType == "required" then
     --     title = "!" .. title
     elseif row.prerequisiteType and row.prerequisiteType == "breadcrumb" then
-        title = ">" .. title
+        title = "Breadcrumb: " .. title
     -- elseif row.prerequisiteType and row.prerequisiteType == "chain" then
     --     title = "#" .. title
     end
