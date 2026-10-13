@@ -263,8 +263,12 @@ local function AppendRelatedRows(quest, depth, visited)
         end
     end
 
+    -- A breadcrumb only points toward this quest, so it is pointless once this quest is hidden as completed.
+    local hideBreadcrumbs = Q:GetSetting("HideCompletedQuests") and Q.API:IsQuestCompleted(quest.id)
+
     for _, prerequisite in ipairs(quest.prerequisites or {}) do
-        if Q.API:GetQuestById(prerequisite.id) then
+        local isHiddenBreadcrumb = hideBreadcrumbs and prerequisite.type == Q.PrerequisiteType.BREADCRUMB
+        if not isHiddenBreadcrumb and Q.API:GetQuestById(prerequisite.id) then
             AddDependency(prerequisite.id, prerequisite.type)
         end
     end
