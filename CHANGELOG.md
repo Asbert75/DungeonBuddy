@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.1] - 2026-10-13
+
+### Added
+
+- Quests with shared questlines now display the chain in only one place instead of both, a new row is shown to alert you that there are shared quests
+- Added breadcrumb quests with a breadcrumb-prefix, these are quests that are not required but only guide you in the right direction
+
+### Changed
+
+- Updated the logic behind prerequisites to support multiple optional quests where only 1 is required.
+
+### Fixed
+
+- Corrected the logic behind notifications to only show notifications for quests that either start a chain, or for quests that are directly inside the dungeon
+
 ## [1.5.0] - 2026-10-11
 
 ### Added
