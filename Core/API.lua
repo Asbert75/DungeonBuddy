@@ -75,17 +75,7 @@ function Q.API:BuildLookupTables()
         visited[quest.id] = true
         addQuestDungeon(quest.id, dungeon)
 
-        local dependencyIds = {}
-        if quest.previousQuestId then
-            table.insert(dependencyIds, quest.previousQuestId)
-        end
-        for _, questId in ipairs((quest.prerequisites and quest.prerequisites.all) or {}) do
-            table.insert(dependencyIds, questId)
-        end
-        for _, questId in ipairs((quest.prerequisites and quest.prerequisites.any) or {}) do
-            table.insert(dependencyIds, questId)
-        end
-        for _, questId in ipairs(dependencyIds) do
+        for _, questId in ipairs(quest.prerequisites or {}) do
             AddDungeonToLineage(self:GetQuestById(questId), dungeon, visited)
         end
     end
@@ -190,7 +180,19 @@ end
 
 function Q.API:IsDungeonQuestChainStart(questId)
     local quest = self:GetQuestById(questId)
-    return quest ~= nil and not quest.previousQuestId
+    local isChainStart = true
+    
+    for _, prerequisite in ipairs(quest.prerequisites or {}) do
+        if  prerequisite.type == Q.PrerequisiteType.CHAIN or
+            prerequisite.type == Q.PrerequisiteType.REQUIRED or
+            prerequisite.type == Q.PrerequisiteType.ANY
+        then
+            isChainStart = false
+            break
+        end
+    end
+
+    return isChainStart
 end
 
 function Q.API:IsQuestLineageStart(questId)

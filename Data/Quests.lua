@@ -1,5 +1,12 @@
 local _, Q = ...
 
+Q.PrerequisiteType = {
+    ["BREADCRUMB"] = "breadcrumb",
+    ["CHAIN"] = "chain",
+    ["REQUIRED"] = "all",
+    ["ANY"] = "any"
+}
+
 --[[
     The "dungeons" property on a quest only tells the addon which dungeons that this particular quest
     should be displayed as a "main" quest, that is; which dungeon in the quest tracker it is displayed
@@ -13,11 +20,11 @@ Q.Quests = {
         name = "Important Heirlooms",
         suggestedLevel = 15,
         requiredLevel = 10,
-        source = { 
-            type = "npc", 
-            name = "Thom Filch", 
-            zone = "Ironforge", 
-            location = { mapId = 1455, x = 0.326, y = 0.446 } 
+        source = {
+            type = "npc",
+            name = "Thom Filch",
+            zone = "Ironforge",
+            location = { mapId = 1455, x = 0.326, y = 0.446 }
         },
         dungeons = { Q.Dungeons["Hall of Thanes"] }
     },
@@ -27,24 +34,24 @@ Q.Quests = {
         name = "The Restless Dead",
         suggestedLevel = 15,
         requiredLevel = 10,
-        source = { 
-            type = "npc", 
-            name = "Afadra Dunwall", 
-            zone = "Ironforge", 
-            location = { mapId = 1455, x = 0.340, y = 0.488 } 
+        source = {
+            type = "npc",
+            name = "Afadra Dunwall",
+            zone = "Ironforge",
+            location = { mapId = 1455, x = 0.340, y = 0.488 }
         },
         dungeons = { Q.Dungeons["Hall of Thanes"] }
     },
-        {
+    {
         id = 96395,
         faction = nil,
         name = "An Ancient Grudge",
         suggestedLevel = 15,
         requiredLevel = 10,
-        source = { 
-            type = "npc", 
-            name = "Ghostly Attendant", 
-            zone = "Hall of Thanes", 
+        source = {
+            type = "npc",
+            name = "Ghostly Attendant",
+            zone = "Hall of Thanes",
             location = { mapId = 1455, x = 0.614, y = 0.892 }
         },
         dungeons = { Q.Dungeons["Hall of Thanes"] }
@@ -55,12 +62,14 @@ Q.Quests = {
         name = "Old Ironforge Incursion",
         suggestedLevel = 16,
         requiredLevel = 9,
-        previousQuestId = 96391,
-        source = { 
-            type = "npc", 
-            name = "Earthseer Farsen", 
-            zone = "Dun Morogh", 
-            location = { mapId = 1426, x = 0.648, y = 0.584 } 
+        prerequisites = {
+            { id = 96391, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Earthseer Farsen",
+            zone = "Dun Morogh",
+            location = { mapId = 1426, x = 0.648, y = 0.584 }
         },
         dungeons = { Q.Dungeons["Hall of Thanes"] }
     },
@@ -70,13 +79,13 @@ Q.Quests = {
         name = "Underground Map",
         suggestedLevel = 15,
         requiredLevel = 9,
-        source = { 
-            type = "item", 
-            name = "Dark Iron Map", 
-            itemId = 274268, 
-            zone = "Dun Morogh", 
-            location = { mapId = 1426, x = 0.65, y = 0.58 }, 
-            text = "Dropped by Captain Beld and Dark Iron spies" 
+        source = {
+            type = "item",
+            name = "Dark Iron Map",
+            itemId = 274268,
+            zone = "Dun Morogh",
+            location = { mapId = 1426, x = 0.65, y = 0.58 },
+            text = "Dropped by Captain Beld and Dark Iron spies"
         },
         dungeons = { Q.Dungeons["Hall of Thanes"] }
     },
@@ -118,7 +127,9 @@ Q.Quests = {
         name = "Hidden Enemies",
         suggestedLevel = 12,
         requiredLevel = 9,
-        previousQuestId = 5726,
+        prerequisites = {
+            { id = 5726, type = Q.PrerequisiteType.CHAIN }
+        },
         source = {
             type = "npc",
             name = "Thrall",
@@ -132,7 +143,9 @@ Q.Quests = {
         name = "Hidden Enemies",
         suggestedLevel = 16,
         requiredLevel = 9,
-        previousQuestId = 5727,
+        prerequisites = {
+            { id = 5727, type = Q.PrerequisiteType.CHAIN }
+        },
         source = {
             type = "npc",
             name = "Thrall",
@@ -188,7 +201,9 @@ Q.Quests = {
         faction = "Horde",
         name = "Returning the Lost Satchel",
         suggestedLevel = 16,
-        previousQuestId = 5722,
+        prerequisites = {
+            { id = 5722, type = Q.PrerequisiteType.CHAIN }
+        },
         requiredLevel = 9,
         source = {
             type = "npc",
@@ -212,7 +227,7 @@ Q.Quests = {
         }
     },
     --#endregion
-
+    
     --#region Ruins of Lordaeron
     {
         id = 92401,
@@ -220,11 +235,11 @@ Q.Quests = {
         name = "A Frightened Request",
         suggestedLevel = 22,
         requiredLevel = 15,
-        source = { 
-            type = "npc", 
-            name = "Tabitha Heartweaver", 
-            zone = "Silverpine Forest", 
-            location = { mapId = 1421, x = 0.446, y = 0.429 } 
+        source = {
+            type = "npc",
+            name = "Tabitha Heartweaver",
+            zone = "Silverpine Forest",
+            location = { mapId = 1421, x = 0.446, y = 0.429 }
         },
         dungeons = { Q.Dungeons["Ruins of Lordaeron"] }
     },
@@ -234,13 +249,13 @@ Q.Quests = {
         name = "Crest of Lordaeron",
         suggestedLevel = 22,
         requiredLevel = 16,
-        source = { 
-            type = "item", 
-            name = "Crest of Lordaeron", 
-            itemId = 275521, 
-            zone = "Ruins of Lordaeron", 
+        source = {
+            type = "item",
+            name = "Crest of Lordaeron",
+            itemId = 275521,
+            zone = "Ruins of Lordaeron",
             location = { mapId = 1420, x = 0.61, y = 0.60 },
-            text = "Search the ruins; the crest can appear in several locations" 
+            text = "Search the ruins; the crest can appear in several locations"
         },
         dungeons = { Q.Dungeons["Ruins of Lordaeron"] }
     },
@@ -250,13 +265,13 @@ Q.Quests = {
         name = "Crest of Lordaeron",
         suggestedLevel = 22,
         requiredLevel = 16,
-        source = { 
-            type = "item", 
-            name = "Crest of Lordaeron", 
-            itemId = 268579, 
-            zone = "Ruins of Lordaeron", 
+        source = {
+            type = "item",
+            name = "Crest of Lordaeron",
+            itemId = 268579,
+            zone = "Ruins of Lordaeron",
             location = { mapId = 1420, x = 0.61, y = 0.60 },
-            text = "Search the ruins; the crest can appear in several locations" 
+            text = "Search the ruins; the crest can appear in several locations"
         },
         dungeons = { Q.Dungeons["Ruins of Lordaeron"] }
     },
@@ -266,10 +281,10 @@ Q.Quests = {
         name = "Light's Justice",
         suggestedLevel = 22,
         requiredLevel = 15,
-        source = { 
-            type = "npc", 
-            name = "Morbin Lightbane", 
-            zone = "Undercity", 
+        source = {
+            type = "npc",
+            name = "Morbin Lightbane",
+            zone = "Undercity",
             location = { mapId = 1458, x = 0.578, y = 0.897 }
         },
         dungeons = { Q.Dungeons["Ruins of Lordaeron"] }
@@ -280,10 +295,10 @@ Q.Quests = {
         name = "The New Plague",
         suggestedLevel = 22,
         requiredLevel = 16,
-        source = { 
-            type = "npc", 
-            name = "Theodore Griffs", 
-            zone = "Undercity", 
+        source = {
+            type = "npc",
+            name = "Theodore Griffs",
+            zone = "Undercity",
             location = { mapId = 1458, x = 0.467, y = 0.719 }
         },
         dungeons = { Q.Dungeons["Ruins of Lordaeron"] }
@@ -294,11 +309,11 @@ Q.Quests = {
         name = "The Wrath of Rath'mael",
         suggestedLevel = 22,
         requiredLevel = 15,
-        source = { 
-            type = "npc", 
-            name = "Deathguard Kristof", 
-            zone = "Tirisfal Glades", 
-            location = { mapId = 1420, x = 0.652, y = 0.602 } 
+        source = {
+            type = "npc",
+            name = "Deathguard Kristof",
+            zone = "Tirisfal Glades",
+            location = { mapId = 1420, x = 0.652, y = 0.602 }
         },
         dungeons = { Q.Dungeons["Ruins of Lordaeron"] }
     },
@@ -308,13 +323,13 @@ Q.Quests = {
         name = "Unending Torment",
         suggestedLevel = 21,
         requiredLevel = 16,
-        source = { 
-            type = "item", 
-            name = "Abominable Head", 
-            itemId = 280438, 
-            zone = "Ruins of Lordaeron", 
+        source = {
+            type = "item",
+            name = "Abominable Head",
+            itemId = 280438,
+            zone = "Ruins of Lordaeron",
             location = { mapId = 1420, x = 0.61, y = 0.60 },
-            text = "Dropped by The Baron inside the dungeon" 
+            text = "Dropped by The Baron inside the dungeon"
         },
         dungeons = { Q.Dungeons["Ruins of Lordaeron"] }
     },
@@ -324,10 +339,10 @@ Q.Quests = {
         name = "Abominable Creatures",
         suggestedLevel = 21,
         requiredLevel = 16,
-        source = { 
-            type = "npc", 
-            name = "Captain Truman", 
-            zone = "Ruins of Lordaeron", 
+        source = {
+            type = "npc",
+            name = "Captain Truman",
+            zone = "Ruins of Lordaeron",
             location = { mapId = 1420, x = 0.61, y = 0.60 },
             text = "Found inside the dungeon at the entrance"
         },
@@ -339,13 +354,13 @@ Q.Quests = {
         name = "Remember That I Love You",
         suggestedLevel = 22,
         requiredLevel = 15,
-        source = { 
-            type = "item", 
-            name = "Blood-Stained Letter", 
-            itemId = 251522, 
-            zone = "Ruins of Lordaeron", 
+        source = {
+            type = "item",
+            name = "Blood-Stained Letter",
+            itemId = 251522,
+            zone = "Ruins of Lordaeron",
             location = { mapId = 1420, x = 0.61, y = 0.60 },
-            text = "Found in the dungeon near Rath'mael" 
+            text = "Found in the dungeon near Rath'mael"
         },
         dungeons = { Q.Dungeons["Ruins of Lordaeron"] }
     },
@@ -355,18 +370,18 @@ Q.Quests = {
         name = "Bloodied Insignia",
         suggestedLevel = 22,
         requiredLevel = 16,
-        source = { 
-            type = "item", 
-            name = "Bloodied Insignia", 
-            itemId = 268535, 
-            zone = "Ruins of Lordaeron", 
+        source = {
+            type = "item",
+            name = "Bloodied Insignia",
+            itemId = 268535,
+            zone = "Ruins of Lordaeron",
             location = { mapId = 1420, x = 0.61, y = 0.60 },
-            text = "Dropped by undead mobs in the ruins" 
+            text = "Dropped by undead mobs in the ruins"
         },
         dungeons = { Q.Dungeons["Ruins of Lordaeron"] }
     },
     --#endregion
-    
+
     --#region The Deadmines
     {
         id = 65,
@@ -374,11 +389,12 @@ Q.Quests = {
         name = "The Defias Brotherhood",
         suggestedLevel = 18,
         requiredLevel = 14,
-        source = { 
-            type = "npc", 
-            name = "Gryan Stoutmantle", 
-            zone = "Westfall", 
-            location = { mapId = 1436, x = 0.56, y = 0.47 } },
+        source = {
+            type = "npc",
+            name = "Gryan Stoutmantle",
+            zone = "Westfall",
+            location = { mapId = 1436, x = 0.56, y = 0.47 }
+        },
     },
     {
         id = 155,
@@ -386,12 +402,15 @@ Q.Quests = {
         name = "The Defias Brotherhood",
         suggestedLevel = 18,
         requiredLevel = 14,
-        previousQuestId = 65,
-        source = { 
-            type = "npc", 
-            name = "Gryan Stoutmantle", 
-            zone = "Westfall", 
-            location = { mapId = 1436, x = 0.56, y = 0.47 } },
+        prerequisites = {
+            { id = 65, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Gryan Stoutmantle",
+            zone = "Westfall",
+            location = { mapId = 1436, x = 0.56, y = 0.47 }
+        },
     },
     {
         id = 132,
@@ -399,12 +418,15 @@ Q.Quests = {
         name = "The Defias Brotherhood",
         suggestedLevel = 18,
         requiredLevel = 14,
-        previousQuestId = 155,
-        source = { 
-            type = "npc", 
-            name = "Wiley the Black", 
-            zone = "Redridge Mountains", 
-            location = { mapId = 1433, x = 0.89, y = 0.70 } },
+        prerequisites = {
+            { id = 155, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Wiley the Black",
+            zone = "Redridge Mountains",
+            location = { mapId = 1433, x = 0.89, y = 0.70 }
+        },
     },
     {
         id = 135,
@@ -412,12 +434,15 @@ Q.Quests = {
         name = "The Defias Brotherhood",
         suggestedLevel = 18,
         requiredLevel = 14,
-        previousQuestId = 132,
-        source = { 
-            type = "npc", 
-            name = "Gryan Stoutmantle", 
-            zone = "Westfall", 
-            location = { mapId = 1436, x = 0.56, y = 0.47 } },
+        prerequisites = {
+            { id = 132, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Gryan Stoutmantle",
+            zone = "Westfall",
+            location = { mapId = 1436, x = 0.56, y = 0.47 }
+        },
     },
     {
         id = 141,
@@ -425,12 +450,15 @@ Q.Quests = {
         name = "The Defias Brotherhood",
         suggestedLevel = 18,
         requiredLevel = 14,
-        previousQuestId = 135,
-        source = { 
-            type = "npc", 
-            name = "Master Mathias Shaw", 
-            zone = "Stormwind City", 
-            location = { mapId = 1453, x = 0.75, y = 0.60 } },
+        prerequisites = {
+            { id = 135, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Master Mathias Shaw",
+            zone = "Stormwind City",
+            location = { mapId = 1453, x = 0.75, y = 0.60 }
+        },
     },
     {
         id = 142,
@@ -438,12 +466,15 @@ Q.Quests = {
         name = "The Defias Brotherhood",
         suggestedLevel = 18,
         requiredLevel = 14,
-        previousQuestId = 141,
-        source = { 
-            type = "npc", 
-            name = "Gryan Stoutmantle", 
-            zone = "Westfall", 
-            location = { mapId = 1436, x = 0.56, y = 0.47 } },
+        prerequisites = {
+            { id = 141, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Gryan Stoutmantle",
+            zone = "Westfall",
+            location = { mapId = 1436, x = 0.56, y = 0.47 }
+        },
     },
     {
         id = 168,
@@ -493,7 +524,9 @@ Q.Quests = {
         name = "Red Silk Bandanas",
         suggestedLevel = 14,
         requiredLevel = 14,
-        previousQuestId = 142,
+        prerequisites = {
+            { id = 142, type = Q.PrerequisiteType.CHAIN }
+        },
         source = {
             type = "npc",
             name = "Scout Riell",
@@ -524,7 +557,9 @@ Q.Quests = {
         name = "The Defias Brotherhood",
         suggestedLevel = 18,
         requiredLevel = 14,
-        previousQuestId = 142,
+        prerequisites = {
+            { id = 142, type = Q.PrerequisiteType.CHAIN }
+        },
         source = {
             type = "npc",
             name = "Gryan Stoutmantle",
@@ -537,15 +572,31 @@ Q.Quests = {
 
     --#region Wailing Caverns
     {
+        id = 886,
+        faction = "Horde",
+        name = "The Barren Oases",
+        suggestedLevel = 10,
+        requiredLevel = 10,
+        source = {
+            type = "npc",
+            name = "Arch Druid Hamuul Runetotem",
+            zone = "Thunder Bluff",
+            location = { mapId = 1456, x = 0.786, y = 0.286 },
+        },
+    },
+    {
         id = 870,
         faction = "Horde",
         name = "The Forgotten Pools",
         suggestedLevel = 13,
         requiredLevel = 10,
+        prerequisites = {
+            { id = 886, type = Q.PrerequisiteType.BREADCRUMB }
+        },
         source = {
             type = "npc",
             name = "Tonga Runetotem",
-            zone = "The Crossroads",
+            zone = "The Barrens",
             location = { mapId = 1413, x = 0.52, y = 0.31 },
         },
     },
@@ -555,11 +606,13 @@ Q.Quests = {
         name = "The Stagnant Oasis",
         suggestedLevel = 13,
         requiredLevel = 10,
-        previousQuestId = 870,
+        prerequisites = {
+            { id = 870, type = Q.PrerequisiteType.CHAIN }
+        },
         source = {
             type = "npc",
             name = "Tonga Runetotem",
-            zone = "The Crossroads",
+            zone = "The Barrens",
             location = { mapId = 1413, x = 0.52, y = 0.31 },
         },
     },
@@ -569,11 +622,13 @@ Q.Quests = {
         name = "Altered Beings",
         suggestedLevel = 16,
         requiredLevel = 10,
-        previousQuestId = 877,
+        prerequisites = {
+            { id = 877, type = Q.PrerequisiteType.CHAIN }
+        },
         source = {
             type = "npc",
             name = "Tonga Runetotem",
-            zone = "The Crossroads",
+            zone = "The Barrens",
             location = { mapId = 1413, x = 0.52, y = 0.31 },
         },
     },
@@ -583,11 +638,13 @@ Q.Quests = {
         name = "Hamuul Runetotem",
         suggestedLevel = 16,
         requiredLevel = 10,
-        previousQuestId = 880,
+        prerequisites = {
+            { id = 880, type = Q.PrerequisiteType.CHAIN }
+        },
         source = {
             type = "npc",
             name = "Tonga Runetotem",
-            zone = "The Crossroads",
+            zone = "The Barrens",
             location = { mapId = 1413, x = 0.52, y = 0.31 },
         },
     },
@@ -597,7 +654,9 @@ Q.Quests = {
         name = "Nara Wildmane",
         suggestedLevel = 16,
         requiredLevel = 10,
-        previousQuestId = 1489,
+        prerequisites = {
+            { id = 1489, type = Q.PrerequisiteType.CHAIN }
+        },
         source = {
             type = "npc",
             name = "Hamuul Runetotem",
@@ -642,7 +701,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Crane Operator Bigglefuzz",
-            zone = "Ratchet",
+            zone = "The Barrens",
             location = { mapId = 1413, x = 0.63, y = 0.37 }
         },
         dungeons = { Q.Dungeons["Wailing Caverns"] },
@@ -653,11 +712,13 @@ Q.Quests = {
         name = "Smart Drinks",
         suggestedLevel = 18,
         requiredLevel = 13,
-        previousQuestId = 865,
+        prerequisites = {
+            { id = 865, type = Q.PrerequisiteType.CHAIN }
+        },
         source = {
             type = "npc",
             name = "Mebok Mizzyrix",
-            zone = "Ratchet",
+            zone = "The Barrens",
             location = { mapId = 1413, x = 0.62, y = 0.37 }
         },
         dungeons = { Q.Dungeons["Wailing Caverns"] },
@@ -672,7 +733,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Mebok Mizzyrix",
-            zone = "Ratchet",
+            zone = "The Barrens",
             location = { mapId = 1413, x = 0.62, y = 0.37 },
         },
     },
@@ -696,7 +757,9 @@ Q.Quests = {
         name = "Leaders of the Fang",
         suggestedLevel = 22,
         requiredLevel = 15,
-        previousQuestId = 1490,
+        prerequisites = {
+            { id = 1490, type = Q.PrerequisiteType.CHAIN }
+        },
         source = {
             type = "npc",
             name = "Nara Wildmane",
@@ -722,7 +785,7 @@ Q.Quests = {
         dungeons = { Q.Dungeons["Wailing Caverns"] },
     },
     --#endregion
-       
+
     --#region Blackfathom Deeps
     {
         id = 971,
@@ -730,11 +793,11 @@ Q.Quests = {
         name = "Knowledge in the Deeps",
         suggestedLevel = 23,
         requiredLevel = 10,
-        source = { 
-            type = "npc", 
-            name = "Gerrig Bonegrip", 
-            zone = "Ironforge", 
-            location = { mapId = 1455, x = 0.50, y = 0.08 } 
+        source = {
+            type = "npc",
+            name = "Gerrig Bonegrip",
+            zone = "Ironforge",
+            location = { mapId = 1455, x = 0.50, y = 0.08 }
         },
         dungeons = { Q.Dungeons["Blackfathom Deeps"] },
     },
@@ -744,12 +807,14 @@ Q.Quests = {
         name = "Researching the Corruption",
         suggestedLevel = 24,
         requiredLevel = 18,
-        previousQuestId = 376,
-        source = { 
-            type = "npc", 
-            name = "Gershala Nightwhisper", 
-            zone = "Darkshore", 
-            location = { mapId = 1439, x = 0.37, y = 0.44 } 
+        prerequisites = {
+            { id = 376, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Gershala Nightwhisper",
+            zone = "Darkshore",
+            location = { mapId = 1439, x = 0.37, y = 0.44 }
         },
         dungeons = { Q.Dungeons["Blackfathom Deeps"] },
     },
@@ -759,11 +824,11 @@ Q.Quests = {
         name = "The Corruption Abroad",
         suggestedLevel = 24,
         requiredLevel = 18,
-        source = { 
-            type = "npc", 
-            name = "Argos Nightwhisper", 
-            zone = "Stormwind City", 
-            location = { mapId = 1453, x = 0.21, y = 0.56 } 
+        source = {
+            type = "npc",
+            name = "Argos Nightwhisper",
+            zone = "Stormwind City",
+            location = { mapId = 1453, x = 0.21, y = 0.56 }
         },
         dungeons = { Q.Dungeons["Blackfathom Deeps"] },
     },
@@ -773,11 +838,11 @@ Q.Quests = {
         name = "Twilight Falls",
         suggestedLevel = 25,
         requiredLevel = 20,
-        source = { 
-            type = "npc", 
-            name = "Argent Guard Manados", 
-            zone = "Darnassus", 
-            location = { mapId = 1457, x = 0.55, y = 0.23 } 
+        source = {
+            type = "npc",
+            name = "Argent Guard Manados",
+            zone = "Darnassus",
+            location = { mapId = 1457, x = 0.55, y = 0.23 }
         },
         dungeons = { Q.Dungeons["Blackfathom Deeps"] },
     },
@@ -787,13 +852,13 @@ Q.Quests = {
         name = "Allegiance to the Old Gods",
         suggestedLevel = 22,
         requiredLevel = 17,
-        source = { 
-            type = "item", 
-            name = "Damp Note", 
-            itemId = 16790, 
-            zone = "Ashenvale", 
-            location = { mapId = 1440, x = 0.13, y = 0.12 }, 
-            text = "Dropped by Blackfathom Tide Priestesses outside the instance" 
+        source = {
+            type = "item",
+            name = "Damp Note",
+            itemId = 16790,
+            zone = "Ashenvale",
+            location = { mapId = 1440, x = 0.13, y = 0.12 },
+            text = "Dropped by Blackfathom Tide Priestesses outside the instance"
         },
         dungeons = { Q.Dungeons["Blackfathom Deeps"] },
     },
@@ -803,11 +868,11 @@ Q.Quests = {
         name = "Amongst the Ruins",
         suggestedLevel = 24,
         requiredLevel = 21,
-        source = { 
-            type = "npc", 
-            name = "Je'neu Sancrea", 
-            zone = "Ashenvale", 
-            location = { mapId = 1440, x = 0.12, y = 0.34 } 
+        source = {
+            type = "npc",
+            name = "Je'neu Sancrea",
+            zone = "Ashenvale",
+            location = { mapId = 1440, x = 0.12, y = 0.34 }
         },
         dungeons = { Q.Dungeons["Blackfathom Deeps"] },
     },
@@ -817,11 +882,11 @@ Q.Quests = {
         name = "The Essence of Aku'Mai",
         suggestedLevel = 22,
         requiredLevel = 17,
-        source = { 
-            type = "npc", 
-            name = "Je'neu Sancrea", 
-            zone = "Ashenvale", 
-            location = { mapId = 1440, x = 0.12, y = 0.34 } 
+        source = {
+            type = "npc",
+            name = "Je'neu Sancrea",
+            zone = "Ashenvale",
+            location = { mapId = 1440, x = 0.12, y = 0.34 }
         },
         dungeons = { Q.Dungeons["Blackfathom Deeps"] },
     },
@@ -831,11 +896,13 @@ Q.Quests = {
         name = "Blackfathom Villainy",
         suggestedLevel = 27,
         requiredLevel = 18,
-        previousQuestId = 1198,
-        source = { 
-            type = "npc", 
-            name = "Argent Guard Thaelrid", 
-            zone = "Blackfathom Deeps", 
+        prerequisites = {
+            { id = 1198, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Argent Guard Thaelrid",
+            zone = "Blackfathom Deeps",
             location = { mapId = 1440, x = 0.14, y = 0.15 }
         },
         dungeons = { Q.Dungeons["Blackfathom Deeps"] },
@@ -846,11 +913,11 @@ Q.Quests = {
         name = "In Search of Thaelrid",
         suggestedLevel = 24,
         requiredLevel = 18,
-        source = { 
-            type = "npc", 
-            name = "Dawnwatcher Shaedlass", 
-            zone = "Darnassus", 
-            location = { mapId = 1457, x = 0.55, y = 0.24 } 
+        source = {
+            type = "npc",
+            name = "Dawnwatcher Shaedlass",
+            zone = "Darnassus",
+            location = { mapId = 1457, x = 0.55, y = 0.24 }
         },
         dungeons = { Q.Dungeons["Blackfathom Deeps"] },
     },
@@ -860,10 +927,10 @@ Q.Quests = {
         name = "Blackfathom Villainy",
         suggestedLevel = 27,
         requiredLevel = 18,
-        source = { 
-            type = "npc", 
-            name = "Argent Guard Thaelrid", 
-            zone = "Blackfathom Deeps", 
+        source = {
+            type = "npc",
+            name = "Argent Guard Thaelrid",
+            zone = "Blackfathom Deeps",
             location = { mapId = 1440, x = 0.14, y = 0.15 }
         },
         dungeons = { Q.Dungeons["Blackfathom Deeps"] },
@@ -874,18 +941,18 @@ Q.Quests = {
         name = "Baron Aquanis",
         suggestedLevel = 27,
         requiredLevel = 21,
-        source = { 
-            type = "item", 
-            name = "Strange Water Globe", 
-            itemId = 16782, 
-            zone = "Blackfathom Deeps", 
+        source = {
+            type = "item",
+            name = "Strange Water Globe",
+            itemId = 16782,
+            zone = "Blackfathom Deeps",
             location = { mapId = 1440, x = 0.14, y = 0.15 },
-            text = "Dropped by Baron Aquanis inside the dungeon" 
+            text = "Dropped by Baron Aquanis inside the dungeon"
         },
         dungeons = { Q.Dungeons["Blackfathom Deeps"] },
     },
     --#endregion
-    
+
     --#region Razorfen Kraul
     {
         id = 1100,
@@ -907,7 +974,9 @@ Q.Quests = {
         faction = "Alliance",
         name = "The Crone of the Kraul",
         suggestedLevel = 34,
-        previousQuestId = 1100,
+        prerequisites = {
+            { id = 1100, type = Q.PrerequisiteType.CHAIN }
+        },
         requiredLevel = 29,
         source = {
             type = "npc",
@@ -1059,9 +1128,9 @@ Q.Quests = {
         name = "Dragonmaw Rumors",
         suggestedLevel = 31,
         requiredLevel = 24,
-        source = { 
-            type = "npc", 
-            name = "Zaruk", 
+        source = {
+            type = "npc",
+            name = "Zaruk",
             zone = "Arathi Highlands",
             location = { mapId = 1417, x = 0.744, y = 0.356 }
         },
@@ -1072,10 +1141,10 @@ Q.Quests = {
         name = "Changing Tastes",
         suggestedLevel = 31,
         requiredLevel = 24,
-        source = { 
-            type = "npc", 
-            name = "Borstan", 
-            zone = "Orgrimmar", 
+        source = {
+            type = "npc",
+            name = "Borstan",
+            zone = "Orgrimmar",
             location = { mapId = 1454, x = 0.576, y = 0.534 }
         },
         dungeons = { Q.Dungeons["Excavation Site: Wetlands"] },
@@ -1086,12 +1155,12 @@ Q.Quests = {
         name = "Elder Knowledge",
         suggestedLevel = 31,
         requiredLevel = 24,
-        source = { 
-            type = "item", 
-            name = "Titan Relic", 
-            itemId = 270866, 
-            zone = "Excavation Site: Wetlands", 
-            text = "Dropped by the Relic Guardian boss" 
+        source = {
+            type = "item",
+            name = "Titan Relic",
+            itemId = 270866,
+            zone = "Excavation Site: Wetlands",
+            text = "Dropped by the Relic Guardian boss"
         },
         dungeons = { Q.Dungeons["Excavation Site: Wetlands"] },
     },
@@ -1100,11 +1169,13 @@ Q.Quests = {
         faction = "Horde",
         name = "Open the Maw",
         suggestedLevel = 31,
-        previousQuestId = 95663,
+        prerequisites = {
+            { id = 95663, type = Q.PrerequisiteType.CHAIN }
+        },
         requiredLevel = 24,
-        source = { 
-            type = "npc", 
-            name = "Deathstalker Agent", 
+        source = {
+            type = "npc",
+            name = "Deathstalker Agent",
             zone = "Wetlands",
             location = { mapId = 1437, x = 0.514, y = 0.592 }
         },
@@ -1116,11 +1187,11 @@ Q.Quests = {
         name = "Highland Hides",
         suggestedLevel = 28,
         requiredLevel = 24,
-        source = { 
-            type = "npc", 
-            name = "James Halloran", 
-            zone = "Wetlands", 
-            location = { mapId = 1437, x = 0.08, y = 0.55 } 
+        source = {
+            type = "npc",
+            name = "James Halloran",
+            zone = "Wetlands",
+            location = { mapId = 1437, x = 0.08, y = 0.55 }
         },
         dungeons = { Q.Dungeons["Excavation Site: Wetlands"] },
     },
@@ -1130,11 +1201,11 @@ Q.Quests = {
         name = "Songblade Search",
         suggestedLevel = 31,
         requiredLevel = 24,
-        source = { 
-            type = "npc", 
-            name = "Dorin Songblade", 
-            zone = "Redridge Mountains", 
-            location = { mapId = 1433, x = 0.308, y = 0.466 } 
+        source = {
+            type = "npc",
+            name = "Dorin Songblade",
+            zone = "Redridge Mountains",
+            location = { mapId = 1433, x = 0.308, y = 0.466 }
         },
         dungeons = { Q.Dungeons["Excavation Site: Wetlands"] },
     },
@@ -1144,11 +1215,11 @@ Q.Quests = {
         name = "Horrors in the Highland",
         suggestedLevel = 24,
         requiredLevel = 24,
-        source = { 
-            type = "npc", 
-            name = "Rethiel the Greenwarden", 
-            zone = "Wetlands", 
-            location = { mapId = 1437, x = 0.562, y = 0.406 } 
+        source = {
+            type = "npc",
+            name = "Rethiel the Greenwarden",
+            zone = "Wetlands",
+            location = { mapId = 1437, x = 0.562, y = 0.406 }
         },
         dungeons = { Q.Dungeons["Excavation Site: Wetlands"] },
     },
@@ -1158,11 +1229,11 @@ Q.Quests = {
         name = "Lost in the Thicket Things",
         suggestedLevel = 31,
         requiredLevel = 24,
-        source = { 
-            type = "npc", 
-            name = "Caitlin Grassman", 
-            zone = "Wetlands", 
-            location = { mapId = 1437, x = 0.118, y = 0.586 } 
+        source = {
+            type = "npc",
+            name = "Caitlin Grassman",
+            zone = "Wetlands",
+            location = { mapId = 1437, x = 0.118, y = 0.586 }
         },
         dungeons = { Q.Dungeons["Excavation Site: Wetlands"] },
     },
@@ -1172,12 +1243,12 @@ Q.Quests = {
         name = "Lost Relic Carry",
         suggestedLevel = 31,
         requiredLevel = 24,
-        source = { 
-            type = "item", 
-            name = "Titan Relic", 
-            itemId = 270865, 
-            zone = "Excavation Site: Wetlands", 
-            text = "Dropped by the boss Relic Guardian in the dungeon" 
+        source = {
+            type = "item",
+            name = "Titan Relic",
+            itemId = 270865,
+            zone = "Excavation Site: Wetlands",
+            text = "Dropped by the boss Relic Guardian in the dungeon"
         },
         dungeons = { Q.Dungeons["Excavation Site: Wetlands"] },
     },
@@ -1190,11 +1261,11 @@ Q.Quests = {
         name = "The Dark Iron War",
         suggestedLevel = 30,
         requiredLevel = 25,
-        source = { 
-            type = "npc", 
-            name = "Motley Garmason", 
-            zone = "Wetlands", 
-            location = { mapId = 1437, x = 0.49, y = 0.18 } 
+        source = {
+            type = "npc",
+            name = "Motley Garmason",
+            zone = "Wetlands",
+            location = { mapId = 1437, x = 0.49, y = 0.18 }
         }
     },
     {
@@ -1203,12 +1274,14 @@ Q.Quests = {
         name = "Bazil Thredd",
         suggestedLevel = 22,
         requiredLevel = 16,
-        previousQuestId = 373,
-        source = { 
-            type = "npc", 
-            name = "Baros Alexston", 
-            zone = "Stormwind City", 
-            location = { mapId = 1453, x = 0.49, y = 0.30 } 
+        prerequisites = {
+            { id = 373, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Baros Alexston",
+            zone = "Stormwind City",
+            location = { mapId = 1453, x = 0.49, y = 0.30 }
         },
     },
     {
@@ -1217,11 +1290,11 @@ Q.Quests = {
         name = "What Comes Around...",
         suggestedLevel = 25,
         requiredLevel = 22,
-        source = { 
-            type = "npc", 
-            name = "Guard Berton", 
-            zone = "Redridge Mountains", 
-            location = { mapId = 1433, x = 0.26, y = 0.46 } 
+        source = {
+            type = "npc",
+            name = "Guard Berton",
+            zone = "Redridge Mountains",
+            location = { mapId = 1433, x = 0.26, y = 0.46 }
         },
         dungeons = { Q.Dungeons["The Stockade"] },
     },
@@ -1231,11 +1304,11 @@ Q.Quests = {
         name = "Crime and Punishment",
         suggestedLevel = 26,
         requiredLevel = 22,
-        source = { 
-            type = "npc", 
-            name = "Councilman Millstipe", 
-            zone = "Duskwood", 
-            location = { mapId = 1431, x = 0.71, y = 0.47 } 
+        source = {
+            type = "npc",
+            name = "Councilman Millstipe",
+            zone = "Duskwood",
+            location = { mapId = 1431, x = 0.71, y = 0.47 }
         },
         dungeons = { Q.Dungeons["The Stockade"] },
     },
@@ -1245,11 +1318,11 @@ Q.Quests = {
         name = "Quell The Uprising",
         suggestedLevel = 26,
         requiredLevel = 22,
-        source = { 
-            type = "npc", 
-            name = "Warden Thelwater", 
-            zone = "Stormwind City", 
-            location = { mapId = 1453, x = 0.518, y = 0.693 } 
+        source = {
+            type = "npc",
+            name = "Warden Thelwater",
+            zone = "Stormwind City",
+            location = { mapId = 1453, x = 0.518, y = 0.693 }
         },
         dungeons = { Q.Dungeons["The Stockade"] },
     },
@@ -1259,11 +1332,11 @@ Q.Quests = {
         name = "The Color of Blood",
         suggestedLevel = 26,
         requiredLevel = 22,
-        source = { 
-            type = "npc", 
-            name = "Nikova Raskol", 
-            zone = "Stormwind City", 
-            location = { mapId = 1453, x = 0.73, y = 0.50 } 
+        source = {
+            type = "npc",
+            name = "Nikova Raskol",
+            zone = "Stormwind City",
+            location = { mapId = 1453, x = 0.73, y = 0.50 }
         },
         dungeons = { Q.Dungeons["The Stockade"] },
     },
@@ -1273,12 +1346,14 @@ Q.Quests = {
         name = "The Fury Runs Deep",
         suggestedLevel = 27,
         requiredLevel = 25,
-        previousQuestId = 303,
-        source = { 
-            type = "npc", 
-            name = "Motley Garmason", 
-            zone = "Wetlands", 
-            location = { mapId = 1437, x = 0.49, y = 0.18 } 
+        prerequisites = {
+            { id = 303, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Motley Garmason",
+            zone = "Wetlands",
+            location = { mapId = 1437, x = 0.49, y = 0.18 }
         },
         dungeons = { Q.Dungeons["The Stockade"] },
     },
@@ -1288,12 +1363,14 @@ Q.Quests = {
         name = "The Stockade Riots",
         suggestedLevel = 29,
         requiredLevel = 16,
-        previousQuestId = 389,
-        source = { 
-            type = "npc", 
-            name = "Warden Thelwater", 
-            zone = "Stormwind City", 
-            location = { mapId = 1453, x = 0.518, y = 0.693 } 
+        prerequisites = {
+            { id = 389, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Warden Thelwater",
+            zone = "Stormwind City",
+            location = { mapId = 1453, x = 0.518, y = 0.693 }
         },
         dungeons = { Q.Dungeons["The Stockade"] },
     },
@@ -1301,16 +1378,30 @@ Q.Quests = {
 
     --#region Gnomeregan
     {
+        id = 2951,
+        faction = nil,
+        name = "The Sparklematic 5200!",
+        suggestedLevel = 30,
+        requiredLevel = 25,
+        source = {
+            type = "object",
+            name = "The Sparklematic 5200",
+            zone = "Gnomeregan",
+            location = { mapId = 1426, x = 0.30, y = 0.36 },
+        },
+        dungeons = { Q.Dungeons["Gnomeregan"] },
+    },
+    {
         id = 2927,
         faction = "Alliance",
         name = "The Day After",
         suggestedLevel = 27,
         requiredLevel = 20,
-        source = { 
-            type = "npc", 
-            name = "Gnoarn", 
-            zone = "Ironforge", 
-            location = { mapId = 1455, x = 0.69, y = 0.50 } 
+        source = {
+            type = "npc",
+            name = "Gnoarn",
+            zone = "Ironforge",
+            location = { mapId = 1455, x = 0.69, y = 0.50 }
         },
         dungeons = { Q.Dungeons["Gnomeregan"] },
     },
@@ -1320,11 +1411,11 @@ Q.Quests = {
         name = "Castpipe's Task",
         suggestedLevel = 30,
         requiredLevel = 25,
-        source = { 
-            type = "npc", 
-            name = "Gaxim Rustfizzle", 
-            zone = "Stonetalon Mountains", 
-            location = { mapId = 1442, x = 0.596, y = 0.670 } 
+        source = {
+            type = "npc",
+            name = "Gaxim Rustfizzle",
+            zone = "Stonetalon Mountains",
+            location = { mapId = 1442, x = 0.596, y = 0.670 }
         },
     },
     {
@@ -1333,11 +1424,11 @@ Q.Quests = {
         name = "Rig Wars",
         suggestedLevel = 35,
         requiredLevel = 25,
-        source = { 
-            type = "npc", 
-            name = "Nogg", 
-            zone = "Orgrimmar", 
-            location = { mapId = 1454, x = 0.76, y = 0.25 } 
+        source = {
+            type = "npc",
+            name = "Nogg",
+            zone = "Orgrimmar",
+            location = { mapId = 1454, x = 0.76, y = 0.25 }
         },
         dungeons = { Q.Dungeons["Gnomeregan"] },
     },
@@ -1347,13 +1438,13 @@ Q.Quests = {
         name = "Chief Engineer Scooty",
         suggestedLevel = 35,
         requiredLevel = 20,
-        source = { 
-            type = "npc", 
-            name = "Sovik", 
-            zone = "Orgrimmar", 
+        source = {
+            type = "npc",
+            name = "Sovik",
+            zone = "Orgrimmar",
             location = { mapId = 1454, x = 0.76, y = 0.25 },
             text = "You must pick up the quest 'Rig Wars' right beside Sovik first."
-        }
+        },
     },
     {
         id = 2924,
@@ -1361,10 +1452,10 @@ Q.Quests = {
         name = "Essential Artificials",
         suggestedLevel = 30,
         requiredLevel = 20,
-        source = { 
-            type = "npc", 
-            name = "Klockmort Spannerspan", 
-            zone = "Ironforge", 
+        source = {
+            type = "npc",
+            name = "Klockmort Spannerspan",
+            zone = "Ironforge",
             location = { mapId = 1455, x = 0.682, y = 0.462 }
         },
         dungeons = { Q.Dungeons["Gnomeregan"] },
@@ -1375,12 +1466,14 @@ Q.Quests = {
         name = "Data Rescue",
         suggestedLevel = 30,
         requiredLevel = 25,
-        previousQuestId = 2931,
-        source = { 
-            type = "npc", 
-            name = "Master Mechanic Castpipe", 
-            zone = "Ironforge", 
-            location = { mapId = 1455, x = 0.700, y = 0.474 } 
+        prerequisites = {
+            { id = 2931, type = Q.PrerequisiteType.BREADCRUMB }
+        },
+        source = {
+            type = "npc",
+            name = "Master Mechanic Castpipe",
+            zone = "Ironforge",
+            location = { mapId = 1455, x = 0.700, y = 0.474 }
         },
         dungeons = { Q.Dungeons["Gnomeregan"] },
     },
@@ -1390,12 +1483,14 @@ Q.Quests = {
         name = "The Only Cure is More Green Glow",
         suggestedLevel = 30,
         requiredLevel = 20,
-        previousQuestId = 2926,
-        source = { 
-            type = "npc", 
-            name = "Ozzie Togglevolt", 
-            zone = "Dun Morogh", 
-            location = { mapId = 1426, x = 0.45, y = 0.49 } 
+        prerequisites = {
+            { id = 2926, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Ozzie Togglevolt",
+            zone = "Dun Morogh",
+            location = { mapId = 1426, x = 0.45, y = 0.49 }
         },
         dungeons = { Q.Dungeons["Gnomeregan"] },
     },
@@ -1405,11 +1500,11 @@ Q.Quests = {
         name = "Grime-Encrusted Ring",
         suggestedLevel = 34,
         requiredLevel = 28,
-        source = { 
-            type = "item", 
-            name = "Grime-Encrusted Ring", 
+        source = {
+            type = "item",
+            name = "Grime-Encrusted Ring",
             itemId = 9326,
-            zone = "Gnomeregan", 
+            zone = "Gnomeregan",
             text = "Dropped by Dark Iron Agents inside the dungeon"
         },
         dungeons = { Q.Dungeons["Gnomeregan"] },
@@ -1420,14 +1515,15 @@ Q.Quests = {
         name = "Gnogaine",
         suggestedLevel = 27,
         requiredLevel = 20,
-        previousQuestId = 2927,
-        source = { 
-            type = "npc", 
-            name = "Ozzie Togglevolt", 
-            zone = "Dun Morogh", 
-            location = { mapId = 1426, x = 0.458, y = 0.492 }
+        prerequisites = {
+            { id = 2927, type = Q.PrerequisiteType.CHAIN }
         },
-        dungeons = { Q.Dungeons["Gnomeregan"] },
+        source = {
+            type = "npc",
+            name = "Ozzie Togglevolt",
+            zone = "Dun Morogh",
+            location = { mapId = 1426, x = 0.458, y = 0.492 }
+        }
     },
     {
         id = 2922,
@@ -1435,11 +1531,11 @@ Q.Quests = {
         name = "Save Techbot's Brain!",
         suggestedLevel = 26,
         requiredLevel = 20,
-        source = { 
-            type = "npc", 
-            name = "Tinkmaster Overspark", 
-            zone = "Ironforge", 
-            location = { mapId = 1455, x = 0.69, y = 0.50 } 
+        source = {
+            type = "npc",
+            name = "Tinkmaster Overspark",
+            zone = "Ironforge",
+            location = { mapId = 1455, x = 0.69, y = 0.50 }
         },
         dungeons = { Q.Dungeons["Gnomeregan"] },
     },
@@ -1449,11 +1545,11 @@ Q.Quests = {
         name = "The Grand Betrayal",
         suggestedLevel = 35,
         requiredLevel = 25,
-        source = { 
-            type = "npc", 
-            name = "High Tinker Mekkatorque", 
-            zone = "Ironforge", 
-            location = { mapId = 1455, x = 0.68, y = 0.49 } 
+        source = {
+            type = "npc",
+            name = "High Tinker Mekkatorque",
+            zone = "Ironforge",
+            location = { mapId = 1455, x = 0.68, y = 0.49 }
         },
         dungeons = { Q.Dungeons["Gnomeregan"] },
     },
@@ -1463,11 +1559,11 @@ Q.Quests = {
         name = "Gyrodrillmatic Excavationators",
         suggestedLevel = 30,
         requiredLevel = 20,
-        source = { 
-            type = "npc", 
-            name = "Shoni the Shilent", 
-            zone = "Stormwind City", 
-            location = { mapId = 1453, x = 0.55, y = 0.12 } 
+        source = {
+            type = "npc",
+            name = "Shoni the Shilent",
+            zone = "Stormwind City",
+            location = { mapId = 1453, x = 0.55, y = 0.12 }
         },
         dungeons = { Q.Dungeons["Gnomeregan"] },
     },
@@ -1477,12 +1573,14 @@ Q.Quests = {
         name = "Gnomer-gooooone!",
         suggestedLevel = 35,
         requiredLevel = 20,
-        previousQuestId = 2842,
-        source = { 
-            type = "npc", 
-            name = "Scooty", 
-            zone = "The Cape of Stranglethorn", 
-            location = { mapId = 1434, x = 0.27, y = 0.77 } 
+        prerequisites = {
+            { id = 2842, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Scooty",
+            zone = "The Cape of Stranglethorn",
+            location = { mapId = 1434, x = 0.27, y = 0.77 }
         },
         dungeons = { Q.Dungeons["Gnomeregan"] },
     },
@@ -1492,10 +1590,10 @@ Q.Quests = {
         name = "A Fine Mess",
         suggestedLevel = 30,
         requiredLevel = 20,
-        source = { 
-            type = "npc", 
-            name = "Kernobee", 
-            zone = "Gnomeregan", 
+        source = {
+            type = "npc",
+            name = "Kernobee",
+            zone = "Gnomeregan",
             text = "Found inside the dungeon in the room right of the Clean Room."
         },
         dungeons = { Q.Dungeons["Gnomeregan"] },
@@ -1509,10 +1607,10 @@ Q.Quests = {
         name = "The Grave Knight",
         suggestedLevel = 33,
         requiredLevel = 30,
-        source = { 
-            type = "npc", 
-            name = "Melisara", 
-            zone = "Hillsbrad Foothills", 
+        source = {
+            type = "npc",
+            name = "Melisara",
+            zone = "Hillsbrad Foothills",
             location = { mapId = 1424, x = 0.626, y = 0.206 }
         },
         dungeons = { Q.Dungeons["City of Dalaran"] },
@@ -1523,10 +1621,10 @@ Q.Quests = {
         name = "Opportunistic Education",
         suggestedLevel = 33,
         requiredLevel = 30,
-        source = { 
-            type = "npc", 
+        source = {
+            type = "npc",
             name = "Rexxie Copperclutch",
-            zone = "City of Dalaran", 
+            zone = "City of Dalaran",
             location = { mapId = 1421, x = 0.686, y = 0.452 }
         },
         dungeons = { Q.Dungeons["City of Dalaran"] },
@@ -1537,11 +1635,13 @@ Q.Quests = {
         name = "Heart of Disruption",
         suggestedLevel = 33,
         requiredLevel = 30,
-        previousQuestId = 92434,
-        source = { 
-            type = "npc", 
-            name = "Image of Archmage Modera", 
-            zone = "City of Dalaran", 
+        prerequisites = {
+            { id = 92434, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Image of Archmage Modera",
+            zone = "City of Dalaran",
             location = { mapId = 1421, x = 0.686, y = 0.452 }
         }
     },
@@ -1551,10 +1651,10 @@ Q.Quests = {
         name = "Starving Arcane",
         suggestedLevel = 33,
         requiredLevel = 30,
-        source = { 
-            type = "npc", 
-            name = "Image of Archmage Modera", 
-            zone = "City of Dalaran", 
+        source = {
+            type = "npc",
+            name = "Image of Archmage Modera",
+            zone = "City of Dalaran",
             location = { mapId = 1421, x = 0.686, y = 0.452 }
         },
         dungeons = { Q.Dungeons["City of Dalaran"] },
@@ -1565,10 +1665,10 @@ Q.Quests = {
         name = "Power Overwhelming",
         suggestedLevel = 33,
         requiredLevel = 30,
-        source = { 
-            type = "npc", 
-            name = "High Sorcerer Andromath", 
-            zone = "Stormwind City", 
+        source = {
+            type = "npc",
+            name = "High Sorcerer Andromath",
+            zone = "Stormwind City",
             location = { mapId = 1453, x = 0.376, y = 0.816 }
         },
         dungeons = { Q.Dungeons["City of Dalaran"] },
@@ -1579,11 +1679,13 @@ Q.Quests = {
         name = "Heart of Disruption",
         suggestedLevel = 33,
         requiredLevel = 30,
-        previousQuestId = 92432,
-        source = { 
-            type = "npc", 
-            name = "Image of Archmage Modera", 
-            zone = "City of Dalaran", 
+        prerequisites = {
+            { id = 92432, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Image of Archmage Modera",
+            zone = "City of Dalaran",
             location = { mapId = 1421, x = 0.686, y = 0.452 }
         },
         dungeons = { Q.Dungeons["City of Dalaran"] },
@@ -1594,10 +1696,10 @@ Q.Quests = {
         name = "Source of Power",
         suggestedLevel = 33,
         requiredLevel = 30,
-        source = { 
-            type = "npc", 
-            name = "Doctor Martin Felben", 
-            zone = "Undercity", 
+        source = {
+            type = "npc",
+            name = "Doctor Martin Felben",
+            zone = "Undercity",
             location = { mapId = 1458, x = 0.466, y = 0.746 }
         },
         dungeons = { Q.Dungeons["City of Dalaran"] },
@@ -1608,80 +1710,86 @@ Q.Quests = {
         name = "Shrewd Negotiations",
         suggestedLevel = 33,
         requiredLevel = 30,
-        previousQuestId = 96984,
-        source = { 
-            type = "npc", 
-            name = "Magus Wordeen Voidglare", 
-            zone = "Hillsbrad Foothills", 
+        prerequisites = {
+            { id = 96984, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Magus Wordeen Voidglare",
+            zone = "Hillsbrad Foothills",
             location = { mapId = 1424, x = 0.616, y = 0.208 }
         },
         dungeons = { Q.Dungeons["City of Dalaran"] },
     },
 
-    { 
+    {
         id = 93680,
         faction = "Horde",
         name = "Key to the City",
         suggestedLevel = 33,
         requiredLevel = 30,
-        source = { 
-            type = "npc", 
-            name = "Magus Wordeen Voidglare", 
-            zone = "Hillsbrad Foothills", 
+        source = {
+            type = "npc",
+            name = "Magus Wordeen Voidglare",
+            zone = "Hillsbrad Foothills",
             location = { mapId = 1424, x = 0.616, y = 0.208 }
         }
     },
-    { 
+    {
         id = 556,
         faction = "Horde",
         name = "Stone Tokens",
         suggestedLevel = 33,
         requiredLevel = 30,
-        source = { 
-            type = "npc", 
-            name = "Keeper Bel'varil", 
-            zone = "Hillsbrad Foothills", 
+        source = {
+            type = "npc",
+            name = "Keeper Bel'varil",
+            zone = "Hillsbrad Foothills",
             location = { mapId = 1424, x = 0.614, y = 0.208 }
         }
     },
-    { 
+    {
         id = 544,
         faction = "Horde",
         name = "Prison Break In",
         suggestedLevel = 33,
         requiredLevel = 30,
-        source = { 
-            type = "npc", 
-            name = "Magus Wordeen Voidglare", 
-            zone = "Hillsbrad Foothills", 
+        source = {
+            type = "npc",
+            name = "Magus Wordeen Voidglare",
+            zone = "Hillsbrad Foothills",
             location = { mapId = 1424, x = 0.616, y = 0.208 }
         }
     },
-    { 
+    {
         id = 545,
         faction = "Horde",
         name = "Dalaran Patrols",
         suggestedLevel = 33,
         requiredLevel = 30,
-        previousQuestId = 544,
-        source = { 
-            type = "npc", 
-            name = "Magus Wordeen Voidglare", 
-            zone = "Hillsbrad Foothills", 
+        prerequisites = {
+            { id = 544, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Magus Wordeen Voidglare",
+            zone = "Hillsbrad Foothills",
             location = { mapId = 1424, x = 0.616, y = 0.208 }
         }
     },
-    { 
+    {
         id = 557,
         faction = "Horde",
         name = "Bracers of Binding",
         suggestedLevel = 33,
         requiredLevel = 30,
-        previousQuestId = 556,
-        source = { 
-            type = "npc", 
-            name = "Keeper Bel'varil", 
-            zone = "Hillsbrad Foothills", 
+        prerequisites = {
+            { id = 556, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Keeper Bel'varil",
+            zone = "Hillsbrad Foothills",
             location = { mapId = 1424, x = 0.614, y = 0.208 }
         }
     },
@@ -1692,13 +1800,13 @@ Q.Quests = {
         suggestedLevel = 33,
         requiredLevel = 30,
         prerequisites = {
-            all = {93680, 545},
-            any = {},
+            { id = 93680, type = Q.PrerequisiteType.REQUIRED },
+            { id = 545,   type = Q.PrerequisiteType.REQUIRED }
         },
-        source = { 
-            type = "npc", 
-            name = "Magus Wordeen Voidglare", 
-            zone = "Hillsbrad Foothills", 
+        source = {
+            type = "npc",
+            name = "Magus Wordeen Voidglare",
+            zone = "Hillsbrad Foothills",
             location = { mapId = 1424, x = 0.616, y = 0.208 }
         }
     },
@@ -1708,10 +1816,10 @@ Q.Quests = {
         name = "A Green Sample",
         suggestedLevel = 33,
         requiredLevel = 30,
-        source = { 
-            type = "npc", 
-            name = "Shylamiir", 
-            zone = "Stormwind City", 
+        source = {
+            type = "npc",
+            name = "Shylamiir",
+            zone = "Stormwind City",
             location = { mapId = 1453, x = 0.313, y = 0.629 }
         },
         dungeons = { Q.Dungeons["City of Dalaran"] },
@@ -1722,10 +1830,10 @@ Q.Quests = {
         name = "An Alarming Request",
         suggestedLevel = 33,
         requiredLevel = 30,
-        source = { 
-            type = "npc", 
-            name = "Emissary Jacques", 
-            zone = "Hillsbrad Foothills", 
+        source = {
+            type = "npc",
+            name = "Emissary Jacques",
+            zone = "Hillsbrad Foothills",
             location = { mapId = 1424, x = 0.483, y = 0.601 }
         }
     },
@@ -1738,11 +1846,11 @@ Q.Quests = {
         name = "Down the Scarlet Path",
         suggestedLevel = 38,
         requiredLevel = 34,
-        source = { 
-            type = "npc", 
-            name = "Brother Anton", 
-            zone = "Desolace", 
-            location = { mapId = 405, x = 0.66, y = 0.09 } 
+        source = {
+            type = "npc",
+            name = "Brother Anton",
+            zone = "Desolace",
+            location = { mapId = 405, x = 0.66, y = 0.09 }
         },
     },
     {
@@ -1751,12 +1859,14 @@ Q.Quests = {
         name = "Down the Scarlet Path",
         suggestedLevel = 38,
         requiredLevel = 34,
-        previousQuestId = 261,
-        source = { 
-            type = "npc", 
-            name = "Brother Anton", 
-            zone = "Desolace", 
-            location = { mapId = 405, x = 0.66, y = 0.09 } 
+        prerequisites = {
+            { id = 261, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Brother Anton",
+            zone = "Desolace",
+            location = { mapId = 405, x = 0.66, y = 0.09 }
         },
     },
     {
@@ -1765,26 +1875,28 @@ Q.Quests = {
         name = "Into The Scarlet Monastery",
         suggestedLevel = 42,
         requiredLevel = 33,
-        source = { 
-            type = "npc", 
-            name = "Varimathras", 
-            zone = "Undercity", 
-            location = { mapId = 1458, x = 0.56, y = 0.92 } 
+        source = {
+            type = "npc",
+            name = "Varimathras",
+            zone = "Undercity",
+            location = { mapId = 1458, x = 0.56, y = 0.92 }
         },
         dungeons = { Q.Dungeons["SM: Library"], Q.Dungeons["SM: Armory"], Q.Dungeons["SM: Cathedral"] },
     },
-        {
+    {
         id = 1113,
         faction = "Horde",
         name = "Hearts of Zeal",
         suggestedLevel = 35,
         requiredLevel = 30,
-        previousQuestId = 1109,
-        source = { 
-            type = "npc", 
-            name = "Master Apothecary Faranell", 
-            zone = "Undercity", 
-            location = { mapId = 1458, x = 0.48, y = 0.69 } 
+        prerequisites = {
+            { id = 1109, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Master Apothecary Faranell",
+            zone = "Undercity",
+            location = { mapId = 1458, x = 0.48, y = 0.69 }
         },
         dungeons = { Q.Dungeons["SM: Library"], Q.Dungeons["SM: Armory"], Q.Dungeons["SM: Cathedral"] },
     },
@@ -1794,12 +1906,14 @@ Q.Quests = {
         name = "In the Name of the Light",
         suggestedLevel = 40,
         requiredLevel = 34,
-        previousQuestId = 1052,
-        source = { 
-            type = "npc", 
-            name = "Raleigh the Devout", 
-            zone = "Hillsbrad Foothills", 
-            location = { mapId = 1424, x = 0.51, y = 0.58 } 
+        prerequisites = {
+            { id = 1052, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Raleigh the Devout",
+            zone = "Hillsbrad Foothills",
+            location = { mapId = 1424, x = 0.51, y = 0.58 }
         },
         dungeons = { Q.Dungeons["SM: Library"], Q.Dungeons["SM: Armory"], Q.Dungeons["SM: Cathedral"] },
     },
@@ -1812,10 +1926,10 @@ Q.Quests = {
         name = "Vorrel's Revenge",
         suggestedLevel = 30,
         requiredLevel = 25,
-        source = { 
-            type = "npc", 
-            name = "Vorrel Sengutz", 
-            zone = "Scarlet Monastery", 
+        source = {
+            type = "npc",
+            name = "Vorrel Sengutz",
+            zone = "Scarlet Monastery",
             location = { mapId = 1420, x = 0.84, y = 0.32 },
             text = "Vorrel is found in the first room after the corridor, inside the dungeon."
         },
@@ -1830,10 +1944,10 @@ Q.Quests = {
         name = "Compendium of the Fallen",
         suggestedLevel = 38,
         requiredLevel = 28,
-        source = { 
-            type = "npc", 
-            name = "Sage Truthseeker", 
-            zone = "Thunder Bluff", 
+        source = {
+            type = "npc",
+            name = "Sage Truthseeker",
+            zone = "Thunder Bluff",
             location = { mapId = 1456, x = 0.36, y = 0.26 },
         },
         dungeons = { Q.Dungeons["SM: Library"] },
@@ -1844,11 +1958,11 @@ Q.Quests = {
         name = "Test of Faith",
         suggestedLevel = 26,
         requiredLevel = 25,
-        source = { 
-            type = "npc", 
-            name = "Dorn Plainstalker", 
-            zone = "Thousand Needles", 
-            location = { mapId = 1441, x = 0.53, y = 0.41 } 
+        source = {
+            type = "npc",
+            name = "Dorn Plainstalker",
+            zone = "Thousand Needles",
+            location = { mapId = 1441, x = 0.53, y = 0.41 }
         },
     },
     {
@@ -1857,12 +1971,14 @@ Q.Quests = {
         name = "Test of Endurance",
         suggestedLevel = 29,
         requiredLevel = 25,
-        previousQuestId = 1149,
-        source = { 
-            type = "npc", 
-            name = "Dorn Plainstalker", 
-            zone = "Thousand Needles", 
-            location = { mapId = 1441, x = 0.53, y = 0.41 } 
+        prerequisites = {
+            { id = 1149, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Dorn Plainstalker",
+            zone = "Thousand Needles",
+            location = { mapId = 1441, x = 0.53, y = 0.41 }
         },
     },
     {
@@ -1871,12 +1987,14 @@ Q.Quests = {
         name = "Test of Strength",
         suggestedLevel = 30,
         requiredLevel = 25,
-        previousQuestId = 1150,
-        source = { 
-            type = "npc", 
-            name = "Dorn Plainstalker", 
-            zone = "Thousand Needles", 
-            location = { mapId = 1441, x = 0.53, y = 0.41 } 
+        prerequisites = {
+            { id = 1150, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Dorn Plainstalker",
+            zone = "Thousand Needles",
+            location = { mapId = 1441, x = 0.53, y = 0.41 }
         },
     },
     {
@@ -1885,12 +2003,14 @@ Q.Quests = {
         name = "Test of Lore",
         suggestedLevel = 30,
         requiredLevel = 25,
-        previousQuestId = 1151,
-        source = { 
-            type = "npc", 
-            name = "Dorn Plainstalker", 
-            zone = "Thousand Needles", 
-            location = { mapId = 1441, x = 0.53, y = 0.41 } 
+        prerequisites = {
+            { id = 1151, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Dorn Plainstalker",
+            zone = "Thousand Needles",
+            location = { mapId = 1441, x = 0.53, y = 0.41 }
         },
     },
     {
@@ -1899,12 +2019,14 @@ Q.Quests = {
         name = "Test of Lore",
         suggestedLevel = 30,
         requiredLevel = 25,
-        previousQuestId = 1152,
-        source = { 
-            type = "npc", 
-            name = "Braug Dimspirit", 
-            zone = "Stonetalon Mountains", 
-            location = { mapId = 1442, x = 0.79, y = 0.46 } 
+        prerequisites = {
+            { id = 1152, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Braug Dimspirit",
+            zone = "Stonetalon Mountains",
+            location = { mapId = 1442, x = 0.79, y = 0.46 }
         },
     },
     {
@@ -1913,12 +2035,14 @@ Q.Quests = {
         name = "Test of Lore",
         suggestedLevel = 30,
         requiredLevel = 25,
-        previousQuestId = 1154,
-        source = { 
-            type = "npc", 
-            name = "Braug Dimspirit", 
-            zone = "Stonetalon Mountains", 
-            location = { mapId = 1442, x = 0.79, y = 0.46 } 
+        prerequisites = {
+            { id = 1154, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Braug Dimspirit",
+            zone = "Stonetalon Mountains",
+            location = { mapId = 1442, x = 0.79, y = 0.46 }
         },
     },
     {
@@ -1927,12 +2051,14 @@ Q.Quests = {
         name = "Test of Lore",
         suggestedLevel = 30,
         requiredLevel = 25,
-        previousQuestId = 6627,
-        source = { 
-            type = "npc", 
-            name = "Braug Dimspirit", 
-            zone = "Stonetalon Mountains", 
-            location = { mapId = 1442, x = 0.79, y = 0.46 } 
+        prerequisites = {
+            { id = 6627, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Braug Dimspirit",
+            zone = "Stonetalon Mountains",
+            location = { mapId = 1442, x = 0.79, y = 0.46 }
         },
     },
     {
@@ -1941,12 +2067,14 @@ Q.Quests = {
         name = "Test of Lore",
         suggestedLevel = 35,
         requiredLevel = 25,
-        previousQuestId = 1159,
-        source = { 
-            type = "npc", 
-            name = "Parqual Fintallas", 
-            zone = "Undercity", 
-            location = { mapId = 1458, x = 0.57, y = 0.65 } 
+        prerequisites = {
+            { id = 1159, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Parqual Fintallas",
+            zone = "Undercity",
+            location = { mapId = 1458, x = 0.57, y = 0.65 }
         },
         dungeons = { Q.Dungeons["SM: Library"] },
     },
@@ -1956,28 +2084,28 @@ Q.Quests = {
         name = "Mythology of the Titans",
         suggestedLevel = 38,
         requiredLevel = 28,
-        source = { 
-            type = "npc", 
-            name = "Librarian Mae Paledust", 
-            zone = "Ironforge", 
-            location = { mapId = 1455, x = 0.75, y = 0.12 } 
+        source = {
+            type = "npc",
+            name = "Librarian Mae Paledust",
+            zone = "Ironforge",
+            location = { mapId = 1455, x = 0.75, y = 0.12 }
         },
         dungeons = { Q.Dungeons["SM: Library"] },
     },
     --#endregion
 
     --#region Razorfen Downs
-        {
+    {
         id = 3341,
         faction = "Horde",
         name = "Bring the End",
         suggestedLevel = 42,
         requiredLevel = 37,
-        source = { 
-            type = "npc", 
-            name = "Andrew Brownell", 
-            zone = "Undercity", 
-            location = { mapId = 1458, x = 0.74, y = 0.33 } 
+        source = {
+            type = "npc",
+            name = "Andrew Brownell",
+            zone = "Undercity",
+            location = { mapId = 1458, x = 0.74, y = 0.33 }
         },
         dungeons = { Q.Dungeons["Razorfen Downs"] },
     },
@@ -1987,12 +2115,14 @@ Q.Quests = {
         name = "An Unholy Alliance",
         suggestedLevel = 36,
         requiredLevel = 28,
-        previousQuestId = 6522,
-        source = { 
-            type = "npc", 
-            name = "Varimathras", 
-            zone = "Undercity", 
-            location = { mapId = 1458, x = 0.56, y = 0.92 } 
+        prerequisites = {
+            { id = 6522, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Varimathras",
+            zone = "Undercity",
+            location = { mapId = 1458, x = 0.56, y = 0.92 }
         },
         dungeons = { Q.Dungeons["Razorfen Downs"] },
     },
@@ -2002,11 +2132,11 @@ Q.Quests = {
         name = "Bring the Light",
         suggestedLevel = 42,
         requiredLevel = 39,
-        source = { 
-            type = "npc", 
-            name = "Archbishop Benedictus", 
-            zone = "Stormwind City", 
-            location = { mapId = 1453, x = 0.39, y = 0.27 } 
+        source = {
+            type = "npc",
+            name = "Archbishop Benedictus",
+            zone = "Stormwind City",
+            location = { mapId = 1453, x = 0.39, y = 0.27 }
         },
         dungeons = { Q.Dungeons["Razorfen Downs"] },
     },
@@ -2016,11 +2146,11 @@ Q.Quests = {
         name = "A Host of Evil",
         suggestedLevel = 35,
         requiredLevel = 28,
-        source = { 
-            type = "npc", 
-            name = "Myriam Moonsinger", 
-            zone = "The Barrens", 
-            location = { mapId = 1413, x = 0.49, y = 0.95 } 
+        source = {
+            type = "npc",
+            name = "Myriam Moonsinger",
+            zone = "The Barrens",
+            location = { mapId = 1413, x = 0.49, y = 0.95 }
         },
         dungeons = { Q.Dungeons["Razorfen Downs"] },
     },
@@ -2030,11 +2160,13 @@ Q.Quests = {
         name = "Extinguishing the Idol",
         suggestedLevel = 37,
         requiredLevel = 32,
-        previousQuestId = 3523,
-        source = { 
-            type = "npc", 
-            name = "Belnistrasz", 
-            zone = "Razorfen Downs", 
+        prerequisites = {
+            { id = 3523, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Belnistrasz",
+            zone = "Razorfen Downs",
             location = { mapId = 1413, x = 0.49, y = 0.92 }
         },
         dungeons = { Q.Dungeons["Razorfen Downs"] },
@@ -2045,10 +2177,10 @@ Q.Quests = {
         name = "Scourge of the Downs",
         suggestedLevel = 37,
         requiredLevel = 32,
-        source = { 
-            type = "npc", 
-            name = "Belnistrasz", 
-            zone = "Razorfen Downs", 
+        source = {
+            type = "npc",
+            name = "Belnistrasz",
+            zone = "Razorfen Downs",
             location = { mapId = 1413, x = 0.49, y = 0.92 },
             text = "Located inside the dungeon"
         }
@@ -2062,11 +2194,11 @@ Q.Quests = {
         name = "Reclaimed Treasures",
         suggestedLevel = 38,
         requiredLevel = 33,
-        source = { 
-            type = "npc", 
-            name = "Patrick Garrett", 
-            zone = "Undercity", 
-            location = { mapId = 1458, x = 0.626, y = 0.486 } 
+        source = {
+            type = "npc",
+            name = "Patrick Garrett",
+            zone = "Undercity",
+            location = { mapId = 1458, x = 0.626, y = 0.486 }
         },
         dungeons = { Q.Dungeons["Uldaman"] },
     },
@@ -2076,11 +2208,11 @@ Q.Quests = {
         name = "Reclaimed Treasures",
         suggestedLevel = 38,
         requiredLevel = 33,
-        source = { 
-            type = "npc", 
-            name = "Krom Stoutarm", 
-            zone = "Ironforge", 
-            location = { mapId = 1455, x = 0.746, y = 0.10 } 
+        source = {
+            type = "npc",
+            name = "Krom Stoutarm",
+            zone = "Ironforge",
+            location = { mapId = 1455, x = 0.746, y = 0.10 }
         },
         dungeons = { Q.Dungeons["Uldaman"] },
     },
@@ -2090,12 +2222,14 @@ Q.Quests = {
         name = "Uldaman Reagent Run",
         suggestedLevel = 42,
         requiredLevel = 38,
-        previousQuestId = 2500,
-        source = { 
-            type = "npc", 
-            name = "Ghak Healtouch", 
-            zone = "Loch Modan", 
-            location = { mapId = 1432, x = 0.37, y = 0.492 } 
+        prerequisites = {
+            { id = 2500, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Ghak Healtouch",
+            zone = "Loch Modan",
+            location = { mapId = 1432, x = 0.37, y = 0.492 }
         },
         dungeons = { Q.Dungeons["Uldaman"] },
     },
@@ -2105,12 +2239,14 @@ Q.Quests = {
         name = "Find the Gems and Power Source",
         suggestedLevel = 44,
         requiredLevel = 37,
-        previousQuestId = 2338,
-        source = { 
-            type = "npc", 
-            name = "Jarkal Mossmeld", 
-            zone = "Badlands", 
-            location = { mapId = 1418, x = 0.024, y = 0.460 }  
+        prerequisites = {
+            { id = 2338, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Jarkal Mossmeld",
+            zone = "Badlands",
+            location = { mapId = 1418, x = 0.024, y = 0.460 }
         },
         dungeons = { Q.Dungeons["Uldaman"] },
     },
@@ -2120,11 +2256,13 @@ Q.Quests = {
         name = "The Hidden Chamber",
         suggestedLevel = 40,
         requiredLevel = 35,
-        previousQuestId = 2398,
-        source = { 
-            type = "npc", 
-            name = "Baelog", 
-            zone = "Uldaman", 
+        prerequisites = {
+            { id = 2398, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Baelog",
+            zone = "Uldaman",
             location = { mapId = 1418, x = 0.426, y = 0.122 },
             text = "Found inside the dungeon"
         },
@@ -2136,11 +2274,11 @@ Q.Quests = {
         name = "Power Stones",
         suggestedLevel = 36,
         requiredLevel = 30,
-        source = { 
-            type = "npc", 
-            name = "Rigglefuzz", 
-            zone = "Badlands", 
-            location = { mapId = 1418, x = 0.424, y = 0.528 } 
+        source = {
+            type = "npc",
+            name = "Rigglefuzz",
+            zone = "Badlands",
+            location = { mapId = 1418, x = 0.424, y = 0.528 }
         },
         dungeons = { Q.Dungeons["Uldaman"] },
     },
@@ -2150,11 +2288,11 @@ Q.Quests = {
         name = "A Sign of Hope",
         suggestedLevel = 35,
         requiredLevel = 35,
-        source = { 
-            type = "item", 
-            name = "Crumpled Map", 
-            zone = "Badlands", 
-            location = { mapId = 1418, x = 0.53, y = 0.341 } 
+        source = {
+            type = "item",
+            name = "Crumpled Map",
+            zone = "Badlands",
+            location = { mapId = 1418, x = 0.53, y = 0.341 }
         }
     },
     {
@@ -2163,12 +2301,14 @@ Q.Quests = {
         name = "A Sign of Hope",
         suggestedLevel = 40,
         requiredLevel = 35,
-        previousQuestId = 720,
-        source = { 
-            type = "npc", 
-            name = "Prospector Ryedol", 
-            zone = "Badlands", 
-            location = { mapId = 1418, x = 0.534, y = 0.432 } 
+        prerequisites = {
+            { id = 720, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Prospector Ryedol",
+            zone = "Badlands",
+            location = { mapId = 1418, x = 0.534, y = 0.432 }
         }
     },
     {
@@ -2177,15 +2317,16 @@ Q.Quests = {
         name = "Amulet of Secrets",
         suggestedLevel = 40,
         requiredLevel = 35,
-        previousQuestId = 721,
-        source = { 
-            type = "npc", 
-            name = "Hammertoe Grez", 
-            zone = "Uldaman", 
+        prerequisites = {
+            { id = 721, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Hammertoe Grez",
+            zone = "Uldaman",
             location = { mapId = 1418, x = 0.426, y = 0.122 },
             text = "Found inside the dungeon"
-        },
-        dungeons = { Q.Dungeons["Uldaman"] },
+        }
     },
     {
         id = 723,
@@ -2193,11 +2334,13 @@ Q.Quests = {
         name = "Prospect of Faith",
         suggestedLevel = 40,
         requiredLevel = 35,
-        previousQuestId = 722,
-        source = { 
-            type = "npc", 
-            name = "Hammertoe Grez", 
-            zone = "Uldaman", 
+        prerequisites = {
+            { id = 722, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Hammertoe Grez",
+            zone = "Uldaman",
             location = { mapId = 1418, x = 0.426, y = 0.122 },
             text = "Found inside the dungeon"
         }
@@ -2208,12 +2351,14 @@ Q.Quests = {
         name = "Prospect of Faith",
         suggestedLevel = 40,
         requiredLevel = 35,
-        previousQuestId = 723,
-        source = { 
-            type = "npc", 
-            name = "Prospector Ryedol", 
-            zone = "Badlands", 
-            location = { mapId = 1418, x = 0.534, y = 0.432 } 
+        prerequisites = {
+            { id = 723, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Prospector Ryedol",
+            zone = "Badlands",
+            location = { mapId = 1418, x = 0.534, y = 0.432 }
         }
     },
     {
@@ -2222,12 +2367,14 @@ Q.Quests = {
         name = "Passing Word of a Threat",
         suggestedLevel = 40,
         requiredLevel = 35,
-        previousQuestId = 724,
-        source = { 
-            type = "npc", 
-            name = "Historian Karnik", 
-            zone = "Ironforge", 
-            location = { mapId = 1455, x = 0.764, y = 0.12 } 
+        prerequisites = {
+            { id = 724, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Historian Karnik",
+            zone = "Ironforge",
+            location = { mapId = 1455, x = 0.764, y = 0.12 }
         }
     },
     {
@@ -2236,12 +2383,14 @@ Q.Quests = {
         name = "Passing Word of a Threat",
         suggestedLevel = 40,
         requiredLevel = 35,
-        previousQuestId = 725,
-        source = { 
-            type = "npc", 
-            name = "Advisor Belgrum", 
-            zone = "Ironforge", 
-            location = { mapId = 1455, x = 0.764, y = 0.12 } 
+        prerequisites = {
+            { id = 725, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Advisor Belgrum",
+            zone = "Ironforge",
+            location = { mapId = 1455, x = 0.764, y = 0.12 }
         }
     },
     {
@@ -2250,12 +2399,14 @@ Q.Quests = {
         name = "An Ambassador of Evil",
         suggestedLevel = 44,
         requiredLevel = 35,
-        previousQuestId = 726,
-        source = { 
-            type = "npc", 
-            name = "Historian Karnik", 
-            zone = "Ironforge", 
-            location = { mapId = 1455, x = 0.764, y = 0.12 } 
+        prerequisites = {
+            { id = 726, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Historian Karnik",
+            zone = "Ironforge",
+            location = { mapId = 1455, x = 0.764, y = 0.12 }
         }
     },
     {
@@ -2264,12 +2415,14 @@ Q.Quests = {
         name = "The Lost Tablets of Will",
         suggestedLevel = 45,
         requiredLevel = 35,
-        previousQuestId = 762,
-        source = { 
-            type = "npc", 
-            name = "Advisor Belgrum", 
-            zone = "Ironforge", 
-            location = { mapId = 1455, x = 0.764, y = 0.12 } 
+        prerequisites = {
+            { id = 762, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Advisor Belgrum",
+            zone = "Ironforge",
+            location = { mapId = 1455, x = 0.764, y = 0.12 }
         },
         dungeons = { Q.Dungeons["Uldaman"] },
     },
@@ -2279,11 +2432,11 @@ Q.Quests = {
         name = "The Shattered Necklace",
         suggestedLevel = 41,
         requiredLevel = 37,
-        source = { 
-            type = "item", 
+        source = {
+            type = "item",
             itemId = 7666,
-            name = "Shattered Necklace", 
-            zone = "Uldaman", 
+            name = "Shattered Necklace",
+            zone = "Uldaman",
             location = { mapId = 1418, x = 0.426, y = 0.122 },
             text = "Drops from Stonevault troggs and Shadowforge Ruffian/Diggers around/inside the dungeon"
         },
@@ -2295,12 +2448,14 @@ Q.Quests = {
         name = "Lore for a Price",
         suggestedLevel = 41,
         requiredLevel = 37,
-        previousQuestId = 2198,
-        source = { 
-            type = "npc", 
-            name = "Talvash del Kissel", 
-            zone = "Ironforge", 
-            location = { mapId = 1455, x = 0.360, y = 0.04 } 
+        prerequisites = {
+            { id = 2198, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Talvash del Kissel",
+            zone = "Ironforge",
+            location = { mapId = 1455, x = 0.360, y = 0.04 }
         }
     },
     {
@@ -2309,12 +2464,14 @@ Q.Quests = {
         name = "Back to Uldaman",
         suggestedLevel = 41,
         requiredLevel = 37,
-        previousQuestId = 2199,
-        source = { 
-            type = "npc", 
-            name = "Talvash del Kissel", 
-            zone = "Ironforge", 
-            location = { mapId = 1455, x = 0.360, y = 0.04 } 
+        prerequisites = {
+            { id = 2199, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Talvash del Kissel",
+            zone = "Ironforge",
+            location = { mapId = 1455, x = 0.360, y = 0.04 }
         }
     },
     {
@@ -2323,11 +2480,13 @@ Q.Quests = {
         name = "Find the Gems",
         suggestedLevel = 43,
         requiredLevel = 37,
-        previousQuestId = 2200,
-        source = { 
-            type = "object", 
-            name = "Remains of a Paladin", 
-            zone = "Uldaman", 
+        prerequisites = {
+            { id = 2200, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "object",
+            name = "Remains of a Paladin",
+            zone = "Uldaman",
             location = { mapId = 1418, x = 0.426, y = 0.122, },
             text = "Found on the floor to the right when moving from Revelosh to Ironaya"
         }
@@ -2338,11 +2497,13 @@ Q.Quests = {
         name = "Restoring the Necklace",
         suggestedLevel = 44,
         requiredLevel = 37,
-        previousQuestId = 2201,
-        source = { 
-            type = "object", 
-            name = "Talvash's Scrying Bowl", 
-            zone = "Uldaman", 
+        prerequisites = {
+            { id = 2201, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "object",
+            name = "Talvash's Scrying Bowl",
+            zone = "Uldaman",
             location = { mapId = 1418, x = 0.426, y = 0.122, },
             text = "Summoned by using Talvah's Phial of Scrying from your bags."
         },
@@ -2354,11 +2515,11 @@ Q.Quests = {
         name = "The Lost Dwarves",
         suggestedLevel = 40,
         requiredLevel = 35,
-        source = { 
-            type = "npc", 
-            name = "Prospector Stormpike", 
-            zone = "Ironforge", 
-            location = { mapId = 1455, x = 0.75, y = 0.12 } 
+        source = {
+            type = "npc",
+            name = "Prospector Stormpike",
+            zone = "Ironforge",
+            location = { mapId = 1455, x = 0.75, y = 0.12 }
         },
     },
     {
@@ -2367,11 +2528,11 @@ Q.Quests = {
         name = "Badlands Reagent Run",
         suggestedLevel = 39,
         requiredLevel = 36,
-        source = { 
-            type = "npc", 
-            name = "Ghak Healtouch", 
-            zone = "Loch Modan", 
-            location = { mapId = 1432, x = 0.37, y = 0.492 } 
+        source = {
+            type = "npc",
+            name = "Ghak Healtouch",
+            zone = "Loch Modan",
+            location = { mapId = 1432, x = 0.37, y = 0.492 }
         },
     },
     {
@@ -2380,12 +2541,14 @@ Q.Quests = {
         name = "Uldaman Reagent Run",
         suggestedLevel = 42,
         requiredLevel = 38,
-        previousQuestId = 2258,
-        source = { 
-            type = "npc", 
-            name = "Jarkal Mossmeld", 
-            zone = "Badlands", 
-            location = { mapId = 1418, x = 0.024, y = 0.460 } 
+        prerequisites = {
+            { id = 2258, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Jarkal Mossmeld",
+            zone = "Badlands",
+            location = { mapId = 1418, x = 0.024, y = 0.460 }
         },
         dungeons = { Q.Dungeons["Uldaman"] },
     },
@@ -2395,11 +2558,11 @@ Q.Quests = {
         name = "Badlands Reagent Run",
         suggestedLevel = 39,
         requiredLevel = 36,
-        source = { 
-            type = "npc", 
-            name = "Jarkal Mossmeld", 
-            zone = "Badlands", 
-            location = { mapId = 1418, x = 0.024, y = 0.460 } 
+        source = {
+            type = "npc",
+            name = "Jarkal Mossmeld",
+            zone = "Badlands",
+            location = { mapId = 1418, x = 0.024, y = 0.460 }
         },
     },
     {
@@ -2408,14 +2571,27 @@ Q.Quests = {
         name = "The Platinum Discs",
         suggestedLevel = 42,
         requiredLevel = 40,
-        source = { 
-            type = "object", 
-            name = "The Platinum Discs", 
-            zone = "Uldaman", 
+        source = {
+            type = "object",
+            name = "The Platinum Discs",
+            zone = "Uldaman",
             location = { mapId = 1418, x = 0.426, y = 0.122 },
             text = "Started in the vault after the final boss"
         },
         dungeons = { Q.Dungeons["Uldaman"] },
+    },
+    {
+        id = 707,
+        faction = "Alliance",
+        name = "Ironband Wants You!",
+        suggestedLevel = 37,
+        requiredLevel = 30,
+        source = {
+            type = "npc",
+            name = "Prospector Ironband",
+            zone = "Loch Modan",
+            location = { mapId = 1432, x = 0.658, y = 0.656 }
+        },
     },
     {
         id = 704,
@@ -2423,11 +2599,13 @@ Q.Quests = {
         name = "Agmond's Fate",
         suggestedLevel = 38,
         requiredLevel = 30,
-        previousQuestId = 739,
-        source = { 
-            type = "npc", 
-            name = "Prospector Ironband", 
-            zone = "Loch Modan", 
+        prerequisites = {
+            { id = 739, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Prospector Ironband",
+            zone = "Loch Modan",
             location = { mapId = 1432, x = 0.658, y = 0.656 }
         },
         dungeons = { Q.Dungeons["Uldaman"] },
@@ -2438,11 +2616,13 @@ Q.Quests = {
         name = "Murdaloc",
         suggestedLevel = 42,
         requiredLevel = 30,
-        previousQuestId = 738,
-        source = { 
-            type = "npc", 
-            name = "Battered Dwarven Skeleton", 
-            zone = "Badlands", 
+        prerequisites = {
+            { id = 738, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Battered Dwarven Skeleton",
+            zone = "Badlands",
             location = { mapId = 15, x = 0.51, y = 0.625 }
         }
     },
@@ -2452,11 +2632,13 @@ Q.Quests = {
         name = "Find Agmond",
         suggestedLevel = 38,
         requiredLevel = 30,
-        previousQuestId = 707,
-        source = { 
-            type = "npc", 
-            name = "Prospector Stormpike", 
-            zone = "Ironforge", 
+        prerequisites = {
+            { id = 707, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Prospector Stormpike",
+            zone = "Ironforge",
             location = { mapId = 1455, x = 0.738, y = 0.13 }
         }
     },
@@ -2466,11 +2648,11 @@ Q.Quests = {
         name = "Necklace Recovery",
         suggestedLevel = 41,
         requiredLevel = 37,
-        source = { 
-            type = "item", 
+        source = {
+            type = "item",
             itemId = 7666,
-            name = "Shattered Necklace", 
-            zone = "Uldaman", 
+            name = "Shattered Necklace",
+            zone = "Uldaman",
             location = { mapId = 1418, x = 0.426, y = 0.122 },
             text = "Drops from Stonevault troggs and Shadowforge Ruffian/Diggers around/inside the dungeon"
         }
@@ -2481,11 +2663,13 @@ Q.Quests = {
         name = "Necklace Recovery, Take 2",
         suggestedLevel = 41,
         requiredLevel = 37,
-        previousQuestId = 2283,
-        source = { 
-            type = "npc", 
-            name = "Dran Droffers", 
-            zone = "Orgrimmar", 
+        prerequisites = {
+            { id = 2283, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Dran Droffers",
+            zone = "Orgrimmar",
             location = { mapId = 1454, x = 0.594, y = 0.368 }
         }
     },
@@ -2495,11 +2679,13 @@ Q.Quests = {
         name = "Translating the Journal",
         suggestedLevel = 42,
         requiredLevel = 37,
-        previousQuestId = 2284,
-        source = { 
-            type = "object", 
-            name = "Remains of a Paladin", 
-            zone = "Uldaman", 
+        prerequisites = {
+            { id = 2284, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "object",
+            name = "Remains of a Paladin",
+            zone = "Uldaman",
             location = { mapId = 1418, x = 0.426, y = 0.122, },
             text = "Found on the floor to the right when moving from Revelosh to Ironaya"
         }
@@ -2510,12 +2696,14 @@ Q.Quests = {
         name = "Translating the Journal",
         suggestedLevel = 42,
         requiredLevel = 37,
-        previousQuestId = 2318,
-        source = { 
-            type = "npc", 
-            name = "Jarkal Mossmeld", 
-            zone = "Badlands", 
-            location = { mapId = 1418, x = 0.024, y = 0.460 } 
+        prerequisites = {
+            { id = 2318, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Jarkal Mossmeld",
+            zone = "Badlands",
+            location = { mapId = 1418, x = 0.024, y = 0.460 }
         }
     },
     {
@@ -2524,11 +2712,11 @@ Q.Quests = {
         name = "Solution to Doom",
         suggestedLevel = 40,
         requiredLevel = 30,
-        source = { 
-            type = "npc", 
-            name = "Theldurin the Lost", 
-            zone = "Badlands", 
-            location = { mapId = 1418, x = 0.514, y = 0.768 } 
+        source = {
+            type = "npc",
+            name = "Theldurin the Lost",
+            zone = "Badlands",
+            location = { mapId = 1418, x = 0.514, y = 0.768 }
         },
         dungeons = { Q.Dungeons["Uldaman"] },
     },
@@ -2541,13 +2729,13 @@ Q.Quests = {
         name = "Venom Bottles",
         suggestedLevel = 45,
         requiredLevel = 40,
-        source = { 
-            type = "item", 
-            name = "Venom Bottle", 
+        source = {
+            type = "item",
+            name = "Venom Bottle",
             itemId = 9321,
-            zone = "The Hinterlands", 
+            zone = "The Hinterlands",
             location = { mapId = 1425, x = 0.236, y = 0.587 },
-            text = "Can spawn in multiple locations throughout the zone" 
+            text = "Can spawn in multiple locations throughout the zone"
         }
     },
     {
@@ -2556,12 +2744,14 @@ Q.Quests = {
         name = "Undamaged Venom Sac",
         suggestedLevel = 45,
         requiredLevel = 40,
-        previousQuestId = 2933,
-        source = { 
-            type = "npc", 
-            name = "Apotechary Lydon", 
-            zone = "Hillsbrad Foothills", 
-            location = { mapId = 1424, x = 0.614, y = 0.192 } 
+        prerequisites = {
+            { id = 2933, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Apotechary Lydon",
+            zone = "Hillsbrad Foothills",
+            location = { mapId = 1424, x = 0.614, y = 0.192 }
         }
     },
     {
@@ -2570,12 +2760,14 @@ Q.Quests = {
         name = "Consult Master Gadrin",
         suggestedLevel = 44,
         requiredLevel = 40,
-        previousQuestId = 2934,
-        source = { 
-            type = "npc", 
-            name = "Apotechary Lydon", 
-            zone = "Hillsbrad Foothills", 
-            location = { mapId = 1424, x = 0.614, y = 0.192 } 
+        prerequisites = {
+            { id = 2934, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Apotechary Lydon",
+            zone = "Hillsbrad Foothills",
+            location = { mapId = 1424, x = 0.614, y = 0.192 }
         }
     },
     {
@@ -2584,12 +2776,14 @@ Q.Quests = {
         name = "The Spider God",
         suggestedLevel = 44,
         requiredLevel = 40,
-        previousQuestId = 2935,
-        source = { 
-            type = "npc", 
-            name = "Master Gadrin", 
-            zone = "Durotar", 
-            location = { mapId = 1411, x = 0.56, y = 0.74 } 
+        prerequisites = {
+            { id = 2935, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Master Gadrin",
+            zone = "Durotar",
+            location = { mapId = 1411, x = 0.56, y = 0.74 }
         },
         dungeons = { Q.Dungeons["Zul'Farrak"] },
     },
@@ -2599,11 +2793,11 @@ Q.Quests = {
         name = "Troll Temper",
         suggestedLevel = 45,
         requiredLevel = 40,
-        source = { 
-            type = "npc", 
-            name = "Trenton Lighthammer", 
-            zone = "Tanaris", 
-            location = { mapId = 440, x = 0.51, y = 0.28 } 
+        source = {
+            type = "npc",
+            name = "Trenton Lighthammer",
+            zone = "Tanaris",
+            location = { mapId = 440, x = 0.51, y = 0.28 }
         },
         dungeons = { Q.Dungeons["Zul'Farrak"] },
     },
@@ -2613,11 +2807,11 @@ Q.Quests = {
         name = "Divino-matic Rod",
         suggestedLevel = 45,
         requiredLevel = 40,
-        source = { 
-            type = "npc", 
-            name = "Chief Engineer Bilgewhizzle", 
-            zone = "Tanaris", 
-            location = { mapId = 440, x = 0.52, y = 0.28 } 
+        source = {
+            type = "npc",
+            name = "Chief Engineer Bilgewhizzle",
+            zone = "Tanaris",
+            location = { mapId = 440, x = 0.52, y = 0.28 }
         },
         dungeons = { Q.Dungeons["Zul'Farrak"] },
     },
@@ -2627,11 +2821,11 @@ Q.Quests = {
         name = "Tiara of the Deep",
         suggestedLevel = 45,
         requiredLevel = 40,
-        source = { 
-            type = "npc", 
-            name = "Tabetha", 
-            zone = "Dustwallow Marsh", 
-            location = { mapId = 1445, x = 0.46, y = 0.57 } 
+        source = {
+            type = "npc",
+            name = "Tabetha",
+            zone = "Dustwallow Marsh",
+            location = { mapId = 1445, x = 0.46, y = 0.57 }
         },
         dungeons = { Q.Dungeons["Zul'Farrak"] },
     },
@@ -2641,11 +2835,11 @@ Q.Quests = {
         name = "Gahz'rilla",
         suggestedLevel = 50,
         requiredLevel = 40,
-        source = { 
-            type = "npc", 
-            name = "Wizzle Brassbolts", 
-            zone = "Thousand Needles", 
-            location = { mapId = 1441, x = 0.78, y = 0.77 } 
+        source = {
+            type = "npc",
+            name = "Wizzle Brassbolts",
+            zone = "Thousand Needles",
+            location = { mapId = 1441, x = 0.78, y = 0.77 }
         },
         dungeons = { Q.Dungeons["Zul'Farrak"] },
     },
@@ -2656,11 +2850,11 @@ Q.Quests = {
         name = "Witherbark Cages",
         suggestedLevel = 45,
         requiredLevel = 40,
-        source = { 
-            type = "npc", 
-            name = "Gryphon Master Talonaxe", 
-            zone = "The Hinterlands", 
-            location = { mapId = 1425, x = 0.098, y = 0.444 } 
+        source = {
+            type = "npc",
+            name = "Gryphon Master Talonaxe",
+            zone = "The Hinterlands",
+            location = { mapId = 1425, x = 0.098, y = 0.444 }
         }
     },
     {
@@ -2669,12 +2863,14 @@ Q.Quests = {
         name = "The Altar of Zul",
         suggestedLevel = 48,
         requiredLevel = 40,
-        previousQuestId = 2988,
-        source = { 
-            type = "npc", 
-            name = "Gryphon Master Talonaxe", 
-            zone = "The Hinterlands", 
-            location = { mapId = 1425, x = 0.098, y = 0.444 } 
+        prerequisites = {
+            { id = 2988, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Gryphon Master Talonaxe",
+            zone = "The Hinterlands",
+            location = { mapId = 1425, x = 0.098, y = 0.444 }
         }
     },
     {
@@ -2683,12 +2879,14 @@ Q.Quests = {
         name = "Thadius Grimshade",
         suggestedLevel = 47,
         requiredLevel = 40,
-        previousQuestId = 2989,
-        source = { 
-            type = "npc", 
-            name = "Gryphon Master Talonaxe", 
-            zone = "The Hinterlands", 
-            location = { mapId = 1425, x = 0.098, y = 0.444 } 
+        prerequisites = {
+            { id = 2989, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Gryphon Master Talonaxe",
+            zone = "The Hinterlands",
+            location = { mapId = 1425, x = 0.098, y = 0.444 }
         }
     },
     {
@@ -2697,12 +2895,14 @@ Q.Quests = {
         name = "Nekrum's Medallion",
         suggestedLevel = 47,
         requiredLevel = 40,
-        previousQuestId = 2990,
-        source = { 
-            type = "npc", 
-            name = "Thadius Grimshade", 
-            zone = "Blasted Lands", 
-            location = { mapId = 1419, x = 0.87, y = 0.194 } 
+        prerequisites = {
+            { id = 2990, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Thadius Grimshade",
+            zone = "Blasted Lands",
+            location = { mapId = 1419, x = 0.87, y = 0.194 }
         },
         dungeons = { Q.Dungeons["Zul'Farrak"] },
     },
@@ -2712,11 +2912,11 @@ Q.Quests = {
         name = "Screecher Spirits",
         suggestedLevel = 42,
         requiredLevel = 40,
-        source = { 
-            type = "npc", 
-            name = "Yeh'kinya", 
-            zone = "Tanaris", 
-            location = { mapId = 440, x = 0.67, y = 0.22 } 
+        source = {
+            type = "npc",
+            name = "Yeh'kinya",
+            zone = "Tanaris",
+            location = { mapId = 440, x = 0.67, y = 0.22 }
         },
     },
     {
@@ -2725,12 +2925,14 @@ Q.Quests = {
         name = "The Prophecy of Mosh'aru",
         suggestedLevel = 47,
         requiredLevel = 40,
-        previousQuestId = 3520,
-        source = { 
-            type = "npc", 
-            name = "Yeh'kinya", 
-            zone = "Tanaris", 
-            location = { mapId = 440, x = 0.67, y = 0.22 } 
+        prerequisites = {
+            { id = 3520, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Yeh'kinya",
+            zone = "Tanaris",
+            location = { mapId = 440, x = 0.67, y = 0.22 }
         },
         dungeons = { Q.Dungeons["Zul'Farrak"] },
     },
@@ -2743,11 +2945,11 @@ Q.Quests = {
         name = "Shadowshard Fragments",
         suggestedLevel = 41,
         requiredLevel = 39,
-        source = { 
-            type = "npc", 
-            name = "Archmage Tervosh", 
-            zone = "Dustwallow Marsh", 
-            location = { mapId = 1445, x = 0.66, y = 0.49 } 
+        source = {
+            type = "npc",
+            name = "Archmage Tervosh",
+            zone = "Dustwallow Marsh",
+            location = { mapId = 1445, x = 0.66, y = 0.49 }
         },
         dungeons = { Q.Dungeons["Maraudon"] },
     },
@@ -2757,11 +2959,11 @@ Q.Quests = {
         name = "Shadowshard Fragments",
         suggestedLevel = 41,
         requiredLevel = 39,
-        source = { 
-            type = "npc", 
-            name = "Uthel'nay", 
-            zone = "Orgrimmar", 
-            location = { mapId = 1454, x = 0.39, y = 0.86 } 
+        source = {
+            type = "npc",
+            name = "Uthel'nay",
+            zone = "Orgrimmar",
+            location = { mapId = 1454, x = 0.39, y = 0.86 }
         },
         dungeons = { Q.Dungeons["Maraudon"] },
     },
@@ -2771,11 +2973,11 @@ Q.Quests = {
         name = "Twisted Evils",
         suggestedLevel = 45,
         requiredLevel = 41,
-        source = { 
-            type = "npc", 
-            name = "Willow", 
-            zone = "Desolace", 
-            location = { mapId = 1443, x = 0.62, y = 0.39 } 
+        source = {
+            type = "npc",
+            name = "Willow",
+            zone = "Desolace",
+            location = { mapId = 1443, x = 0.62, y = 0.39 }
         },
         dungeons = { Q.Dungeons["Maraudon"] },
     },
@@ -2785,10 +2987,10 @@ Q.Quests = {
         name = "Legends of Maraudon",
         suggestedLevel = 49,
         requiredLevel = 41,
-        source = { 
-            type = "npc", 
-            name = "Cavindra", 
-            zone = "Maraudon", 
+        source = {
+            type = "npc",
+            name = "Cavindra",
+            zone = "Maraudon",
             location = { mapId = 1443, x = 0.29, y = 0.62 }
         }
     },
@@ -2798,11 +3000,11 @@ Q.Quests = {
         name = "Vyletongue Corruption",
         suggestedLevel = 47,
         requiredLevel = 41,
-        source = { 
-            type = "npc", 
-            name = "Vark Battlescar", 
-            zone = "Desolace", 
-            location = { mapId = 1443, x = 0.232, y = 0.702 } 
+        source = {
+            type = "npc",
+            name = "Vark Battlescar",
+            zone = "Desolace",
+            location = { mapId = 1443, x = 0.232, y = 0.702 }
         },
         dungeons = { Q.Dungeons["Maraudon"] },
     },
@@ -2812,11 +3014,11 @@ Q.Quests = {
         name = "Vyletongue Corruption",
         suggestedLevel = 47,
         requiredLevel = 41,
-        source = { 
-            type = "npc", 
-            name = "Talendria", 
-            zone = "Desolace", 
-            location = { mapId = 1443, x = 0.684, y = 0.088 } 
+        source = {
+            type = "npc",
+            name = "Talendria",
+            zone = "Desolace",
+            location = { mapId = 1443, x = 0.684, y = 0.088 }
         },
         dungeons = { Q.Dungeons["Maraudon"] },
     },
@@ -2826,11 +3028,11 @@ Q.Quests = {
         name = "Corruption of Earth and Seed",
         suggestedLevel = 51,
         requiredLevel = 45,
-        source = { 
-            type = "npc", 
-            name = "Keeper Marandis", 
-            zone = "Desolace", 
-            location = { mapId = 1443, x = 0.63, y = 0.10 } 
+        source = {
+            type = "npc",
+            name = "Keeper Marandis",
+            zone = "Desolace",
+            location = { mapId = 1443, x = 0.63, y = 0.10 }
         },
         dungeons = { Q.Dungeons["Maraudon"] },
     },
@@ -2840,11 +3042,13 @@ Q.Quests = {
         name = "The Scepter of Celebras",
         suggestedLevel = 49,
         requiredLevel = 41,
-        previousQuestId = 7044,
-        source = { 
-            type = "npc", 
-            name = "Celebras the Redeemed", 
-            zone = "Desolace", 
+        prerequisites = {
+            { id = 7044, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Celebras the Redeemed",
+            zone = "Desolace",
             location = { mapId = 1443, x = 0.38, y = 0.58 },
             text = "Inside the dungeon, spawns after killing Celebras the Cursed"
         },
@@ -2856,10 +3060,10 @@ Q.Quests = {
         name = "Seed of Life",
         suggestedLevel = 51,
         requiredLevel = 39,
-        source = { 
-            type = "npc", 
-            name = "Zaetar's Spirit", 
-            zone = "Desolace", 
+        source = {
+            type = "npc",
+            name = "Zaetar's Spirit",
+            zone = "Desolace",
             location = { mapId = 1443, x = 0.38, y = 0.58 },
             text = "Inside the dungeon, spawns after killing Princess Theradras"
         },
@@ -2871,10 +3075,10 @@ Q.Quests = {
         name = "The Pariah's Instructions",
         suggestedLevel = 48,
         requiredLevel = 39,
-        source = { 
-            type = "npc", 
-            name = "Centaur Pariah", 
-            zone = "Desolace", 
+        source = {
+            type = "npc",
+            name = "Centaur Pariah",
+            zone = "Desolace",
             location = { mapId = 1443, x = 0.462, y = 0.866 },
             text = "Patrols the area"
         },
@@ -2889,11 +3093,11 @@ Q.Quests = {
         name = "Pool of Tears",
         suggestedLevel = 43,
         requiredLevel = 38,
-        source = { 
-            type = "npc", 
-            name = "Fel'zerul", 
-            zone = "Swamp of Sorrows", 
-            location = { mapId = 1435, x = 0.47, y = 0.54 } 
+        source = {
+            type = "npc",
+            name = "Fel'zerul",
+            zone = "Swamp of Sorrows",
+            location = { mapId = 1435, x = 0.47, y = 0.54 }
         }
     },
     {
@@ -2902,12 +3106,14 @@ Q.Quests = {
         name = "The Atal'ai Exile",
         suggestedLevel = 44,
         requiredLevel = 38,
-        previousQuestId = 1424,
-        source = { 
-            type = "npc", 
-            name = "Fel'zerul", 
-            zone = "Swamp of Sorrows", 
-            location = { mapId = 1435, x = 0.47, y = 0.54 } 
+        prerequisites = {
+            { id = 1424, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Fel'zerul",
+            zone = "Swamp of Sorrows",
+            location = { mapId = 1435, x = 0.47, y = 0.54 }
         }
     },
     {
@@ -2916,12 +3122,14 @@ Q.Quests = {
         name = "Return to Fel'Zerul",
         suggestedLevel = 44,
         requiredLevel = 38,
-        previousQuestId = 1429,
-        source = { 
-            type = "npc", 
-            name = "Atal'ai Exile", 
-            zone = "The Hinterlands", 
-            location = { mapId = 1425, x = 0.336, y = 0.752 } 
+        prerequisites = {
+            { id = 1429, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Atal'ai Exile",
+            zone = "The Hinterlands",
+            location = { mapId = 1425, x = 0.336, y = 0.752 }
         }
     },
     {
@@ -2930,12 +3138,14 @@ Q.Quests = {
         name = "The Temple of Atal'Hakkar",
         suggestedLevel = 50,
         requiredLevel = 38,
-        previousQuestId = 1444,
-        source = { 
-            type = "npc", 
-            name = "Fel'zerul", 
-            zone = "Swamp of Sorrows", 
-            location = { mapId = 1435, x = 0.47, y = 0.54 } 
+        prerequisites = {
+            { id = 1444, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Fel'zerul",
+            zone = "Swamp of Sorrows",
+            location = { mapId = 1435, x = 0.47, y = 0.54 }
         },
         dungeons = { Q.Dungeons["Temple of Atal'Hakkar"] },
     },
@@ -2945,12 +3155,14 @@ Q.Quests = {
         name = "Haze of Evil",
         suggestedLevel = 52,
         requiredLevel = 47,
-        previousQuestId = 4142,
-        source = { 
-            type = "npc", 
-            name = "Gregan Brewspewer", 
-            zone = "Feralas", 
-            location = { mapId = 1444, x = 0.45, y = 0.256 } 
+        prerequisites = {
+            { id = 4142, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Gregan Brewspewer",
+            zone = "Feralas",
+            location = { mapId = 1444, x = 0.45, y = 0.256 }
         },
         dungeons = { Q.Dungeons["Temple of Atal'Hakkar"] },
     },
@@ -2960,11 +3172,11 @@ Q.Quests = {
         name = "In Search of The Temple",
         suggestedLevel = 43,
         requiredLevel = 38,
-        source = { 
-            type = "npc", 
-            name = "Brohann Caskbelly", 
-            zone = "Stormwind City", 
-            location = { mapId = 1453, x = 0.64, y = 0.21 } 
+        source = {
+            type = "npc",
+            name = "Brohann Caskbelly",
+            zone = "Stormwind City",
+            location = { mapId = 1453, x = 0.64, y = 0.21 }
         }
     },
     {
@@ -2973,11 +3185,11 @@ Q.Quests = {
         name = "Larion And Muigin",
         suggestedLevel = 52,
         requiredLevel = 47,
-        source = { 
-            type = "npc", 
-            name = "Larion", 
-            zone = "Un'Goro Crater", 
-            location = { mapId = 1449, x = 0.43, y = 0.096 } 
+        source = {
+            type = "npc",
+            name = "Larion",
+            zone = "Un'Goro Crater",
+            location = { mapId = 1449, x = 0.43, y = 0.096 }
         }
     },
     {
@@ -2986,12 +3198,14 @@ Q.Quests = {
         name = "Marvon's Workshop",
         suggestedLevel = 52,
         requiredLevel = 47,
-        previousQuestId = 4145,
-        source = { 
-            type = "npc", 
-            name = "Larion", 
-            zone = "Un'Goro Crater", 
-            location = { mapId = 1449, x = 0.43, y = 0.096 } 
+        prerequisites = {
+            { id = 4145, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Larion",
+            zone = "Un'Goro Crater",
+            location = { mapId = 1449, x = 0.43, y = 0.096 }
         }
     },
     {
@@ -3000,12 +3214,14 @@ Q.Quests = {
         name = "Zapper Fuel",
         suggestedLevel = 52,
         requiredLevel = 47,
-        previousQuestId = 4147,
-        source = { 
-            type = "npc", 
-            name = "Liv Rizzlefix", 
-            zone = "Feralas", 
-            location = { mapId = 1413, x = 0.624, y = 0.386 } 
+        prerequisites = {
+            { id = 4147, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Liv Rizzlefix",
+            zone = "Feralas",
+            location = { mapId = 1413, x = 0.624, y = 0.386 }
         },
         dungeons = { Q.Dungeons["Temple of Atal'Hakkar"] },
     },
@@ -3015,11 +3231,11 @@ Q.Quests = {
         name = "Muigin and Larion",
         suggestedLevel = 52,
         requiredLevel = 47,
-        source = { 
-            type = "npc", 
-            name = "Muigin", 
-            zone = "Un'Goro Crater", 
-            location = { mapId = 1449, x = 0.43, y = 0.096 } 
+        source = {
+            type = "npc",
+            name = "Muigin",
+            zone = "Un'Goro Crater",
+            location = { mapId = 1449, x = 0.43, y = 0.096 }
         }
     },
     {
@@ -3028,12 +3244,14 @@ Q.Quests = {
         name = "A Visist to Gregan",
         suggestedLevel = 52,
         requiredLevel = 47,
-        previousQuestId = 4141,
-        source = { 
-            type = "npc", 
-            name = "Muigin", 
-            zone = "Un'Goro Crater", 
-            location = { mapId = 1449, x = 0.43, y = 0.096 } 
+        prerequisites = {
+            { id = 4141, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Muigin",
+            zone = "Un'Goro Crater",
+            location = { mapId = 1449, x = 0.43, y = 0.096 }
         }
     },
     {
@@ -3042,12 +3260,14 @@ Q.Quests = {
         name = "To The Hinterlands",
         suggestedLevel = 43,
         requiredLevel = 38,
-        previousQuestId = 1448,
-        source = { 
-            type = "npc", 
-            name = "Brohann Caskbelly", 
-            zone = "Stormwind City", 
-            location = { mapId = 1453, x = 0.64, y = 0.21 } 
+        prerequisites = {
+            { id = 1448, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Brohann Caskbelly",
+            zone = "Stormwind City",
+            location = { mapId = 1453, x = 0.64, y = 0.21 }
         }
     },
     {
@@ -3056,12 +3276,14 @@ Q.Quests = {
         name = "Gryphon Master Talonaxe",
         suggestedLevel = 43,
         requiredLevel = 38,
-        previousQuestId = 1449,
-        source = { 
-            type = "npc", 
-            name = "Falstad Wildhammer", 
-            zone = "The Hinterlands", 
-            location = { mapId = 1425, x = 0.118, y = 0.468 } 
+        prerequisites = {
+            { id = 1449, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Falstad Wildhammer",
+            zone = "The Hinterlands",
+            location = { mapId = 1425, x = 0.118, y = 0.468 }
         }
     },
     {
@@ -3070,12 +3292,14 @@ Q.Quests = {
         name = "Rhapsody Shindigger",
         suggestedLevel = 43,
         requiredLevel = 38,
-        previousQuestId = 1450,
-        source = { 
-            type = "npc", 
-            name = "Gryphon Master Talonaxe", 
-            zone = "The Hinterlands", 
-            location = { mapId = 1425, x = 0.098, y = 0.444 } 
+        prerequisites = {
+            { id = 1450, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Gryphon Master Talonaxe",
+            zone = "The Hinterlands",
+            location = { mapId = 1425, x = 0.098, y = 0.444 }
         }
     },
     {
@@ -3084,12 +3308,14 @@ Q.Quests = {
         name = "Rhapsody's Kalimdor Kocktail",
         suggestedLevel = 43,
         requiredLevel = 38,
-        previousQuestId = 1451,
-        source = { 
-            type = "npc", 
-            name = "Rhapsody Shindigger", 
-            zone = "The Hinterlands", 
-            location = { mapId = 1425, x = 0.268, y = 0.486 } 
+        prerequisites = {
+            { id = 1451, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Rhapsody Shindigger",
+            zone = "The Hinterlands",
+            location = { mapId = 1425, x = 0.268, y = 0.486 }
         }
     },
     {
@@ -3098,12 +3324,14 @@ Q.Quests = {
         name = "Rhapsody's Tale",
         suggestedLevel = 43,
         requiredLevel = 38,
-        previousQuestId = 1452,
-        source = { 
-            type = "npc", 
-            name = "Rhapsody Shindigger", 
-            zone = "The Hinterlands", 
-            location = { mapId = 1425, x = 0.268, y = 0.486 } 
+        prerequisites = {
+            { id = 1452, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Rhapsody Shindigger",
+            zone = "The Hinterlands",
+            location = { mapId = 1425, x = 0.268, y = 0.486 }
         }
     },
     {
@@ -3112,12 +3340,14 @@ Q.Quests = {
         name = "Into The Temple of Atal'Hakkar",
         suggestedLevel = 50,
         requiredLevel = 38,
-        previousQuestId = 1469,
-        source = { 
-            type = "npc", 
-            name = "Brohann Caskbelly", 
-            zone = "Stormwind City", 
-            location = { mapId = 1453, x = 0.64, y = 0.21 } 
+        prerequisites = {
+            { id = 1469, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Brohann Caskbelly",
+            zone = "Stormwind City",
+            location = { mapId = 1453, x = 0.64, y = 0.21 }
         },
         dungeons = { Q.Dungeons["Temple of Atal'Hakkar"] },
     },
@@ -3127,28 +3357,30 @@ Q.Quests = {
         name = "The Essence of Eranikus",
         suggestedLevel = 52,
         requiredLevel = 48,
-        source = { 
-            type = "item", 
-            name = "Essence of Eranikus", 
-            itemId = 10454, 
-            zone = "Temple of Atal'Hakkar", 
+        source = {
+            type = "item",
+            name = "Essence of Eranikus",
+            itemId = 10454,
+            zone = "Temple of Atal'Hakkar",
             location = { mapId = 1435, x = 0.43, y = 0.53 },
-            text = "Dropped by Shade of Eranikus inside the dungeon" 
+            text = "Dropped by Shade of Eranikus inside the dungeon"
         },
         dungeons = { Q.Dungeons["Temple of Atal'Hakkar"] },
     },
     {
-        id = 4787,
+        id = 3528,
         faction = nil,
         name = "The God Hakkar",
         suggestedLevel = 50,
         requiredLevel = 40,
-        previousQuestId = 4786,
-        source = { 
-            type = "npc", 
-            name = "Yeh'kinya", 
-            zone = "Tanaris", 
-            location = { mapId = 440, x = 0.67, y = 0.22 } 
+        prerequisites = {
+            { id = 4786, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Yeh'kinya",
+            zone = "Tanaris",
+            location = { mapId = 440, x = 0.67, y = 0.22 }
         },
         dungeons = { Q.Dungeons["Temple of Atal'Hakkar"] },
     },
@@ -3158,12 +3390,14 @@ Q.Quests = {
         name = "The Ancient Egg",
         suggestedLevel = 50,
         requiredLevel = 40,
-        previousQuestId = 3527,
-        source = { 
-            type = "npc", 
-            name = "Yeh'kinya", 
-            zone = "Tanaris", 
-            location = { mapId = 440, x = 0.67, y = 0.22 } 
+        prerequisites = {
+            { id = 3527, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Yeh'kinya",
+            zone = "Tanaris",
+            location = { mapId = 440, x = 0.67, y = 0.22 }
         },
     },
     {
@@ -3172,11 +3406,11 @@ Q.Quests = {
         name = "Jammal'an the Prophet",
         suggestedLevel = 53,
         requiredLevel = 38,
-        source = { 
-            type = "npc", 
-            name = "Atal'ai Exile", 
-            zone = "The Hinterlands", 
-            location = { mapId = 1425, x = 0.336, y = 0.752 } 
+        source = {
+            type = "npc",
+            name = "Atal'ai Exile",
+            zone = "The Hinterlands",
+            location = { mapId = 1425, x = 0.336, y = 0.752 }
         },
         dungeons = { Q.Dungeons["Temple of Atal'Hakkar"] },
     },
@@ -3186,11 +3420,11 @@ Q.Quests = {
         name = "The Sunken Temple",
         suggestedLevel = 51,
         requiredLevel = 46,
-        source = { 
-            type = "npc", 
-            name = "Witch Doctor Uzer'i", 
-            zone = "Feralas", 
-            location = { mapId = 1444, x = 0.744, y = 0.434 } 
+        source = {
+            type = "npc",
+            name = "Witch Doctor Uzer'i",
+            zone = "Feralas",
+            location = { mapId = 1444, x = 0.744, y = 0.434 }
         }
     },
     {
@@ -3199,11 +3433,11 @@ Q.Quests = {
         name = "The Sunken Temple",
         suggestedLevel = 51,
         requiredLevel = 46,
-        source = { 
-            type = "npc", 
-            name = "Angelas Moonbreeze", 
-            zone = "Feralas", 
-            location = { mapId = 1444, x = 0.318, y = 0.456 } 
+        source = {
+            type = "npc",
+            name = "Angelas Moonbreeze",
+            zone = "Feralas",
+            location = { mapId = 1444, x = 0.318, y = 0.456 }
         }
     },
     {
@@ -3213,14 +3447,14 @@ Q.Quests = {
         suggestedLevel = 51,
         requiredLevel = 46,
         prerequisites = {
-            all = { 3380, 3445 },
-            any = {}
+            { id = 3380, type = Q.PrerequisiteType.REQUIRED },
+            { id = 3445, type = Q.PrerequisiteType.REQUIRED },
         },
-        source = { 
-            type = "npc", 
-            name = "Marvon Rivetseeker", 
-            zone = "Tanaris", 
-            location = { mapId = 1446, x = 0.526, y = 0.458 } 
+        source = {
+            type = "npc",
+            name = "Marvon Rivetseeker",
+            zone = "Tanaris",
+            location = { mapId = 1446, x = 0.526, y = 0.458 }
         }
     },
     {
@@ -3229,12 +3463,14 @@ Q.Quests = {
         name = "Into the Depths",
         suggestedLevel = 51,
         requiredLevel = 46,
-        previousQuestId = 3444,
-        source = { 
-            type = "npc", 
-            name = "Marvon Rivetseeker", 
-            zone = "Tanaris", 
-            location = { mapId = 1446, x = 0.526, y = 0.458 } 
+        prerequisites = {
+            { id = 3444, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Marvon Rivetseeker",
+            zone = "Tanaris",
+            location = { mapId = 1446, x = 0.526, y = 0.458 }
         },
         dungeons = { Q.Dungeons["Temple of Atal'Hakkar"] },
     },
@@ -3244,12 +3480,14 @@ Q.Quests = {
         name = "Secret of the Circle",
         suggestedLevel = 51,
         requiredLevel = 46,
-        previousQuestId = 3444,
-        source = { 
-            type = "npc", 
-            name = "Marvon Rivetseeker", 
-            zone = "Tanaris", 
-            location = { mapId = 1446, x = 0.526, y = 0.458 } 
+        prerequisites = {
+            { id = 3444, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Marvon Rivetseeker",
+            zone = "Tanaris",
+            location = { mapId = 1446, x = 0.526, y = 0.458 }
         },
         dungeons = { Q.Dungeons["Temple of Atal'Hakkar"] },
     },
@@ -3257,19 +3495,195 @@ Q.Quests = {
 
     --#region Blackrock Depths
     {
+        id = 3981,
+        faction = "Horde",
+        name = "Commander Gor'shak",
+        suggestedLevel = 52,
+        requiredLevel = 48,
+        prerequisites = {
+            { id = 3906, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Galamav the Marksman",
+            zone = "Badlands",
+            location = { mapId = 1418, x = 0.058, y = 0.476 }
+        },
+    },
+    {
+        id = 3982,
+        faction = "Horde",
+        name = "What is Going On?",
+        suggestedLevel = 54,
+        requiredLevel = 48,
+        prerequisites = {
+            { id = 3981, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Commander Gor'shak",
+            zone = "Blackrock Depths",
+            location = { mapId = 1428, x = 0.284, y = 0.285 },
+            text = "Located inside the dungeon"
+        },
+    },
+    {
+        id = 4001,
+        faction = "Horde",
+        name = "What is Going On?",
+        suggestedLevel = 54,
+        requiredLevel = 48,
+        prerequisites = {
+            { id = 3982, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Commander Gor'shak",
+            zone = "Blackrock Depths",
+            location = { mapId = 1428, x = 0.284, y = 0.285 },
+            text = "Located inside the dungeon"
+        },
+    },
+    {
+        id = 4002,
+        faction = "Horde",
+        name = "The Eastern Kingdoms",
+        suggestedLevel = 54,
+        requiredLevel = 48,
+        prerequisites = {
+            { id = 4001, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Thrall",
+            zone = "Orgrimmar",
+            location = { mapId = 1454, x = 0.32, y = 0.378 }
+        },
+    },
+    {
+        id = 4003,
+        faction = "Horde",
+        name = "The Royal Rescue",
+        suggestedLevel = 59,
+        requiredLevel = 48,
+        prerequisites = {
+            { id = 4002, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Thrall",
+            zone = "Orgrimmar",
+            location = { mapId = 1454, x = 0.32, y = 0.378 }
+        },
+        dungeons = { Q.Dungeons["Blackrock Depths"] }
+    },
+    {
+        id = 4061,
+        faction = "Horde",
+        name = "The Rise of the Machines",
+        suggestedLevel = 54,
+        requiredLevel = 52,
+        source = {
+            type = "npc",
+            name = "Hierophant Theodora Mulvadania",
+            zone = "Badlands",
+            location = { mapId = 1418, x = 0.03, y = 0.478 }
+        }
+    },
+    {
+        id = 4062,
+        faction = "Horde",
+        name = "The Rise of the Machines",
+        suggestedLevel = 54,
+        requiredLevel = 52,
+        prerequisites = {
+            { id = 4061, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Hierophant Theodora Mulvadania",
+            zone = "Badlands",
+            location = { mapId = 1418, x = 0.03, y = 0.478 }
+        }
+    },
+    {
+        id = 4063,
+        faction = "Horde",
+        name = "The Rise of the Machines",
+        suggestedLevel = 58,
+        requiredLevel = 52,
+        prerequisites = {
+            { id = 4062, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Lotwil Veriatus",
+            zone = "Badlands",
+            location = { mapId = 1418, x = 0.258, y = 0.45 }
+        },
+        dungeons = { Q.Dungeons["Blackrock Depths"] }
+    },
+    {
+        id = 4122,
+        faction = "Horde",
+        name = "Grark Lorkrub",
+        suggestedLevel = 58,
+        requiredLevel = 52,
+        prerequisites = {
+            { id = 4082, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Lexlort",
+            zone = "Badlands",
+            location = { mapId = 1418, x = 0.058, y = 0.476 }
+        }
+    },
+    {
+        id = 4121,
+        faction = "Horde",
+        name = "Precarious Predicament",
+        suggestedLevel = 58,
+        requiredLevel = 52,
+        prerequisites = {
+            { id = 4122, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Grark Lorkrub",
+            zone = "Burning Steppes",
+            location = { mapId = 1428, x = 0.412, y = 0.35 }
+        }
+    },
+    {
+        id = 4132,
+        faction = "Horde",
+        name = "Operation: Death to Angerforge",
+        suggestedLevel = 58,
+        requiredLevel = 52,
+        prerequisites = {
+            { id = 4121, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Warlord Goretooth",
+            zone = "Badlands",
+            location = { mapId = 1418, x = 0.058, y = 0.474 }
+        },
+        dungeons = { Q.Dungeons["Blackrock Depths"] }
+    },
+    {
         id = 4081,
         faction = "Horde",
         name = "KILL ON SIGHT: Dark Iron Dwarves",
         suggestedLevel = 52,
         requiredLevel = 48,
-        source = { 
-            type = "object", 
-            name = "WANTED", 
-            zone = "Badlands", 
-            location = { mapId = 1418, x = 0.039, y = 0.474 },
-            text = "Found in Kargath"
+        source = {
+            type = "object",
+            name = "WANTED",
+            zone = "Badlands",
+            location = { mapId = 1418, x = 0.039, y = 0.474 }
         },
-        dungeons = { Q.Dungeons["Blackrock Depths"] }
     },
     {
         id = 4082,
@@ -3277,13 +3691,234 @@ Q.Quests = {
         name = "KILL ON SIGHT: High Ranking Dark Iron Officials",
         suggestedLevel = 54,
         requiredLevel = 50,
-        previousQuestId = 4081,
-        source = { 
-            type = "object", 
-            name = "WANTED", 
+        prerequisites = {
+            { id = 4081, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "object",
+            name = "WANTED",
             zone = "Badlands",
-            location = { mapId = 1418, x = 0.04, y = 0.468 },
-            text = "Found in Kargath"
+            location = { mapId = 1418, x = 0.04, y = 0.468 }
+        }
+    },
+    {
+        id = 3441,
+        faction = nil,
+        name = "Divine Retribution",
+        suggestedLevel = 48,
+        requiredLevel = 40,
+        source = {
+            type = "npc",
+            name = "Velarok Windblade",
+            zone = "Searing Gorge",
+            location = { mapId = 1427, x = 0.39, y = 0.389 }
+        }
+    },
+    {
+        id = 3442,
+        faction = nil,
+        name = "The Flawless Flame",
+        suggestedLevel = 48,
+        requiredLevel = 40,
+        prerequisites = {
+            { id = 3441, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Velarok Windblade",
+            zone = "Searing Gorge",
+            location = { mapId = 1427, x = 0.39, y = 0.389 }
+        }
+    },
+    {
+        id = 3443,
+        faction = nil,
+        name = "Forging the Shaft",
+        suggestedLevel = 48,
+        requiredLevel = 40,
+        prerequisites = {
+            { id = 3442, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Velarok Windblade",
+            zone = "Searing Gorge",
+            location = { mapId = 1427, x = 0.39, y = 0.389 }
+        }
+    },
+    {
+        id = 3452,
+        faction = nil,
+        name = "The Flame's Casing",
+        suggestedLevel = 50,
+        requiredLevel = 40,
+        prerequisites = {
+            { id = 3443, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Velarok Windblade",
+            zone = "Searing Gorge",
+            location = { mapId = 1427, x = 0.39, y = 0.389 }
+        }
+    },
+    {
+        id = 3453,
+        faction = nil,
+        name = "The Torch of Retribution",
+        suggestedLevel = 50,
+        requiredLevel = 40,
+        prerequisites = {
+            { id = 3452, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Velarok Windblade",
+            zone = "Searing Gorge",
+            location = { mapId = 1427, x = 0.39, y = 0.389 }
+        }
+    },
+    {
+        id = 3454,
+        faction = nil,
+        name = "The Torch of Retribution",
+        suggestedLevel = 50,
+        requiredLevel = 40,
+        prerequisites = {
+            { id = 3453, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Velarok Windblade",
+            zone = "Searing Gorge",
+            location = { mapId = 1427, x = 0.39, y = 0.389 }
+        }
+    },
+    {
+        id = 3462,
+        faction = nil,
+        name = "Squire Maltrake",
+        suggestedLevel = 50,
+        requiredLevel = 40,
+        prerequisites = {
+            { id = 3454, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Velarok Windblade",
+            zone = "Searing Gorge",
+            location = { mapId = 1427, x = 0.39, y = 0.389 }
+        }
+    },
+    {
+        id = 3463,
+        faction = nil,
+        name = "Set Them Ablaze!",
+        suggestedLevel = 50,
+        requiredLevel = 40,
+        prerequisites = {
+            { id = 3462, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Squire Maltrake",
+            zone = "Searing Gorge",
+            location = { mapId = 1427, x = 0.39, y = 0.389 }
+        }
+    },
+    {
+        id = 3481,
+        faction = nil,
+        name = "Trinkets...",
+        suggestedLevel = 50,
+        requiredLevel = 40,
+        prerequisites = {
+            { id = 3463, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "object",
+            name = "Hoard of the Black Dragonflight",
+            zone = "Searing Gorge",
+            location = { mapId = 1427, x = 0.39, y = 0.389 }
+        }
+    },
+    {
+        id = 4022,
+        faction = nil,
+        name = "A Taste of Flame",
+        suggestedLevel = 58,
+        requiredLevel = 52,
+        prerequisites = {
+            { id = 3481, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Cyrus Therepentous",
+            zone = "Burning Steppes",
+            location = { mapId = 1428, x = 0.95, y = 0.314 }
+        }
+    },
+    {
+        id = 4023,
+        faction = nil,
+        name = "A Taste of Flame",
+        suggestedLevel = 58,
+        requiredLevel = 52,
+        prerequisites = {
+            { id = 3481, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Cyrus Therepentous",
+            zone = "Burning Steppes",
+            location = { mapId = 1428, x = 0.95, y = 0.314 }
+        }
+    },
+    {
+        id = 4024,
+        faction = nil,
+        name = "A Taste of Flame",
+        suggestedLevel = 58,
+        requiredLevel = 52,
+        prerequisites = {
+            { id = 4023, type = Q.PrerequisiteType.ANY },
+            { id = 4022, type = Q.PrerequisiteType.ANY },
+        },
+        source = {
+            type = "npc",
+            name = "Cyrus Therepentous",
+            zone = "Burning Steppes",
+            location = { mapId = 1428, x = 0.95, y = 0.314 }
+        },
+        dungeons = { Q.Dungeons["Blackrock Depths"] }
+    },
+    {
+        id = 4262,
+        faction = "Alliance",
+        name = "Overmaster Pyron",
+        suggestedLevel = 56,
+        requiredLevel = 48,
+        source = {
+            type = "npc",
+            name = "Jalinda Sprig",
+            zone = "Burning Steppes",
+            location = { mapId = 1428, x = 0.854, y = 0.70 }
+        }
+    },
+    {
+        id = 4263,
+        faction = "Alliance",
+        name = "Incendius!",
+        suggestedLevel = 56,
+        requiredLevel = 48,
+        prerequisites = {
+            { id = 4262, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Jalinda Sprig",
+            zone = "Burning Steppes",
+            location = { mapId = 1428, x = 0.854, y = 0.70 }
         },
         dungeons = { Q.Dungeons["Blackrock Depths"] }
     },
@@ -3293,10 +3928,10 @@ Q.Quests = {
         name = "Disharmony of Flame",
         suggestedLevel = 52,
         requiredLevel = 48,
-        source = { 
-            type = "npc", 
-            name = "Thunderheart", 
-            zone = "Badlands", 
+        source = {
+            type = "npc",
+            name = "Thunderheart",
+            zone = "Badlands",
             location = { mapId = 1418, x = 0.036, y = 0.48 }
         }
     },
@@ -3306,11 +3941,13 @@ Q.Quests = {
         name = "Disharmony of Fire",
         suggestedLevel = 56,
         requiredLevel = 48,
-        previousQuestId = 3906,
-        source = { 
-            type = "npc", 
-            name = "Thunderheart", 
-            zone = "Badlands", 
+        prerequisites = {
+            { id = 3906, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Thunderheart",
+            zone = "Badlands",
             location = { mapId = 1418, x = 0.036, y = 0.48 }
         },
         dungeons = { Q.Dungeons["Blackrock Depths"] }
@@ -3321,11 +3958,13 @@ Q.Quests = {
         name = "The Last Element",
         suggestedLevel = 54,
         requiredLevel = 48,
-        previousQuestId = 3906,
-        source = { 
-            type = "npc", 
-            name = "Shadowmage Vivian Lagrave", 
-            zone = "Badlands", 
+        prerequisites = {
+            { id = 3906, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Shadowmage Vivian Lagrave",
+            zone = "Badlands",
             location = { mapId = 1418, x = 0.03, y = 0.476 }
         },
         dungeons = { Q.Dungeons["Blackrock Depths"] }
@@ -3336,10 +3975,10 @@ Q.Quests = {
         name = "Lost Thunderbrew Recipe",
         suggestedLevel = 55,
         requiredLevel = 50,
-        source = { 
-            type = "npc", 
-            name = "Shadowmage Vivian Lagrave", 
-            zone = "Badlands", 
+        source = {
+            type = "npc",
+            name = "Shadowmage Vivian Lagrave",
+            zone = "Badlands",
             location = { mapId = 1418, x = 0.03, y = 0.476 }
         },
         dungeons = { Q.Dungeons["Blackrock Depths"] }
@@ -3350,11 +3989,11 @@ Q.Quests = {
         name = "The Heart of the Mountain",
         suggestedLevel = 55,
         requiredLevel = 50,
-        source = { 
-            type = "npc", 
-            name = "Maxwort Uberglint", 
-            zone = "Burning Steppes", 
-            location = { mapId = 1428, x = 0.652, y = 0.238 } 
+        source = {
+            type = "npc",
+            name = "Maxwort Uberglint",
+            zone = "Burning Steppes",
+            location = { mapId = 1428, x = 0.652, y = 0.238 }
         },
         dungeons = { Q.Dungeons["Blackrock Depths"] }
     },
@@ -3364,12 +4003,126 @@ Q.Quests = {
         name = "Attunement to the Core",
         suggestedLevel = 55,
         requiredLevel = 55,
-        source = { 
-            type = "npc", 
-            name = "Lothos Riftwaker", 
-            zone = "Blackrock Mountain", 
+        source = {
+            type = "npc",
+            name = "Lothos Riftwaker",
+            zone = "Blackrock Mountain",
             location = { mapId = 1428, x = 0.49, y = 0.63 },
             text = "Found at the bottom of the chain inside the mountain on the way to the dungeon"
+        },
+        dungeons = { Q.Dungeons["Blackrock Depths"] }
+    },
+    {
+        id = 3702,
+        faction = "Alliance",
+        name = "The Smoldering Ruins of Thaurissan",
+        suggestedLevel = 54,
+        requiredLevel = 50,
+        source = {
+            type = "npc",
+            name = "Royal Historian Archenosus",
+            zone = "Ironforge",
+            location = { mapId = 1455, x = 0.386, y = 0.554 }
+        }
+    },
+    {
+        id = 3701,
+        faction = "Alliance",
+        name = "The Smoldering Ruins of Thaurissan",
+        suggestedLevel = 54,
+        requiredLevel = 50,
+        prerequisites = {
+            { id = 3702, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Royal Historian Archenosus",
+            zone = "Ironforge",
+            location = { mapId = 1455, x = 0.386, y = 0.554 }
+        }
+    },
+    {
+        id = 4341,
+        faction = "Alliance",
+        name = "Kharan Mighthammer",
+        suggestedLevel = 55,
+        requiredLevel = 50,
+        prerequisites = {
+            { id = 3701, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "King Magni Bronzebeard",
+            zone = "Ironforge",
+            location = { mapId = 1455, x = 0.384, y = 0.558 }
+        }
+    },
+    {
+        id = 4342,
+        faction = "Alliance",
+        name = "Kharan's Tale",
+        suggestedLevel = 59,
+        requiredLevel = 50,
+        prerequisites = {
+            { id = 4341, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Kharan Mighthammer",
+            zone = "Blackrock Depths",
+            location = { mapId = 1428, x = 0.284, y = 0.285 },
+            text = "Located inside the dungeon"
+        }
+    },
+    {
+        id = 4361,
+        faction = "Alliance",
+        name = "The Bearer of Bad News",
+        suggestedLevel = 59,
+        requiredLevel = 50,
+        prerequisites = {
+            { id = 4342, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Kharan Mighthammer",
+            zone = "Blackrock Depths",
+            location = { mapId = 1428, x = 0.284, y = 0.285 },
+            text = "Located inside the dungeon"
+        }
+    },
+    {
+        id = 4362,
+        faction = "Alliance",
+        name = "The Fate of the Kingdom",
+        suggestedLevel = 59,
+        requiredLevel = 50,
+        prerequisites = {
+            { id = 4361, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "King Magni Bronzebeard",
+            zone = "Ironforge",
+            location = { mapId = 1455, x = 0.384, y = 0.558 }
+        }
+    },
+    {
+        id = 4363,
+        faction = "Alliance",
+        name = "The Princess's Surprise",
+        suggestedLevel = 59,
+        requiredLevel = 50,
+        prerequisites = {
+            { id = 4362, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Princess Moira Bronzebeard",
+            zone = "Blackrock Depths",
+            location = { mapId = 1428, x = 0.284, y = 0.285 },
+            text =
+            "You must defeat Emperor Thaurissan without killing her and she'll become friendly and offer the quest"
         },
         dungeons = { Q.Dungeons["Blackrock Depths"] }
     },
@@ -3379,11 +4132,11 @@ Q.Quests = {
         name = "Yuka Screwspigot",
         suggestedLevel = 48,
         requiredLevel = 53,
-        source = { 
-            type = "npc", 
-            name = "Yorba Screwspigot", 
-            zone = "Tanaris", 
-            location = { mapId = 1446, x = 0.670, y = 0.24 } 
+        source = {
+            type = "npc",
+            name = "Yorba Screwspigot",
+            zone = "Tanaris",
+            location = { mapId = 1446, x = 0.670, y = 0.24 }
         },
         dungeons = { Q.Dungeons["Blackrock Depths"] }
     },
@@ -3393,12 +4146,14 @@ Q.Quests = {
         name = "Ribbly Screwspigot",
         suggestedLevel = 48,
         requiredLevel = 53,
-        previousQuestId = 4324,
-        source = { 
-            type = "npc", 
-            name = "Yuka Screwspigot", 
-            zone = "Burning Steppes", 
-            location = { mapId = 1428, x = 0.66, y = 0.22 } 
+        prerequisites = {
+            { id = 4324, type = Q.PrerequisiteType.BREADCRUMB }
+        },
+        source = {
+            type = "npc",
+            name = "Yuka Screwspigot",
+            zone = "Burning Steppes",
+            location = { mapId = 1428, x = 0.66, y = 0.22 }
         },
         dungeons = { Q.Dungeons["Blackrock Depths"] }
     },
@@ -3408,11 +4163,11 @@ Q.Quests = {
         name = "The Good Stuff",
         suggestedLevel = 56,
         requiredLevel = 50,
-        source = { 
-            type = "npc", 
-            name = "Oralius", 
-            zone = "Burning Steppes", 
-            location = { mapId = 1428, x = 0.846, y = 0.686 } 
+        source = {
+            type = "npc",
+            name = "Oralius",
+            zone = "Burning Steppes",
+            location = { mapId = 1428, x = 0.846, y = 0.686 }
         },
         dungeons = { Q.Dungeons["Blackrock Depths"] }
     },
@@ -3422,11 +4177,11 @@ Q.Quests = {
         name = "Hurley Blackbreath",
         suggestedLevel = 55,
         requiredLevel = 50,
-        source = { 
-            type = "npc", 
-            name = "Ragnar Thunderbrew", 
-            zone = "Dun Morogh", 
-            location = { mapId = 1426, x = 0.468, y = 0.524 } 
+        source = {
+            type = "npc",
+            name = "Ragnar Thunderbrew",
+            zone = "Dun Morogh",
+            location = { mapId = 1426, x = 0.468, y = 0.524 }
         },
         dungeons = { Q.Dungeons["Blackrock Depths"] }
     },
@@ -3436,14 +4191,14 @@ Q.Quests = {
         name = "Dark Iron Legacy",
         suggestedLevel = 52,
         requiredLevel = 48,
-        source = { 
-            type = "npc", 
-            name = "Franclorn Forgewright", 
-            zone = "Blackrock Mountain", 
+        source = {
+            type = "npc",
+            name = "Franclorn Forgewright",
+            zone = "Blackrock Mountain",
             location = { mapId = 1428, x = 0.48, y = 0.66 },
-            text = "You must be dead to speak to him, he's located in the middle of Blackrock Mountains inside the building"
-        },
-        dungeons = { Q.Dungeons["Blackrock Depths"] }
+            text =
+            "You must be dead to speak to him, he's located in the middle of Blackrock Mountains inside the building"
+        }
     },
     {
         id = 3802,
@@ -3451,13 +4206,16 @@ Q.Quests = {
         name = "Dark Iron Legacy",
         suggestedLevel = 52,
         requiredLevel = 48,
-        previousQuestId = 3801,
-        source = { 
-            type = "npc", 
-            name = "Franclorn Forgewright", 
-            zone = "Blackrock Mountain", 
+        prerequisites = {
+            { id = 3801, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Franclorn Forgewright",
+            zone = "Blackrock Mountain",
             location = { mapId = 1428, x = 0.48, y = 0.66 },
-            text = "You must be dead to speak to him, he's located in the middle of Blackrock Mountains inside the building"
+            text =
+            "You must be dead to speak to him, he's located in the middle of Blackrock Mountains inside the building"
         },
         dungeons = { Q.Dungeons["Blackrock Depths"] }
     },
@@ -3467,14 +4225,76 @@ Q.Quests = {
         name = "The Love Potion",
         suggestedLevel = 54,
         requiredLevel = 50,
-        source = { 
-            type = "npc", 
-            name = "Mistress Nagmara", 
-            zone = "Blackrock Depths", 
-            location = { mapId = 1428, x = 0.48, y = 0.62 },
+        source = {
+            type = "npc",
+            name = "Mistress Nagmara",
+            zone = "Blackrock Depths",
+            location = { mapId = 1428, x = 0.284, y = 0.285 },
             text = "Found in the bar inside the dungeon"
         },
         dungeons = { Q.Dungeons["Blackrock Depths"] }
+    },
+    --#endregion
+
+    --#region Dire Maul: West
+    {
+        id = 7461,
+        faction = nil,
+        name = "The Madness Within",
+        suggestedLevel = 58,
+        requiredLevel = 56,
+        source = {
+            type = "npc",
+            name = "Shen'dralar Ancient",
+            zone = "Dire Maul",
+            location = { mapId = 1448, x = 0.59, y = 0.45 },
+            text = "Found inside DM: West"
+        }
+    },
+    {
+        id = 7877,
+        faction = nil,
+        name = "The Treasure of the Shen'dralar",
+        suggestedLevel = 58,
+        requiredLevel = 56,
+        source = {
+            type = "npc",
+            name = "Shen'dralar Ancient",
+            zone = "Dire Maul",
+            location = { mapId = 1448, x = 0.59, y = 0.45 },
+            text = "Found inside DM: West"
+        },
+        dungeons = { Q.Dungeons["Dire Maul: West"] }
+    },
+    {
+        id = 5527,
+        faction = nil,
+        name = "A Reliquary of Purity",
+        suggestedLevel = 60,
+        requiredLevel = 56,
+        source = {
+            type = "npc",
+            name = "Rabine Saturna",
+            zone = "Moonglade",
+            location = { mapId = 1450, x = 0.516, y = 0.448 }
+        }
+    },
+    {
+        id = 5526,
+        faction = nil,
+        name = "Shards of the Felvine",
+        suggestedLevel = 60,
+        requiredLevel = 56,
+        prerequisites = {
+            { id = 5527, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Rabine Saturna",
+            zone = "Moonglade",
+            location = { mapId = 1450, x = 0.516, y = 0.448 }
+        },
+        dungeons = { Q.Dungeons["Dire Maul: West"] }
     },
     --#endregion
 
@@ -3485,11 +4305,11 @@ Q.Quests = {
         name = "Lethtendris's Web",
         suggestedLevel = 56,
         requiredLevel = 54,
-        source = { 
-            type = "npc", 
-            name = "Latronicus Moonspear", 
-            zone = "Feralas", 
-            location = { mapId = 1444, x = 0.304, y = 0.46 } 
+        source = {
+            type = "npc",
+            name = "Latronicus Moonspear",
+            zone = "Feralas",
+            location = { mapId = 1444, x = 0.304, y = 0.46 }
         },
         dungeons = { Q.Dungeons["Dire Maul: East"] }
     },
@@ -3499,25 +4319,11 @@ Q.Quests = {
         name = "Lethtendris's Web",
         suggestedLevel = 56,
         requiredLevel = 54,
-        source = { 
-            type = "npc", 
-            name = "Talo Thornhoof", 
-            zone = "Feralas", 
-            location = { mapId = 1444, x = 0.76, y = 0.43 } 
-        },
-        dungeons = { Q.Dungeons["Dire Maul: East"] }
-    },
-    {
-        id = 7461,
-        faction = nil,
-        name = "The Madness Within",
-        suggestedLevel = 58,
-        requiredLevel = 56,
-        source = { 
-            type = "npc", 
-            name = "Shen'dralar Ancient", 
-            zone = "Dire Maul", 
-            location = { mapId = 1448, x = 0.59, y = 0.45 }
+        source = {
+            type = "npc",
+            name = "Talo Thornhoof",
+            zone = "Feralas",
+            location = { mapId = 1444, x = 0.76, y = 0.43 }
         },
         dungeons = { Q.Dungeons["Dire Maul: East"] }
     },
@@ -3527,11 +4333,11 @@ Q.Quests = {
         name = "Pusillin and the Elder Azj'Tordin",
         suggestedLevel = 56,
         requiredLevel = 54,
-        source = { 
-            type = "npc", 
-            name = "Azj'Tordin", 
-            zone = "Feralas", 
-            location = { mapId = 1444, x = 0.76, y = 0.37 } 
+        source = {
+            type = "npc",
+            name = "Azj'Tordin",
+            zone = "Feralas",
+            location = { mapId = 1444, x = 0.76, y = 0.37 }
         },
         dungeons = { Q.Dungeons["Dire Maul: East"] }
     },
@@ -3544,10 +4350,10 @@ Q.Quests = {
         name = "Free Knot!",
         suggestedLevel = 60,
         requiredLevel = 56,
-        source = { 
-            type = "npc", 
-            name = "Knot Thimblejack", 
-            zone = "Dire Maul", 
+        source = {
+            type = "npc",
+            name = "Knot Thimblejack",
+            zone = "Dire Maul",
             location = { mapId = 1448, x = 0.59, y = 0.45 },
             text = "Located inside the dungeon"
         },
@@ -3559,11 +4365,11 @@ Q.Quests = {
         name = "Elven Legends",
         suggestedLevel = 56,
         requiredLevel = 54,
-        source = { 
-            type = "npc", 
-            name = "Sage Korolusk", 
-            zone = "Feralas", 
-            location = { mapId = 1444, x = 0.74, y = 0.43 } 
+        source = {
+            type = "npc",
+            name = "Sage Korolusk",
+            zone = "Feralas",
+            location = { mapId = 1444, x = 0.74, y = 0.43 }
         },
         dungeons = { Q.Dungeons["Dire Maul: North"] }
     },
@@ -3573,11 +4379,11 @@ Q.Quests = {
         name = "Elven Legends",
         suggestedLevel = 56,
         requiredLevel = 54,
-        source = { 
-            type = "npc", 
-            name = "Sage Korolusk", 
-            zone = "Feralas", 
-            location = { mapId = 1444, x = 0.318, y = 0.444 } 
+        source = {
+            type = "npc",
+            name = "Sage Korolusk",
+            zone = "Feralas",
+            location = { mapId = 1444, x = 0.318, y = 0.444 }
         },
         dungeons = { Q.Dungeons["Dire Maul: North"] }
     },
@@ -3585,16 +4391,127 @@ Q.Quests = {
 
     --#region Lower Blackrock Spire
     {
+        id = 5065,
+        faction = nil,
+        name = "The Lost Tablets of Mosh'aru",
+        suggestedLevel = 58,
+        requiredLevel = 40,
+        prerequisites = {
+            { id = 3528, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Prospector Ironboot",
+            zone = "Tanaris",
+            location = { mapId = 1446, x = 0.668, y = 0.24 }
+        }
+    },
+    {
+        id = 4788,
+        faction = nil,
+        name = "The Final Tablets",
+        suggestedLevel = 58,
+        requiredLevel = 40,
+        prerequisites = {
+            { id = 5065, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Prospector Ironboot",
+            zone = "Tanaris",
+            location = { mapId = 1446, x = 0.668, y = 0.24 }
+        },
+        dungeons = { Q.Dungeons["Lower Blackrock Spire"] }
+    },
+    {
+        id = 5001,
+        faction = "Alliance",
+        name = "Bijou's Belongings",
+        suggestedLevel = 59,
+        requiredLevel = 55,
+        source = {
+            type = "npc",
+            name = "Bijou",
+            zone = "Lower Blackrock Spire",
+            location = { mapId = 1428, x = 0.284, y = 0.285 },
+            text = "Found on a ledge inside Lower Blackrock Spire"
+        }
+    },
+    {
+        id = 5002,
+        faction = "Alliance",
+        name = "A Message to Maxwell",
+        suggestedLevel = 59,
+        requiredLevel = 55,
+        prerequisites = {
+            { id = 5001, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Bijou",
+            zone = "Lower Blackrock Spire",
+            location = { mapId = 1428, x = 0.284, y = 0.285 },
+            text = "Found on a ledge inside Lower Blackrock Spire"
+        }
+    },
+    {
+        id = 5081,
+        faction = "Alliance",
+        name = "Maxwell's Mission",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        prerequisites = {
+            { id = 5002, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Marshal Maxwell",
+            zone = "Burning Steppes",
+            location = { mapId = 1428, x = 0.846, y = 0.688 }
+        },
+        dungeons = { Q.Dungeons["Lower Blackrock Spire"] }
+    },
+    {
+        id = 5089,
+        faction = "Alliance",
+        name = "General Drakkisath's Command",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        source = {
+            type = "item",
+            itemId = 12780,
+            name = "General Drakkisath's Command",
+            zone = "Lower Blackrock Spire",
+            location = { mapId = 1428, x = 0.284, y = 0.285 },
+            text = "Dropped by General Drakkisath inside Lower Blackrock Spire"
+        },
+        dungeons = { Q.Dungeons["Lower Blackrock Spire"] }
+    },
+    {
+        id = 4862,
+        faction = nil,
+        name = "En-Ay-Es-Tee-Why",
+        suggestedLevel = 59,
+        requiredLevel = 55,
+        source = {
+            type = "npc",
+            name = "Kibler",
+            zone = "Badlands",
+            location = { mapId = 1428, x = 0.658, y = 0.22 }
+        },
+        dungeons = { Q.Dungeons["Lower Blackrock Spire"] }
+    },
+    {
         id = 4724,
         faction = "Horde",
         name = "The Pack Mistress",
         suggestedLevel = 60,
         requiredLevel = 55,
-        source = { 
-            type = "npc", 
-            name = "Galamav the Marksman", 
-            zone = "Badlands", 
-            location = { mapId = 1418, x = 0.06, y = 0.47 } 
+        source = {
+            type = "npc",
+            name = "Galamav the Marksman",
+            zone = "Badlands",
+            location = { mapId = 1418, x = 0.06, y = 0.47 }
         },
         dungeons = { Q.Dungeons["Lower Blackrock Spire"] }
     },
@@ -3604,11 +4521,11 @@ Q.Quests = {
         name = "Put Her Down",
         suggestedLevel = 59,
         requiredLevel = 55,
-        source = { 
-            type = "npc", 
-            name = "Helendis Riverhorn", 
-            zone = "Badlands", 
-            location = { mapId = 1428, x = 0.856, y = 0.69 } 
+        source = {
+            type = "npc",
+            name = "Helendis Riverhorn",
+            zone = "Burning Steppes",
+            location = { mapId = 1428, x = 0.856, y = 0.69 }
         },
         dungeons = { Q.Dungeons["Lower Blackrock Spire"] }
     },
@@ -3616,13 +4533,30 @@ Q.Quests = {
         id = 4981,
         faction = "Horde",
         name = "Operative Bijou",
-        suggestedLevel = 60,
+        suggestedLevel = 59,
         requiredLevel = 55,
-        source = { 
-            type = "npc", 
-            name = "Lexlort", 
-            zone = "Badlands", 
-            location = { mapId = 1418, x = 0.05, y = 0.47 } 
+        source = {
+            type = "npc",
+            name = "Lexlort",
+            zone = "Badlands",
+            location = { mapId = 1418, x = 0.05, y = 0.47 }
+        }
+    },
+    {
+        id = 4982,
+        faction = "Horde",
+        name = "Bijou's Belongings",
+        suggestedLevel = 59,
+        requiredLevel = 55,
+        prerequisites = {
+            { id = 4981, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Bijou",
+            zone = "Lower Blackrock Spire",
+            location = { mapId = 1428, x = 0.284, y = 0.285 },
+            text = "Found on a ledge inside Lower Blackrock Spire"
         },
         dungeons = { Q.Dungeons["Lower Blackrock Spire"] }
     },
@@ -3632,11 +4566,11 @@ Q.Quests = {
         name = "Warlord's Command",
         suggestedLevel = 60,
         requiredLevel = 55,
-        source = { 
-            type = "npc", 
-            name = "Warlord Goretooth", 
-            zone = "Badlands", 
-            location = { mapId = 1418, x = 0.05, y = 0.47 } 
+        source = {
+            type = "npc",
+            name = "Warlord Goretooth",
+            zone = "Badlands",
+            location = { mapId = 1418, x = 0.05, y = 0.47 }
         },
         dungeons = { Q.Dungeons["Lower Blackrock Spire"] }
     },
@@ -3646,11 +4580,11 @@ Q.Quests = {
         name = "Kibler's Exotic Pets",
         suggestedLevel = 59,
         requiredLevel = 55,
-        source = { 
-            type = "npc", 
-            name = "Kibler", 
-            zone = "Burning Steppes", 
-            location = { mapId = 1428, x = 0.658, y = 0.22 } 
+        source = {
+            type = "npc",
+            name = "Kibler",
+            zone = "Burning Steppes",
+            location = { mapId = 1428, x = 0.658, y = 0.22 }
         },
         dungeons = { Q.Dungeons["Lower Blackrock Spire"] }
     },
@@ -3660,27 +4594,13 @@ Q.Quests = {
         name = "Seal of Ascension",
         suggestedLevel = 60,
         requiredLevel = 57,
-        source = { 
-            type = "item", 
-            name = "Unadorned Seal of Ascension", 
-            itemId = 12219, 
-            zone = "Blackrock Spire", 
+        source = {
+            type = "item",
+            name = "Unadorned Seal of Ascension",
+            itemId = 12219,
+            zone = "Blackrock Spire",
             location = { mapId = 1428, x = 0.48, y = 0.62 },
-            text = "A random drop from mobs in Lower Blackrock Spire" 
-        },
-        dungeons = { Q.Dungeons["Lower Blackrock Spire"] }
-    },
-    {
-        id = 4981,
-        faction = nil,
-        name = "Urok Doomhowl",
-        suggestedLevel = 60,
-        requiredLevel = 55,
-        source = { 
-            type = "npc", 
-            name = "Warosh", 
-            zone = "Blackrock Spire", 
-            location = { mapId = 1428, x = 0.48, y = 0.62 }
+            text = "A random drop from mobs in Lower Blackrock Spire"
         },
         dungeons = { Q.Dungeons["Lower Blackrock Spire"] }
     },
@@ -3688,60 +4608,126 @@ Q.Quests = {
 
     --#region Scholomance
     {
+        id = 5582,
+        faction = nil,
+        name = "Healthy Dragon Scale",
+        suggestedLevel = 60,
+        requiredLevel = 52,
+        source = {
+            type = "item",
+            itemId = 13920,
+            name = "Healthy Dragon Scale",
+            zone = "Scholomance",
+            location = { mapId = 1422, x = 0.69, y = 0.73 },
+            text = "Dropped by Plagued Hatchlings inside the dungeon"
+        },
+        dungeons = { Q.Dungeons["Scholomance"] }
+    },
+    {
         id = 5341,
         faction = "Horde",
         name = "Barov Family Fortune",
         suggestedLevel = 60,
         requiredLevel = 52,
-        source = { 
-            type = "npc", 
-            name = "Alexi Barov", 
-            zone = "Western Plaguelands", 
-            location = { mapId = 1422, x = 0.83, y = 0.71 } 
+        source = {
+            type = "npc",
+            name = "Alexi Barov",
+            zone = "Tirisfal Glades",
+            location = { mapId = 1420, x = 0.83, y = 0.716 }
+        },
+        dungeons = { Q.Dungeons["Scholomance"] }
+    },
+    {
+        id = 5343,
+        faction = "Alliance",
+        name = "Barov Family Fortune",
+        suggestedLevel = 60,
+        requiredLevel = 52,
+        source = {
+            type = "npc",
+            name = "Weldon Barov",
+            zone = "Western Plaguelands",
+            location = { mapId = 1422, x = 0.436, y = 0.836 }
         },
         dungeons = { Q.Dungeons["Scholomance"] }
     },
     {
         id = 5382,
-        faction = "Alliance",
-        name = "Barov Family Fortune",
-        suggestedLevel = 60,
-        requiredLevel = 52,
-        source = { 
-            type = "npc", 
-            name = "Weldon Barov", 
-            zone = "Western Plaguelands", 
-            location = { mapId = 1422, x = 0.43, y = 0.83 } 
-        },
-        dungeons = { Q.Dungeons["Scholomance"] }
-    },
-    {
-        id = 5533,
         faction = nil,
         name = "Doctor Theolen Krastinov, the Butcher",
         suggestedLevel = 60,
         requiredLevel = 55,
-        source = { 
-            type = "npc", 
-            name = "Eva Sarkhoff", 
-            zone = "Western Plaguelands", 
-            location = { mapId = 1422, x = 0.70, y = 0.73 } 
-        },
-        dungeons = { Q.Dungeons["Scholomance"] }
+        source = {
+            type = "npc",
+            name = "Eva Sarkhoff",
+            zone = "Western Plaguelands",
+            location = { mapId = 1422, x = 0.702, y = 0.738 }
+        }
     },
     {
-        id = 5537,
+        id = 5515,
+        faction = nil,
+        name = "Krastinov's Bag of Horrors",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        prerequisites = {
+            { id = 5382, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Eva Sarkhoff",
+            zone = "Western Plaguelands",
+            location = { mapId = 1422, x = 0.702, y = 0.738 }
+        }
+    },
+    {
+        id = 5384,
         faction = nil,
         name = "Kirtonos the Herald",
         suggestedLevel = 60,
         requiredLevel = 55,
-        source = { 
-            type = "npc", 
-            name = "Eva Sarkhoff", 
-            zone = "Western Plaguelands", 
-            location = { mapId = 1422, x = 0.70, y = 0.73 } 
+        prerequisites = {
+            { id = 5515, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Eva Sarkhoff",
+            zone = "Western Plaguelands",
+            location = { mapId = 1422, x = 0.702, y = 0.738 }
         },
         dungeons = { Q.Dungeons["Scholomance"] }
+    },
+    {
+        id = 5461,
+        faction = nil,
+        name = "The Human, Ras Frostwhisper",
+        suggestedLevel = 60,
+        requiredLevel = 57,
+        prerequisites = {
+            { id = 5384, type = Q.PrerequisiteType.REQUIRED }
+        },
+        source = {
+            type = "npc",
+            name = "Magistrate Marduke",
+            zone = "Western Plaguelands",
+            location = { mapId = 1422, x = 0.70, y = 0.74 }
+        }
+    },
+    {
+        id = 5462,
+        faction = nil,
+        name = "The Dying, Ras Frostwhisper",
+        suggestedLevel = 60,
+        requiredLevel = 57,
+        prerequisites = {
+            { id = 5461, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Magistrate Marduke",
+            zone = "Western Plaguelands",
+            location = { mapId = 1422, x = 0.70, y = 0.74 }
+        }
     },
     {
         id = 5529,
@@ -3749,39 +4735,28 @@ Q.Quests = {
         name = "Plagued Hatchlings",
         suggestedLevel = 60,
         requiredLevel = 55,
-        source = { 
-            type = "npc", 
-            name = "Betina Bigglezink", 
-            zone = "Eastern Plaguelands", 
-            location = { mapId = 1423, x = 0.81, y = 0.59 } 
+        source = {
+            type = "npc",
+            name = "Betina Bigglezink",
+            zone = "Eastern Plaguelands",
+            location = { mapId = 1423, x = 0.81, y = 0.59 }
         },
         dungeons = { Q.Dungeons["Scholomance"] }
     },
     {
-        id = 5384,
+        id = 5466,
         faction = nil,
         name = "The Lich, Ras Frostwhisper",
         suggestedLevel = 60,
         requiredLevel = 57,
-        source = { 
-            type = "npc", 
-            name = "Magistrate Marduke", 
-            zone = "Western Plaguelands", 
-            location = { mapId = 1422, x = 0.70, y = 0.74 } 
+        prerequisites = {
+            { id = 5465, type = Q.PrerequisiteType.CHAIN }
         },
-        dungeons = { Q.Dungeons["Scholomance"] }
-    },
-    {
-        id = 5214,
-        faction = nil,
-        name = "The Great Ezra Grimm",
-        suggestedLevel = 60,
-        requiredLevel = 55,
-        source = { 
-            type = "npc", 
-            name = "Smokey LaRue", 
-            zone = "Eastern Plaguelands", 
-            location = { mapId = 1423, x = 0.80, y = 0.58 } 
+        source = {
+            type = "npc",
+            name = "Magistrate Marduke",
+            zone = "Western Plaguelands",
+            location = { mapId = 1422, x = 0.70, y = 0.74 }
         },
         dungeons = { Q.Dungeons["Scholomance"] }
     },
@@ -3789,17 +4764,136 @@ Q.Quests = {
 
     --#region Stratholme
     {
+        id = 5742,
+        faction = nil,
+        name = "Redemption",
+        suggestedLevel = 56,
+        requiredLevel = 52,
+        source = {
+            type = "npc",
+            name = "Tirion Fordring",
+            zone = "Eastern Plaguelands",
+            location = { mapId = 1423, x = 0.074, y = 0.436 }
+        }
+    },
+    {
+        id = 5781,
+        faction = nil,
+        name = "Of Forgotten Memories",
+        suggestedLevel = 57,
+        requiredLevel = 52,
+        prerequisites = {
+            { id = 5742, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Tirion Fordring",
+            zone = "Eastern Plaguelands",
+            location = { mapId = 1423, x = 0.074, y = 0.436 }
+        }
+    },
+    {
+        id = 5845,
+        faction = nil,
+        name = "Of Lost Honor",
+        suggestedLevel = 58,
+        requiredLevel = 52,
+        prerequisites = {
+            { id = 5781, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Tirion Fordring",
+            zone = "Eastern Plaguelands",
+            location = { mapId = 1423, x = 0.074, y = 0.436 }
+        }
+    },
+    {
+        id = 5846,
+        faction = nil,
+        name = "Of Love and Family",
+        suggestedLevel = 57,
+        requiredLevel = 52,
+        prerequisites = {
+            { id = 5845, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Tirion Fordring",
+            zone = "Eastern Plaguelands",
+            location = { mapId = 1423, x = 0.074, y = 0.436 }
+        }
+    },
+    {
+        id = 5848,
+        faction = nil,
+        name = "Of Love and Family",
+        suggestedLevel = 57,
+        requiredLevel = 52,
+        prerequisites = {
+            { id = 5846, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Artist Renfray",
+            zone = "Western Plaguelands",
+            location = { mapId = 1422, x = 0.656, y = 0.754 }
+        },
+        dungeons = { Q.Dungeons["Stratholme"] }
+    },
+    {
+        id = 5214,
+        faction = nil,
+        name = "The Great Ezra Grimm",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        source = {
+            type = "npc",
+            name = "Smokey LaRue",
+            zone = "Eastern Plaguelands",
+            location = { mapId = 1423, x = 0.80, y = 0.58 }
+        },
+        dungeons = { Q.Dungeons["Stratholme"] }
+    },
+    {
+        id = 5212,
+        faction = nil,
+        name = "The Flesh Does Not Lie",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        source = {
+            type = "npc",
+            name = "Betina Bigglezink",
+            zone = "Eastern Plaguelands",
+            location = { mapId = 1423, x = 0.814, y = 0.596 }
+        },
+        dungeons = { Q.Dungeons["Stratholme"] }
+    },
+    {
         id = 5251,
         faction = nil,
         name = "The Archivist",
         suggestedLevel = 60,
         requiredLevel = 55,
-        source = { 
-            type = "npc", 
-            name = "Duke Nicholas Zverenhoff", 
-            zone = "Eastern Plaguelands", 
-            location = { mapId = 1423, x = 0.81, y = 0.59 } 
+        source = {
+            type = "npc",
+            name = "Duke Nicholas Zverenhoff",
+            zone = "Eastern Plaguelands",
+            location = { mapId = 1423, x = 0.81, y = 0.59 }
         },
+    },
+    {
+        id = 5281,
+        faction = nil,
+        name = "The Restless Souls",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        source = {
+            type = "npc",
+            name = "Caretaker Alen",
+            zone = "Eastern Plaguelands",
+            location = { mapId = 1423, x = 0.794, y = 0.638 }
+        }
     },
     {
         id = 5282,
@@ -3807,11 +4901,14 @@ Q.Quests = {
         name = "The Restless Souls",
         suggestedLevel = 60,
         requiredLevel = 55,
-        source = { 
-            type = "npc", 
-            name = "Egan", 
-            zone = "Eastern Plaguelands", 
-            location = { mapId = 1423, x = 0.14, y = 0.33 } 
+        prerequisites = {
+            { id = 5281, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Egan",
+            zone = "Eastern Plaguelands",
+            location = { mapId = 1423, x = 0.144, y = 0.336 }
         },
         dungeons = { Q.Dungeons["Stratholme"] }
     },
@@ -3821,11 +4918,12 @@ Q.Quests = {
         name = "The Medallion of Faith",
         suggestedLevel = 60,
         requiredLevel = 55,
-        source = { 
-            type = "npc", 
-            name = "Aurius", 
-            zone = "Stratholme", 
-            location = { mapId = 1423, x = 0.30, y = 0.27 }
+        source = {
+            type = "npc",
+            name = "Aurius",
+            zone = "Stratholme",
+            location = { mapId = 1423, x = 0.267, y = 0.116 },
+            text = "Found inside Stratholme"
         },
         dungeons = { Q.Dungeons["Stratholme"] }
     },
@@ -3835,11 +4933,11 @@ Q.Quests = {
         name = "Houses of the Holy",
         suggestedLevel = 60,
         requiredLevel = 55,
-        source = { 
-            type = "npc", 
-            name = "Leonid Barthalomew the Revered", 
-            zone = "Eastern Plaguelands", 
-            location = { mapId = 1423, x = 0.81, y = 0.57 } 
+        source = {
+            type = "npc",
+            name = "Leonid Barthalomew the Revered",
+            zone = "Eastern Plaguelands",
+            location = { mapId = 1423, x = 0.81, y = 0.578 }
         },
         dungeons = { Q.Dungeons["Stratholme"] }
     },
@@ -3849,16 +4947,334 @@ Q.Quests = {
         name = "The Truth Comes Crashing Down",
         suggestedLevel = 60,
         requiredLevel = 55,
-        previousQuestId = 5251,
-        source = { 
-            type = "item", 
-            name = "Head of Balnazzar", 
-            itemId = 13250, 
-            zone = "Stratholme", 
+        prerequisites = {
+            { id = 5251, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "item",
+            name = "Head of Balnazzar",
+            itemId = 13250,
+            zone = "Stratholme",
             location = { mapId = 1423, x = 0.30, y = 0.27 },
-            text = "Dropped by Balnazzar in Stratholme" 
+            text = "Dropped by Balnazzar in Stratholme"
+        }
+    },
+    {
+        id = 5263,
+        faction = nil,
+        name = "Above and Beyond",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        prerequisites = {
+            { id = 5127, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Duke Nicholas Zverenhoff",
+            zone = "Eastern Plaguelands",
+            location = { mapId = 1423, x = 0.814, y = 0.598 }
         },
         dungeons = { Q.Dungeons["Stratholme"] }
+    },
+    {
+        id = 6133,
+        faction = "Horde",
+        name = "The Ranger Lord's Behest",
+        suggestedLevel = 60,
+        requiredLevel = 54,
+        source = {
+            type = "npc",
+            name = "Nathanos Blightcaller",
+            zone = "Eastern Plaguelands",
+            location = { mapId = 1423, x = 0.266, y = 0.748 }
+        }
+    },
+    {
+        id = 6135,
+        faction = "Horde",
+        name = "Duskwing, Oh How I Hate Thee...",
+        suggestedLevel = 60,
+        requiredLevel = 56,
+        prerequisites = {
+            { id = 6133, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Nathanos Blightcaller",
+            zone = "Eastern Plaguelands",
+            location = { mapId = 1423, x = 0.266, y = 0.748 }
+        }
+    },
+    {
+        id = 6163,
+        faction = "Horde",
+        name = "Ramstein",
+        suggestedLevel = 60,
+        requiredLevel = 56,
+        prerequisites = {
+            { id = 6135, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Nathanos Blightcaller",
+            zone = "Eastern Plaguelands",
+            location = { mapId = 1423, x = 0.266, y = 0.748 }
+        },
+        dungeons = { Q.Dungeons["Stratholme"] }
+    },
+    {
+        id = 5463,
+        faction = nil,
+        name = "Menethil's Gift",
+        suggestedLevel = 60,
+        requiredLevel = 57,
+        prerequisites = {
+            { id = 5462, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Leonid Barthalomew the Revered",
+            zone = "Eastern Plaguelands",
+            location = { mapId = 1423, x = 0.81, y = 0.578 }
+        }
+    },
+    {
+        id = 5464,
+        faction = nil,
+        name = "Menethil's Gift",
+        suggestedLevel = 60,
+        requiredLevel = 57,
+        prerequisites = {
+            { id = 5463, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "object",
+            name = "Menethil's Gift",
+            zone = "Eastern Plaguelands",
+            location = { mapId = 1423, x = 0.81, y = 0.578 },
+            text = "Use the red circle on the floor in Baron Rivendares room"
+        },
+        dungeons = { Q.Dungeons["Stratholme"] }
+    },
+    {
+        id = 5465,
+        faction = nil,
+        name = "Menethil's Gift",
+        suggestedLevel = 60,
+        requiredLevel = 57,
+        prerequisites = {
+            { id = 5464, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Leonid Barthalomew the Revered",
+            zone = "Eastern Plaguelands",
+            location = { mapId = 1423, x = 0.81, y = 0.578 }
+        }
+    },
+    --#endregion
+
+    --#region Upper Blackrock Spire
+    {
+        id = 4941,
+        faction = "Horde",
+        name = "Eitrigg's Wisdom",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        prerequisites = {
+            { id = 4903, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Warlord Goretooth",
+            zone = "Badlands",
+            location = { mapId = 1418, x = 0.058, y = 0.474 }
+        }
+    },
+    {
+        id = 4974,
+        faction = "Horde",
+        name = "For The Horde!",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        prerequisites = {
+            { id = 4941, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Thrall",
+            zone = "Orgrimmar",
+            location = { mapId = 1454, x = 0.32, y = 0.378 }
+        },
+        dungeons = { Q.Dungeons["Upper Blackrock Spire"] }
+    },
+    {
+        id = 5102,
+        faction = "Alliance",
+        name = "General Drakkisath's Demise",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        prerequisites = {
+            { id = 5089, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Marshall Maxwell",
+            zone = "Burning Steppes",
+            location = { mapId = 1428, x = 0.846, y = 0.688 }
+        },
+        dungeons = { Q.Dungeons["Upper Blackrock Spire"] }
+    },
+    {
+        id = 6805,
+        faction = nil,
+        name = "Stormers and Rumblers",
+        suggestedLevel = 57,
+        requiredLevel = 55,
+        source = {
+            type = "npc",
+            name = "Duke Hydraxis",
+            zone = "Azshara",
+            location = { mapId = 1447, x = 0.792, y = 0.736 }
+        }
+    },
+    {
+        id = 6804,
+        faction = nil,
+        name = "Poisoned Water",
+        suggestedLevel = 56,
+        requiredLevel = 55,
+        source = {
+            type = "npc",
+            name = "Duke Hydraxis",
+            zone = "Azshara",
+            location = { mapId = 1447, x = 0.792, y = 0.736 }
+        }
+    },
+    {
+        id = 6821,
+        faction = nil,
+        name = "Eye of the Emberseer",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        prerequisites = {
+            { id = 6804, type = Q.PrerequisiteType.REQUIRED },
+            { id = 6805, type = Q.PrerequisiteType.REQUIRED }
+        },
+        source = {
+            type = "npc",
+            name = "Duke Hydraxis",
+            zone = "Azshara",
+            location = { mapId = 1447, x = 0.792, y = 0.736 }
+        },
+        dungeons = { Q.Dungeons["Upper Blackrock Spire"] }
+    },
+    {
+        id = 5160,
+        faction = nil,
+        name = "The Matron Protectorate",
+        suggestedLevel = 60,
+        requiredLevel = 57,
+        source = {
+            type = "npc",
+            name = "Awbee",
+            zone = "Upper Blackrock Spire",
+            location = { mapId = 1428, x = 0.284, y = 0.285 },
+            text = "Found through the door after the Rend"
+        },
+        dungeons = { Q.Dungeons["Upper Blackrock Spire"] }
+    },
+    {
+        id = 5047,
+        faction = nil,
+        name = "Pip Quickwit, At Your Service!",
+        suggestedLevel = 60,
+        requiredLevel = 57,
+        source = {
+            type = "npc",
+            name = "Pip Quickwit",
+            zone = "Upper Blackrock Spire",
+            location = { mapId = 1428, x = 0.284, y = 0.285 },
+            text = "Spawns after killing and skinning The Beast (requires 315 skinning)"
+        },
+        dungeons = { Q.Dungeons["Upper Blackrock Spire"] }
+    },
+    {
+        id = 7761,
+        faction = nil,
+        name = "Blackhand's Command",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        source = {
+            type = "item",
+            itemId = 18987,
+            name = "Blackhand's Command",
+            zone = "Blackrock Mountain",
+            location = { mapId = 1428, x = 0.284, y = 0.285 },
+            text = "Kill the Scarshield Quartermaster found outside the UBRS/LBRS entrance"
+        },
+        dungeons = { Q.Dungeons["Upper Blackrock Spire"] }
+    },
+    {
+        id = 4766,
+        faction = "Alliance",
+        name = "Mayara Brightwing",
+        suggestedLevel = 60,
+        requiredLevel = 57,
+        source = {
+            type = "npc",
+            name = "Count Remington Ridgewell",
+            zone = "Stormwind City",
+            location = { mapId = 1453, x = 0.74, y = 0.30 }
+        },
+        dungeons = { Q.Dungeons["Upper Blackrock Spire"] }
+    },
+    {
+        id = 4764,
+        faction = "Alliance",
+        name = "Doomrigger's Clasp",
+        suggestedLevel = 60,
+        requiredLevel = 57,
+        prerequisites = {
+            { id = 4766, type = Q.PrerequisiteType.BREADCRUMB }
+        },
+        source = {
+            type = "npc",
+            name = "Mayara Brightwing",
+            zone = "Burning Steppes",
+            location = { mapId = 1428, x = 0.848, y = 0.69 }
+        },
+        dungeons = { Q.Dungeons["Upper Blackrock Spire"] }
+    },
+    {
+        id = 4768,
+        faction = "Horde",
+        name = "The Darkstone Tablet",
+        suggestedLevel = 60,
+        requiredLevel = 57,
+        prerequisites = {
+            { id = 4769, type = Q.PrerequisiteType.BREADCRUMB }
+        },
+        source = {
+            type = "npc",
+            name = "Shadowmage Vivian Lagrave",
+            zone = "Badlands",
+            location = { mapId = 1418, x = 0.030, y = 0.476 }
+        },
+        dungeons = { Q.Dungeons["Upper Blackrock Spire"] }
+    },
+    {
+        id = 4769,
+        faction = "Horde",
+        name = "Vivian Lagrave and the Darkstone Tablet",
+        suggestedLevel = 60,
+        requiredLevel = 57,
+        source = {
+            type = "npc",
+            name = "Apothecary Zinge",
+            zone = "Undercity",
+            location = { mapId = 1452, x = 0.50, y = 0.684 }
+        }
     },
     --#endregion
 
@@ -3870,7 +5286,9 @@ Q.Quests = {
         name = "A Moon-Kissed Blade",
         suggestedLevel = 25,
         requiredLevel = 20,
-        previousQuestId = 95034,
+        prerequisites = {
+            { id = 95034, type = Q.PrerequisiteType.CHAIN }
+        },
         source = {
             type = "npc",
             name = "Lumina Windsinger",
@@ -3886,7 +5304,9 @@ Q.Quests = {
         name = "The Test of Righteousness",
         suggestedLevel = 20,
         requiredLevel = 20,
-        previousQuestId = 1653,
+        prerequisites = {
+            { id = 1653, type = Q.PrerequisiteType.CHAIN }
+        },
         source = {
             type = "npc",
             name = "Jordan Stilwell",
@@ -3902,12 +5322,13 @@ Q.Quests = {
         name = "The Tome of Valor",
         suggestedLevel = 20,
         requiredLevel = 20,
-        source = { 
-            type = "item", 
-            name = "Tome of Valor", 
-            zone = "Stormwind City", 
-            location = { mapId = 1453, x = 0.40, y = 0.29 } },
-            text = "Speak to Duthorian Rall to receive the tome and start the quest"
+        source = {
+            type = "item",
+            name = "Tome of Valor",
+            zone = "Stormwind City",
+            location = { mapId = 1453, x = 0.40, y = 0.29 }
+        },
+        text = "Speak to Duthorian Rall to receive the tome and start the quest"
     },
     {
         id = 1650,
@@ -3916,12 +5337,14 @@ Q.Quests = {
         name = "The Tome of Valor",
         suggestedLevel = 23,
         requiredLevel = 20,
-        previousQuestId = 1649,
-        source = { 
-            type = "npc", 
-            name = "Daphne Stilwell", 
-            zone = "Westfall", 
-            location = { mapId = 1436, x = 0.42, y = 0.88 } 
+        prerequisites = {
+            { id = 1649, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Daphne Stilwell",
+            zone = "Westfall",
+            location = { mapId = 1436, x = 0.42, y = 0.88 }
         },
     },
     {
@@ -3931,12 +5354,14 @@ Q.Quests = {
         name = "The Tome of Valor",
         suggestedLevel = 25,
         requiredLevel = 20,
-        previousQuestId = 1650,
-        source = { 
-            type = "npc", 
-            name = "Daphne Stilwell", 
-            zone = "Westfall", 
-            location = { mapId = 1436, x = 0.42, y = 0.88 } 
+        prerequisites = {
+            { id = 1650, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Daphne Stilwell",
+            zone = "Westfall",
+            location = { mapId = 1436, x = 0.42, y = 0.88 }
         },
     },
     {
@@ -3946,12 +5371,14 @@ Q.Quests = {
         name = "The Tome of Valor",
         suggestedLevel = 25,
         requiredLevel = 20,
-        previousQuestId = 1651,
-        source = { 
-            type = "npc", 
-            name = "Duthorian Rall", 
-            zone = "Stormwind City", 
-            location = { mapId = 1453, x = 0.40, y = 0.29 } 
+        prerequisites = {
+            { id = 1651, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Duthorian Rall",
+            zone = "Stormwind City",
+            location = { mapId = 1453, x = 0.40, y = 0.29 }
         },
     },
     {
@@ -3961,16 +5388,188 @@ Q.Quests = {
         name = "The Test of Righteousness",
         suggestedLevel = 25,
         requiredLevel = 20,
-        previousQuestId = 1652,
-        source = { 
-            type = "npc", 
-            name = "Duthorian Rall", 
-            zone = "Stormwind City", 
-            location = { mapId = 1453, x = 0.40, y = 0.29 } 
+        prerequisites = {
+            { id = 1652, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Duthorian Rall",
+            zone = "Stormwind City",
+            location = { mapId = 1453, x = 0.40, y = 0.29 }
         },
     },
+    {
+        id = 7638,
+        faction = "Alliance",
+        class = "PALADIN",
+        name = "Lord Grayson Shadowbreaker",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        source = {
+            type = "npc",
+            name = "Duthorian Rall",
+            zone = "Stormwind City",
+            location = { mapId = 1453, x = 0.40, y = 0.29 }
+        },
+    },
+    {
+        id = 7637,
+        faction = "Alliance",
+        class = "PALADIN",
+        name = "Emphasis on Sacrifice",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        prerequisites = {
+            { id = 7638, type = Q.PrerequisiteType.REQUIRED }
+        },
+        source = {
+            type = "npc",
+            name = "Lord Grayson Shadowbreaker",
+            zone = "Stormwind City",
+            location = { mapId = 1453, x = 0.372, y = 0.33 }
+        },
+    },
+    {
+        id = 7639,
+        faction = "Alliance",
+        class = "PALADIN",
+        name = "To Show Due Judgment",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        prerequisites = {
+            { id = 7638, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "High Priest Rohan",
+            zone = "Ironforge",
+            location = { mapId = 1455, x = 0.268, y = 0.076 }
+        },
+    },
+    {
+        id = 7640,
+        faction = "Alliance",
+        class = "PALADIN",
+        name = "Exorcising Terrordale",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        prerequisites = {
+            { id = 7639, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Lord Grayson Shadowbreaker",
+            zone = "Stormwind City",
+            location = { mapId = 1453, x = 0.372, y = 0.33 }
+        },
+    },
+    {
+        id = 7641,
+        faction = "Alliance",
+        class = "PALADIN",
+        name = "The Work of Grimand Elmore",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        prerequisites = {
+            { id = 7640, type = Q.PrerequisiteType.REQUIRED }
+        },
+        source = {
+            type = "npc",
+            name = "Lord Grayson Shadowbreaker",
+            zone = "Stormwind City",
+            location = { mapId = 1453, x = 0.372, y = 0.33 }
+        },
+    },
+    {
+        id = 7462,
+        faction = "Alliance",
+        class = "PALADIN",
+        name = "Collection of Goods",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        prerequisites = {
+            { id = 7641, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Grimand Elmore",
+            zone = "Stormwind City",
+            location = { mapId = 1453, x = 0.516, y = 0.122 }
+        },
+    },
+    {
+        id = 7463,
+        faction = "Alliance",
+        class = "PALADIN",
+        name = "Ancient Equine Spirit",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        prerequisites = {
+            { id = 7642, type = Q.PrerequisiteType.REQUIRED }
+        },
+        source = {
+            type = "npc",
+            name = "Lord Grayson Shadowbreaker",
+            zone = "Stormwind City",
+            location = { mapId = 1453, x = 0.372, y = 0.33 }
+        },
+        dungeons = { Q.Dungeons["Dire Maul: West"] }
+    },
+    {
+        id = 7644,
+        faction = "Alliance",
+        class = "PALADIN",
+        name = "Blessed Arcanite Barding",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        prerequisites = {
+            { id = 7643, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Ancient Equine Spirit",
+            zone = "Dire Maul: West",
+            location = { mapId = 1444, x = 0.59, y = 0.45 },
+            text = "Found inside DM: West"
+        }
+    },
+    {
+        id = 7646,
+        faction = "Alliance",
+        class = "PALADIN",
+        name = "The Divination Scryer",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        prerequisites = {
+            { id = 7643, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Lord Grayson Shadowbreaker",
+            zone = "Stormwind City",
+            location = { mapId = 1453, x = 0.372, y = 0.33 }
+        },
+    },
+    {
+        id = 7647,
+        faction = "Alliance",
+        class = "PALADIN",
+        name = "Judgment and Redemption",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        prerequisites = {
+            { id = 7646, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Lord Grayson Shadowbreaker",
+            zone = "Stormwind City",
+            location = { mapId = 1453, x = 0.372, y = 0.33 }
+        },
+        dungeons = { Q.Dungeons["Scholomance"] }
+    },
     --#endregion
-    
+
     --#region Warlock Quests
     {
         id = 1740,
@@ -3979,16 +5578,228 @@ Q.Quests = {
         name = "The Orb of Soran'ruk",
         suggestedLevel = 25,
         requiredLevel = 20,
-        source = { 
-            type = "npc", 
-            name = "Doan Karhan", 
-            zone = "The Barrens", 
-            location = { mapId = 1413, x = 0.49, y = 0.57 } 
+        source = {
+            type = "npc",
+            name = "Doan Karhan",
+            zone = "The Barrens",
+            location = { mapId = 1413, x = 0.49, y = 0.57 }
         },
         dungeons = { Q.Dungeons["Shadowfang Keep"], Q.Dungeons["Blackfathom Deeps"] }
     },
+    {
+        id = 7562,
+        faction = nil,
+        class = "WARLOCK",
+        name = "Mor'zul Bloodbringer",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        sources = {
+            {
+                type = "npc",
+                faction = "Horde",
+                name = "Martha Strain",
+                zone = "Undercity",
+                location = { mapId = 1458, x = 0.858, y = 0.158 }
+            },
+            {
+                type = "npc",
+                faction = "Horde",
+                name = "Kurgul",
+                zone = "Orgrimmar",
+                location = { mapId = 1458, x = 0.476, y = 0.476 }
+            },
+            {
+                type = "npc",
+                faction = "Alliance",
+                name = "Jubahl Corpseseeker",
+                zone = "Ironforge",
+                location = { mapId = 1455, x = 0.532, y = 0.076 }
+            },
+            {
+                type = "npc",
+                faction = "Alliance",
+                name = "Spackle Thornberry",
+                zone = "Stormwind City",
+                location = { mapId = 1453, x = 0.258, y = 0.776 }
+            }
+        },
+    },
+    {
+        id = 7563,
+        faction = nil,
+        class = "WARLOCK",
+        name = "Rage of Blood",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        prerequisites = {
+            { id = 7562, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Mor'zul Bloodbringer",
+            zone = "Burning Steppes",
+            location = { mapId = 1428, x = 0.126, y = 0.316 }
+        }
+    },
+    {
+        id = 7564,
+        faction = nil,
+        class = "WARLOCK",
+        name = "Wildeyes",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        prerequisites = {
+            { id = 7563, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Mor'zul Bloodbringer",
+            zone = "Burning Steppes",
+            location = { mapId = 1428, x = 0.126, y = 0.316 }
+        }
+    },
+    {
+        id = 7623,
+        faction = nil,
+        class = "WARLOCK",
+        name = "Lord Banehollow",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        prerequisites = {
+            { id = 7564, type = Q.PrerequisiteType.REQUIRED }
+        },
+        source = {
+            type = "npc",
+            name = "Gorzeeki Wildeyes",
+            zone = "Burning Steppes",
+            location = { mapId = 1428, x = 0.124, y = 0.316 }
+        }
+    },
+    {
+        id = 7624,
+        faction = nil,
+        class = "WARLOCK",
+        name = "Ulathek the Traitor",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        prerequisites = {
+            { id = 7623, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Lord Banehollow",
+            zone = "Felwood",
+            location = { mapId = 1448, x = 0.36, y = 0.456 }
+        }
+    },
+    {
+        id = 7625,
+        faction = nil,
+        class = "WARLOCK",
+        name = "Xorothian Stardust",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        prerequisites = {
+            { id = 7624, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Lord Banehollow",
+            zone = "Felwood",
+            location = { mapId = 1448, x = 0.36, y = 0.456 }
+        }
+    },
+    {
+        id = 7629,
+        faction = nil,
+        class = "WARLOCK",
+        name = "Imp Delivery",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        prerequisites = {
+            { id = 7625, type = Q.PrerequisiteType.REQUIRED },
+            { id = 7625, type = Q.PrerequisiteType.REQUIRED }
+        },
+        source = {
+            type = "npc",
+            name = "Gorzeeki Wildeyes",
+            zone = "Burning Steppes",
+            location = { mapId = 1428, x = 0.124, y = 0.316 }
+        },
+        dungeons = { Q.Dungeons["Scholomance"] }
+    },
+    {
+        id = 7630,
+        faction = nil,
+        class = "WARLOCK",
+        name = "Arcanite",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        prerequisites = {
+            { id = 7626, type = Q.PrerequisiteType.REQUIRED },
+            { id = 7628, type = Q.PrerequisiteType.REQUIRED },
+            { id = 7627, type = Q.PrerequisiteType.REQUIRED }
+        },
+        source = {
+            type = "npc",
+            name = "Gorzeeki Wildeyes",
+            zone = "Burning Steppes",
+            location = { mapId = 1428, x = 0.124, y = 0.316 }
+        }
+    },
+    {
+        id = 7628,
+        faction = nil,
+        class = "WARLOCK",
+        name = "Doomsday Candle",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        prerequisites = {
+            { id = 7564, type = Q.PrerequisiteType.REQUIRED },
+        },
+        source = {
+            type = "npc",
+            name = "Mor'zul Bloodbringer",
+            zone = "Burning Steppes",
+            location = { mapId = 1428, x = 0.126, y = 0.316 }
+        }
+    },
+    {
+        id = 7627,
+        faction = nil,
+        class = "WARLOCK",
+        name = "Wheel of the Black March",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        prerequisites = {
+            { id = 7564, type = Q.PrerequisiteType.REQUIRED },
+        },
+        source = {
+            type = "npc",
+            name = "Mor'zul Bloodbringer",
+            zone = "Burning Steppes",
+            location = { mapId = 1428, x = 0.126, y = 0.316 }
+        }
+    },
+    {
+        id = 7626,
+        faction = nil,
+        class = "WARLOCK",
+        name = "Bell of Dethmoora",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        prerequisites = {
+            { id = 7564, type = Q.PrerequisiteType.REQUIRED },
+        },
+        source = {
+            type = "npc",
+            name = "Mor'zul Bloodbringer",
+            zone = "Burning Steppes",
+            location = { mapId = 1428, x = 0.126, y = 0.316 }
+        }
+    },
     --#endregion
-    
+
     --#region Warrior Quests
     {
         id = 1701,
@@ -3997,14 +5808,16 @@ Q.Quests = {
         name = "Fire Hardened Mail",
         suggestedLevel = 28,
         requiredLevel = 20,
-        previousQuestId = 1702,
+        prerequisites = {
+            { id = 1702, type = Q.PrerequisiteType.CHAIN }
+        },
         source = {
             type = "npc",
             name = "Furen Longbeard",
             zone = "Stormwind City",
             location = { mapId = 1453, x = 0.63, y = 0.33 }
         },
-        dungeons = { Q.Dungeons["Razorfen Kraul"]}
+        dungeons = { Q.Dungeons["Razorfen Kraul"] }
     },
     {
         id = 1699,
@@ -4013,11 +5826,11 @@ Q.Quests = {
         name = "The Rethban Gauntlet",
         suggestedLevel = 22,
         requiredLevel = 20,
-        source = { 
-            type = "npc", 
-            name = "Yorus Barleybrew", 
-            zone = "Redridge Mountains", 
-            location = { mapId = 1433, x = 0.27, y = 0.45 } 
+        source = {
+            type = "npc",
+            name = "Yorus Barleybrew",
+            zone = "Redridge Mountains",
+            location = { mapId = 1433, x = 0.27, y = 0.45 }
         },
     },
     {
@@ -4027,12 +5840,14 @@ Q.Quests = {
         name = "The Shieldsmith",
         suggestedLevel = 22,
         requiredLevel = 20,
-        previousQuestId = 1699,
-        source = { 
-            type = "npc", 
-            name = "Furen Longbeard", 
-            zone = "Stormwind City", 
-            location = { mapId = 1453, x = 0.63, y = 0.33 } 
+        prerequisites = {
+            { id = 1699, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Furen Longbeard",
+            zone = "Stormwind City",
+            location = { mapId = 1453, x = 0.63, y = 0.33 }
         },
     },
     {
@@ -4042,7 +5857,9 @@ Q.Quests = {
         name = "Brutal Armor",
         suggestedLevel = 30,
         requiredLevel = 20,
-        previousQuestId = 1825,
+        prerequisites = {
+            { id = 1825, type = Q.PrerequisiteType.CHAIN }
+        },
         source = {
             type = "npc",
             name = "Thun'grim Firegaze",
@@ -4059,23 +5876,23 @@ Q.Quests = {
         suggestedLevel = 20,
         requiredLevel = 20,
         sources = {
-            { 
-                type = "npc", 
-                name = "Sorek", 
-                zone = "Orgrimmar", 
-                location = { mapId = 1454, x = 0.804, y = 0.314 } 
+            {
+                type = "npc",
+                name = "Sorek",
+                zone = "Orgrimmar",
+                location = { mapId = 1454, x = 0.804, y = 0.314 }
             },
-            { 
-                type = "npc", 
-                name = "Torm Ragetotem", 
-                zone = "Thunder Bluff", 
-                location = { mapId = 1456, x = 0.576, y = 0.876 } 
+            {
+                type = "npc",
+                name = "Torm Ragetotem",
+                zone = "Thunder Bluff",
+                location = { mapId = 1456, x = 0.576, y = 0.876 }
             },
-            { 
-                type = "npc", 
-                name = "Baltus Fowler", 
-                zone = "Undercity", 
-                location = { mapId = 1458, x = 0.476, y = 0.168 } 
+            {
+                type = "npc",
+                name = "Baltus Fowler",
+                zone = "Undercity",
+                location = { mapId = 1458, x = 0.476, y = 0.168 }
             }
         },
     },
@@ -4086,12 +5903,14 @@ Q.Quests = {
         name = "Trial at the Field of Giants",
         suggestedLevel = 20,
         requiredLevel = 20,
-        previousQuestId = 1823,
-        source = { 
-            type = "npc", 
-            name = "Ruga Ragetotem", 
-            zone = "The Barrens", 
-            location = { mapId = 1413, x = 0.45, y = 0.59 } 
+        prerequisites = {
+            { id = 1823, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Ruga Ragetotem",
+            zone = "The Barrens",
+            location = { mapId = 1413, x = 0.45, y = 0.59 }
         },
     },
     {
@@ -4101,12 +5920,14 @@ Q.Quests = {
         name = "Speak with Thun'grim",
         suggestedLevel = 20,
         requiredLevel = 20,
-        previousQuestId = 1824,
-        source = { 
-            type = "npc", 
-            name = "Thun'grim Firegaze", 
-            zone = "The Barrens", 
-            location = { mapId = 1413, x = 0.57, y = 0.30 } 
+        prerequisites = {
+            { id = 1824, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Thun'grim Firegaze",
+            zone = "The Barrens",
+            location = { mapId = 1413, x = 0.57, y = 0.30 }
         },
     },
     --#endregion
@@ -4119,28 +5940,28 @@ Q.Quests = {
         suggestedLevel = 38,
         requiredLevel = 30,
         sources = {
-            { 
+            {
                 type = "npc",
                 faction = "Horde",
                 name = "Ursyn Ghull",
                 zone = "Thunder Bluff",
                 location = { mapId = 1456, x = 0.256, y = 0.156 }
             },
-            { 
+            {
                 type = "npc",
                 faction = "Horde",
                 name = "Anastasia Hartwell",
                 zone = "Undercity",
                 location = { mapId = 1458, x = 0.85, y = 0.102 }
             },
-            { 
+            {
                 type = "npc",
                 faction = "Horde",
                 name = "Deino",
                 zone = "Orgrimmar",
                 location = { mapId = 1454, x = 0.386, y = 0.852 }
             },
-            { 
+            {
                 type = "npc",
                 faction = "Alliance",
                 name = "Jennea Cannon",
@@ -4148,7 +5969,7 @@ Q.Quests = {
                 location = { mapId = 1453, x = 0.386, y = 0.796 }
             }
             ,
-            { 
+            {
                 type = "npc",
                 faction = "Alliance",
                 name = "Bink",
@@ -4164,7 +5985,7 @@ Q.Quests = {
         suggestedLevel = 38,
         requiredLevel = 30,
         prerequisites = {
-            any = { 1947 }
+            { id = 1947, type = Q.PrerequisiteType.BREADCRUMB }
         },
         source = {
             type = "npc",
@@ -4179,7 +6000,9 @@ Q.Quests = {
         name = "Get the Scoop",
         suggestedLevel = 30,
         requiredLevel = 30,
-        previousQuestId = 1949,
+        prerequisites = {
+            { id = 1949, type = Q.PrerequisiteType.CHAIN }
+        },
         source = {
             type = "npc",
             name = "Magus Tirth",
@@ -4194,28 +6017,28 @@ Q.Quests = {
         suggestedLevel = 40,
         requiredLevel = 35,
         sources = {
-            { 
+            {
                 type = "npc",
                 faction = "Horde",
                 name = "Ursyn Ghull",
                 zone = "Thunder Bluff",
                 location = { mapId = 1456, x = 0.256, y = 0.156 }
             },
-            { 
+            {
                 type = "npc",
                 faction = "Horde",
                 name = "Anastasia Hartwell",
                 zone = "Undercity",
                 location = { mapId = 1458, x = 0.85, y = 0.102 }
             },
-            { 
+            {
                 type = "npc",
                 faction = "Horde",
                 name = "Deino",
                 zone = "Orgrimmar",
                 location = { mapId = 1454, x = 0.386, y = 0.852 }
             },
-            { 
+            {
                 type = "npc",
                 faction = "Alliance",
                 name = "Jennea Cannon",
@@ -4223,7 +6046,7 @@ Q.Quests = {
                 location = { mapId = 1453, x = 0.386, y = 0.796 }
             }
             ,
-            { 
+            {
                 type = "npc",
                 faction = "Alliance",
                 name = "Bink",
@@ -4238,7 +6061,9 @@ Q.Quests = {
         name = "The Infernal Orb",
         suggestedLevel = 40,
         requiredLevel = 35,
-        previousQuestId = 1953,
+        prerequisites = {
+            { id = 1953, type = Q.PrerequisiteType.BREADCRUMB }
+        },
         source = {
             type = "npc",
             name = "Tabetha",
@@ -4252,7 +6077,9 @@ Q.Quests = {
         name = "The Exorcism",
         suggestedLevel = 40,
         requiredLevel = 35,
-        previousQuestId = 1954,
+        prerequisites = {
+            { id = 1954, type = Q.PrerequisiteType.CHAIN }
+        },
         source = {
             type = "npc",
             name = "Tabetha",
@@ -4266,7 +6093,9 @@ Q.Quests = {
         name = "Power in Uldaman",
         suggestedLevel = 40,
         requiredLevel = 35,
-        previousQuestId = 1955,
+        prerequisites = {
+            { id = 1955, type = Q.PrerequisiteType.CHAIN }
+        },
         source = {
             type = "npc",
             name = "Tabetha",
@@ -4281,7 +6110,9 @@ Q.Quests = {
         name = "Rituals of Power",
         suggestedLevel = 40,
         requiredLevel = 30,
-        previousQuestId = 1950,
+        prerequisites = {
+            { id = 1950, type = Q.PrerequisiteType.CHAIN }
+        },
         source = {
             type = "npc",
             name = "Magus Tirth",
@@ -4290,5 +6121,84 @@ Q.Quests = {
         },
         dungeons = { Q.Dungeons["SM: Library"] },
     },
+    {
+        id = 7463,
+        class = "MAGE",
+        name = "Arcane Refreshment",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        source = {
+            type = "npc",
+            name = "Lorekeeper Lydros",
+            zone = "Dire Maul",
+            location = { mapId = 1444, x = 0.59, y = 0.45 },
+            text = "Found inside DM: West"
+        },
+        dungeons = { Q.Dungeons["DM: West"] },
+    },
     --#endregion
+
+    --#region Shaman Quests
+    {
+        id = 7667,
+        class = "SHAMAN",
+        name = "Material Assistance",
+        suggestedLevel = 60,
+        requiredLevel = 58,
+        source = {
+            type = "npc",
+            name = "Sagorne Creststrider",
+            zone = "Orgrimmar",
+            location = { mapId = 1454, x = 0.386, y = 0.362 },
+        }
+    },
+    {
+        id = 8258,
+        class = "SHAMAN",
+        name = "The Darkreaver Menace",
+        suggestedLevel = 60,
+        requiredLevel = 58,
+        source = {
+            type = "npc",
+            name = "Sagorne Creststrider",
+            zone = "Orgrimmar",
+            location = { mapId = 1454, x = 0.386, y = 0.362 },
+        },
+        dungeons = { Q.Dungeons["Scholomance"] }
+    },
+    --#endregion
+
+    --#region Blacksmithing Quests
+    {
+        id = 5126,
+        profession = "Blacksmithing",
+        name = "Lorax",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        source = {
+            type = "npc",
+            name = "Lorax",
+            zone = "Winterspring",
+            location = { mapId = 1452, x = 0.638, y = 0.738 },
+        }
+    },
+    {
+        id = 5127,
+        profession = "Blacksmithing",
+        name = "The Demon Forge",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        prerequisites = {
+            { id = 5126, type = Q.PrerequisiteType.REQUIRED }
+        },
+        source = {
+            type = "npc",
+            name = "Lorax",
+            zone = "Winterspring",
+            location = { mapId = 1452, x = 0.638, y = 0.738 },
+        },
+        dungeons = { Q.Dungeons["Upper Blackrock Spire"] }
+    },
+    --#endregion
+
 }

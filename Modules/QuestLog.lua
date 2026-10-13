@@ -224,6 +224,11 @@ local function AppendRelatedRows(quest, depth)
             AddDependency(questId, "any")
         end
     end
+    for _, questId in ipairs((quest.prerequisites and quest.prerequisites.breadcrumb) or {}) do
+        if Q.API:GetQuestById(questId) then
+            AddDependency(questId, "breadcrumb")
+        end
+    end
 end
 
 local function SetQuestStatusColor(fontString, settingPath, fallbackKey)
