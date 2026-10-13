@@ -75,8 +75,8 @@ function Q.API:BuildLookupTables()
         visited[quest.id] = true
         addQuestDungeon(quest.id, dungeon)
 
-        for _, questId in ipairs(quest.prerequisites or {}) do
-            AddDungeonToLineage(self:GetQuestById(questId), dungeon, visited)
+        for _, prerequisite in ipairs(quest.prerequisites or {}) do
+            AddDungeonToLineage(self:GetQuestById(prerequisite.id), dungeon, visited)
         end
     end
 
@@ -180,6 +180,10 @@ end
 
 function Q.API:IsDungeonQuestChainStart(questId)
     local quest = self:GetQuestById(questId)
+    if not quest then
+        return false
+    end
+
     local isChainStart = true
     
     for _, prerequisite in ipairs(quest.prerequisites or {}) do
@@ -197,13 +201,19 @@ end
 
 function Q.API:IsQuestLineageStart(questId)
     local quest = self:GetQuestById(questId)
-    if not quest or quest.previousQuestId then
+    if not quest then
         return false
     end
-    local prerequisites = quest.prerequisites or {}
-    if #(prerequisites.all or {}) > 0 or #(prerequisites.any or {}) > 0 then
-        return false
+
+    for _, prerequisite in ipairs(quest.prerequisites or {}) do
+        if prerequisite.type == Q.PrerequisiteType.CHAIN or
+            prerequisite.type == Q.PrerequisiteType.REQUIRED or
+            prerequisite.type == Q.PrerequisiteType.ANY
+        then
+            return false
+        end
     end
+
     return true
 end
 
@@ -287,40 +297,34 @@ function Q.API:IsPrerequisiteSatisfied(questId)
     end
 
     local function IsRequiredQuestCompleted(requiredQuestId)
-        -- Quest definitions filtered by faction or class are not requirements
-        -- for this character, so do not query their completion state.
+        -- Quest definitions filtered by faction or class are not requirements for this character, so do not query their completion state.
         return not self:GetQuestById(requiredQuestId) or self:IsQuestCompleted(requiredQuestId)
     end
     
-    if quest.previousQuestId and not IsRequiredQuestCompleted(quest.previousQuestId) then
-        return false
-    end
+    local hasKnownAnyPrerequisite = false
+    local hasCompletedAnyPrerequisite = false
 
-    local prerequisites = quest.prerequisites
-    if prerequisites then
-        for _, requiredQuestId in ipairs(prerequisites.all or {}) do
-            if not IsRequiredQuestCompleted(requiredQuestId) then
+    for _, prerequisite in ipairs(quest.prerequisites or {}) do
+        local prerequisiteQuestId = prerequisite.id
+        local prerequisiteType = prerequisite.type
+
+        if prerequisiteType == Q.PrerequisiteType.CHAIN or prerequisiteType == Q.PrerequisiteType.REQUIRED
+        then
+            if not IsRequiredQuestCompleted(prerequisiteQuestId) then
                 return false
             end
-        end
-
-        local anyPrerequisites = prerequisites.any or {}
-        if #anyPrerequisites > 0 then
-            local hasKnownPrerequisite = false
-            local hasCompletedAny = false
-            for _, requiredQuestId in ipairs(anyPrerequisites) do
-                if self:GetQuestById(requiredQuestId) then
-                    hasKnownPrerequisite = true
-                    if self:IsQuestCompleted(requiredQuestId) then
-                        hasCompletedAny = true
-                        break
-                    end
+        elseif prerequisiteType == Q.PrerequisiteType.ANY then
+            if self:GetQuestById(prerequisiteQuestId) then
+                hasKnownAnyPrerequisite = true
+                if self:IsQuestCompleted(prerequisiteQuestId) then
+                    hasCompletedAnyPrerequisite = true
                 end
             end
-            if hasKnownPrerequisite and not hasCompletedAny then
-                return false
-            end
         end
+    end
+
+    if hasKnownAnyPrerequisite and not hasCompletedAnyPrerequisite then
+        return false
     end
 
     return true

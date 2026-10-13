@@ -210,23 +210,9 @@ local function AppendRelatedRows(quest, depth)
         end
     end
 
-    if quest.previousQuestId then
-        AddDependency(quest.previousQuestId, "chain")
-    end
-
-    for _, questId in ipairs((quest.prerequisites and quest.prerequisites.all) or {}) do
-        if Q.API:GetQuestById(questId) then
-            AddDependency(questId, "all")
-        end
-    end
-    for _, questId in ipairs((quest.prerequisites and quest.prerequisites.any) or {}) do
-        if Q.API:GetQuestById(questId) then
-            AddDependency(questId, "any")
-        end
-    end
-    for _, questId in ipairs((quest.prerequisites and quest.prerequisites.breadcrumb) or {}) do
-        if Q.API:GetQuestById(questId) then
-            AddDependency(questId, "breadcrumb")
+    for _, prerequisite in ipairs(quest.prerequisites or {}) do
+        if Q.API:GetQuestById(prerequisite.id) then
+            AddDependency(prerequisite.id, prerequisite.type)
         end
     end
 end
@@ -282,7 +268,8 @@ end
 
 local function UpdateCollapseButton(frame)
     local row = frame.row
-    if row.isDungeon or row.previousQuestId or row.prerequisites then
+
+    if row.isDungeon or #(row.prerequisites or {}) > 0 then
         frame.collapseButton:Show()
     else
         frame.collapseButton:Hide()
@@ -325,12 +312,14 @@ local function UpdateRowText(frame)
     end
 
     local title = row.name
-    -- if row.isChainQuest then
-    --     title = "Chain: " .. title
-    -- end
-
-    if row.isPrerequisite then
-        title = string.format("%s%s", row.prerequisiteType == "any" and "*" or "", row.name)
+    if row.prerequisiteType and row.prerequisiteType == "any" then
+        title = "*" .. title
+    -- elseif row.prerequisiteType and row.prerequisiteType == "required" then
+    --     title = "!" .. title
+    elseif row.prerequisiteType and row.prerequisiteType == "breadcrumb" then
+        title = ">" .. title
+    -- elseif row.prerequisiteType and row.prerequisiteType == "chain" then
+    --     title = "#" .. title
     end
 
     frame.titleFrame.title:SetText(title)

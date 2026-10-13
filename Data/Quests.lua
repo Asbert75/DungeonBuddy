@@ -1,10 +1,10 @@
 local _, Q = ...
 
 Q.PrerequisiteType = {
-    ["BREADCRUMB"] = "breadcrumb",
-    ["CHAIN"] = "chain",
-    ["REQUIRED"] = "all",
-    ["ANY"] = "any"
+    BREADCRUMB = "breadcrumb",
+    CHAIN = "chain",
+    REQUIRED = "required",
+    ANY = "any"
 }
 
 --[[
@@ -1841,23 +1841,39 @@ Q.Quests = {
 
     --#region Scarlet Monastery: Shared
     {
+        id = 6141,
+        faction = "Alliance",
+        name = "Brother Anton",
+        suggestedLevel = 39,
+        requiredLevel = 34,
+        source = {
+            type = "npc",
+            name = "Brother Crowley",
+            zone = "Stormwind City",
+            location = { mapId = 1453, x = 0.432, y = 0.242 }
+        },
+    },
+    {
         id = 261,
         faction = "Alliance",
         name = "Down the Scarlet Path",
-        suggestedLevel = 38,
+        suggestedLevel = 39,
         requiredLevel = 34,
+        prerequisites = {
+            { id = 6141, type = Q.PrerequisiteType.BREADCRUMB }
+        },
         source = {
             type = "npc",
             name = "Brother Anton",
             zone = "Desolace",
-            location = { mapId = 405, x = 0.66, y = 0.09 }
+            location = { mapId = 1443, x = 0.664, y = 0.078 }
         },
     },
     {
         id = 1052,
         faction = "Alliance",
         name = "Down the Scarlet Path",
-        suggestedLevel = 38,
+        suggestedLevel = 40,
         requiredLevel = 34,
         prerequisites = {
             { id = 261, type = Q.PrerequisiteType.CHAIN }
@@ -1866,7 +1882,7 @@ Q.Quests = {
             type = "npc",
             name = "Brother Anton",
             zone = "Desolace",
-            location = { mapId = 405, x = 0.66, y = 0.09 }
+            location = { mapId = 1443, x = 0.664, y = 0.078 }
         },
     },
     {
@@ -1907,7 +1923,7 @@ Q.Quests = {
         suggestedLevel = 40,
         requiredLevel = 34,
         prerequisites = {
-            { id = 1052, type = Q.PrerequisiteType.CHAIN }
+            { id = 1052, type = Q.PrerequisiteType.REQUIRED }
         },
         source = {
             type = "npc",
