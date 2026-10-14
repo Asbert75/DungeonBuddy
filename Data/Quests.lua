@@ -982,7 +982,7 @@ Q.Quests = {
             type = "npc",
             name = "Falfindel Waywarder",
             zone = "Feralas",
-            location = { mapId = 1448, x = 0.89, y = 0.46 },
+            location = { mapId = 1444, x = 0.89, y = 0.46 },
         },
         dungeons = { Q.Dungeons["Razorfen Kraul"] },
     },
@@ -3237,7 +3237,7 @@ Q.Quests = {
             type = "npc",
             name = "Liv Rizzlefix",
             zone = "Feralas",
-            location = { mapId = 1413, x = 0.624, y = 0.386 }
+            location = { mapId = 1444, x = 0.624, y = 0.386 }
         },
         dungeons = { Q.Dungeons["Temple of Atal'Hakkar"] },
     },
@@ -4370,7 +4370,7 @@ Q.Quests = {
             type = "npc",
             name = "Knot Thimblejack",
             zone = "Dire Maul",
-            location = { mapId = 1448, x = 0.59, y = 0.45 },
+            location = { mapId = 1444, x = 0.59, y = 0.45 },
             text = "Located inside the dungeon"
         },
         dungeons = { Q.Dungeons["Dire Maul: North"] }
@@ -4512,7 +4512,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Kibler",
-            zone = "Badlands",
+            zone = "Burning Steppes",
             location = { mapId = 1428, x = 0.658, y = 0.22 }
         },
         dungeons = { Q.Dungeons["Lower Blackrock Spire"] }
@@ -4958,7 +4958,7 @@ Q.Quests = {
         dungeons = { Q.Dungeons["Stratholme"] }
     },
     {
-        id = 5127,
+        id = 5262,
         faction = nil,
         name = "The Truth Comes Crashing Down",
         suggestedLevel = 60,
@@ -4982,7 +4982,7 @@ Q.Quests = {
         suggestedLevel = 60,
         requiredLevel = 55,
         prerequisites = {
-            { id = 5127, type = Q.PrerequisiteType.CHAIN }
+            { id = 5262, type = Q.PrerequisiteType.CHAIN }
         },
         source = {
             type = "npc",
@@ -5075,7 +5075,7 @@ Q.Quests = {
     {
         id = 5465,
         faction = nil,
-        name = "Menethil's Gift",
+        name = "Soulbound Keepsake",
         suggestedLevel = 60,
         requiredLevel = 57,
         prerequisites = {
@@ -5622,7 +5622,7 @@ Q.Quests = {
                 faction = "Horde",
                 name = "Kurgul",
                 zone = "Orgrimmar",
-                location = { mapId = 1458, x = 0.476, y = 0.476 }
+                location = { mapId = 1454, x = 0.476, y = 0.476 }
             },
             {
                 type = "npc",

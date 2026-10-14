@@ -107,6 +107,56 @@ function Q.API:GetPlayerInfo()
     }
 end
 
+local ProfessionIcons = {
+    Alchemy = "Trade_Alchemy",
+    Blacksmithing = "Trade_BlackSmithing",
+    Enchanting = "Trade_Engraving",
+    Engineering = "Trade_Engineering",
+    Herbalism = "Trade_Herbalism",
+    Leatherworking = "Trade_LeatherWorking",
+    Mining = "Trade_Mining",
+    Skinning = "INV_Misc_Pelt_Wolf_01",
+    Tailoring = "Trade_Tailoring",
+    Cooking = "INV_Misc_Food_15",
+    ["First Aid"] = "Spell_Holy_SealOfSacrifice",
+    Fishing = "Trade_Fishing",
+}
+
+function Q.API:GetProfessionIconTexture(profession)
+    local icon = profession and ProfessionIcons[profession]
+    return icon and ("Interface\\Icons\\" .. icon) or nil
+end
+
+function Q.API:PlayerHasProfession(profession)
+    if not profession then
+        return true
+    end
+
+    if Q.Debug.Enabled then
+        return false
+    end
+
+    if GetNumSkillLines and GetSkillLineInfo then
+        for i = 1, GetNumSkillLines() do
+            local skillName, isHeader = GetSkillLineInfo(i)
+            if not isHeader and skillName == profession then
+                return true
+            end
+        end
+        return false
+    end
+
+    if GetProfessions and GetProfessionInfo then
+        for _, index in pairs({ GetProfessions() }) do
+            if index and GetProfessionInfo(index) == profession then
+                return true
+            end
+        end
+    end
+
+    return false
+end
+
 function Q.API:GetClassIconTexture(class)
     if not class then
         return nil
@@ -147,12 +197,12 @@ function Q.API:GetDifficultyColor(playerLevel, comparisonLevel)
 end
 
 function Q.API:GetWaypointText(quest, source)
-    local sourceName = source and source.name
+    local title = string.format("%s (%s)", source.name, quest.name)
 
-    local title = quest.name
-    if sourceName then
-        return string.format("%s (%s)", sourceName, title)
+    if source.text then
+        title = string.format("%s - %s (%s)", source.name, source.text, quest.name)
     end
+
     return title
 end
 
@@ -270,7 +320,7 @@ end
 function Q.API:GetAvailableQuestsByDungeonId(dungeonId, playerInfo)
     local quests = {}
     for _, quest in ipairs(self:GetQuestsByDungeonId(dungeonId) or {}) do
-        if self:IsQuestAvailableToLevel(quest.id, playerInfo) then
+        if self:IsQuestAvailableToLevel(quest.id, playerInfo) and self:PlayerHasProfession(quest.profession) then
             table.insert(quests, quest)
         end
     end
@@ -280,7 +330,8 @@ end
 function Q.API:DungeonHasAvailableQuests(dungeonId, playerInfo)
     for _, quest in ipairs(self:GetQuests() or {}) do
         if  self:IsQuestRelatedToDungeon(quest.id, dungeonId) and 
-            self:IsQuestAvailableToLevel(quest.id, playerInfo) and 
+            self:IsQuestAvailableToLevel(quest.id, playerInfo) and
+            self:PlayerHasProfession(quest.profession) and
             (Q:GetSetting("HideCompletedQuests") == false or not self:IsQuestCompleted(quest.id))
         then
             return true
@@ -353,10 +404,12 @@ function Q.API:IsQuestAvailable(questId)
     end
 
     local playerInfo = Q.API:GetPlayerInfo()
+    local quest = self:GetQuestById(questId)
 
     return
         not self:IsQuestCompleted(questId)
         and self:IsQuestAvailableToLevel(questId, playerInfo)
+        and self:PlayerHasProfession(quest.profession)
         and self:IsPrerequisiteSatisfied(questId)
 end
 
@@ -409,7 +462,7 @@ function Q.API:SetWaypoint(entity, isDungeon)
         local playerInfo = Q.API:GetPlayerInfo()
         if entity.source then
             local title = self:GetWaypointText(entity, entity.source)
-            AddWaypoint(entity.location, title)  
+            AddWaypoint(entity.source.location, title)  
         else
             for _, source in ipairs(entity.sources or {}) do
                 if source.faction and source.faction ~= playerInfo.faction then

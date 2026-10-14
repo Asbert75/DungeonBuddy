@@ -292,12 +292,28 @@ end
 
 local function UpdateClassIcon(frame)
     local classIcon = frame.titleFrame.classIcon
+    local professionIcon = frame.titleFrame.professionIcon
     local classIconTexture = not frame.row.isDungeon and Q.API:GetClassIconTexture(frame.row.class)
+    local professionIconTexture = not frame.row.isDungeon and Q.API:GetProfessionIconTexture(frame.row.profession)
+
     if classIconTexture then
         classIcon:SetTexture(classIconTexture)
         classIcon:Show()
     else
         classIcon:Hide()
+    end
+
+    if professionIconTexture then
+        professionIcon:SetTexture(professionIconTexture)
+        professionIcon:ClearAllPoints()
+        if classIconTexture then
+            Q:SetPixelPerfectPoint(professionIcon, "LEFT", classIcon, "RIGHT", Q.Theme.Padding.S, 0)
+        else
+            Q:SetPixelPerfectPoint(professionIcon, "LEFT", frame.titleFrame.title, "RIGHT", Q.Theme.Padding.S, 0)
+        end
+        professionIcon:Show()
+    else
+        professionIcon:Hide()
     end
 end
 
@@ -358,7 +374,7 @@ local function UpdateRowText(frame)
     local pixelPerfect = Q:PixelPerfect(1)
 
     if frame.row.isDungeon then
-        frame.titleFrame.level:SetText(string.format("(%s-%s)", row.minLevel, row.maxLevel))
+        frame.titleFrame.level:SetText(string.format(" %s-%s", row.minLevel, row.maxLevel))
 
         frame.titleFrame.title:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * Q.Theme.Font.XL)
         Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", 0, 0)
@@ -374,7 +390,7 @@ local function UpdateRowText(frame)
         end
     end
 
-    local title = row.name
+    local title = not frame.row.isDungeon and Q:GetSetting("ShowSuggestedQuestLevel") and string.format("[%d] %s", row.suggestedLevel or 0, row.name) or row.name
     if row.prerequisiteType and row.prerequisiteType == "any" then
         title = "*" .. title
     -- elseif row.prerequisiteType and row.prerequisiteType == "required" then
@@ -438,6 +454,23 @@ local function CreateRowFrame(index, row)
     Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", Q.Theme.Padding.S, 0)
     frame.titleFrame.title:SetJustifyH("LEFT")
 
+    frame.titleFrame.title:EnableMouse(true)
+    frame.titleFrame.title:SetScript("OnEnter", function(self)
+        local hoveredRow = frame.row
+        if hoveredRow and hoveredRow.prerequisiteType == Q.PrerequisiteType.ANY then
+            GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+            GameTooltip:SetText("You only need to complete one of the quests marked with * to unlock the next quest.", 0.85, 0.85, 0.85)
+            GameTooltip:Show()
+        elseif hoveredRow and hoveredRow.prerequisiteType == Q.PrerequisiteType.BREADCRUMB then
+            GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+            GameTooltip:SetText("Not required to unlock the next quest. Breadcrumb quests are only meant to help players find a quest.", 0.85, 0.85, 0.85)
+            GameTooltip:Show()
+        end
+    end)
+    frame.titleFrame.title:SetScript("OnLeave", function()
+        GameTooltip:Hide()
+    end)
+
     frame.titleFrame.level = Q:CreateText(nil, frame.titleFrame, "", Q.Theme.Font.L)
     Q:SetPixelPerfectPoint(frame.titleFrame.level, "LEFT", frame.titleFrame.title, "RIGHT", 2, 0)
     frame.titleFrame.level:SetJustifyH("LEFT")
@@ -446,6 +479,10 @@ local function CreateRowFrame(index, row)
     Q:SetPixelPerfectPoint(frame.titleFrame.classIcon, "LEFT", frame.titleFrame.title, "RIGHT", Q.Theme.Padding.S, 0)
     Q:SetPixelPerfectSize(frame.titleFrame.classIcon, 16, 16)
     frame.titleFrame.classIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+
+    frame.titleFrame.professionIcon = frame.titleFrame:CreateTexture(nil, "ARTWORK")
+    Q:SetPixelPerfectSize(frame.titleFrame.professionIcon, 16, 16)
+    frame.titleFrame.professionIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 
     --------------------------------------------------
     -- Create Action Buttons
@@ -498,13 +535,19 @@ local function CreateRowFrame(index, row)
             end)
         end,
         OnMouseEnter = function(self)
+            local r, g, b = unpack(Q.Theme.Text.Primary)
+
             GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
             GameTooltip:SetText("Get Directions", 1, 1, 1)
             local tomtom = rawget(_G, "TomTom")
             if tomtom and tomtom.AddWaypoint then
-                GameTooltip:AddLine(string.format("Add a TomTom waypoint at this %s.", frame.row.isDungeon and "dungeon entrance" or "quests source(s)"), 0.85, 0.85, 0.85, true)
+                GameTooltip:AddLine(string.format("Add a TomTom waypoint at this %s.", frame.row.isDungeon and "dungeon entrance" or "quests source(s)"), r, g, b, true)
+                if frame.row.source and frame.row.source.text then
+                    GameTooltip:AddLine("-", r, g, b, true)
+                    GameTooltip:AddLine("Info: "..frame.row.source.text, r, g, b, true)
+                end
             else
-                GameTooltip:AddLine("TomTom required for waypoint directions.", 0.85, 0.85, 0.85, true)
+                GameTooltip:AddLine("TomTom required for waypoint directions.", r, g, b, true)
             end
             GameTooltip:Show()
         end,
@@ -603,7 +646,7 @@ function QuestLog:RefreshAndPopulate()
         self._frames[index].row = nil
     end
 
-    Q:SetPixelPerfectHeight(self.scrollChild, math.max(1, totalOffset + DB_ROW_HEIGHT + 10))
+    Q:SetPixelPerfectHeight(self.scrollChild, math.max(1, totalOffset + DB_ROW_HEIGHT + Q:PixelPerfect(50)))
 end
 
 function QuestLog:Toggle()

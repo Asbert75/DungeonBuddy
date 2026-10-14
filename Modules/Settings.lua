@@ -77,6 +77,18 @@ local function GetSectionSettings(sectionName)
                     Q.QuestLog:RefreshAndPopulate()
                 end
             end,
+        },
+        {
+            section = Sections.General.name,
+            type = "checkbox",
+            path = "ShowSuggestedQuestLevel",
+            title = "Show suggested quest levels",
+            description = "Display the suggested quest level for each quest in notifications/tracker.",
+            onChange = function()
+                if Q.QuestLog and Q.QuestLog.frame then
+                    Q.QuestLog:RefreshAndPopulate()
+                end
+            end,
         }
     }
 
@@ -90,7 +102,7 @@ local function GetSectionSettings(sectionName)
 end
 
 function Settings:CreateSection(sectionName, sectionTitle, anchorFrame)
-    local paddingL, paddingM, paddingS = Q.Theme.Padding.L, Q.Theme.Padding.M, Q.Theme.Padding.S
+    local paddingM, paddingS = Q.Theme.Padding.M, Q.Theme.Padding.S
     local fontL = Q.Theme.Font.L
 
     local sectionHeight = fontL + (paddingM * 2)

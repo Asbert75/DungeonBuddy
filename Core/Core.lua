@@ -42,8 +42,7 @@ end
 local function TestNotificationQuest()
     local quest = Q.API:GetRandomQuest()
     local quest2 = Q.API:GetRandomQuest()
-    local quest3 = Q.API:GetQuestById(1947)
-    local quests = { quest, quest2, quest3, Q.API:GetQuestById(4082), Q.API:GetQuestById(7046) }
+    local quests = { quest, quest2 }
 
     Q.Notification:AddToQueue(quests)
 end

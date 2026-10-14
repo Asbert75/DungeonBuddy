@@ -31,6 +31,7 @@ local SharedDefaults = {
     RemindOnZoneChange = true,
     HideCompletedQuests = false,
     AutoWaypoint = false,
+    ShowSuggestedQuestLevel = true,
 
     -- Tracking Data
     CollapsedDungeons = {},

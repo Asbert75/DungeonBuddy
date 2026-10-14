@@ -140,6 +140,9 @@ function Notification:Create()
     self.questClassIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
     Q:SetPixelPerfectPoint(self.questClassIcon, "TOPLEFT", self.dungeonName, "BOTTOMLEFT", 0, -paddingS)
 
+    self.questProfessionIcon = Q:CreateTexture("QuestProfessionIcon", self.frame, 20, 20)
+    self.questProfessionIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+
     --------------------------------------------------
     -- Quest Source Label
     --------------------------------------------------
@@ -402,16 +405,33 @@ local function UpdateSourceData(playerFaction)
     end
 end
 
-local function UpdateClassIcon(questClass)
+local function UpdateClassIcon(questClass, questProfession)
     local classIconTexture = Q.API:GetClassIconTexture(questClass)
+    local professionIconTexture = Q.API:GetProfessionIconTexture(questProfession)
+    local previous = Notification.dungeonName
+    local previousPoint, offsetX, offsetY = "BOTTOMLEFT", 0, -Q.Theme.Padding.S
+    local paddingS = Q.Theme.Padding.S
+
     if classIconTexture then
         Notification.questClassIcon:SetTexture(classIconTexture)
         Notification.questClassIcon:Show()
-        Q:SetPixelPerfectPoint(Notification.questName, "TOPLEFT", Notification.questClassIcon, "TOPRIGHT", Q.Theme.Padding.S, 0)
+        previous, previousPoint, offsetX, offsetY = Notification.questClassIcon, "TOPRIGHT", paddingS, 0
     else
         Notification.questClassIcon:Hide()
-        Q:SetPixelPerfectPoint(Notification.questName, "TOPLEFT", Notification.dungeonName, "BOTTOMLEFT", 0, -Q.Theme.Padding.S)
     end
+
+    if professionIconTexture then
+        local icon = Notification.questProfessionIcon
+        icon:SetTexture(professionIconTexture)
+        icon:ClearAllPoints()
+        Q:SetPixelPerfectPoint(icon, "TOPLEFT", previous, previousPoint, offsetX, offsetY)
+        icon:Show()
+        previous, previousPoint, offsetX, offsetY = icon, "TOPRIGHT", paddingS, 0
+    else
+        Notification.questProfessionIcon:Hide()
+    end
+
+    Q:SetPixelPerfectPoint(Notification.questName, "TOPLEFT", previous, previousPoint, offsetX, offsetY)
 end
 
 local function UpdateActionButtons()
@@ -460,16 +480,22 @@ function Notification:DisplayQuest(quest, isPrevious)
 
     local playerInfo = Q.API:GetPlayerInfo()
 
+    -- Update window title
+    self.notificationTitle:SetText("A NEW QUEST CHAIN IS AVAILABLE")
+    if (not quest.prerequisites or #quest.prerequisites == 0) and (quest.dungeons and #quest.dungeons > 0) then
+        self.notificationTitle:SetText("A NEW DUNGEON QUEST IS AVAILABLE")
+    end
+
     -- Update Dungeon Name Text
     self.dungeonName:SetText(FormatDungeonRelationships(quest))
     
     -- Update Quest Title
-    local questTitle = quest.suggestedLevel and string.format("[%d] %s", quest.suggestedLevel, quest.name) or quest.name
+    local questTitle = (Q:GetSetting("ShowSuggestedQuestLevel") and quest.suggestedLevel and string.format("[%d] %s", quest.suggestedLevel, quest.name)) or quest.name
     self.questName:SetText(questTitle)
     local color = Q.API:GetDifficultyColor(playerInfo.level, quest.suggestedLevel)
     self.questName:SetTextColor(color.r, color.g, color.b)
 
-    UpdateClassIcon(quest.class)
+    UpdateClassIcon(quest.class, quest.profession)
     UpdateSourceData(playerInfo.faction)
     UpdateActionButtons()
     
