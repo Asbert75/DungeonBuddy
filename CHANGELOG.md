@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.3] - 2026-10-15
+
+### Fixed
+
+- Entering a dungeon should no longer cause a LUA error in the Auto reminder module
+
 ## [1.5.2] - 2026-10-14
 
 ### Added
