@@ -72,7 +72,7 @@ function Notification:Create()
     --------------------------------------------------
     -- Create Notification Frame
     --------------------------------------------------
-    self.frame = Q:CreateBackdropFrame('DungeonBuddy_NotificationFrame', UIParent, 500, 300, "MEDIUM", "Primary", "Accent", 0.8, 0.8)
+    self.frame = Q:CreateBackdropFrame('DungeonBuddy_NotificationFrame', UIParent, 500, 300, "MEDIUM", "Primary", "Accent")
 
     self.frame:SetMovable(true)
     self.frame:EnableMouse(true)
@@ -100,12 +100,6 @@ function Notification:Create()
     Q:SetSetting("NotificationFrame.y", y - centerY)
     self.frame:SetAlpha(0)
     self.frame:Hide()
-
-    self.frame.gradient = self.frame:CreateTexture(nil, "BACKGROUND", nil, 1)
-    self.frame.gradient:SetAllPoints(self.frame)
-    self.frame.gradient:SetColorTexture(1, 1, 1, 1)
-    local bottomR, bottomG, bottomB = unpack(Q.Theme.Text.Accent)
-    self.frame.gradient:SetGradient("VERTICAL", CreateColor(bottomR, bottomG, bottomB, 0.15), CreateColor(0, 0, 0, 0))
 
     local closeButton = Q:CreateCloseButton(self.frame)
     closeButton:SetScript("OnClick", function()
@@ -500,7 +494,6 @@ function Notification:DisplayQuest(quest, isPrevious)
     self.questName:SetText(questTitle)
     local color = Q.API:GetDifficultyColor(playerInfo.level, quest.suggestedLevel)
     self.questName:SetTextColor(color.r, color.g, color.b)
-    self.frame.gradient:SetGradient("VERTICAL", CreateColor(color.r, color.g, color.b, 0.15), CreateColor(0, 0, 0, 0))
 
     UpdateClassIcon(quest.class, quest.profession)
     UpdateSourceData(playerInfo.faction)

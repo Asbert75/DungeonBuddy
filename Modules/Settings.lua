@@ -109,7 +109,7 @@ function Settings:CreateSection(sectionName, sectionTitle, anchorFrame)
     for _, setting in ipairs(GetSectionSettings(sectionName)) do
         sectionHeight = sectionHeight + paddingM + 55
     end
-    local sectionFrame = Q:CreateBackdropFrame("DungeonBuddy_"..sectionName.."SettingsFrame", anchorFrame == self.scrollChild and anchorFrame or anchorFrame:GetParent(), CONTENT_WIDTH, sectionHeight, "HIGH", "Primary", "Accent", 0, 0.5)
+    local sectionFrame = Q:CreateBackdropFrame("DungeonBuddy_"..sectionName.."SettingsFrame", anchorFrame == self.scrollChild and anchorFrame or anchorFrame:GetParent(), CONTENT_WIDTH, sectionHeight, "HIGH", "Primary", "Default")
     local anchorPoint = anchorFrame == self.scrollChild and "TOPLEFT" or "BOTTOMLEFT"
     Q:SetPixelPerfectPoint(sectionFrame, "TOPLEFT", anchorFrame, anchorPoint, 0, -paddingM)
     local sectionTitle = Q:CreateText(sectionName.."SettingsTitle", sectionFrame, sectionTitle, fontL, "Accent", 1)
@@ -147,7 +147,7 @@ function Settings:Create()
     end
 
     local paddingS, paddingM, paddingL = Q.Theme.Padding.S, Q.Theme.Padding.M, Q.Theme.Padding.L
-    local frame = Q:CreateBackdropFrame("DungeonBuddy_SettingsFrame", UIParent, PANEL_WIDTH, 700, "HIGH", "Primary", "Default", 0.8, 0.5)
+    local frame = Q:CreateBackdropFrame("DungeonBuddy_SettingsFrame", UIParent, PANEL_WIDTH, 700, "HIGH", "Primary", "Default")
     self.frame = frame
     Q:SetPixelPerfectPoint(frame, "CENTER", UIParent, "CENTER", 0, 0)
     

@@ -277,11 +277,7 @@ end
 function Q.API:GetRelevantQuestsForZone()
     local quests = {}
     local mapID = C_Map.GetBestMapForUnit("player")
-    local mapInfo = mapID and C_Map.GetMapInfo(mapID)
-    if not mapInfo then
-        return quests
-    end
-    local zone = mapInfo.name
+    local zone = C_Map.GetMapInfo(mapID).name
     local playerInfo = Q.API:GetPlayerInfo()
 
     for _, quest in ipairs(self:GetQuests()) do
