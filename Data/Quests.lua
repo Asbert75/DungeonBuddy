@@ -5296,24 +5296,6 @@ Q.Quests = {
 
     --#region Paladin Quests
     {
-        id = 95036,
-        faction = "Horde",
-        class = "PALADIN",
-        name = "A Moon-Kissed Blade",
-        suggestedLevel = 25,
-        requiredLevel = 20,
-        prerequisites = {
-            { id = 95034, type = Q.PrerequisiteType.CHAIN }
-        },
-        source = {
-            type = "npc",
-            name = "Lumina Windsinger",
-            zone = "The Sepulcher",
-            location = { mapId = 1421, x = 0.432, y = 0.41 },
-        },
-        dungeons = { Q.Dungeons["Shadowfang Keep"], Q.Dungeons["The Deadmines"], Q.Dungeons["Blackfathom Deeps"] },
-    },
-    {
         id = 1654,
         faction = "Alliance",
         class = "PALADIN",
@@ -5583,6 +5565,124 @@ Q.Quests = {
             location = { mapId = 1453, x = 0.372, y = 0.33 }
         },
         dungeons = { Q.Dungeons["Scholomance"] }
+    },
+    {
+        id = 91858,
+        faction = "Horde",
+        class = "PALADIN",
+        name = "Diplomatic Incident",
+        suggestedLevel = 22,
+        requiredLevel = 20,
+        source = {
+            type = "npc",
+            name = "Danitha Morr",
+            zone = "Tirisfal Glades",
+            location = { mapId = 1420, x = 0.22, y = 0.446 },
+        }
+    },
+    {
+        id = 91859,
+        faction = "Horde",
+        class = "PALADIN",
+        name = "A Curious Pair",
+        suggestedLevel = 22,
+        requiredLevel = 20,
+        prerequisites = {
+            { id = 91858, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Trevan Rol",
+            zone = "Silverpine Forest",
+            location = { mapId = 1421, x = 0.434, y = 0.41 },
+        }
+    },
+    {
+        id = 91860,
+        faction = "Horde",
+        class = "PALADIN",
+        name = "A Grim Fate",
+        suggestedLevel = 22,
+        requiredLevel = 20,
+        prerequisites = {
+            { id = 91859, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Deathguard Baldren",
+            zone = "Silverpine Forest",
+            location = { mapId = 1421, x = 0.456, y = 0.418 },
+        }
+    },
+    {
+        id = 91861,
+        faction = "Horde",
+        class = "PALADIN",
+        name = "Into Fenris Keep",
+        suggestedLevel = 22,
+        requiredLevel = 20,
+        prerequisites = {
+            { id = 91860, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "object",
+            name = "Charred Remains",
+            zone = "Silverpine Forest",
+            location = { mapId = 1421, x = 0.65, y = 0.342 },
+            text = "Found on the floor"
+        }
+    },
+    {
+        id = 91862,
+        faction = "Horde",
+        class = "PALADIN",
+        name = "Lumina Windsinger",
+        suggestedLevel = 22,
+        requiredLevel = 20,
+        prerequisites = {
+            { id = 91861, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Lumina Windsinger",
+            zone = "Silverpine Forest",
+            location = { mapId = 1421, x = 0.657, y = 0.274 },
+        }
+    },
+    {
+        id = 96204,
+        faction = "Horde",
+        class = "PALADIN",
+        name = "The Windshaper's Wrath",
+        suggestedLevel = 22,
+        requiredLevel = 20,
+        prerequisites = {
+            { id = 91862, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Lumina Windsinger",
+            zone = "Silverpine Forest",
+            location = { mapId = 1421, x = 0.657, y = 0.274 },
+        }
+    },
+    {
+        id = 95036,
+        faction = "Horde",
+        class = "PALADIN",
+        name = "A Moon-Kissed Blade",
+        suggestedLevel = 25,
+        requiredLevel = 20,
+        prerequisites = {
+            { id = 96204, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Lumina Windsinger",
+            zone = "Silverpine Forest",
+            location = { mapId = 1421, x = 0.657, y = 0.274 },
+        },
+        dungeons = { Q.Dungeons["Shadowfang Keep"], Q.Dungeons["The Deadmines"], Q.Dungeons["Blackfathom Deeps"] },
     },
     --#endregion
 

@@ -1,7 +1,7 @@
 ## Interface: 16001, 16000
 ## Title: DungeonBuddy
 ## Author: Wicked
-## Version: 1.5.4
+## Version: 1.5.5
 ## X-Curse-Project-ID: 1730648
 ## Category: Quests & Leveling
 ## SavedVariables: DungeonBuddyDB
