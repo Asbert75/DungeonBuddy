@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.2] - 2026-10-14
+
+### Added
+
+- Added new setting to hide/show suggested quest levels.
+- Added support for profession-locked quests (Lorax, The Demon Forge)
+
+### Fixed
+
+- Corrected some incorrect quest data
+- Fixed an issue with setting waypoints to quests in the tracker not working
+
 ## [1.5.1] - 2026-10-13
 
 ### Added
