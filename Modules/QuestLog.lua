@@ -224,7 +224,24 @@ local function HasLineage(quest)
     return false
 end
 
--- `visited` holds every quest already listed under the current main quest, so a chain shared by
+-- Adds a chain-style info row below a quest the player is too low level for. It reuses the
+-- isSharedSummary row type, which has no buttons, a disabled colour and no quest-specific text.
+local function InsertLevelRequirementRow(row, depth)
+    if row.isDungeon or not row.requiredLevel or not Q:GetSetting("ShowAllQuestsForAvailableDungeon") then
+        return
+    end
+
+    if row.requiredLevel > Q.API:GetPlayerLevel() then
+        table.insert(QuestLog.rows, {
+            id = "level:" .. tostring(row.id) .. ":" .. #QuestLog.rows,
+            name = string.format("Requires Level %d", row.requiredLevel),
+            isSharedSummary = true,
+            lineageDepth = depth,
+        })
+    end
+end
+
+-- "visited" holds every quest already listed under the current main quest, so a chain shared by
 -- several alternatives is only expanded once and referenced with a summary row afterwards.
 local function AppendRelatedRows(quest, depth, visited)
     if not quest then
@@ -248,6 +265,7 @@ local function AppendRelatedRows(quest, depth, visited)
         local isHidden = Q:GetSetting("HideCompletedQuests") and Q.API:IsQuestCompleted(questId)
         if not isHidden then
             table.insert(QuestLog.rows, row)
+            InsertLevelRequirementRow(row, depth + 2)
         end
 
         if IsRowCollapsed(row) or not dependency then
@@ -390,7 +408,7 @@ local function UpdateRowText(frame)
     local row = frame.row
     local pixelPerfect = Q:PixelPerfect(1)
 
-    if frame.row.isDungeon then
+    if row.isDungeon then
         frame.titleFrame.level:SetText(string.format(" %s-%s", row.minLevel, row.maxLevel))
 
         frame.titleFrame.title:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * Q.Theme.Font.XL)
@@ -407,7 +425,7 @@ local function UpdateRowText(frame)
         end
     end
 
-    local title = not frame.row.isDungeon and not frame.row.isSharedSummary and Q:GetSetting("ShowSuggestedQuestLevel") and string.format("[%d] %s", row.suggestedLevel or 0, row.name) or row.name
+    local title = not row.isDungeon and not row.isSharedSummary and Q:GetSetting("ShowSuggestedQuestLevel") and string.format("[%d] %s", row.suggestedLevel or 0, row.name) or row.name
     if row.prerequisiteType and row.prerequisiteType == "any" then
         title = "*" .. title
     elseif row.prerequisiteType and row.prerequisiteType == "breadcrumb" then
@@ -620,7 +638,7 @@ function QuestLog:RefreshAndPopulate()
     for _, dungeon in pairs(dungeons) do
         if Q.API:DungeonHasAvailableQuests(dungeon.id, playerInfo) and playerInfo.level <= dungeon.maxLevel then
             local isCollapsed = Q:GetSetting("CollapsedDungeons")[dungeon.id] or false
-            local quests = Q.API:GetAvailableQuestsByDungeonId(dungeon.id, playerInfo)
+            local quests = (Q:GetSetting("ShowAllQuestsForAvailableDungeon") and Q.API:GetQuestsByDungeonId(dungeon.id)) or Q.API:GetAvailableQuestsByDungeonId(dungeon.id, playerInfo)
             table.sort(quests, function(a, b) return a.name < b.name end)
             dungeon.isDungeon = true
 
@@ -634,6 +652,7 @@ function QuestLog:RefreshAndPopulate()
                     questRow.isMainQuest = true
                     if not Q:GetSetting("HideCompletedQuests") or not Q.API:IsQuestCompleted(quest.id) then
                         table.insert(self.rows, questRow)
+                        InsertLevelRequirementRow(questRow, 1)
                     end
 
                     if not questIsCollapsed and (not Q:GetSetting("HideCompletedQuests") or not Q.API:IsQuestCompleted(quest.id)) then

@@ -79,6 +79,18 @@ local function GetSectionSettings(sectionName)
             end,
         },
         {
+            section = Sections.QuestLog.name,
+            type = "checkbox",
+            path = "ShowAllQuestsForAvailableDungeon",
+            title = "Instantly show all dungeon quests when one is a available",
+            description = "Enable showing all quests for a dungeon as soon as you have a single quest available in that dungeon. Also shows required levels to quests you are not high enough level for yet.",
+            onChange = function()
+                if Q.QuestLog and Q.QuestLog.frame then
+                    Q.QuestLog:RefreshAndPopulate()
+                end
+            end,
+        },
+        {
             section = Sections.General.name,
             type = "checkbox",
             path = "ShowSuggestedQuestLevel",
@@ -247,8 +259,11 @@ function Settings:Create()
     local questLogSettingsFrame = self:CreateSection(Sections.QuestLog.name, Sections.QuestLog.title, notificationSettingsFrame)
 
     -- Setting: Quest Colors
-    local anchorFrame = _G["Setting_HideCompletedQuests"]
-    local questColorContainer = Q:CreateBackdropFrame("QuestColorContainer", questLogSettingsFrame, CONTENT_WIDTH - (2 * paddingM), 128, "HIGH", "Secondary", "Default", 0.6, 0.6)
+    -- Get last setting in QuestLog section to anchor to
+    local settingCount = #GetSectionSettings(Sections.QuestLog.name)
+    local anchorFrame = _G["Setting_" .. GetSectionSettings(Sections.QuestLog.name)[settingCount].path] or nil
+
+    local questColorContainer = Q:CreateBackdropFrame("QuestColorContainer", questLogSettingsFrame, CONTENT_WIDTH - (2 * paddingM), 128, "MEDIUM", "Secondary", "Default", 0.6, 0.6)
     Q:SetPixelPerfectPoint(questColorContainer, "TOPLEFT", anchorFrame, "BOTTOMLEFT", 0, -paddingM)
 
     local label = Q:CreateText(nil, questColorContainer, "Quest Colors", Q.Theme.Font.M, "Accent")
@@ -269,7 +284,7 @@ function Settings:Create()
         local picker = AceGUI:Create("ColorPicker")
         picker:SetLabel(setting.label)
         picker:SetColor(color.r, color.g, color.b, 1)
-        Q:SetPixelPerfectWidth(picker, 420)
+        Q:SetPixelPerfectWidth(picker, 260)
         picker.frame:SetParent(questColorContainer)
         picker.frame:ClearAllPoints()
         Q:SetPixelPerfectPoint(picker.frame, "TOPLEFT", questColorContainer, "TOPLEFT", setting.x, -setting.y)
@@ -283,7 +298,25 @@ function Settings:Create()
         self.colorPickers[setting.path] = picker
     end
 
-    questLogSettingsFrame:SetHeight(questLogSettingsFrame:GetHeight() + Q:PixelPerfect(paddingM) + questColorContainer:GetHeight())
+     local resetColorHandlers = {
+        ["OnClick"] = function()
+            for _, color in ipairs(colorSettings) do
+                Q:SetSetting(color.path, Q.Theme[color.path])
+            end
+            for path, picker in pairs(self.colorPickers or {}) do
+                local color = Q:GetSetting(path)
+                picker:SetColor(color.r, color.g, color.b, 1)
+            end
+
+            if Q.QuestLog and Q.QuestLog.frame then
+                Q.QuestLog:RefreshAndPopulate()
+            end
+        end
+    }
+    local resetColorsButton = Q:CreateTransparentButton(nil, questColorContainer, "Reset Colors", 120, 40, Q.Theme.Font.M, Q.Theme.Status.Error, resetColorHandlers)
+    Q:SetPixelPerfectPoint(resetColorsButton, "BOTTOMRIGHT", questColorContainer, "BOTTOMRIGHT", -paddingS, paddingS)
+
+    questLogSettingsFrame:SetHeight(resetColorsButton:GetHeight() + questLogSettingsFrame:GetHeight() + Q:PixelPerfect(paddingM) + questColorContainer:GetHeight())
     scrollChild:SetHeight(
         generalSettingsFrame:GetHeight()
         + notificationSettingsFrame:GetHeight()

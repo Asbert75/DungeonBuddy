@@ -4153,8 +4153,7 @@ Q.Quests = {
             name = "Yorba Screwspigot",
             zone = "Tanaris",
             location = { mapId = 1446, x = 0.670, y = 0.24 }
-        },
-        dungeons = { Q.Dungeons["Blackrock Depths"] }
+        }
     },
     {
         id = 4136,

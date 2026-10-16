@@ -28,6 +28,7 @@ local SharedDefaults = {
     -- Settings
     ShowNotificationOnLevelUp = true,
     ShowNotificationForAllQuests = false,
+    ShowAllQuestsForAvailableDungeon = false,
     RemindOnZoneChange = true,
     HideCompletedQuests = false,
     AutoWaypoint = false,

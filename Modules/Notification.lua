@@ -65,7 +65,6 @@ function Notification:Create()
         return self.frame
     end
 
-    local pixelPerfect = Q:PixelPerfect(1)
     local fontS, fontM, fontL, fontXL = Q.Theme.Font.S, Q.Theme.Font.M, Q.Theme.Font.L, Q.Theme.Font.XL
     local paddingS, paddingM = Q.Theme.Padding.S, Q.Theme.Padding.M
 
@@ -172,165 +171,63 @@ function Notification:Create()
     --------------------------------------------------
     -- Create Waypoint/Directions Button
     --------------------------------------------------
-    self.waypointButton = CreateFrame("Button", nil, self.frame, "BackdropTemplate")
-    self.waypointButton:EnableMouse(true)
+    local waypointHandlers = {
+        ["OnMouseEnter"] = function()
+            local tooltip = Q:GetTooltip()
+            local tomtom = rawget(_G, "TomTom")
+            local r, g, b = unpack(Q.Theme.Text.Primary)
+
+            tooltip:SetOwner(self.waypointButton, "ANCHOR_RIGHT")
+            if tomtom and tomtom.AddWaypoint then
+                tooltip:SetText("Find Source", unpack(Q.Theme.Text.Accent))
+                tooltip:AddLine("Add a waypoint at this quests source(s)", r, g, b, true)
+            else
+                tooltip:AddLine("TomTom required for waypoint directions.", r, g, b, true)
+            end
+            tooltip:Show()
+        end,
+        ["OnMouseLeave"] = function()
+            Q:GetTooltip():Hide()
+        end,
+        ["OnClick"] = function()
+            if not self.quest then
+                return
+            end
+
+            Q.API:SetWaypoint(self.quest)
+
+            self.trackWaypointSet = true
+            self.waypointButton.label:SetText("Waypoint Set")
+            self.waypointButton:SetColor(Q.Theme.Status.Success)
+        end
+    }
+    self.waypointButton = Q:CreateTransparentButton(nil, self.frame, "Find Source", 140, 40, fontM, Q.Theme.Text.Accent, waypointHandlers)
     self.waypointButton:SetFrameLevel(self.frame:GetFrameLevel() + 1)
-    Q:SetPixelPerfectSize(self.waypointButton, 140, 40)
     Q:SetPixelPerfectPoint(self.waypointButton, "BOTTOMLEFT", self.frame, "BOTTOMLEFT", paddingM, paddingM)
-    self.waypointButton:SetBackdrop({
-        bgFile = "Interface\\Buttons\\WHITE8x8",
-        edgeFile = "Interface\\Buttons\\WHITE8x8",
-        edgeSize = pixelPerfect,
-        insets = { left = pixelPerfect, right = pixelPerfect, top = pixelPerfect, bottom = pixelPerfect, },
-    })
-
-    self.waypointButton.text = self.waypointButton:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-    self.waypointButton.text:SetPoint("CENTER")
-    self.waypointButton.text:SetText("Find Source")
-    self.waypointButton.text:SetTextColor(unpack(Q.Theme.Text.Accent))
-
-    local function updateWaypointButtonStyle(isHovered)
-        local trackColor = self.trackWaypointSet and Q.Theme.Status.Success or Q.Theme.Text.Accent
-        local r, g, b = unpack(trackColor)
-
-        self.waypointButton:SetBackdropColor(r, g, b, isHovered and Q.Theme.Alpha.ButtonBackgroundHover or Q.Theme.Alpha.ButtonBackground)
-        self.waypointButton:SetBackdropBorderColor(r, g, b, isHovered and Q.Theme.Alpha.ButtonBorderHover or Q.Theme.Alpha.ButtonBorder)
-        if isHovered then
-            self.waypointButton.text:SetTextColor(unpack(Q.Theme.Text.Primary))
-        else
-            self.waypointButton.text:SetTextColor(r, g, b)
-        end
-    end
-
-    updateWaypointButtonStyle(false)
-
-    self.waypointButton:SetScript("OnEnter", function()
-        updateWaypointButtonStyle(true)
-
-        local tooltip = Q:GetTooltip()
-        local tomtom = rawget(_G, "TomTom")
-        local r, g, b = unpack(Q.Theme.Text.Primary)
-
-        tooltip:SetOwner(self.waypointButton, "ANCHOR_RIGHT")
-        if tomtom and tomtom.AddWaypoint then
-            tooltip:SetText("Find Source", unpack(Q.Theme.Text.Accent))
-            tooltip:AddLine("Add a waypoint at this quests source(s)", r, g, b, true)
-        else
-            tooltip:AddLine("TomTom required for waypoint directions.", r, g, b, true)
-        end
-        tooltip:Show()
-    end)
-    self.waypointButton:SetScript("OnLeave", function()
-        updateWaypointButtonStyle(false)
-
-        local tooltip = Q:GetTooltip()
-        tooltip:Hide()
-    end)
-    self.waypointButton:SetScript("OnClick", function()
-        if not self.quest then
-            return
-        end
-
-        Q.API:SetWaypoint(self.quest)
-
-        self.trackWaypointSet = true
-        self.waypointButton.text:SetText("Waypoint Set")
-        updateWaypointButtonStyle(self.waypointButton:IsMouseOver())
-    end)
 
     --------------------------------------------------------
     -- Dismiss / View Next button
     --------------------------------------------------------
-    self.dismissButton = CreateFrame("Button", nil, self.frame, "BackdropTemplate")
-    self.dismissButton:EnableMouse(true)
-    self.dismissButton:SetFrameLevel(self.frame:GetFrameLevel() + 1)
-    Q:SetPixelPerfectSize(self.dismissButton, 120, 40)
-    Q:SetPixelPerfectPoint(self.dismissButton, "BOTTOMRIGHT", self.frame, "BOTTOMRIGHT", -paddingM, paddingM)
-
-    self.dismissButton:SetBackdrop({
-        bgFile = "Interface\\Buttons\\WHITE8x8",
-        edgeFile = "Interface\\Buttons\\WHITE8x8",
-        edgeSize = pixelPerfect,
-        insets = { left = pixelPerfect, right = pixelPerfect, top = pixelPerfect, bottom = pixelPerfect, },
-    })
-    local colorR, colorG, colorB = unpack(Q.Theme.Text.Secondary)
-
-    self.dismissButton.text = self.dismissButton:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-    self.dismissButton.text:SetPoint("CENTER")
-    self.dismissButton.text:SetText("Dismiss")
-    self.dismissButton.text:SetTextColor(colorR, colorG, colorB)
-
-    local function updateDismissButtonStyle(isHovered)
-        self.dismissButton:SetBackdropColor(colorR, colorG, colorB, isHovered and Q.Theme.Alpha.ButtonBackgroundHover or Q.Theme.Alpha.ButtonBackground)
-        self.dismissButton:SetBackdropBorderColor(colorR, colorG, colorB, isHovered and Q.Theme.Alpha.ButtonBorderHover or Q.Theme.Alpha.ButtonBorder)
-
-        if isHovered then
-            self.dismissButton.text:SetTextColor(unpack(Q.Theme.Text.Primary))
-        else
-            self.dismissButton.text:SetTextColor(colorR, colorG, colorB)
+    local dismissHandlers = {
+        ["OnClick"] = function()
+            self:Dismiss()
         end
-    end
-
-    updateDismissButtonStyle(false)
-
-    self.dismissButton:SetScript("OnEnter", function()
-        updateDismissButtonStyle(true)
-    end)
-    self.dismissButton:SetScript("OnLeave", function()
-        updateDismissButtonStyle(false)
-    end)
-    self.dismissButton:SetScript("OnClick", function()
-        updateDismissButtonStyle(false)
-        updateWaypointButtonStyle(false)
-        self:Dismiss()
-    end)
+    }
+    self.dismissButton = Q:CreateTransparentButton(nil, self.frame, "Dismiss", 120, 40, fontM, Q.Theme.Text.Secondary, dismissHandlers)
+    self.dismissButton:SetFrameLevel(self.frame:GetFrameLevel() + 1)
+    Q:SetPixelPerfectPoint(self.dismissButton, "BOTTOMRIGHT", self.frame, "BOTTOMRIGHT", -paddingM, paddingM)
 
     --------------------------------------------------
     -- View Previous Button
     --------------------------------------------------
-    self.previousQuestButton = CreateFrame("Button", nil, self.frame, "BackdropTemplate")
-    self.previousQuestButton:EnableMouse(true)
-    self.previousQuestButton:SetFrameLevel(self.frame:GetFrameLevel() + 1)
-    Q:SetPixelPerfectSize(self.previousQuestButton, 120, 40)
-    Q:SetPixelPerfectPoint(self.previousQuestButton, "RIGHT", self.dismissButton, "LEFT", -paddingS, 0)
-
-    self.previousQuestButton:SetBackdrop({
-        bgFile = "Interface\\Buttons\\WHITE8x8",
-        edgeFile = "Interface\\Buttons\\WHITE8x8",
-        edgeSize = pixelPerfect,
-        insets = { left = pixelPerfect, right = pixelPerfect, top = pixelPerfect, bottom = pixelPerfect, },
-    })
-    local colorR, colorG, colorB = unpack(Q.Theme.Text.Secondary)
-
-    self.previousQuestButton.text = self.previousQuestButton:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-    self.previousQuestButton.text:SetPoint("CENTER")
-    self.previousQuestButton.text:SetText("< Previous")
-    self.previousQuestButton.text:SetTextColor(colorR, colorG, colorB)
-
-    local function updatePreviousQuestButtonStyle(isHovered)
-        self.previousQuestButton:SetBackdropColor(colorR, colorG, colorB, isHovered and Q.Theme.Alpha.ButtonBackgroundHover or Q.Theme.Alpha.ButtonBackground)
-        self.previousQuestButton:SetBackdropBorderColor(colorR, colorG, colorB, isHovered and Q.Theme.Alpha.ButtonBorderHover or Q.Theme.Alpha.ButtonBorder)
-
-        if isHovered then
-            self.previousQuestButton.text:SetTextColor(unpack(Q.Theme.Text.Primary))
-        else
-            self.previousQuestButton.text:SetTextColor(colorR, colorG, colorB)
+    local previousHandlers = {
+        ["OnClick"] = function()
+            Notification:DisplayPreviousInQueue()
         end
-    end
-
-    updatePreviousQuestButtonStyle(false)
-
-    self.previousQuestButton:SetScript("OnEnter", function()
-        updatePreviousQuestButtonStyle(true)
-    end)
-    self.previousQuestButton:SetScript("OnLeave", function()
-        updatePreviousQuestButtonStyle(false)
-    end)
-    self.previousQuestButton:SetScript("OnClick", function()
-        updatePreviousQuestButtonStyle(false)
-        updateWaypointButtonStyle(false)
-        Notification:DisplayPreviousInQueue()
-    end)
+    }
+    self.previousQuestButton = Q:CreateTransparentButton(nil, self.frame, "< Previous", 120, 40, fontM, Q.Theme.Text.Secondary, previousHandlers)
+    self.previousQuestButton:SetFrameLevel(self.frame:GetFrameLevel() + 1)
+    Q:SetPixelPerfectPoint(self.previousQuestButton, "RIGHT", self.dismissButton, "LEFT", -paddingS, 0)
 end
 
 function Notification:Dismiss(dismissAll)
@@ -452,16 +349,13 @@ end
 
 local function UpdateActionButtons()
     Notification.trackWaypointSet = false
-    Notification.waypointButton.text:SetText("Set Waypoint")
-    local trackColorR, trackColorG, trackColorB = unpack(Q.Theme.Text.Accent)
-    Notification.waypointButton:SetBackdropColor(trackColorR, trackColorG, trackColorB, Q.Theme.Alpha.ButtonBackground)
-    Notification.waypointButton:SetBackdropBorderColor(trackColorR, trackColorG, trackColorB, Q.Theme.Alpha.ButtonBorder)
-    Notification.waypointButton.text:SetTextColor(trackColorR, trackColorG, trackColorB)
+    Notification.waypointButton.label:SetText("Set Waypoint")
+    Notification.waypointButton:SetColor(Q.Theme.Text.Accent)
 
     if Notification.queueIndex ~= #Notification.queue then
-        Notification.dismissButton.text:SetText("Next >")
+        Notification.dismissButton.label:SetText("Next >")
     else
-        Notification.dismissButton.text:SetText("Dismiss")
+        Notification.dismissButton.label:SetText("Dismiss")
     end
 
     if Notification.queueIndex == 1 then
@@ -470,24 +364,10 @@ local function UpdateActionButtons()
         Notification.previousQuestButton:Show()
     end
 
-    local colorR, colorG, colorB = unpack(Q.Theme.Text.Secondary)
-    Notification.dismissButton:SetBackdropColor(colorR, colorG, colorB, Q.Theme.Alpha.ButtonBackground)
-    Notification.dismissButton:SetBackdropBorderColor(colorR, colorG, colorB, Q.Theme.Alpha.ButtonBorder)
-    Notification.dismissButton.text:SetTextColor(colorR, colorG, colorB)
-
     if Q:GetSetting("AutoWaypoint") then
         Notification.trackWaypointSet = true
-        Notification.waypointButton.text:SetText("Waypoint Set")
-
-        local trackColor = Q.Theme.Text.Accent
-        if Notification.trackWaypointSet then
-            trackColor = Q.Theme.Status.Success
-        end
-        local r, g, b = unpack(trackColor)
-
-        Notification.waypointButton:SetBackdropColor(r, g, b, Q.Theme.Alpha.ButtonBackground)
-        Notification.waypointButton:SetBackdropBorderColor(r, g, b, Q.Theme.Alpha.ButtonBorder)
-        Notification.waypointButton.text:SetTextColor(r, g, b)
+        Notification.waypointButton.label:SetText("Waypoint Set")
+        Notification.waypointButton:SetColor(Q.Theme.Status.Success)
     end
 end
 

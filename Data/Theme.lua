@@ -56,5 +56,10 @@ Q.Theme = {
         XL = 18,
         XXL = 20,
         XXXL = 22,
-    }
+    },
+    -- Defaults
+    QuestColorUnavailable = { r = 163/255, g = 59/255, b = 57/255 },
+    QuestColorAvailable = { r = 35/255, g = 213/255, b = 0/255 },
+    QuestColorInProgress = { r = 255/255, g = 239/255, b = 0/255 },
+    QuestColorCompleted = { r = 146/255, g = 146/255, b = 146/255 },
 }

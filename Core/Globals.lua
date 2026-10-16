@@ -183,6 +183,12 @@ function Q:CreateTransparentButton(frameName, parent, text, width, height, fontS
     end
 
     ApplyStyle(false, false)
+
+    function button:SetColor(newColor)
+        color = newColor
+        ApplyStyle(self:IsMouseOver(), false)
+    end
+
     button:SetScript("OnEnter", function(self)
         if self.isDisabled then
             return
