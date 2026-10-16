@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added the Wolfsbane quest line for horde paladins
+- Updated the design to be more "futuristic"
 
 ## [1.5.4] - 2026-10-14
 

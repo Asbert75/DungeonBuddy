@@ -3,6 +3,7 @@ local QuestLog = Q.Addon:NewModule("QuestLog", "AceEvent-3.0", "AceConsole-3.0")
 Q.QuestLog = QuestLog
 
 local DB_ROW_HEIGHT = Q.Theme.Font.XL + 6
+local DUNGEON_ROW_EXTRA_HEIGHT = 20
 
 function QuestLog:Create()
     if self.frame then
@@ -14,7 +15,7 @@ function QuestLog:Create()
     --------------------------------------------------
     -- Create QuestLog Frame
     --------------------------------------------------
-    self.frame = Q:CreateBackdropFrame('DungeonBuddy_QuestLogFrame', UIParent, containerWidth, 600, "MEDIUM", "Primary", "Default")
+    self.frame = Q:CreateBackdropFrame('DungeonBuddy_QuestLogFrame', UIParent, containerWidth, 600, "MEDIUM", "Primary", "Default", 0.8, 0.5)
 
     self.frame:SetMovable(true)
     self.frame:EnableMouse(true)
@@ -43,18 +44,19 @@ function QuestLog:Create()
     --------------------------------------------------
     self.header = Q:CreateFrame("QuestLogHeader", self.frame, containerWidth, 50, "MEDIUM")
     Q:SetPixelPerfectPoint(self.header, "TOP", self.frame, "TOP", 0, 0)
-    Q:SetPixelPerfectPoint(self.header, "LEFT", self.frame, "LEFT", Q.Theme.Padding.S, 0)
-    Q:SetPixelPerfectPoint(self.header, "RIGHT", self.frame, "RIGHT", -Q.Theme.Padding.L, 0)
+    Q:SetPixelPerfectPoint(self.header, "LEFT", self.frame, "LEFT", 0, 0)
+    Q:SetPixelPerfectPoint(self.header, "RIGHT", self.frame, "RIGHT", 0, 0)
 
     local border = self.header:CreateTexture(nil, "OVERLAY")
-    border:SetColorTexture(unpack(Q.Theme.Border.Accent))
+    local borderR, borderG, borderB = unpack(Q.Theme.Border.Default)
+    border:SetColorTexture(borderR, borderG, borderB, 0.8)
     border:SetHeight(Q:PixelPerfect(1))
     Q:SetPixelPerfectPoint(border, "BOTTOMLEFT", self.header, "BOTTOMLEFT", 0, 0)
     Q:SetPixelPerfectPoint(border, "BOTTOMRIGHT", self.header, "BOTTOMRIGHT", 0, 0)
 
     self.header.text = Q:CreateText("QuestLogHeaderText", self.header, "Dungeon Buddy", Q.Theme.Font.XXL, "Accent", 1)
     self.header.text:SetJustifyH("LEFT")
-    Q:SetPixelPerfectPoint(self.header.text, "LEFT", self.header, "LEFT", 0, 0)
+    Q:SetPixelPerfectPoint(self.header.text, "LEFT", self.header, "LEFT", Q.Theme.Padding.S, 0)
 
     --------------------------------------------------
     -- Action Buttons
@@ -105,7 +107,7 @@ function QuestLog:Create()
     -- QuestLog Content Container
     --------------------------------------------------
     self.contentContainer = CreateFrame("ScrollFrame", "DungeonBuddy_QuestLogContentContainer", self.frame, "UIPanelScrollFrameTemplate")
-    Q:SetPixelPerfectPoint(self.contentContainer, "TOPLEFT", self.header, "BOTTOMLEFT", 0, -Q.Theme.Padding.S)
+    Q:SetPixelPerfectPoint(self.contentContainer, "TOPLEFT", self.header, "BOTTOMLEFT", 0, 0)
     Q:SetPixelPerfectPoint(self.contentContainer, "BOTTOMRIGHT", self.frame, "BOTTOMRIGHT", 0, 0)
     self.contentContainer:EnableMouseWheel(true)
 
@@ -121,8 +123,8 @@ function QuestLog:Create()
         scrollBar:ClearAllPoints()
         scrollBar:SetValueStep(Q:PixelPerfect(DB_ROW_HEIGHT))
         scrollBar:SetObeyStepOnDrag(true)
-        Q:SetPixelPerfectPoint(scrollBar, "TOPRIGHT", self.contentContainer, "TOPRIGHT", -1, -20)
-        Q:SetPixelPerfectPoint(scrollBar, "BOTTOMRIGHT", self.contentContainer, "BOTTOMRIGHT", -1, 20)
+        Q:SetPixelPerfectPoint(scrollBar, "TOPRIGHT", self.contentContainer, "TOPRIGHT", 4, -20)
+        Q:SetPixelPerfectPoint(scrollBar, "BOTTOMRIGHT", self.contentContainer, "BOTTOMRIGHT", 4, 20)
 
         for _, arrow in ipairs({
             { suffix = "ScrollUpButton" },
@@ -150,7 +152,7 @@ function QuestLog:Create()
         end
         if thumb then
             thumb:SetTexture(nil)
-            thumb:SetColorTexture(unpack(Q.Theme.Text.Accent))
+            thumb:SetColorTexture(unpack(Q.Theme.Border.Default))
             Q:SetPixelPerfectWidth(thumb, 4)
         end
     end
@@ -318,6 +320,9 @@ local function UpdateClassIcon(frame)
 end
 
 local function UpdateRowAppearance(frame, playerInfo)
+    Q:SetPixelPerfectHeight(frame, DB_ROW_HEIGHT)
+    Q:SetPixelPerfectHeight(frame.titleFrame, DB_ROW_HEIGHT)
+
     if frame.row.isSharedSummary then
         Q:SetTextColor(frame.titleFrame.title, "Disabled")
         frame.leftBorder:SetColorTexture(unpack(Q.Theme.Border.Accent))
@@ -327,6 +332,13 @@ local function UpdateRowAppearance(frame, playerInfo)
 
         Q:SetTextColor(frame.titleFrame.title, "Primary")
         frame.leftBorder:SetColorTexture(unpack(Q.Theme.Text.Primary))
+
+        Q:SetPixelPerfectHeight(frame, DB_ROW_HEIGHT + DUNGEON_ROW_EXTRA_HEIGHT)
+        Q:SetPixelPerfectHeight(frame.titleFrame, DB_ROW_HEIGHT + DUNGEON_ROW_EXTRA_HEIGHT)
+
+
+        frame.gradient:SetGradient("VERTICAL", CreateColor(levelColor.r, levelColor.g, levelColor.b, 0.15), CreateColor(0, 0, 0, 0))
+        frame.bottomBorder:SetColorTexture(levelColor.r, levelColor.g, levelColor.b, 1)
     elseif Q.API:IsQuestCompleted(frame.row.id) then
         SetQuestStatusColor(frame.titleFrame.title, "QuestColorCompleted", "Disabled")
         SetBorderTextureColor(frame.leftBorder, "QuestColorCompleted")
@@ -377,7 +389,7 @@ local function UpdateRowText(frame)
         frame.titleFrame.level:SetText(string.format(" %s-%s", row.minLevel, row.maxLevel))
 
         frame.titleFrame.title:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * Q.Theme.Font.XL)
-        Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", 0, 0)
+        Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", 4, 0)
     else
         frame.titleFrame.level:SetText("")
 
@@ -390,15 +402,11 @@ local function UpdateRowText(frame)
         end
     end
 
-    local title = not frame.row.isDungeon and Q:GetSetting("ShowSuggestedQuestLevel") and string.format("[%d] %s", row.suggestedLevel or 0, row.name) or row.name
+    local title = not frame.row.isDungeon and not frame.row.isSharedSummary and Q:GetSetting("ShowSuggestedQuestLevel") and string.format("[%d] %s", row.suggestedLevel or 0, row.name) or row.name
     if row.prerequisiteType and row.prerequisiteType == "any" then
         title = "*" .. title
-    -- elseif row.prerequisiteType and row.prerequisiteType == "required" then
-    --     title = "!" .. title
     elseif row.prerequisiteType and row.prerequisiteType == "breadcrumb" then
-        title = "Breadcrumb: " .. title
-    -- elseif row.prerequisiteType and row.prerequisiteType == "chain" then
-    --     title = "#" .. title
+        title = "B: " .. title
     end
 
     frame.titleFrame.title:SetText(title)
@@ -426,7 +434,7 @@ end
 local function CreateRowFrame(index, row)
     local frame = CreateFrame("Frame", "DungeonBuddy_QuestLogRow"..index, QuestLog.scrollChild)
     QuestLog._frames[index] = frame
-    frame:SetWidth(QuestLog.scrollChild:GetWidth() - 20)
+    frame:SetWidth(QuestLog.scrollChild:GetWidth())
     Q:SetPixelPerfectHeight(frame, DB_ROW_HEIGHT)
     Q:SetPixelPerfectPoint(frame, "TOPLEFT", QuestLog.scrollChild, "TOPLEFT", 0, 0)
 
@@ -434,6 +442,20 @@ local function CreateRowFrame(index, row)
     frame.background:SetAllPoints(frame)
     frame.background:SetColorTexture(unpack(Q.Theme.Background.Tertiary))
     frame.background:SetAlpha(0.2)
+
+    frame.gradient = frame:CreateTexture(nil, "BACKGROUND", nil, 1)
+    frame.gradient:SetAllPoints(frame)
+    frame.gradient:SetColorTexture(1, 1, 1, 1)
+    local bottomR, bottomG, bottomB = unpack(Q.Theme.Text.Accent)
+    frame.gradient:SetGradient("VERTICAL", CreateColor(bottomR, bottomG, bottomB, 0.15), CreateColor(0, 0, 0, 0))
+    frame.gradient:Hide()
+
+    frame.bottomBorder = frame:CreateTexture(nil, "OVERLAY")
+    frame.bottomBorder:SetColorTexture(unpack(Q.Theme.Text.Accent))
+    frame.bottomBorder:SetHeight(Q:PixelPerfect(2))
+    frame.bottomBorder:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", 0, 0)
+    frame.bottomBorder:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 0)
+    frame.bottomBorder:Hide()
 
     local leftBorder = frame:CreateTexture(nil, "OVERLAY")
     frame.leftBorder = leftBorder
@@ -459,11 +481,11 @@ local function CreateRowFrame(index, row)
         local hoveredRow = frame.row
         if hoveredRow and hoveredRow.prerequisiteType == Q.PrerequisiteType.ANY then
             GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-            GameTooltip:SetText("You only need to complete one of the quests marked with * to unlock the next quest.", 0.85, 0.85, 0.85)
+            GameTooltip:SetText("*: You only need to complete one of the quests marked with * to unlock the next quest.", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3])
             GameTooltip:Show()
         elseif hoveredRow and hoveredRow.prerequisiteType == Q.PrerequisiteType.BREADCRUMB then
             GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-            GameTooltip:SetText("Not required to unlock the next quest. Breadcrumb quests are only meant to help players find a quest.", 0.85, 0.85, 0.85)
+            GameTooltip:SetText("B: Not required to unlock the next quest. Breadcrumb quests are only meant to help players find a quest.", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3])
             GameTooltip:Show()
         end
     end)
@@ -538,10 +560,10 @@ local function CreateRowFrame(index, row)
             local r, g, b = unpack(Q.Theme.Text.Primary)
 
             GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-            GameTooltip:SetText("Get Directions", 1, 1, 1)
             local tomtom = rawget(_G, "TomTom")
             if tomtom and tomtom.AddWaypoint then
-                GameTooltip:AddLine(string.format("Add a TomTom waypoint at this %s.", frame.row.isDungeon and "dungeon entrance" or "quests source(s)"), r, g, b, true)
+                GameTooltip:SetText(frame.row.isDungeon and "Find Entrance" or "Find Source", 1, 1, 1)
+                GameTooltip:AddLine(string.format("Add a TomTom waypoint at %s.", frame.row.isDungeon and "the dungeon entrance" or "this quests source(s)"), r, g, b, true)
                 if frame.row.source and frame.row.source.text then
                     GameTooltip:AddLine("-", r, g, b, true)
                     GameTooltip:AddLine("Info: "..frame.row.source.text, r, g, b, true)
@@ -555,7 +577,11 @@ local function CreateRowFrame(index, row)
             GameTooltip:Hide()
         end
     }
-    frame.waypointButton = Q:CreateButton(nil, frame, "D", DB_ROW_HEIGHT, DB_ROW_HEIGHT, Q.Theme.Font.M, waypointHandlers)
+    frame.waypointButton = Q:CreateButton(nil, frame, "", DB_ROW_HEIGHT, DB_ROW_HEIGHT, Q.Theme.Font.M, waypointHandlers)
+    frame.waypointButton.icon = frame.waypointButton:CreateTexture(nil, "ARTWORK")
+    frame.waypointButton.icon:SetAtlas("waypoint-mappin-minimap-untracked")
+    frame.waypointButton.icon:SetSize(DB_ROW_HEIGHT * 0.9, DB_ROW_HEIGHT * 0.9)
+    frame.waypointButton.icon:SetPoint("CENTER")
     frame.waypointButton:SetPoint("RIGHT", frame.titleFrame, "RIGHT", -Q.Theme.Padding.L * 1.8, 0)
 
     return frame
@@ -600,6 +626,7 @@ function QuestLog:RefreshAndPopulate()
         end
     end
 
+    local prevRowHeight = DB_ROW_HEIGHT
     for index, row in ipairs(self.rows) do
         local frame = self._frames[index] -- Frames cannot be destroyed so we reuse frames by id and create a new if we have a longer list
 
@@ -619,6 +646,8 @@ function QuestLog:RefreshAndPopulate()
         UpdateWaypointButton(frame)
         UpdateRowText(frame)
         
+        frame.gradient:SetShown(row.isDungeon and true or false)
+        frame.bottomBorder:SetShown(row.isDungeon and true or false)
         if row.isDungeon then
             frame.background:SetAlpha(0)
             frame.leftBorder:SetAlpha(0)
@@ -630,12 +659,13 @@ function QuestLog:RefreshAndPopulate()
         local rowOffset
         if index == 1 then
             rowOffset = 0
-        elseif index ~= 1 then
-            rowOffset = DB_ROW_HEIGHT + 2
+        else
+            rowOffset = prevRowHeight + 2
             if row.isDungeon then
                 rowOffset = rowOffset + 10
             end
         end
+        prevRowHeight = row.isDungeon and (DB_ROW_HEIGHT + DUNGEON_ROW_EXTRA_HEIGHT) or DB_ROW_HEIGHT
 
         Q:SetPixelPerfectPoint(frame, "TOPLEFT", self.scrollChild, "TOPLEFT", 0, -(rowOffset + totalOffset))
         totalOffset = totalOffset + rowOffset
