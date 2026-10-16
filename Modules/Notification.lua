@@ -72,7 +72,7 @@ function Notification:Create()
     --------------------------------------------------
     -- Create Notification Frame
     --------------------------------------------------
-    self.frame = Q:CreateBackdropFrame('DungeonBuddy_NotificationFrame', UIParent, 500, 300, "MEDIUM", "Primary", "Accent", 0.8, 0.8)
+    self.frame = Q:CreateBackdropFrame('DungeonBuddy_NotificationFrame', UIParent, 500, 300, "HIGH", "Primary", "Accent", 0.9, 0.9)
 
     self.frame:SetMovable(true)
     self.frame:EnableMouse(true)
@@ -186,7 +186,7 @@ function Notification:Create()
 
     self.waypointButton.text = self.waypointButton:CreateFontString(nil, "OVERLAY", "GameFontNormal")
     self.waypointButton.text:SetPoint("CENTER")
-    self.waypointButton.text:SetText("Set Waypoint")
+    self.waypointButton.text:SetText("Find Source")
     self.waypointButton.text:SetTextColor(unpack(Q.Theme.Text.Accent))
 
     local function updateWaypointButtonStyle(isHovered)
@@ -206,9 +206,25 @@ function Notification:Create()
 
     self.waypointButton:SetScript("OnEnter", function()
         updateWaypointButtonStyle(true)
+
+        local tooltip = Q:GetTooltip()
+        local tomtom = rawget(_G, "TomTom")
+        local r, g, b = unpack(Q.Theme.Text.Primary)
+
+        tooltip:SetOwner(self.waypointButton, "ANCHOR_RIGHT")
+        if tomtom and tomtom.AddWaypoint then
+            tooltip:SetText("Find Source", unpack(Q.Theme.Text.Accent))
+            tooltip:AddLine("Add a waypoint at this quests source(s)", r, g, b, true)
+        else
+            tooltip:AddLine("TomTom required for waypoint directions.", r, g, b, true)
+        end
+        tooltip:Show()
     end)
     self.waypointButton:SetScript("OnLeave", function()
         updateWaypointButtonStyle(false)
+
+        local tooltip = Q:GetTooltip()
+        tooltip:Hide()
     end)
     self.waypointButton:SetScript("OnClick", function()
         if not self.quest then

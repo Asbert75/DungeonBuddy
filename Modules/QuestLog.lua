@@ -15,7 +15,7 @@ function QuestLog:Create()
     --------------------------------------------------
     -- Create QuestLog Frame
     --------------------------------------------------
-    self.frame = Q:CreateBackdropFrame('DungeonBuddy_QuestLogFrame', UIParent, containerWidth, 600, "MEDIUM", "Primary", "Default", 0.8, 0.5)
+    self.frame = Q:CreateBackdropFrame('DungeonBuddy_QuestLogFrame', UIParent, containerWidth, 600, "HIGH", "Primary", "Default", 0.9, 0.25)
 
     self.frame:SetMovable(true)
     self.frame:EnableMouse(true)
@@ -42,14 +42,14 @@ function QuestLog:Create()
     --------------------------------------------------
     -- QuestLog Header
     --------------------------------------------------
-    self.header = Q:CreateFrame("QuestLogHeader", self.frame, containerWidth, 50, "MEDIUM")
+    self.header = Q:CreateFrame("QuestLogHeader", self.frame, containerWidth, 50, "HIGH")
     Q:SetPixelPerfectPoint(self.header, "TOP", self.frame, "TOP", 0, 0)
     Q:SetPixelPerfectPoint(self.header, "LEFT", self.frame, "LEFT", 0, 0)
     Q:SetPixelPerfectPoint(self.header, "RIGHT", self.frame, "RIGHT", 0, 0)
 
     local border = self.header:CreateTexture(nil, "OVERLAY")
     local borderR, borderG, borderB = unpack(Q.Theme.Border.Default)
-    border:SetColorTexture(borderR, borderG, borderB, 0.8)
+    border:SetColorTexture(borderR, borderG, borderB, 0.25)
     border:SetHeight(Q:PixelPerfect(1))
     Q:SetPixelPerfectPoint(border, "BOTTOMLEFT", self.header, "BOTTOMLEFT", 0, 0)
     Q:SetPixelPerfectPoint(border, "BOTTOMRIGHT", self.header, "BOTTOMRIGHT", 0, 0)
@@ -89,18 +89,23 @@ function QuestLog:Create()
             end
         end,
         OnMouseEnter = function(self)
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-            GameTooltip:SetText("Expand/Collapse All", 1, 1, 1)
-            GameTooltip:AddLine("Click to expand/collapse all rows.", 0.85, 0.85, 0.85, true)
-            GameTooltip:Show()
+            local tooltip = Q:GetTooltip()
+            local accentR, accentG, accentB = unpack(Q.Theme.Text.Accent)
+            local primaryR, primaryG, primaryB = unpack(Q.Theme.Text.Primary)
+
+            tooltip:SetOwner(self, "ANCHOR_RIGHT")
+            tooltip:SetText("Expand/Collapse All", accentR, accentG, accentB)
+            tooltip:AddLine("Click to expand/collapse all rows.", primaryR, primaryG, primaryB, true)
+            tooltip:Show()
         end,
         OnMouseLeave = function()
-            GameTooltip:Hide()
+            local tooltip = Q:GetTooltip()
+            tooltip:Hide()
         end
     }
 
     local initialText = (#Q:GetSetting("CollapsedQuests") > 0 or #Q:GetSetting("CollapsedDungeons") > 0) and "+" or "-"
-    local collapseAndExpandButton = Q:CreateButton("DungeonBuddy_CollapseAndExpandButton", self.frame, initialText, 24, 24, Q.Theme.Font.M, actionHandlers)
+    local collapseAndExpandButton = Q:CreateTransparentButton("DungeonBuddy_CollapseAndExpandButton", self.frame, initialText, 24, 24, Q.Theme.Font.M, Q.Theme.Text.Secondary, actionHandlers)
     collapseAndExpandButton:SetPoint("RIGHT", closeButton, "LEFT", -2, 0)
     
     --------------------------------------------------
@@ -121,7 +126,7 @@ function QuestLog:Create()
     local scrollBar = _G[self.contentContainer:GetName() .. "ScrollBar"]
     if scrollBar then
         scrollBar:ClearAllPoints()
-        scrollBar:SetValueStep(Q:PixelPerfect(DB_ROW_HEIGHT))
+        scrollBar:SetValueStep(Q:PixelPerfect(DB_ROW_HEIGHT / 4))
         scrollBar:SetObeyStepOnDrag(true)
         Q:SetPixelPerfectPoint(scrollBar, "TOPRIGHT", self.contentContainer, "TOPRIGHT", 4, -20)
         Q:SetPixelPerfectPoint(scrollBar, "BOTTOMRIGHT", self.contentContainer, "BOTTOMRIGHT", 4, 20)
@@ -389,7 +394,7 @@ local function UpdateRowText(frame)
         frame.titleFrame.level:SetText(string.format(" %s-%s", row.minLevel, row.maxLevel))
 
         frame.titleFrame.title:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * Q.Theme.Font.XL)
-        Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", 4, 0)
+        Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", Q.Theme.Padding.S, 0)
     else
         frame.titleFrame.level:SetText("")
 
@@ -434,9 +439,9 @@ end
 local function CreateRowFrame(index, row)
     local frame = CreateFrame("Frame", "DungeonBuddy_QuestLogRow"..index, QuestLog.scrollChild)
     QuestLog._frames[index] = frame
-    frame:SetWidth(QuestLog.scrollChild:GetWidth())
+    frame:SetWidth(QuestLog.scrollChild:GetWidth() - 2)
     Q:SetPixelPerfectHeight(frame, DB_ROW_HEIGHT)
-    Q:SetPixelPerfectPoint(frame, "TOPLEFT", QuestLog.scrollChild, "TOPLEFT", 0, 0)
+    Q:SetPixelPerfectPoint(frame, "TOPLEFT", QuestLog.scrollChild, "TOPLEFT", 1, 0)
 
     frame.background = frame:CreateTexture(nil, "BACKGROUND")
     frame.background:SetAllPoints(frame)
@@ -452,7 +457,7 @@ local function CreateRowFrame(index, row)
 
     frame.bottomBorder = frame:CreateTexture(nil, "OVERLAY")
     frame.bottomBorder:SetColorTexture(unpack(Q.Theme.Text.Accent))
-    frame.bottomBorder:SetHeight(Q:PixelPerfect(2))
+    frame.bottomBorder:SetHeight(Q:PixelPerfect(1))
     frame.bottomBorder:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", 0, 0)
     frame.bottomBorder:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 0)
     frame.bottomBorder:Hide()
@@ -479,18 +484,22 @@ local function CreateRowFrame(index, row)
     frame.titleFrame.title:EnableMouse(true)
     frame.titleFrame.title:SetScript("OnEnter", function(self)
         local hoveredRow = frame.row
+        local tooltip = Q:GetTooltip()
         if hoveredRow and hoveredRow.prerequisiteType == Q.PrerequisiteType.ANY then
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-            GameTooltip:SetText("*: You only need to complete one of the quests marked with * to unlock the next quest.", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3])
-            GameTooltip:Show()
+            tooltip:SetOwner(self, "ANCHOR_RIGHT")
+            tooltip:SetText("Optional Choice", Q.Theme.Text.Accent[1], Q.Theme.Text.Accent[2], Q.Theme.Text.Accent[3])
+            tooltip:AddLine("You only need to complete one of the quests marked with * to unlock the next quest.", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
+            tooltip:Show()
         elseif hoveredRow and hoveredRow.prerequisiteType == Q.PrerequisiteType.BREADCRUMB then
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-            GameTooltip:SetText("B: Not required to unlock the next quest. Breadcrumb quests are only meant to help players find a quest.", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3])
-            GameTooltip:Show()
+            tooltip:SetOwner(self, "ANCHOR_RIGHT")
+            tooltip:SetText("Breadcrumb", Q.Theme.Text.Accent[1], Q.Theme.Text.Accent[2], Q.Theme.Text.Accent[3])
+            tooltip:AddLine("Not required to unlock the next quest. Breadcrumb quests are only meant to help players find a quest.", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
+            tooltip:Show()
         end
     end)
     frame.titleFrame.title:SetScript("OnLeave", function()
-        GameTooltip:Hide()
+        local tooltip = Q:GetTooltip()
+        tooltip:Hide()
     end)
 
     frame.titleFrame.level = Q:CreateText(nil, frame.titleFrame, "", Q.Theme.Font.L)
@@ -527,16 +536,21 @@ local function CreateRowFrame(index, row)
             QuestLog:RefreshAndPopulate()
         end,
         OnMouseEnter = function(self)
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-            GameTooltip:SetText("Expand/Collapse Section", 1, 1, 1)
-            GameTooltip:AddLine("Click to expand/collapse this section.", 0.85, 0.85, 0.85, true)
-            GameTooltip:Show()
+            local tooltip = Q:GetTooltip()
+            local accentR, accentG, accentB = unpack(Q.Theme.Text.Accent)
+            local primaryR, primaryG, primaryB = unpack(Q.Theme.Text.Primary)
+
+            tooltip:SetOwner(self, "ANCHOR_RIGHT")
+            tooltip:SetText("Expand/Collapse Section", accentR, accentG, accentB)
+            tooltip:AddLine("Click to expand/collapse this section.", primaryR, primaryG, primaryB, true)
+            tooltip:Show()
         end,
         OnMouseLeave = function()
-            GameTooltip:Hide()
+            local tooltip = Q:GetTooltip()
+            tooltip:Hide()
         end
     }
-    frame.collapseButton = Q:CreateButton(nil, frame, "+", DB_ROW_HEIGHT, DB_ROW_HEIGHT, Q.Theme.Font.M, collapseHandlers)
+    frame.collapseButton = Q:CreateTransparentButton(nil, frame, "+", DB_ROW_HEIGHT, DB_ROW_HEIGHT, Q.Theme.Font.M, Q.Theme.Text.Secondary, collapseHandlers)
     frame.collapseButton:SetPoint("RIGHT", frame.titleFrame, "RIGHT", -Q.Theme.Padding.L, 0)
     
     local waypointHandlers = {
@@ -550,34 +564,38 @@ local function CreateRowFrame(index, row)
             end
 
             self.isDisabled = true
+            self:SetAlpha(0.5)
             Q.API:SetWaypoint(frame.row, frame.row.isDungeon)
 
             C_Timer.After(2, function()
                 self.isDisabled = false
+                self:SetAlpha(1)
             end)
         end,
         OnMouseEnter = function(self)
+            local tooltip = Q:GetTooltip()
+            local tomtom = rawget(_G, "TomTom")
             local r, g, b = unpack(Q.Theme.Text.Primary)
 
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-            local tomtom = rawget(_G, "TomTom")
+            tooltip:SetOwner(self, "ANCHOR_RIGHT")
             if tomtom and tomtom.AddWaypoint then
-                GameTooltip:SetText(frame.row.isDungeon and "Find Entrance" or "Find Source", 1, 1, 1)
-                GameTooltip:AddLine(string.format("Add a TomTom waypoint at %s.", frame.row.isDungeon and "the dungeon entrance" or "this quests source(s)"), r, g, b, true)
+                tooltip:SetText(frame.row.isDungeon and "Find Entrance" or "Find Source", unpack(Q.Theme.Text.Accent))
+                tooltip:AddLine(string.format("Add a waypoint at %s.", frame.row.isDungeon and "the dungeon entrance" or "this quests source(s)"), r, g, b, true)
                 if frame.row.source and frame.row.source.text then
-                    GameTooltip:AddLine("-", r, g, b, true)
-                    GameTooltip:AddLine("Info: "..frame.row.source.text, r, g, b, true)
+                    tooltip:AddLine("-", r, g, b, true)
+                    tooltip:AddLine("Info: "..frame.row.source.text, r, g, b, true)
                 end
             else
-                GameTooltip:AddLine("TomTom required for waypoint directions.", r, g, b, true)
+                tooltip:AddLine("TomTom required for waypoint directions.", r, g, b, true)
             end
-            GameTooltip:Show()
+            tooltip:Show()
         end,
         OnMouseLeave = function()
-            GameTooltip:Hide()
+            local tooltip = Q:GetTooltip()
+            tooltip:Hide()
         end
     }
-    frame.waypointButton = Q:CreateButton(nil, frame, "", DB_ROW_HEIGHT, DB_ROW_HEIGHT, Q.Theme.Font.M, waypointHandlers)
+    frame.waypointButton = Q:CreateTransparentButton(nil, frame, "", DB_ROW_HEIGHT, DB_ROW_HEIGHT, Q.Theme.Font.M, Q.Theme.Background.Accent, waypointHandlers)
     frame.waypointButton.icon = frame.waypointButton:CreateTexture(nil, "ARTWORK")
     frame.waypointButton.icon:SetAtlas("waypoint-mappin-minimap-untracked")
     frame.waypointButton.icon:SetSize(DB_ROW_HEIGHT * 0.9, DB_ROW_HEIGHT * 0.9)
@@ -667,7 +685,7 @@ function QuestLog:RefreshAndPopulate()
         end
         prevRowHeight = row.isDungeon and (DB_ROW_HEIGHT + DUNGEON_ROW_EXTRA_HEIGHT) or DB_ROW_HEIGHT
 
-        Q:SetPixelPerfectPoint(frame, "TOPLEFT", self.scrollChild, "TOPLEFT", 0, -(rowOffset + totalOffset))
+        Q:SetPixelPerfectPoint(frame, "TOPLEFT", self.scrollChild, "TOPLEFT", 1, -(rowOffset + totalOffset))
         totalOffset = totalOffset + rowOffset
     end
 

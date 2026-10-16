@@ -50,7 +50,7 @@ local function GetSectionSettings(sectionName)
             type = "checkbox",
             path = "AutoWaypoint",
             title = "Automatic quest giver waypoints",
-            description = "Automatically adds a TomTom waypoint to the quest giver when a quest notification appears.",
+            description = "Automatically adds a waypoint to the quest giver when a quest notification appears.",
         },
         {
             section = Sections.Notifications.name,
@@ -109,7 +109,7 @@ function Settings:CreateSection(sectionName, sectionTitle, anchorFrame)
     for _, setting in ipairs(GetSectionSettings(sectionName)) do
         sectionHeight = sectionHeight + paddingM + 55
     end
-    local sectionFrame = Q:CreateBackdropFrame("DungeonBuddy_"..sectionName.."SettingsFrame", anchorFrame == self.scrollChild and anchorFrame or anchorFrame:GetParent(), CONTENT_WIDTH, sectionHeight, "HIGH", "Primary", "Accent", 0, 0.5)
+    local sectionFrame = Q:CreateBackdropFrame("DungeonBuddy_"..sectionName.."SettingsFrame", anchorFrame == self.scrollChild and anchorFrame or anchorFrame:GetParent(), CONTENT_WIDTH, sectionHeight, "HIGH", "Primary", "Accent", 0, 0)
     local anchorPoint = anchorFrame == self.scrollChild and "TOPLEFT" or "BOTTOMLEFT"
     Q:SetPixelPerfectPoint(sectionFrame, "TOPLEFT", anchorFrame, anchorPoint, 0, -paddingM)
     local sectionTitle = Q:CreateText(sectionName.."SettingsTitle", sectionFrame, sectionTitle, fontL, "Accent", 1)
@@ -120,6 +120,12 @@ function Settings:CreateSection(sectionName, sectionTitle, anchorFrame)
 
         local row = Q:CreateBackdropFrame("Setting_"..setting.path, sectionFrame, CONTENT_WIDTH - (2 * paddingM), 55, "HIGH", "Secondary", "Default", 0.6, 0.6)
         Q:SetPixelPerfectPoint(row, "TOPLEFT", sectionTitle, "BOTTOMLEFT", 0, -y)
+
+        row.gradient = row:CreateTexture(nil, "BACKGROUND", nil, 1)
+        row.gradient:SetAllPoints(row)
+        row.gradient:SetColorTexture(1, 1, 1, 1)
+        local bottomR, bottomG, bottomB = unpack(Q.Theme.Background.Tertiary)
+        row.gradient:SetGradient("VERTICAL", CreateColor(bottomR, bottomG, bottomB, 0.25), CreateColor(0, 0, 0, 0))
 
         local label = Q:CreateText(nil, row, setting.title, Q.Theme.Font.M, "Accent")
         Q:SetPixelPerfectPoint(label, "TOPLEFT", row, "TOPLEFT", paddingS, -13)
@@ -147,7 +153,7 @@ function Settings:Create()
     end
 
     local paddingS, paddingM, paddingL = Q.Theme.Padding.S, Q.Theme.Padding.M, Q.Theme.Padding.L
-    local frame = Q:CreateBackdropFrame("DungeonBuddy_SettingsFrame", UIParent, PANEL_WIDTH, 700, "HIGH", "Primary", "Default", 0.8, 0.5)
+    local frame = Q:CreateBackdropFrame("DungeonBuddy_SettingsFrame", UIParent, PANEL_WIDTH, 700, "HIGH", "Primary", "Default", 0.9, 0.25)
     self.frame = frame
     Q:SetPixelPerfectPoint(frame, "CENTER", UIParent, "CENTER", 0, 0)
     
