@@ -10,6 +10,8 @@ It also adds a quest tracker that shows quests by dungeon, and shows the chain s
 - Class specific quests have a class icon appended before (in notifications) or after (in quest log) their names.
 - Get extra automatic notifications when entering a zone with relevant available quests to pick up, can be turned off in settings.
 - Add directions to a quest source from the quest log or a notification (Requires TomTom).
+- Optionally show every quest for a dungeon as soon as one of its quests is available. Quests you are not high enough level for get a "Requires Level" row below them, like a step in a chain.
+- Customize the quest colors (available, unavailable, in quest log, completed) in settings to your liking, with a button to reset them to defaults.
 
 ## Available commands
 
