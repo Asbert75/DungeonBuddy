@@ -9,7 +9,7 @@ local CONTENT_WIDTH = PANEL_WIDTH - (2 * Q.Theme.Padding.M)
 local Sections = {
     General = { name = "General", title = "General" },
     Notifications = { name = "Notifications", title = "Notifications" },
-    QuestLog = { name = "QuestLog", title = "Dungeon Buddy Tracker" },
+    QuestLog = { name = "QuestLog", title = "Quest Tracker" },
 }
 
 local function GetSectionSettings(sectionName)
@@ -28,7 +28,7 @@ local function GetSectionSettings(sectionName)
             section = Sections.Notifications.name,
             type = "checkbox",
             path = "ShowNotificationOnLevelUp",
-            title = "Show notifications on level up",
+            title = "Notifications on level up",
             description = "Show a notification on level up when the first quest of a chain leading to a dungeon quest is available.",
             onChange = function(value)
                 if value then
@@ -42,7 +42,7 @@ local function GetSectionSettings(sectionName)
             section = Sections.Notifications.name,
             type = "checkbox",
             path = "ShowNotificationForAllQuests",
-            title = "Show notifications for all quests",
+            title = "Notifications for all quests",
             description = "Enable notifications for all dungeon quests, not just the first quest in a chain."
         },
         {
@@ -50,7 +50,7 @@ local function GetSectionSettings(sectionName)
             type = "checkbox",
             path = "AutoWaypoint",
             title = "Automatic quest giver waypoints",
-            description = "Automatically adds a TomTom waypoint to the quest giver when a quest notification appears.",
+            description = "Automatically adds a waypoint to the quest giver when a quest notification appears.",
         },
         {
             section = Sections.Notifications.name,
@@ -79,10 +79,22 @@ local function GetSectionSettings(sectionName)
             end,
         },
         {
+            section = Sections.QuestLog.name,
+            type = "checkbox",
+            path = "ShowAllQuestsForAvailableDungeon",
+            title = "Instantly show all dungeon quests when one is available",
+            description = "Enable showing all quests for a dungeon as soon as you have a single quest available in that dungeon. Also adds a required level display row to quests you are not high enough level for.",
+            onChange = function()
+                if Q.QuestLog and Q.QuestLog.frame then
+                    Q.QuestLog:RefreshAndPopulate()
+                end
+            end,
+        },
+        {
             section = Sections.General.name,
             type = "checkbox",
             path = "ShowSuggestedQuestLevel",
-            title = "Show suggested quest levels",
+            title = "Suggested quest levels",
             description = "Display the suggested quest level for each quest in notifications/tracker.",
             onChange = function()
                 if Q.QuestLog and Q.QuestLog.frame then
@@ -101,30 +113,72 @@ local function GetSectionSettings(sectionName)
     return sectionSettings
 end
 
+local SETTING_ROW_HEIGHT = 55
+local CHECKBOX_SIZE = 29
+
+-- Rows grow taller when the description wraps onto extra lines.
+local function GetDescriptionLayout(settings, rowWidth)
+    local textWidth = rowWidth - (Q.Theme.Padding.L * 5) - CHECKBOX_SIZE
+    local unit = Q:PixelPerfect(1)
+
+    local measure = Q:CreateText(nil, UIParent, "", Q.Theme.Font.S, "Primary")
+    measure:SetWordWrap(true)
+    measure:SetWidth(textWidth * unit)
+
+    measure:SetText("X")
+    local lineHeight = measure:GetStringHeight() / unit
+
+    local heights = {}
+    for index, setting in ipairs(settings) do
+        measure:SetText(setting.description or "")
+        local textHeight = measure:GetStringHeight() / unit
+        heights[index] = SETTING_ROW_HEIGHT + math.max(0, math.ceil(textHeight - lineHeight))
+    end
+
+    measure:Hide()
+    return textWidth, heights
+end
+
 function Settings:CreateSection(sectionName, sectionTitle, anchorFrame)
     local paddingM, paddingS = Q.Theme.Padding.M, Q.Theme.Padding.S
     local fontL = Q.Theme.Font.L
 
+    local sectionSettings = GetSectionSettings(sectionName)
+    local textWidth, rowHeights = GetDescriptionLayout(sectionSettings, CONTENT_WIDTH - (2 * paddingM))
+
     local sectionHeight = fontL + (paddingM * 2)
-    for _, setting in ipairs(GetSectionSettings(sectionName)) do
-        sectionHeight = sectionHeight + paddingM + 55
+    for index in ipairs(sectionSettings) do
+        sectionHeight = sectionHeight + paddingM + rowHeights[index]
     end
-    local sectionFrame = Q:CreateBackdropFrame("DungeonBuddy_"..sectionName.."SettingsFrame", anchorFrame == self.scrollChild and anchorFrame or anchorFrame:GetParent(), CONTENT_WIDTH, sectionHeight, "HIGH", "Primary", "Default")
+    local sectionFrame = Q:CreateBackdropFrame("DungeonBuddy_"..sectionName.."SettingsFrame", anchorFrame == self.scrollChild and anchorFrame or anchorFrame:GetParent(), CONTENT_WIDTH, sectionHeight, "HIGH", "Primary", "Accent", 0, 0)
     local anchorPoint = anchorFrame == self.scrollChild and "TOPLEFT" or "BOTTOMLEFT"
-    Q:SetPixelPerfectPoint(sectionFrame, "TOPLEFT", anchorFrame, anchorPoint, 0, -paddingM)
+    Q:SetPixelPerfectPoint(sectionFrame, "TOPLEFT", anchorFrame, anchorPoint, 0, 0)
+
     local sectionTitle = Q:CreateText(sectionName.."SettingsTitle", sectionFrame, sectionTitle, fontL, "Accent", 1)
     Q:SetPixelPerfectPoint(sectionTitle, "TOPLEFT", sectionFrame, "TOPLEFT", paddingM, -paddingM)
 
-    for index, setting in ipairs(GetSectionSettings(sectionName)) do
-        local y = (index * paddingM) + (index - 1) * 55
+    local y = 0
+    for index, setting in ipairs(sectionSettings) do
+        y = y + paddingM
+        local rowHeight = rowHeights[index]
 
-        local row = Q:CreateBackdropFrame("Setting_"..setting.path, sectionFrame, CONTENT_WIDTH - (2 * paddingM), 55, "HIGH", "Secondary", "Default", 0.6, 0.6)
+        local row = Q:CreateBackdropFrame("Setting_"..setting.path, sectionFrame, CONTENT_WIDTH - (2 * paddingM), rowHeight, "HIGH", "Secondary", "Default", 0.6, 0.6)
         Q:SetPixelPerfectPoint(row, "TOPLEFT", sectionTitle, "BOTTOMLEFT", 0, -y)
+        y = y + rowHeight
+
+        row.gradient = row:CreateTexture(nil, "BACKGROUND", nil, 1)
+        row.gradient:SetAllPoints(row)
+        row.gradient:SetColorTexture(1, 1, 1, 1)
+        local bottomR, bottomG, bottomB = unpack(Q.Theme.Background.Tertiary)
+        row.gradient:SetGradient("VERTICAL", CreateColor(bottomR, bottomG, bottomB, 0.25), CreateColor(0, 0, 0, 0))
 
         local label = Q:CreateText(nil, row, setting.title, Q.Theme.Font.M, "Accent")
         Q:SetPixelPerfectPoint(label, "TOPLEFT", row, "TOPLEFT", paddingS, -13)
         local description = Q:CreateText(nil, row, setting.description, Q.Theme.Font.S, "Primary")
         Q:SetPixelPerfectPoint(description, "TOPLEFT", label, "BOTTOMLEFT", 0, -4)
+        Q:SetPixelPerfectWidth(description, textWidth)
+        description:SetJustifyH("LEFT")
+        description:SetWordWrap(true)
 
         local checkbox = Q:CreateCheckbox(nil, row, 29, 29, nil, "Tertiary", "Default", function(self, checked)
             Q:SetSetting(setting.path, checked and true or false)
@@ -146,8 +200,8 @@ function Settings:Create()
         return self.frame
     end
 
-    local paddingS, paddingM, paddingL = Q.Theme.Padding.S, Q.Theme.Padding.M, Q.Theme.Padding.L
-    local frame = Q:CreateBackdropFrame("DungeonBuddy_SettingsFrame", UIParent, PANEL_WIDTH, 700, "HIGH", "Primary", "Default")
+    local paddingS, paddingM = Q.Theme.Padding.S, Q.Theme.Padding.M
+    local frame = Q:CreateBackdropFrame("DungeonBuddy_SettingsFrame", UIParent, PANEL_WIDTH, 700, "TOOLTIP", "Primary", "Default", 0.9, 0.25)
     self.frame = frame
     Q:SetPixelPerfectPoint(frame, "CENTER", UIParent, "CENTER", 0, 0)
     
@@ -185,6 +239,8 @@ function Settings:Create()
     local scrollBar = _G[contentContainer:GetName() .. "ScrollBar"]
     if scrollBar then
         scrollBar:ClearAllPoints()
+        scrollBar:SetValueStep(Q:PixelPerfect(10))
+        scrollBar:SetObeyStepOnDrag(true)
         Q:SetPixelPerfectPoint(scrollBar, "TOPRIGHT", contentContainer, "TOPRIGHT", -1, -20)
         Q:SetPixelPerfectPoint(scrollBar, "BOTTOMRIGHT", contentContainer, "BOTTOMRIGHT", -1, 20)
 
@@ -241,8 +297,11 @@ function Settings:Create()
     local questLogSettingsFrame = self:CreateSection(Sections.QuestLog.name, Sections.QuestLog.title, notificationSettingsFrame)
 
     -- Setting: Quest Colors
-    local anchorFrame = _G["Setting_HideCompletedQuests"]
-    local questColorContainer = Q:CreateBackdropFrame("QuestColorContainer", questLogSettingsFrame, CONTENT_WIDTH - (2 * paddingM), 128, "HIGH", "Secondary", "Default", 0.6, 0.6)
+    -- Get last setting in QuestLog section to anchor to
+    local settingCount = #GetSectionSettings(Sections.QuestLog.name)
+    local anchorFrame = _G["Setting_" .. GetSectionSettings(Sections.QuestLog.name)[settingCount].path] or nil
+
+    local questColorContainer = Q:CreateBackdropFrame("QuestColorContainer", questLogSettingsFrame, CONTENT_WIDTH - (2 * paddingM), 128, "MEDIUM", "Secondary", "Default", 0.6, 0.6)
     Q:SetPixelPerfectPoint(questColorContainer, "TOPLEFT", anchorFrame, "BOTTOMLEFT", 0, -paddingM)
 
     local label = Q:CreateText(nil, questColorContainer, "Quest Colors", Q.Theme.Font.M, "Accent")
@@ -263,7 +322,7 @@ function Settings:Create()
         local picker = AceGUI:Create("ColorPicker")
         picker:SetLabel(setting.label)
         picker:SetColor(color.r, color.g, color.b, 1)
-        Q:SetPixelPerfectWidth(picker, 420)
+        Q:SetPixelPerfectWidth(picker, 260)
         picker.frame:SetParent(questColorContainer)
         picker.frame:ClearAllPoints()
         Q:SetPixelPerfectPoint(picker.frame, "TOPLEFT", questColorContainer, "TOPLEFT", setting.x, -setting.y)
@@ -277,12 +336,30 @@ function Settings:Create()
         self.colorPickers[setting.path] = picker
     end
 
-    questLogSettingsFrame:SetHeight(questLogSettingsFrame:GetHeight() + Q:PixelPerfect(paddingM) + questColorContainer:GetHeight())
+     local resetColorHandlers = {
+        ["OnClick"] = function()
+            for _, color in ipairs(colorSettings) do
+                Q:SetSetting(color.path, Q.Theme[color.path])
+            end
+            for path, picker in pairs(self.colorPickers or {}) do
+                local color = Q:GetSetting(path)
+                picker:SetColor(color.r, color.g, color.b, 1)
+            end
+
+            if Q.QuestLog and Q.QuestLog.frame then
+                Q.QuestLog:RefreshAndPopulate()
+            end
+        end
+    }
+    local resetColorsButton = Q:CreateTransparentButton(nil, questColorContainer, "Reset Colors", 120, 40, Q.Theme.Font.M, Q.Theme.Status.Error, resetColorHandlers)
+    Q:SetPixelPerfectPoint(resetColorsButton, "BOTTOMRIGHT", questColorContainer, "BOTTOMRIGHT", -paddingS, paddingS)
+
+    questLogSettingsFrame:SetHeight(resetColorsButton:GetHeight() + questLogSettingsFrame:GetHeight() + Q:PixelPerfect(paddingM) + questColorContainer:GetHeight())
     scrollChild:SetHeight(
         generalSettingsFrame:GetHeight()
         + notificationSettingsFrame:GetHeight()
         + questLogSettingsFrame:GetHeight()
-        + Q:PixelPerfect(paddingM * 4)
+        + Q:PixelPerfect(paddingS * 4)
         - Q:PixelPerfect(2)
     )
 

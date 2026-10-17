@@ -12,6 +12,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added the Wolfsbane quest line for horde paladins
+- Added a "Reset Colors" button to the quest color settings
+- Added a setting to show all quests for a dungeon as soon as a single one of its quests is available to the player. If the setting is enabled, quests you are not high enough level for now get a separate "Requires Level" row below them
+
+### Changed
+
+- Updated the design of the addon
+- Updated the tooltips to use the addon design
+
+### Fixed
+
+- Corrected some quest data that was still wrong such as The Madness Within not correctly showing DM: West and the shaman quest Material Assistance not being set as the prerequisite for The Darkreaver Menace
 
 ## [1.5.4] - 2026-10-14
 

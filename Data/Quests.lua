@@ -4153,8 +4153,7 @@ Q.Quests = {
             name = "Yorba Screwspigot",
             zone = "Tanaris",
             location = { mapId = 1446, x = 0.670, y = 0.24 }
-        },
-        dungeons = { Q.Dungeons["Blackrock Depths"] }
+        }
     },
     {
         id = 4136,
@@ -4265,7 +4264,8 @@ Q.Quests = {
             zone = "Dire Maul",
             location = { mapId = 1448, x = 0.59, y = 0.45 },
             text = "Found inside DM: West"
-        }
+        },
+        dungeons = { Q.Dungeons["Dire Maul: West"] }
     },
     {
         id = 7877,
@@ -6274,6 +6274,9 @@ Q.Quests = {
         name = "The Darkreaver Menace",
         suggestedLevel = 60,
         requiredLevel = 58,
+        prerequisites = {
+            { id = 7667, type = Q.PrerequisiteType.CHAIN }
+        },
         source = {
             type = "npc",
             name = "Sagorne Creststrider",

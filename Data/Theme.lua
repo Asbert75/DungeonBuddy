@@ -5,6 +5,7 @@ Q.Theme = {
         Primary   = {11/255, 13/255, 16/255, 1}, -- #0B0D10
         Secondary = {23/255, 24/255, 25/255, 1}, -- #171819
         Tertiary  = {39/255, 37/255, 34/255, 1}, -- #272522
+        Accent = {190/255, 143/255, 49/255, 1}, -- #BE8F31
     },
 
     Border = {
@@ -55,5 +56,10 @@ Q.Theme = {
         XL = 18,
         XXL = 20,
         XXXL = 22,
-    }
+    },
+    -- Defaults
+    QuestColorUnavailable = { r = 163/255, g = 59/255, b = 57/255 },
+    QuestColorAvailable = { r = 35/255, g = 213/255, b = 0/255 },
+    QuestColorInProgress = { r = 255/255, g = 239/255, b = 0/255 },
+    QuestColorCompleted = { r = 146/255, g = 146/255, b = 146/255 },
 }
