@@ -19,10 +19,10 @@ local SharedDefaults = {
     },
     NotificationFrame = {
         x = 0,
-        y = 0,
+        y = 250,
     },
     QuestLogFrame = {
-        x = -250,
+        x = 500,
         y = 0,
     },
     -- Settings

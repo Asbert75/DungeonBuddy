@@ -90,7 +90,7 @@ function Notification:Create()
         Q:SetSetting("NotificationFrame.y", y - centerY)
     end)
 
-    self.frame:SetPoint("CENTER", UIParent, "CENTER", Q:GetSetting("NotificationFrame.x") or 0, Q:GetSetting("NotificationFrame.y") or 0)
+    self.frame:SetPoint("CENTER", UIParent, "CENTER", Q:GetSetting("NotificationFrame.x") or 0, Q:GetSetting("NotificationFrame.y") or 250)
     Q:ClampFrameToScreen(self.frame)
 
     local x, y = self.frame:GetCenter()

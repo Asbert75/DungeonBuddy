@@ -34,7 +34,7 @@ function QuestLog:Create()
         Q:SetSetting("QuestLogFrame.Y", Q:PixelPerfect(y - centerY))
     end)
 
-    self.frame:SetPoint("CENTER", UIParent, "CENTER", Q:GetSetting("QuestLogFrame.X") or 0, Q:GetSetting("QuestLogFrame.Y") or 0)
+    self.frame:SetPoint("CENTER", UIParent, "CENTER", Q:GetSetting("QuestLogFrame.X") or 500, Q:GetSetting("QuestLogFrame.Y") or 0)
     Q:ClampFrameToScreen(self.frame)
 
     local closeButton = Q:CreateCloseButton(self.frame, "DungeonBuddy_QuestLogCloseButton")
@@ -280,7 +280,7 @@ local function AppendRelatedRows(quest, depth, visited)
             if count > 0 then
                 table.insert(QuestLog.rows, {
                     id = "shared:" .. questId .. ":" .. #QuestLog.rows,
-                    name = string.format("Shared (%d %s, listed above)", count, count == 1 and "quest" or "quests"),
+                    name = string.format("Shared chain (%d %s, listed above)", count, count == 1 and "quest" or "quests"),
                     isSharedSummary = true,
                     lineageDepth = depth + 2,
                 })
