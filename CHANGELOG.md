@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `/db settings` no longer causes a Lua error
 - "Reminders when switching to a new zone" no longer requires level-up notifications to be enabled
 - Toggling notification settings no longer calls OnEnable / OnDisable (bypassing the ACE module enable/disable handling)
+- Fixed an issue causing levelup notification to crash
 
 ### Changed
 
