@@ -151,7 +151,7 @@ function Q:CreateFrame(frameName, parent, width, height, strata)
     return frame
 end
 
-function Q:CreateTransparentButton(frameName, parent, text, width, height, fontSize, color, handlers)
+function Q:CreateButton(frameName, parent, text, width, height, fontSize, color, handlers)
     handlers = handlers or {}
 
     local button = CreateFrame("Button", frameName, parent, "BackdropTemplate")
@@ -230,73 +230,6 @@ function Q:CreateTransparentButton(frameName, parent, text, width, height, fontS
             return
         end
 
-        if handlers.OnClick then
-            handlers.OnClick(self)
-        end
-    end)
-
-    return button
-end
-
-function Q:CreateButton(frameName, parent, text, width, height, fontSize, handlers)
-    handlers = handlers or {}
-
-    local button = CreateFrame("Button", frameName, parent, "BackdropTemplate")
-    Q:SetPixelPerfectSize(button, width, height)
-    button:SetBackdrop({
-        bgFile = "Interface\\Buttons\\WHITE8X8",
-        edgeFile = "Interface\\Buttons\\WHITE8X8",
-        edgeSize = Q:PixelPerfect(1),
-        insets = { left = 0, right = 0, top = 0, bottom = 0 },
-    })
-
-    local label = Q:CreateText(nil, button, text, fontSize, "Accent")
-    button.label = label
-    label:SetJustifyH("CENTER")
-    Q:SetPixelPerfectPoint(label, "CENTER", button, "CENTER", 0, 0)
-
-    local function ApplyStyle(isHovered, isPressed)
-        local r, g, b = unpack(Q.Theme.Background.Tertiary)
-        button:SetBackdropColor(r, g, b, 1)
-
-        local borderColor = isHovered and Q.Theme.Border.Accent or Q.Theme.Border.Default
-        button:SetBackdropBorderColor(unpack(borderColor))
-
-        if isPressed then
-            label:SetTextColor(unpack(Q.Theme.Text.Secondary))
-        elseif isHovered then
-            label:SetTextColor(unpack(Q.Theme.Text.Primary))
-        else
-            label:SetTextColor(unpack(Q.Theme.Text.Accent))
-        end
-    end
-
-    ApplyStyle(false, false)
-    button:SetScript("OnEnter", function(self)
-        ApplyStyle(true, false)
-        if handlers.OnMouseEnter then
-            handlers.OnMouseEnter(self)
-        end
-    end)
-    button:SetScript("OnLeave", function(self)
-        ApplyStyle(false, false)
-        if handlers.OnMouseLeave then
-            handlers.OnMouseLeave(self)
-        end
-    end)
-    button:SetScript("OnMouseDown", function(self)
-        ApplyStyle(true, true)
-        if handlers.OnMouseDown then
-            handlers.OnMouseDown(self)
-        end
-    end)
-    button:SetScript("OnMouseUp", function(self)
-        ApplyStyle(self:IsMouseOver(), false)
-        if handlers.OnMouseUp then
-            handlers.OnMouseUp(self)
-        end
-    end)
-    button:SetScript("OnClick", function(self)
         if handlers.OnClick then
             handlers.OnClick(self)
         end

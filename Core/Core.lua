@@ -1,15 +1,6 @@
 local ADDON_NAME, Q = ...
 local Addon = LibStub("AceAddon-3.0"):NewAddon(ADDON_NAME, "AceConsole-3.0", "AceEvent-3.0")
 
-Q.Addon = {}
-Q.API = {}
-Q.DB = {}
-
-Q.MinimapButton = {}
-Q.Notification = {}
-Q.QuestLog = {}
-Q.Settings = {}
-
 Q.Dungeons = {}
 Q.Quests = {}
 Q.DungeonById = {}
@@ -17,13 +8,13 @@ Q.QuestById = {}
 Q.QuestsByDungeonId = {}
 Q.DungeonByQuestId =  {}
 
-Q.Theme = {}
 Q.Debug = {
     Enabled = false,
     Level = nil,
     Faction = nil,
     Class = nil
 }
+
 
 function Addon:OnInitialize()
     Q.DB = LibStub("AceDB-3.0"):New("DungeonBuddyCharDB", Q.GetDefaultDB())
@@ -52,6 +43,8 @@ function Addon:HandleDebugCommand(input)
 
     if arg1 == "quest" then
         TestNotificationQuest()
+    elseif arg1 == "levelup" then
+        Q.Notification:LevelUpEventHandler()
     elseif arg1 == "status" then
         if Q.Debug.Enabled then
             Q:PrettyPrint("Debug mode is currently enabled")
@@ -65,10 +58,19 @@ function Addon:HandleDebugCommand(input)
         Q.Debug.Level = tonumber(arg2) or Q.Debug.Level
         Q:PrettyPrint("Debug level set to " .. tostring(Q.Debug.Level))
     elseif arg1 == "faction" then
-        Q.Debug.Faction = (arg2 and arg2:lower() == "horde") and "Horde" or "Alliance"
+        local faction = arg2:lower()
+        if faction == "horde" then
+            Q.Debug.Faction = "Horde"
+        elseif faction == "alliance" then
+            Q.Debug.Faction = "Alliance"
+        else
+            Q:PrettyPrint("Usage: /dbdebug faction horde|alliance")
+        end
         Q:PrettyPrint("Debug faction set to " .. tostring(Q.Debug.Faction))
     elseif arg1 == "class" then
-        Q.Debug.Class = arg2:upper() or Q.Debug.Class
+        if arg2 ~= "" then
+            Q.Debug.Class = arg2:upper()
+        end
         Q:PrettyPrint("Debug class set to " .. tostring(Q.Debug.Class))
     else
         Q.Debug.Enabled = not Q.Debug.Enabled
@@ -109,17 +111,16 @@ function Addon:HandleCommand(input)
     elseif command == "minimap" then
         Q.MinimapButton:Toggle()
     elseif command == "settings" then
-        Q:OpenSettings()
+        Q.Settings:Toggle()
     elseif command == "notification" then
-        if args == "on" then
-            Q:SetSetting("ShowNotificationOnLevelUp", true)
-            Q.Notification:Enable()
-            Q:PrettyPrint("Level-up notifications enabled.")
-        end
-        if args == "off" then
-            Q:SetSetting("ShowNotificationOnLevelUp", false)
-            Q.Notification:Disable()
-            Q:PrettyPrint("Level-up notifications disabled.")
+        if args == "on" or args == "off" then
+            local enabled = args == "on"
+            Q:SetSetting("ShowNotificationOnLevelUp", enabled)
+            Q.Notification:UpdateLevelUpRegistration()
+            Q.Settings:RefreshCheckbox("ShowNotificationOnLevelUp")
+            Q:PrettyPrint("Level-up notifications " .. (enabled and "enabled." or "disabled."))
+        else
+            PrintHelpCommands()
         end
     elseif command == "tracker" then
         Q.QuestLog:Toggle()

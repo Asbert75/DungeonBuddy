@@ -1,0 +1,5 @@
+package-as: DungeonBuddy
+
+ignore:
+  - .vscode
+  - .gitignore

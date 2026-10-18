@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.6] - 2026-10-18
+
+### Fixed
+
+- `/db settings` no longer causes a Lua error
+- "Reminders when switching to a new zone" no longer requires level-up notifications to be enabled
+- Toggling notification settings no longer calls OnEnable / OnDisable (bypassing the ACE module enable/disable handling)
+- Fixed an issue causing levelup notification to crash
+
+### Changed
+
+- Removed the unused account-wide saved variable and unused optional dependencies from the addon metadata
+- The quest tracker no longer rebuilds on every quest log event while hidden, and rapid updates are now debounced
+- Checking whether a dungeon has available quests no longer scans every quest in the game
+
 ## [1.5.5] - 2026-10-15
 
 ### Added

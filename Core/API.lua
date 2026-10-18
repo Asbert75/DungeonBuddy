@@ -1,4 +1,4 @@
-local _, Q = ...
+local ADDON_NAME, Q = ...
 
 Q.API = {}
 
@@ -19,11 +19,19 @@ local function FilterArray(table, predicate)
     end
 end
 
+local function CopyArray(source)
+    local copy = {}
+    for index = 1, #source do
+        copy[index] = source[index]
+    end
+    return copy
+end
+
 function Q.API:BuildLookupTables()
     if not Q.API.QuestsBackup then
-        Q.API.QuestsBackup = { unpack(Q.Quests) }
+        Q.API.QuestsBackup = CopyArray(Q.Quests)
     else
-        Q.Quests = { unpack(Q.API.QuestsBackup) }
+        Q.Quests = CopyArray(Q.API.QuestsBackup)
     end
 
     wipe(Q.QuestById)
@@ -163,7 +171,7 @@ function Q.API:GetClassIconTexture(class)
     end
 
     local className = class:lower():gsub("^%l", string.upper)
-    return "Interface\\Addons\\DungeonBuddy\\Media\\Icons\\ClassIcon_" .. className
+    return "Interface\\Addons\\" .. ADDON_NAME .. "\\Media\\Icons\\ClassIcon_" .. className
 end
 
 function Q.API:GetDifficultyColor(playerLevel, comparisonLevel)
@@ -290,9 +298,10 @@ function Q.API:GetRelevantQuestsForZone()
                 not self:IsQuestInQuestLog(quest.id) and
                 source.faction == playerInfo.faction and
                 source.zone == zone and
-                playerInfo.level <= quest.suggestedLevel + 3 -- Allow a buffer of 3 levels above the suggested level before it doesn't count as "relevant" anymore
+                playerInfo.level <= (quest.suggestedLevel or quest.requiredLevel or 0) + 3 -- Allow a buffer of 3 levels above the suggested level before it doesn't count as "relevant" anymore
             then
                 table.insert(quests, quest)
+                break
             end
         end
     end
@@ -332,9 +341,8 @@ function Q.API:GetAvailableQuestsByDungeonId(dungeonId, playerInfo)
 end
 
 function Q.API:DungeonHasAvailableQuests(dungeonId, playerInfo)
-    for _, quest in ipairs(self:GetQuests() or {}) do
-        if  self:IsQuestRelatedToDungeon(quest.id, dungeonId) and 
-            self:IsQuestAvailableToLevel(quest.id, playerInfo) and
+    for _, quest in ipairs(self:GetQuestsByDungeonId(dungeonId)) do
+        if  self:IsQuestAvailableToLevel(quest.id, playerInfo) and
             self:PlayerHasProfession(quest.profession) and
             (Q:GetSetting("HideCompletedQuests") == false or not self:IsQuestCompleted(quest.id))
         then
@@ -395,6 +403,9 @@ end
 
 function Q.API:IsQuestAvailableToLevel(questId, playerInfo)
     local quest = self:GetQuestById(questId)
+    if not quest then
+        return false
+    end
     local playerLevel = playerInfo and playerInfo.level or Q.API:GetPlayerLevel()
     if quest.requiredLevel and playerLevel < quest.requiredLevel then
         return false

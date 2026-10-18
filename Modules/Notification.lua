@@ -48,7 +48,7 @@ function Notification:LevelUpEventHandler()
     self.queueIndex = 1
 
     for _, quest in ipairs(quests) do
-        if ((Q:GetSetting("ShowNotificationForAllQuests") and #quest.dungeons) or Q.API:IsDungeonQuestLineageStart(quest.id)) and quest.requiredLevel == playerLevel and Q.API:IsQuestAvailable(quest.id) then
+        if ((Q:GetSetting("ShowNotificationForAllQuests") and quest.dungeons and #quest.dungeons > 0) or Q.API:IsDungeonQuestLineageStart(quest.id)) and quest.requiredLevel == playerLevel and Q.API:IsQuestAvailable(quest.id) then
             table.insert(self.queue, quest)
 
             if Q:GetSetting("AutoWaypoint") then
@@ -201,7 +201,7 @@ function Notification:Create()
             self.waypointButton:SetColor(Q.Theme.Status.Success)
         end
     }
-    self.waypointButton = Q:CreateTransparentButton(nil, self.frame, "Find Source", 140, 40, fontM, Q.Theme.Text.Accent, waypointHandlers)
+    self.waypointButton = Q:CreateButton(nil, self.frame, "Find Source", 140, 40, fontM, Q.Theme.Text.Accent, waypointHandlers)
     self.waypointButton:SetFrameLevel(self.frame:GetFrameLevel() + 1)
     Q:SetPixelPerfectPoint(self.waypointButton, "BOTTOMLEFT", self.frame, "BOTTOMLEFT", paddingM, paddingM)
 
@@ -213,7 +213,7 @@ function Notification:Create()
             self:Dismiss()
         end
     }
-    self.dismissButton = Q:CreateTransparentButton(nil, self.frame, "Dismiss", 120, 40, fontM, Q.Theme.Text.Secondary, dismissHandlers)
+    self.dismissButton = Q:CreateButton(nil, self.frame, "Dismiss", 120, 40, fontM, Q.Theme.Text.Secondary, dismissHandlers)
     self.dismissButton:SetFrameLevel(self.frame:GetFrameLevel() + 1)
     Q:SetPixelPerfectPoint(self.dismissButton, "BOTTOMRIGHT", self.frame, "BOTTOMRIGHT", -paddingM, paddingM)
 
@@ -225,7 +225,7 @@ function Notification:Create()
             Notification:DisplayPreviousInQueue()
         end
     }
-    self.previousQuestButton = Q:CreateTransparentButton(nil, self.frame, "< Previous", 120, 40, fontM, Q.Theme.Text.Secondary, previousHandlers)
+    self.previousQuestButton = Q:CreateButton(nil, self.frame, "< Previous", 120, 40, fontM, Q.Theme.Text.Secondary, previousHandlers)
     self.previousQuestButton:SetFrameLevel(self.frame:GetFrameLevel() + 1)
     Q:SetPixelPerfectPoint(self.previousQuestButton, "RIGHT", self.dismissButton, "LEFT", -paddingS, 0)
 end
@@ -409,7 +409,7 @@ function Notification:DisplayQuest(quest, isPrevious)
 end
 
 function Notification:OnDisable()
-    self:UnregisterEvent("PLAYER_LEVEL_UP", "LevelUpEventHandler")
+    self:UnregisterEvent("PLAYER_LEVEL_UP")
     self.queue = {}
     self.queueIndex = 1
 
@@ -422,15 +422,20 @@ function Notification:OnDisable()
     end
 end
 
-function Notification:OnEnable()
-    if not Q:GetSetting("ShowNotificationOnLevelUp") then
-        return
+-- The module itself stays enabled so other modules (zone reminders) can still queue notifications;
+-- the level-up setting only controls whether the level-up event is listened to.
+function Notification:UpdateLevelUpRegistration()
+    if Q:GetSetting("ShowNotificationOnLevelUp") then
+        self:RegisterEvent("PLAYER_LEVEL_UP", "LevelUpEventHandler")
+    else
+        self:UnregisterEvent("PLAYER_LEVEL_UP")
     end
-    self:RegisterEvent("PLAYER_LEVEL_UP", "LevelUpEventHandler")
+end
+
+function Notification:OnEnable()
+    self:UpdateLevelUpRegistration()
 
     if not self.frame then
         self:Create()
-    elseif self.frame then
-        self.frame:Show()
     end
 end
