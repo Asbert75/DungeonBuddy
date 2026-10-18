@@ -105,7 +105,7 @@ function QuestLog:Create()
     }
 
     local initialText = (#Q:GetSetting("CollapsedQuests") > 0 or #Q:GetSetting("CollapsedDungeons") > 0) and "+" or "-"
-    local collapseAndExpandButton = Q:CreateTransparentButton("DungeonBuddy_CollapseAndExpandButton", self.frame, initialText, 24, 24, Q.Theme.Font.M, Q.Theme.Text.Secondary, actionHandlers)
+    local collapseAndExpandButton = Q:CreateButton("DungeonBuddy_CollapseAndExpandButton", self.frame, initialText, 24, 24, Q.Theme.Font.M, Q.Theme.Text.Secondary, actionHandlers)
     collapseAndExpandButton:SetPoint("RIGHT", closeButton, "LEFT", -2, 0)
     
     --------------------------------------------------
@@ -315,6 +315,13 @@ local function SetBorderTextureColor(frame, settingPath)
     end
 end
 
+local function SetGradientColor(frame, settingPath)
+    local color = Q:GetSetting(settingPath)
+    if color and color.r and color.g and color.b then
+        frame:SetGradient("HORIZONTAL", CreateColor(color.r, color.g, color.b, 0.03), CreateColor(0, 0, 0, 0))
+    end
+end
+
 local function UpdateClassIcon(frame)
     local classIcon = frame.titleFrame.classIcon
     local professionIcon = frame.titleFrame.professionIcon
@@ -349,6 +356,7 @@ local function UpdateRowAppearance(frame, playerInfo)
     if frame.row.isSharedSummary then
         Q:SetTextColor(frame.titleFrame.title, "Disabled")
         frame.leftBorder:SetColorTexture(unpack(Q.Theme.Border.Accent))
+        frame.sideGradient:SetGradient("HORIZONTAL", CreateColor(Q.Theme.Border.Accent[1], Q.Theme.Border.Accent[2], Q.Theme.Border.Accent[3], 0.03), CreateColor(0, 0, 0, 0))
     elseif frame.row.isDungeon then
         local levelColor = Q.API:GetDifficultyColor(playerInfo.level, frame.row.minLevel)
         frame.titleFrame.level:SetTextColor(levelColor.r, levelColor.g, levelColor.b, 1)
@@ -365,15 +373,19 @@ local function UpdateRowAppearance(frame, playerInfo)
     elseif Q.API:IsQuestCompleted(frame.row.id) then
         SetQuestStatusColor(frame.titleFrame.title, "QuestColorCompleted", "Disabled")
         SetBorderTextureColor(frame.leftBorder, "QuestColorCompleted")
+        SetGradientColor(frame.sideGradient, "QuestColorCompleted")
     elseif Q.API:IsQuestInQuestLog(frame.row.id) then
         SetQuestStatusColor(frame.titleFrame.title, "QuestColorInProgress", "Success")
         SetBorderTextureColor(frame.leftBorder, "QuestColorInProgress")
+        SetGradientColor(frame.sideGradient, "QuestColorInProgress")
     elseif Q.API:IsQuestAvailable(frame.row.id) then
         SetQuestStatusColor(frame.titleFrame.title, "QuestColorAvailable", "Accent")
         SetBorderTextureColor(frame.leftBorder, "QuestColorAvailable")
+        SetGradientColor(frame.sideGradient, "QuestColorAvailable")
     else
         SetQuestStatusColor(frame.titleFrame.title, "QuestColorUnavailable", "Emphasized")
         SetBorderTextureColor(frame.leftBorder, "QuestColorUnavailable")
+        SetGradientColor(frame.sideGradient, "QuestColorUnavailable")
     end
 end
 
@@ -473,6 +485,12 @@ local function CreateRowFrame(index, row)
     frame.gradient:SetGradient("VERTICAL", CreateColor(bottomR, bottomG, bottomB, 0.15), CreateColor(0, 0, 0, 0))
     frame.gradient:Hide()
 
+    frame.sideGradient = frame:CreateTexture(nil, "BACKGROUND", nil, 1)
+    frame.sideGradient:SetAllPoints(frame)
+    frame.sideGradient:SetColorTexture(1, 1, 1, 1)
+    frame.sideGradient:SetGradient("HORIZONTAL", CreateColor(0, 0, 0, 0.05), CreateColor(0, 0, 0, 0))
+    frame.sideGradient:Hide()
+
     frame.bottomBorder = frame:CreateTexture(nil, "OVERLAY")
     frame.bottomBorder:SetColorTexture(unpack(Q.Theme.Text.Accent))
     frame.bottomBorder:SetHeight(Q:PixelPerfect(1))
@@ -568,7 +586,7 @@ local function CreateRowFrame(index, row)
             tooltip:Hide()
         end
     }
-    frame.collapseButton = Q:CreateTransparentButton(nil, frame, "+", DB_ROW_HEIGHT, DB_ROW_HEIGHT, Q.Theme.Font.M, Q.Theme.Text.Secondary, collapseHandlers)
+    frame.collapseButton = Q:CreateButton(nil, frame, "+", DB_ROW_HEIGHT, DB_ROW_HEIGHT, Q.Theme.Font.M, Q.Theme.Text.Secondary, collapseHandlers)
     frame.collapseButton:SetPoint("RIGHT", frame.titleFrame, "RIGHT", -Q.Theme.Padding.L, 0)
     
     local waypointHandlers = {
@@ -613,12 +631,12 @@ local function CreateRowFrame(index, row)
             tooltip:Hide()
         end
     }
-    frame.waypointButton = Q:CreateTransparentButton(nil, frame, "", DB_ROW_HEIGHT, DB_ROW_HEIGHT, Q.Theme.Font.M, Q.Theme.Background.Accent, waypointHandlers)
+    frame.waypointButton = Q:CreateButton(nil, frame, "", DB_ROW_HEIGHT, DB_ROW_HEIGHT, Q.Theme.Font.M, Q.Theme.Background.Accent, waypointHandlers)
     frame.waypointButton.icon = frame.waypointButton:CreateTexture(nil, "ARTWORK")
     frame.waypointButton.icon:SetAtlas("waypoint-mappin-minimap-untracked")
     frame.waypointButton.icon:SetSize(DB_ROW_HEIGHT * 0.9, DB_ROW_HEIGHT * 0.9)
     frame.waypointButton.icon:SetPoint("CENTER")
-    frame.waypointButton:SetPoint("RIGHT", frame.titleFrame, "RIGHT", -Q.Theme.Padding.L * 1.8, 0)
+    frame.waypointButton:SetPoint("RIGHT", frame.collapseButton, "LEFT", -Q:PixelPerfect(2), 0)
 
     return frame
 end
@@ -683,6 +701,7 @@ function QuestLog:RefreshAndPopulate()
         UpdateWaypointButton(frame)
         UpdateRowText(frame)
         
+        frame.sideGradient:SetShown(not row.isDungeon and true or false)
         frame.gradient:SetShown(row.isDungeon and true or false)
         frame.bottomBorder:SetShown(row.isDungeon and true or false)
         if row.isDungeon then
@@ -764,6 +783,18 @@ function QuestLog:OnEnable()
     end
 end
 
+-- QUEST_LOG_UPDATE fires in bursts, so refreshes are coalesced and skipped while the log is hidden
+-- (Toggle and Reload both refresh before showing it).
 function QuestLog:OnQuestStateChanged()
-    self:RefreshAndPopulate()
+    if not self.frame or not self.frame:IsShown() or self.refreshPending then
+        return
+    end
+
+    self.refreshPending = true
+    C_Timer.After(0.2, function()
+        self.refreshPending = false
+        if self.frame and self.frame:IsShown() then
+            self:RefreshAndPopulate()
+        end
+    end)
 end

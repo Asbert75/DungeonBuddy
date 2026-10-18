@@ -48,10 +48,6 @@ local Defaults = {
     profile = CopyTable(SharedDefaults),
     global = {
         version = 1,
-        ProfileBindings = {
-            EnableSpecProfiles = false,
-            SpecProfiles = {},
-        },
     },
 }
 
@@ -87,6 +83,9 @@ function Q:SetSetting(path, value)
     local lastKey = table.remove(keys)
     local node = self.DB.profile
     for _, key in ipairs(keys) do
+        if type(node[key]) ~= "table" then
+            node[key] = {}
+        end
         node = node[key]
     end
     node[lastKey] = value

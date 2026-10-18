@@ -30,12 +30,8 @@ local function GetSectionSettings(sectionName)
             path = "ShowNotificationOnLevelUp",
             title = "Notifications on level up",
             description = "Show a notification on level up when the first quest of a chain leading to a dungeon quest is available.",
-            onChange = function(value)
-                if value then
-                    Q.Notification:OnEnable()
-                else
-                    Q.Notification:OnDisable()
-                end
+            onChange = function()
+                Q.Notification:UpdateLevelUpRegistration()
             end,
         },
         {
@@ -58,12 +54,8 @@ local function GetSectionSettings(sectionName)
             path = "RemindOnZoneChange",
             title = "Reminders when switching to a new zone",
             description = "Show a notification when switching to a new zone if there are relevant quests available (not just chain starters).",
-            onChange = function(value)
-                if value then
-                    Q.AutoReminder:OnEnable()
-                else
-                    Q.AutoReminder:OnDisable()
-                end
+            onChange = function()
+                Q.AutoReminder:UpdateRegistration()
             end,
         },
         {
@@ -163,7 +155,7 @@ function Settings:CreateSection(sectionName, sectionTitle, anchorFrame)
         local rowHeight = rowHeights[index]
 
         local row = Q:CreateBackdropFrame("Setting_"..setting.path, sectionFrame, CONTENT_WIDTH - (2 * paddingM), rowHeight, "HIGH", "Secondary", "Default", 0.6, 0.6)
-        Q:SetPixelPerfectPoint(row, "TOPLEFT", sectionTitle, "BOTTOMLEFT", 0, -y)
+        Q:SetPixelPerfectPoint(row, "TOPLEFT", sectionFrame, "TOPLEFT", paddingM, -(paddingM + fontL + y))
         y = y + rowHeight
 
         row.gradient = row:CreateTexture(nil, "BACKGROUND", nil, 1)
@@ -187,7 +179,7 @@ function Settings:CreateSection(sectionName, sectionTitle, anchorFrame)
             end
         end)
         checkbox:SetFrameStrata("TOOLTIP")
-        Q:SetPixelPerfectPoint(checkbox, "RIGHT", row, "RIGHT", -paddingS, -1)
+        Q:SetPixelPerfectPoint(checkbox, "TOPRIGHT", row, "TOPRIGHT", -paddingS, -(math.floor((rowHeight - CHECKBOX_SIZE) / 2) + 1))
         checkbox:SetChecked(Q:GetSetting(setting.path) and true or false)
         self.settings[setting.path] = checkbox
     end
@@ -223,7 +215,7 @@ function Settings:Create()
 
     local contentContainer = CreateFrame("ScrollFrame", "DungeonBuddy_SettingsScrollFrame", frame, "UIPanelScrollFrameTemplate")
     self.contentContainer = contentContainer
-    Q:SetPixelPerfectPoint(contentContainer, "TOPLEFT", title, "BOTTOMLEFT", 0, -Q.Theme.Padding.S)
+    Q:SetPixelPerfectPoint(contentContainer, "TOPLEFT", frame, "TOPLEFT", paddingM, -(paddingM + Q.Theme.Font.XL + Q.Theme.Padding.S))
     Q:SetPixelPerfectPoint(contentContainer, "BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 2)
     contentContainer:EnableMouseWheel(true)
 
@@ -275,10 +267,23 @@ function Settings:Create()
         end
     end
 
+    -- Scroll offsets must be whole physical pixels, otherwise child borders render at differing thicknesses.
+    local function SnapScroll(offset)
+        local unit = Q:PixelPerfect(1)
+        return math.floor(offset / unit + 0.0001) * unit
+    end
+
+    contentContainer:HookScript("OnVerticalScroll", function(self, offset)
+        local snapped = SnapScroll(offset)
+        if math.abs(snapped - offset) > 0.00001 then
+            self:SetVerticalScroll(snapped)
+        end
+    end)
+
     contentContainer:SetScript("OnMouseWheel", function(self, delta)
-        local step = 10
-        local maxScroll = math.max(0, scrollChild:GetHeight() - self:GetHeight())
-        self:SetVerticalScroll(math.max(0, math.min(maxScroll, self:GetVerticalScroll() - delta * step)))
+        local step = Q:PixelPerfect(10)
+        local maxScroll = SnapScroll(math.max(0, scrollChild:GetHeight() - self:GetHeight()))
+        self:SetVerticalScroll(math.max(0, math.min(maxScroll, SnapScroll(self:GetVerticalScroll()) - delta * step)))
     end)
 
     --------------------------------------------------
@@ -351,7 +356,7 @@ function Settings:Create()
             end
         end
     }
-    local resetColorsButton = Q:CreateTransparentButton(nil, questColorContainer, "Reset Colors", 120, 40, Q.Theme.Font.M, Q.Theme.Status.Error, resetColorHandlers)
+    local resetColorsButton = Q:CreateButton(nil, questColorContainer, "Reset Colors", 120, 40, Q.Theme.Font.M, Q.Theme.Status.Error, resetColorHandlers)
     Q:SetPixelPerfectPoint(resetColorsButton, "BOTTOMRIGHT", questColorContainer, "BOTTOMRIGHT", -paddingS, paddingS)
 
     questLogSettingsFrame:SetHeight(resetColorsButton:GetHeight() + questLogSettingsFrame:GetHeight() + Q:PixelPerfect(paddingM) + questColorContainer:GetHeight())
@@ -365,6 +370,13 @@ function Settings:Create()
 
     self.frame:Hide()
     return frame
+end
+
+function Settings:RefreshCheckbox(path)
+    local checkbox = self.settings[path]
+    if checkbox then
+        checkbox:SetChecked(Q:GetSetting(path) and true or false)
+    end
 end
 
 function Settings:Toggle()

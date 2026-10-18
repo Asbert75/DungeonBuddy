@@ -1,14 +1,14 @@
 ## Interface: 16001, 16000
 ## Title: DungeonBuddy
+## Notes: Reminds you of quest chains that lead into dungeon quests and tracks them by dungeon.
 ## Author: Wicked
 ## Version: 1.5.5
 ## X-Curse-Project-ID: 1730648
 ## Category: Quests & Leveling
-## SavedVariables: DungeonBuddyDB
 ## SavedVariablesPerCharacter: DungeonBuddyCharDB
 ## IconTexture: Interface\Icons\inv_misc_steelweaponchain
 ## DefaultState: enabled
-## OptionalDeps: LibDBIcon-1.0, LibSharedMedia-3.0, SharedMedia_MyMedia, TomTom
+## OptionalDeps: LibDBIcon-1.0, TomTom
 
 # Libraries
 Libs\LibStub\LibStub.lua

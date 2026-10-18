@@ -24,13 +24,18 @@ function AutoReminder:ZoneChangedEventHandler()
     Q.Notification:AddToQueue(questsToNotify)
 end
 
+function AutoReminder:UpdateRegistration()
+    if Q:GetSetting("RemindOnZoneChange") then
+        self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "ZoneChangedEventHandler")
+    else
+        self:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
+    end
+end
+
 function AutoReminder:OnDisable()
-    self:UnregisterEvent("ZONE_CHANGED_NEW_AREA", "ZoneChangedEventHandler")
+    self:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
 end
 
 function AutoReminder:OnEnable()
-    if not Q:GetSetting("ShowNotificationOnLevelUp") or not Q:GetSetting("RemindOnZoneChange") then
-        return
-    end
-    self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "ZoneChangedEventHandler")
+    self:UpdateRegistration()
 end
