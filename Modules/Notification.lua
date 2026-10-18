@@ -48,7 +48,7 @@ function Notification:LevelUpEventHandler()
     self.queueIndex = 1
 
     for _, quest in ipairs(quests) do
-        if ((Q:GetSetting("ShowNotificationForAllQuests") and #quest.dungeons) or Q.API:IsDungeonQuestLineageStart(quest.id)) and quest.requiredLevel == playerLevel and Q.API:IsQuestAvailable(quest.id) then
+        if ((Q:GetSetting("ShowNotificationForAllQuests") and quest.dungeons and #quest.dungeons > 0) or Q.API:IsDungeonQuestLineageStart(quest.id)) and quest.requiredLevel == playerLevel and Q.API:IsQuestAvailable(quest.id) then
             table.insert(self.queue, quest)
 
             if Q:GetSetting("AutoWaypoint") then

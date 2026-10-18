@@ -43,6 +43,8 @@ function Addon:HandleDebugCommand(input)
 
     if arg1 == "quest" then
         TestNotificationQuest()
+    elseif arg1 == "levelup" then
+        Q.Notification:LevelUpEventHandler()
     elseif arg1 == "status" then
         if Q.Debug.Enabled then
             Q:PrettyPrint("Debug mode is currently enabled")
