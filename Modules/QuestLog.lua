@@ -473,37 +473,42 @@ local function CreateRowFrame(index, row)
     Q:SetPixelPerfectHeight(frame, DB_ROW_HEIGHT)
     Q:SetPixelPerfectPoint(frame, "TOPLEFT", QuestLog.scrollChild, "TOPLEFT", 1, 0)
 
-    frame.background = frame:CreateTexture(nil, "BACKGROUND")
-    frame.background:SetAllPoints(frame)
-    frame.background:SetColorTexture(unpack(Q.Theme.Background.Tertiary))
-    frame.background:SetAlpha(0.2)
+    local content = CreateFrame("Frame", nil, frame)
+    local actions = CreateFrame("Frame", nil, frame)
 
-    frame.gradient = frame:CreateTexture(nil, "BACKGROUND", nil, 1)
-    frame.gradient:SetAllPoints(frame)
-    frame.gradient:SetColorTexture(1, 1, 1, 1)
+    frame.content = content
+    frame.actions = actions
+
+    content.background = content:CreateTexture(nil, "BACKGROUND")
+    content.background:SetAllPoints(frame)
+    content.background:SetColorTexture(unpack(Q.Theme.Background.Tertiary))
+    content.background:SetAlpha(0.2)
+
+    content.gradient = content:CreateTexture(nil, "BACKGROUND", nil, 1)
+    content.gradient:SetAllPoints(content)
+    content.gradient:SetColorTexture(1, 1, 1, 1)
     local bottomR, bottomG, bottomB = unpack(Q.Theme.Text.Accent)
-    frame.gradient:SetGradient("VERTICAL", CreateColor(bottomR, bottomG, bottomB, 0.15), CreateColor(0, 0, 0, 0))
-    frame.gradient:Hide()
+    content.gradient:SetGradient("VERTICAL", CreateColor(bottomR, bottomG, bottomB, 0.15), CreateColor(0, 0, 0, 0))
+    content.gradient:Hide()
 
-    frame.sideGradient = frame:CreateTexture(nil, "BACKGROUND", nil, 1)
-    frame.sideGradient:SetAllPoints(frame)
-    frame.sideGradient:SetColorTexture(1, 1, 1, 1)
-    frame.sideGradient:SetGradient("HORIZONTAL", CreateColor(0, 0, 0, 0.05), CreateColor(0, 0, 0, 0))
-    frame.sideGradient:Hide()
+    content.sideGradient = content:CreateTexture(nil, "BACKGROUND", nil, 1)
+    content.sideGradient:SetAllPoints(content)
+    content.sideGradient:SetColorTexture(1, 1, 1, 1)
+    content.sideGradient:SetGradient("HORIZONTAL", CreateColor(0, 0, 0, 0.05), CreateColor(0, 0, 0, 0))
+    content.sideGradient:Hide()
 
-    frame.bottomBorder = frame:CreateTexture(nil, "OVERLAY")
-    frame.bottomBorder:SetColorTexture(unpack(Q.Theme.Text.Accent))
-    frame.bottomBorder:SetHeight(Q:PixelPerfect(1))
-    frame.bottomBorder:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", 0, 0)
-    frame.bottomBorder:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 0)
-    frame.bottomBorder:Hide()
+    content.bottomBorder = content:CreateTexture(nil, "OVERLAY")
+    content.bottomBorder:SetColorTexture(unpack(Q.Theme.Text.Accent))
+    content.bottomBorder:SetHeight(Q:PixelPerfect(1))
+    content.bottomBorder:SetPoint("BOTTOMLEFT", content, "BOTTOMLEFT", 0, 0)
+    content.bottomBorder:SetPoint("BOTTOMRIGHT", content, "BOTTOMRIGHT", 0, 0)
+    content.bottomBorder:Hide()
 
-    local leftBorder = frame:CreateTexture(nil, "OVERLAY")
-    frame.leftBorder = leftBorder
-    leftBorder:SetColorTexture(unpack(Q.Theme.Border.Accent))
-    leftBorder:SetWidth(Q:PixelPerfect(3))
-    leftBorder:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
-    leftBorder:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", 0, 0)
+    content.leftBorder = content:CreateTexture(nil, "OVERLAY")
+    content.leftBorder:SetColorTexture(unpack(Q.Theme.Border.Accent))
+    content.leftBorder:SetWidth(Q:PixelPerfect(3))
+    content.leftBorder:SetPoint("TOPLEFT", content, "TOPLEFT", 0, 0)
+    content.leftBorder:SetPoint("BOTTOMLEFT", content, "BOTTOMLEFT", 0, 0)
 
     --------------------------------------------------
     -- Create Title
