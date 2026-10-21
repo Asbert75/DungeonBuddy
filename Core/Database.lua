@@ -28,14 +28,14 @@ local SharedDefaults = {
     -- Settings
     ShowNotificationOnLevelUp = true,
     ShowNotificationForAllQuests = false,
-    ShowAllQuestsForAvailableDungeon = false,
+    ShowAllQuestsForAvailableInstance = false,
     RemindOnZoneChange = true,
     HideCompletedQuests = false,
     AutoWaypoint = false,
     ShowSuggestedQuestLevel = true,
 
     -- Tracking Data
-    CollapsedDungeons = {},
+    CollapsedInstances = {},
     CollapsedQuests = {},
 
     QuestColorUnavailable = { r = 163/255, g = 59/255, b = 57/255 },

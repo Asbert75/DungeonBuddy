@@ -4,14 +4,14 @@ Notification.queue = {}
 Notification.queueIndex = 1
 Q.Notification = Notification
 
-local function FormatDungeonRelationships(quest)
+local function FormatInstanceRelationships(quest)
     local groups = {}
     local groupOrder = {}
 
-    for _, dungeon in ipairs(Q.API:GetDungeonsForQuest(quest.id)) do
-        if dungeon then
-            local instance, wing = dungeon.name:match("^(.+):%s*(.+)$")
-            local groupName = instance or dungeon.name
+    for _, instance in ipairs(Q.API:GetInstancesForQuest(quest.id)) do
+        if instance then
+            local instanceName, wing = instance.name:match("^(.+):%s*(.+)$")
+            local groupName = instanceName or instance.name
             local group = groups[groupName]
 
             if not group then
@@ -48,7 +48,7 @@ function Notification:LevelUpEventHandler()
     self.queueIndex = 1
 
     for _, quest in ipairs(quests) do
-        if ((Q:GetSetting("ShowNotificationForAllQuests") and quest.dungeons and #quest.dungeons > 0) or Q.API:IsDungeonQuestLineageStart(quest.id)) and quest.requiredLevel == playerLevel and Q.API:IsQuestAvailable(quest.id) then
+        if ((Q:GetSetting("ShowNotificationForAllQuests") and quest.instances and #quest.instances > 0) or Q.API:IsInstanceQuestLineageStart(quest.id)) and quest.requiredLevel == playerLevel and Q.API:IsQuestAvailable(quest.id) then
             table.insert(self.queue, quest)
 
             if Q:GetSetting("AutoWaypoint") then
@@ -71,7 +71,7 @@ function Notification:Create()
     --------------------------------------------------
     -- Create Notification Frame
     --------------------------------------------------
-    self.frame = Q:CreateBackdropFrame('DungeonBuddy_NotificationFrame', UIParent, 500, 300, "HIGH", "Primary", "Accent", 0.9, 0.9)
+    self.frame = Q:CreateBackdropFrame('InstanceBuddy_NotificationFrame', UIParent, 500, 300, "HIGH", "Primary", "Accent", 0.9, 0.9)
 
     self.frame:SetMovable(true)
     self.frame:EnableMouse(true)
@@ -124,20 +124,20 @@ function Notification:Create()
     Q:SetPixelPerfectPoint(self.notificationProgress, "LEFT", self.notificationTitle, "RIGHT", 5, 0)
 
     --------------------------------------------------
-    -- Dungeon Name
+    -- Instance Name
     --------------------------------------------------
-    self.dungeonName = Q:CreateText("DungeonName", self.frame, "DUNGEON NAME", fontS, "Accent")
-    Q:SetPixelPerfectPoint(self.dungeonName, "TOPLEFT", self.notificationIcon, "BOTTOMLEFT", 0, -paddingM)
+    self.instanceName = Q:CreateText("InstanceName", self.frame, "INSTANCE NAME", fontS, "Accent")
+    Q:SetPixelPerfectPoint(self.instanceName, "TOPLEFT", self.notificationIcon, "BOTTOMLEFT", 0, -paddingM)
 
     --------------------------------------------------
     -- Quest Name
     --------------------------------------------------
     self.questName = Q:CreateText("QuestName", self.frame, "QUEST NAME", fontXL, "Primary")
-    Q:SetPixelPerfectPoint(self.questName, "TOPLEFT", self.dungeonName, "BOTTOMLEFT", 0, -paddingS)
+    Q:SetPixelPerfectPoint(self.questName, "TOPLEFT", self.instanceName, "BOTTOMLEFT", 0, -paddingS)
 
     self.questClassIcon = Q:CreateTexture("QuestClassIcon", self.frame, 20, 20)
     self.questClassIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-    Q:SetPixelPerfectPoint(self.questClassIcon, "TOPLEFT", self.dungeonName, "BOTTOMLEFT", 0, -paddingS)
+    Q:SetPixelPerfectPoint(self.questClassIcon, "TOPLEFT", self.instanceName, "BOTTOMLEFT", 0, -paddingS)
 
     self.questProfessionIcon = Q:CreateTexture("QuestProfessionIcon", self.frame, 20, 20)
     self.questProfessionIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
@@ -321,7 +321,7 @@ end
 local function UpdateClassIcon(questClass, questProfession)
     local classIconTexture = Q.API:GetClassIconTexture(questClass)
     local professionIconTexture = Q.API:GetProfessionIconTexture(questProfession)
-    local previous = Notification.dungeonName
+    local previous = Notification.instanceName
     local previousPoint, offsetX, offsetY = "BOTTOMLEFT", 0, -Q.Theme.Padding.S
     local paddingS = Q.Theme.Padding.S
 
@@ -378,12 +378,12 @@ function Notification:DisplayQuest(quest, isPrevious)
 
     -- Update window title
     self.notificationTitle:SetText("A NEW QUEST CHAIN IS AVAILABLE")
-    if (not quest.prerequisites or #quest.prerequisites == 0) and (quest.dungeons and #quest.dungeons > 0) then
-        self.notificationTitle:SetText("A NEW DUNGEON QUEST IS AVAILABLE")
+    if (not quest.prerequisites or #quest.prerequisites == 0) and (quest.instances and #quest.instances > 0) then
+        self.notificationTitle:SetText("A NEW INSTANCE QUEST IS AVAILABLE")
     end
 
-    -- Update Dungeon Name Text
-    self.dungeonName:SetText(FormatDungeonRelationships(quest))
+    -- Update Instance Name Text
+    self.instanceName:SetText(FormatInstanceRelationships(quest))
     
     -- Update Quest Title
     local questTitle = (Q:GetSetting("ShowSuggestedQuestLevel") and quest.suggestedLevel and string.format("[%d] %s", quest.suggestedLevel, quest.name)) or quest.name

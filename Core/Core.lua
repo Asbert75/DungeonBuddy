@@ -1,12 +1,12 @@
 local ADDON_NAME, Q = ...
 local Addon = LibStub("AceAddon-3.0"):NewAddon(ADDON_NAME, "AceConsole-3.0", "AceEvent-3.0")
 
-Q.Dungeons = {}
+Q.Instances = {}
 Q.Quests = {}
-Q.DungeonById = {}
+Q.InstanceById = {}
 Q.QuestById = {}
-Q.QuestsByDungeonId = {}
-Q.DungeonByQuestId =  {}
+Q.QuestsByInstanceId = {}
+Q.InstanceByQuestId =  {}
 
 Q.Debug = {
     Enabled = false,
@@ -20,7 +20,7 @@ function Addon:OnInitialize()
     Q.DB = LibStub("AceDB-3.0"):New("DungeonBuddyCharDB", Q.GetDefaultDB())
 
     Addon:RegisterChatCommand("db", "HandleCommand")
-    Addon:RegisterChatCommand("dungeonbuddy", "HandleCommand")
+    Addon:RegisterChatCommand("instancebuddy", "HandleCommand")
     Addon:RegisterChatCommand("dbdebug", "HandleDebugCommand")
 
     Q:CreateMinimapButton()

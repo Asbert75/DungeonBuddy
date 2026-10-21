@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Removed the unused account-wide saved variable and unused optional dependencies from the addon metadata
 - The quest tracker no longer rebuilds on every quest log event while hidden, and rapid updates are now debounced
-- Checking whether a dungeon has available quests no longer scans every quest in the game
+- Checking whether a instance has available quests no longer scans every quest in the game
 
 ## [1.5.5] - 2026-10-15
 
@@ -28,7 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added the Wolfsbane quest line for horde paladins
 - Added a "Reset Colors" button to the quest color settings
-- Added a setting to show all quests for a dungeon as soon as a single one of its quests is available to the player. If the setting is enabled, quests you are not high enough level for now get a separate "Requires Level" row below them
+- Added a setting to show all quests for a instance as soon as a single one of its quests is available to the player. If the setting is enabled, quests you are not high enough level for now get a separate "Requires Level" row below them
 
 ### Changed
 
@@ -43,7 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Entering a dungeon should no longer cause a LUA error in the Auto reminder module
+- Entering a instance should no longer cause a LUA error in the Auto reminder module
 
 ## [1.5.2] - 2026-10-14
 
@@ -70,7 +70,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Corrected the logic behind notifications to only show notifications for quests that either start a chain, or for quests that are directly inside the dungeon
+- Corrected the logic behind notifications to only show notifications for quests that either start a chain, or for quests that are directly inside the instance
 
 ## [1.5.0] - 2026-10-11
 
@@ -96,14 +96,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - A quest may not correctly have multiple sources (Class quests for example that can be started in all major cities)
-- Updated how quest/dungeon relations are built in an attempt to simplify both usage but also updates going forward
+- Updated how quest/instance relations are built in an attempt to simplify both usage but also updates going forward
 
 ## [1.3.0] - 2026-10-09
 
 ### Changed
 
 - Updated minimap icon to use the weapon chain enchant icon
-- Updated quest tracker to hide dungeons if all quests are completed when "Hide completed quests" is checked
+- Updated quest tracker to hide instances if all quests are completed when "Hide completed quests" is checked
 
 ### Added
 
@@ -128,4 +128,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added a new setting that allows users to determine if they want notifications for all dungeon quests, not just ones that start a quest chain. Off by default.
+- Added a new setting that allows users to determine if they want notifications for all instance quests, not just ones that start a quest chain. Off by default.
