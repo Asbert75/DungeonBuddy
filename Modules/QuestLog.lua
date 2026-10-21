@@ -420,17 +420,17 @@ local function UpdateQuestActionButtons(frame)
     local isQuest = not frame.row.isInstance and not frame.row.isSharedSummary
     if isQuest then
         frame.infoButton:Show()
-        local isInQuestLog = Q.API:IsQuestInQuestLog(frame.row.id)
-        frame.trackButton:SetShown(isInQuestLog)
-        if not isInQuestLog then
-            return
-        end
-        local watchType = C_QuestLog.GetQuestWatchType and C_QuestLog.GetQuestWatchType(frame.row.id)
-        frame.trackButton:SetColor(watchType ~= nil and Q.Theme.Status.Success or frame.trackButton.untrackedColor)
-        frame.trackButton.label:SetTextColor(unpack(watchType ~= nil and Q.Theme.Text.Primary or frame.trackButton.untrackedColor))
+        -- local isInQuestLog = Q.API:IsQuestInQuestLog(frame.row.id)
+        -- frame.trackButton:SetShown(isInQuestLog)
+        -- if not isInQuestLog then
+        --     return
+        -- end
+        -- local watchType = C_QuestLog.GetQuestWatchType and C_QuestLog.GetQuestWatchType(frame.row.id)
+        -- frame.trackButton:SetColor(watchType ~= nil and Q.Theme.Status.Success or frame.trackButton.untrackedColor)
+        -- frame.trackButton.label:SetTextColor(unpack(watchType ~= nil and Q.Theme.Text.Primary or frame.trackButton.untrackedColor))
     else
         frame.infoButton:Hide()
-        frame.trackButton:Hide()
+        -- frame.trackButton:Hide()
     end
 end
 
@@ -659,31 +659,31 @@ local function CreateRowFrame(index, row)
     frame.infoButton = Q:CreateButton(nil, frame, "i", DB_ROW_HEIGHT, DB_ROW_HEIGHT, Q.Theme.Font.M, Q.Theme.Status.Info, {
         OnClick = function()
             if frame.row and not frame.row.isInstance and not frame.row.isSharedSummary then
-                Q.QuestInfo:Show(frame.row)
+                Q.InfoFrame:Show(frame.row)
             end
         end,
     })
     frame.infoButton:SetPoint("RIGHT", frame.waypointButton, "LEFT", -Q:PixelPerfect(2), 0)
 
-    local trackYellow = Q.Theme.DifficultyColors.Yellow
-    frame.trackButton = Q:CreateButton(nil, frame, "t", DB_ROW_HEIGHT, DB_ROW_HEIGHT, Q.Theme.Font.M, { trackYellow.r, trackYellow.g, trackYellow.b, 1 }, {
-        OnClick = function()
-            local row = frame.row
-            if not row or row.isInstance or row.isSharedSummary then
-                return
-            end
+    -- local trackYellow = Q.Theme.DifficultyColors.Yellow
+    -- frame.trackButton = Q:CreateButton(nil, frame, "t", DB_ROW_HEIGHT, DB_ROW_HEIGHT, Q.Theme.Font.M, { trackYellow.r, trackYellow.g, trackYellow.b, 1 }, {
+    --     OnClick = function()
+    --         local row = frame.row
+    --         if not row or row.isInstance or row.isSharedSummary then
+    --             return
+    --         end
 
-            local watchType = C_QuestLog.GetQuestWatchType and C_QuestLog.GetQuestWatchType(row.id)
-            if watchType ~= nil then
-                C_QuestLog.RemoveQuestWatch(row.id)
-            else
-                C_QuestLog.AddQuestWatch(row.id)
-            end
-            UpdateQuestActionButtons(frame)
-        end,
-    })
-    frame.trackButton.untrackedColor = { trackYellow.r, trackYellow.g, trackYellow.b, 1 }
-    frame.trackButton:SetPoint("RIGHT", frame.infoButton, "LEFT", -Q:PixelPerfect(2), 0)
+    --         local watchType = C_QuestLog.GetQuestWatchType and C_QuestLog.GetQuestWatchType(row.id)
+    --         if watchType ~= nil then
+    --             C_QuestLog.RemoveQuestWatch(row.id)
+    --         else
+    --             C_QuestLog.AddQuestWatch(row.id)
+    --         end
+    --         UpdateQuestActionButtons(frame)
+    --     end,
+    -- })
+    -- frame.trackButton.untrackedColor = { trackYellow.r, trackYellow.g, trackYellow.b, 1 }
+    -- frame.trackButton:SetPoint("RIGHT", frame.infoButton, "LEFT", -Q:PixelPerfect(2), 0)
 
     return frame
 end
