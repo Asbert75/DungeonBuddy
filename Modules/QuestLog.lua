@@ -323,8 +323,8 @@ local function SetGradientColor(frame, settingPath)
 end
 
 local function UpdateClassIcon(frame)
-    local classIcon = frame.titleFrame.classIcon
-    local professionIcon = frame.titleFrame.professionIcon
+    local classIcon = frame.content.titleFrame.classIcon
+    local professionIcon = frame.content.titleFrame.professionIcon
     local classIconTexture = not frame.row.isInstance and Q.API:GetClassIconTexture(frame.row.class)
     local professionIconTexture = not frame.row.isInstance and Q.API:GetProfessionIconTexture(frame.row.profession)
 
@@ -341,7 +341,7 @@ local function UpdateClassIcon(frame)
         if classIconTexture then
             Q:SetPixelPerfectPoint(professionIcon, "LEFT", classIcon, "RIGHT", Q.Theme.Padding.S, 0)
         else
-            Q:SetPixelPerfectPoint(professionIcon, "LEFT", frame.titleFrame.title, "RIGHT", Q.Theme.Padding.S, 0)
+            Q:SetPixelPerfectPoint(professionIcon, "LEFT", frame.content.titleFrame.title, "RIGHT", Q.Theme.Padding.S, 0)
         end
         professionIcon:Show()
     else
@@ -351,41 +351,41 @@ end
 
 local function UpdateRowAppearance(frame, playerInfo)
     Q:SetPixelPerfectHeight(frame, DB_ROW_HEIGHT)
-    Q:SetPixelPerfectHeight(frame.titleFrame, DB_ROW_HEIGHT)
+    Q:SetPixelPerfectHeight(frame.content.titleFrame, DB_ROW_HEIGHT)
 
     if frame.row.isSharedSummary then
-        Q:SetTextColor(frame.titleFrame.title, "Disabled")
-        frame.leftBorder:SetColorTexture(unpack(Q.Theme.Border.Accent))
-        frame.sideGradient:SetGradient("HORIZONTAL", CreateColor(Q.Theme.Border.Accent[1], Q.Theme.Border.Accent[2], Q.Theme.Border.Accent[3], 0.03), CreateColor(0, 0, 0, 0))
+        Q:SetTextColor(frame.content.titleFrame.title, "Disabled")
+        frame.content.leftBorder:SetColorTexture(unpack(Q.Theme.Border.Accent))
+        frame.content.sideGradient:SetGradient("HORIZONTAL", CreateColor(Q.Theme.Border.Accent[1], Q.Theme.Border.Accent[2], Q.Theme.Border.Accent[3], 0.03), CreateColor(0, 0, 0, 0))
     elseif frame.row.isInstance then
         local levelColor = Q.API:GetDifficultyColor(playerInfo.level, frame.row.minLevel)
-        frame.titleFrame.level:SetTextColor(levelColor.r, levelColor.g, levelColor.b, 1)
+        frame.content.titleFrame.level:SetTextColor(levelColor.r, levelColor.g, levelColor.b, 1)
 
-        Q:SetTextColor(frame.titleFrame.title, "Primary")
-        frame.leftBorder:SetColorTexture(unpack(Q.Theme.Text.Primary))
+        Q:SetTextColor(frame.content.titleFrame.title, "Primary")
+        frame.content.leftBorder:SetColorTexture(unpack(Q.Theme.Text.Primary))
 
         Q:SetPixelPerfectHeight(frame, DB_ROW_HEIGHT + INSTANCE_ROW_EXTRA_HEIGHT)
-        Q:SetPixelPerfectHeight(frame.titleFrame, DB_ROW_HEIGHT + INSTANCE_ROW_EXTRA_HEIGHT)
+        Q:SetPixelPerfectHeight(frame.content.titleFrame, DB_ROW_HEIGHT + INSTANCE_ROW_EXTRA_HEIGHT)
 
 
-        frame.gradient:SetGradient("VERTICAL", CreateColor(levelColor.r, levelColor.g, levelColor.b, 0.15), CreateColor(0, 0, 0, 0))
-        frame.bottomBorder:SetColorTexture(levelColor.r, levelColor.g, levelColor.b, 1)
+        frame.content.gradient:SetGradient("VERTICAL", CreateColor(levelColor.r, levelColor.g, levelColor.b, 0.15), CreateColor(0, 0, 0, 0))
+        frame.content.bottomBorder:SetColorTexture(levelColor.r, levelColor.g, levelColor.b, 1)
     elseif Q.API:IsQuestCompleted(frame.row.id) then
-        SetQuestStatusColor(frame.titleFrame.title, "QuestColorCompleted", "Disabled")
-        SetBorderTextureColor(frame.leftBorder, "QuestColorCompleted")
-        SetGradientColor(frame.sideGradient, "QuestColorCompleted")
+        SetQuestStatusColor(frame.content.titleFrame.title, "QuestColorCompleted", "Disabled")
+        SetBorderTextureColor(frame.content.leftBorder, "QuestColorCompleted")
+        SetGradientColor(frame.content.sideGradient, "QuestColorCompleted")
     elseif Q.API:IsQuestInQuestLog(frame.row.id) then
-        SetQuestStatusColor(frame.titleFrame.title, "QuestColorInProgress", "Success")
-        SetBorderTextureColor(frame.leftBorder, "QuestColorInProgress")
-        SetGradientColor(frame.sideGradient, "QuestColorInProgress")
+        SetQuestStatusColor(frame.content.titleFrame.title, "QuestColorInProgress", "Success")
+        SetBorderTextureColor(frame.content.leftBorder, "QuestColorInProgress")
+        SetGradientColor(frame.content.sideGradient, "QuestColorInProgress")
     elseif Q.API:IsQuestAvailable(frame.row.id) then
-        SetQuestStatusColor(frame.titleFrame.title, "QuestColorAvailable", "Accent")
-        SetBorderTextureColor(frame.leftBorder, "QuestColorAvailable")
-        SetGradientColor(frame.sideGradient, "QuestColorAvailable")
+        SetQuestStatusColor(frame.content.titleFrame.title, "QuestColorAvailable", "Accent")
+        SetBorderTextureColor(frame.content.leftBorder, "QuestColorAvailable")
+        SetGradientColor(frame.content.sideGradient, "QuestColorAvailable")
     else
-        SetQuestStatusColor(frame.titleFrame.title, "QuestColorUnavailable", "Emphasized")
-        SetBorderTextureColor(frame.leftBorder, "QuestColorUnavailable")
-        SetGradientColor(frame.sideGradient, "QuestColorUnavailable")
+        SetQuestStatusColor(frame.content.titleFrame.title, "QuestColorUnavailable", "Emphasized")
+        SetBorderTextureColor(frame.content.leftBorder, "QuestColorUnavailable")
+        SetGradientColor(frame.content.sideGradient, "QuestColorUnavailable")
     end
 end
 
@@ -421,19 +421,19 @@ local function UpdateRowText(frame)
     local pixelPerfect = Q:PixelPerfect(1)
 
     if row.isInstance then
-        frame.titleFrame.level:SetText(string.format(" %s-%s", row.minLevel, row.maxLevel))
+        frame.content.titleFrame.level:SetText(string.format(" %s-%s", row.minLevel, row.maxLevel))
 
-        frame.titleFrame.title:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * Q.Theme.Font.XL)
-        Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", Q.Theme.Padding.S, 0)
+        frame.content.titleFrame.title:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * Q.Theme.Font.XL)
+        Q:SetPixelPerfectPoint(frame.content.titleFrame.title, "LEFT", frame.content.titleFrame, "LEFT", Q.Theme.Padding.S, 0)
     else
-        frame.titleFrame.level:SetText("")
+        frame.content.titleFrame.level:SetText("")
 
         if row.isMainQuest then
-            frame.titleFrame.title:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * Q.Theme.Font.M)
-            Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", 2 * Q.Theme.Padding.S, 0)
+            frame.content.titleFrame.title:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * Q.Theme.Font.M)
+            Q:SetPixelPerfectPoint(frame.content.titleFrame.title, "LEFT", frame.content.titleFrame, "LEFT", 2 * Q.Theme.Padding.S, 0)
         else
-            frame.titleFrame.title:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * Q.Theme.Font.M)
-            Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", (3 + (row.lineageDepth or 0)) * Q.Theme.Padding.S, 0)
+            frame.content.titleFrame.title:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * Q.Theme.Font.M)
+            Q:SetPixelPerfectPoint(frame.content.titleFrame.title, "LEFT", frame.content.titleFrame, "LEFT", (3 + (row.lineageDepth or 0)) * Q.Theme.Padding.S, 0)
         end
     end
 
@@ -444,7 +444,7 @@ local function UpdateRowText(frame)
         title = "B: " .. title
     end
 
-    frame.titleFrame.title:SetText(title)
+    frame.content.titleFrame.title:SetText(title)
 end
 
 local function CreateOrUpdateNoQuestsFoundFrame(playerInfo)
@@ -513,17 +513,17 @@ local function CreateRowFrame(index, row)
     --------------------------------------------------
     -- Create Title
     --------------------------------------------------
-    frame.titleFrame = CreateFrame("Frame", nil, frame)
-    frame.titleFrame:SetWidth(QuestLog.scrollChild:GetWidth())
-    Q:SetPixelPerfectHeight(frame.titleFrame, DB_ROW_HEIGHT)
-    Q:SetPixelPerfectPoint(frame.titleFrame, "TOPLEFT", frame, "TOPLEFT", 0, 0)
+    frame.content.titleFrame = CreateFrame("Frame", nil, frame)
+    frame.content.titleFrame:SetWidth(QuestLog.scrollChild:GetWidth())
+    Q:SetPixelPerfectHeight(frame.content.titleFrame, DB_ROW_HEIGHT)
+    Q:SetPixelPerfectPoint(frame.content.titleFrame, "TOPLEFT", frame, "TOPLEFT", 0, 0)
 
-    frame.titleFrame.title = Q:CreateText(nil, frame.titleFrame, row.name, row.isInstance and Q.Theme.Font.XL or Q.Theme.Font.M)
-    Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", Q.Theme.Padding.S, 0)
-    frame.titleFrame.title:SetJustifyH("LEFT")
+    frame.content.titleFrame.title = Q:CreateText(nil, frame.content.titleFrame, row.name, row.isInstance and Q.Theme.Font.XL or Q.Theme.Font.M)
+    Q:SetPixelPerfectPoint(frame.content.titleFrame.title, "LEFT", frame.content.titleFrame, "LEFT", Q.Theme.Padding.S, 0)
+    frame.content.titleFrame.title:SetJustifyH("LEFT")
 
-    frame.titleFrame.title:EnableMouse(true)
-    frame.titleFrame.title:SetScript("OnEnter", function(self)
+    frame.content.titleFrame.title:EnableMouse(true)
+    frame.content.titleFrame.title:SetScript("OnEnter", function(self)
         local hoveredRow = frame.row
         local tooltip = Q:GetTooltip()
         if hoveredRow and hoveredRow.prerequisiteType == Q.PrerequisiteType.ANY then
@@ -538,23 +538,23 @@ local function CreateRowFrame(index, row)
             tooltip:Show()
         end
     end)
-    frame.titleFrame.title:SetScript("OnLeave", function()
+    frame.content.titleFrame.title:SetScript("OnLeave", function()
         local tooltip = Q:GetTooltip()
         tooltip:Hide()
     end)
 
-    frame.titleFrame.level = Q:CreateText(nil, frame.titleFrame, "", Q.Theme.Font.L)
-    Q:SetPixelPerfectPoint(frame.titleFrame.level, "LEFT", frame.titleFrame.title, "RIGHT", 2, 0)
-    frame.titleFrame.level:SetJustifyH("LEFT")
+    frame.content.titleFrame.level = Q:CreateText(nil, frame.content.titleFrame, "", Q.Theme.Font.L)
+    Q:SetPixelPerfectPoint(frame.content.titleFrame.level, "LEFT", frame.content.titleFrame.title, "RIGHT", 2, 0)
+    frame.content.titleFrame.level:SetJustifyH("LEFT")
 
-    frame.titleFrame.classIcon = frame.titleFrame:CreateTexture(nil, "ARTWORK")
-    Q:SetPixelPerfectPoint(frame.titleFrame.classIcon, "LEFT", frame.titleFrame.title, "RIGHT", Q.Theme.Padding.S, 0)
-    Q:SetPixelPerfectSize(frame.titleFrame.classIcon, 16, 16)
-    frame.titleFrame.classIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+    frame.content.titleFrame.classIcon = frame.content.titleFrame:CreateTexture(nil, "ARTWORK")
+    Q:SetPixelPerfectPoint(frame.content.titleFrame.classIcon, "LEFT", frame.content.titleFrame.title, "RIGHT", Q.Theme.Padding.S, 0)
+    Q:SetPixelPerfectSize(frame.content.titleFrame.classIcon, 16, 16)
+    frame.content.titleFrame.classIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 
-    frame.titleFrame.professionIcon = frame.titleFrame:CreateTexture(nil, "ARTWORK")
-    Q:SetPixelPerfectSize(frame.titleFrame.professionIcon, 16, 16)
-    frame.titleFrame.professionIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+    frame.content.titleFrame.professionIcon = frame.content.titleFrame:CreateTexture(nil, "ARTWORK")
+    Q:SetPixelPerfectSize(frame.content.titleFrame.professionIcon, 16, 16)
+    frame.content.titleFrame.professionIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 
     --------------------------------------------------
     -- Create Action Buttons
@@ -592,7 +592,7 @@ local function CreateRowFrame(index, row)
         end
     }
     frame.collapseButton = Q:CreateButton(nil, frame, "+", DB_ROW_HEIGHT, DB_ROW_HEIGHT, Q.Theme.Font.M, Q.Theme.Text.Secondary, collapseHandlers)
-    frame.collapseButton:SetPoint("RIGHT", frame.titleFrame, "RIGHT", -Q.Theme.Padding.L, 0)
+    frame.collapseButton:SetPoint("RIGHT", frame.content.titleFrame, "RIGHT", -Q.Theme.Padding.L, 0)
     
     local waypointHandlers = {
         OnClick = function(self)
@@ -706,15 +706,15 @@ function QuestLog:RefreshAndPopulate()
         UpdateWaypointButton(frame)
         UpdateRowText(frame)
         
-        frame.sideGradient:SetShown(not row.isInstance and true or false)
-        frame.gradient:SetShown(row.isInstance and true or false)
-        frame.bottomBorder:SetShown(row.isInstance and true or false)
+        frame.content.sideGradient:SetShown(not row.isInstance and true or false)
+        frame.content.gradient:SetShown(row.isInstance and true or false)
+        frame.content.bottomBorder:SetShown(row.isInstance and true or false)
         if row.isInstance then
-            frame.background:SetAlpha(0)
-            frame.leftBorder:SetAlpha(0)
+            frame.content.background:SetAlpha(0)
+            frame.content.leftBorder:SetAlpha(0)
         else
-            frame.background:SetAlpha(0.2)
-            frame.leftBorder:SetAlpha(1)
+            frame.content.background:SetAlpha(0.2)
+            frame.content.leftBorder:SetAlpha(1)
         end
 
         local rowOffset
