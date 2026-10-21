@@ -71,7 +71,7 @@ function Notification:Create()
     --------------------------------------------------
     -- Create Notification Frame
     --------------------------------------------------
-    self.frame = Q:CreateBackdropFrame('InstanceBuddy_NotificationFrame', UIParent, 500, 300, "HIGH", "Primary", "Accent", 0.9, 0.9)
+    self.frame = Q:CreateBackdropFrame('DungeonBuddy_NotificationFrame', UIParent, 500, 300, "HIGH", "Primary", "Accent", 0.9, 0.9)
 
     self.frame:SetMovable(true)
     self.frame:EnableMouse(true)

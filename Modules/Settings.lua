@@ -63,7 +63,7 @@ local function GetSectionSettings(sectionName)
             type = "checkbox",
             path = "HideCompletedQuests",
             title = "Hide completed quests",
-            description = "Remove completed quests from the instance buddy tracker.",
+            description = "Remove completed quests from the Dungeon Buddy tracker.",
             onChange = function()
                 if Q.QuestLog and Q.QuestLog.frame then
                     Q.QuestLog:RefreshAndPopulate()

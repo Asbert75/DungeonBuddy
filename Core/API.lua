@@ -459,7 +459,7 @@ local function AddWaypoint(location, title)
 
     tomtom:AddWaypoint(tonumber(location.mapId), tonumber(location.x), tonumber(location.y), {
         title = title,
-        from = "Instance Buddy",
+        from = "Dungeon Buddy",
         persistent = true,
     })
 end
