@@ -1,6 +1,7 @@
 local _, Q = ...
 
 Q.Instances = {
+    --#region Dungeons
     ["Hall of Thanes"] = {
         id = 1,
         name = "Hall of Thanes",
@@ -99,7 +100,7 @@ Q.Instances = {
         location = { mapId = 1421, x = 0.693, y = 0.455 },
         minLevel = 28,
         suggestedLevel = 30,
-        maxLevel = 34
+        maxLevel = 33
     },
     ["Razorfen Kraul"] = {
         id = 11,
@@ -141,6 +142,16 @@ Q.Instances = {
         suggestedLevel = 33,
         maxLevel = 40
     },
+    ["The Drowned City"] = {
+        id = 30,
+        name = "The Drowned City",
+        continent = "Eastern Kingdoms",
+        zone = "Stranglethorn Vale",
+        location = { mapId = 1434, x = 0.223, y = 0.395 },
+        minLevel = 35,
+        suggestedLevel = 37,
+        maxLevel = 40
+    },
     ["SM: Armory"] = {
         id = 15,
         name = "SM: Armory",
@@ -171,6 +182,16 @@ Q.Instances = {
         suggestedLevel = 38,
         maxLevel = 45
     },
+    ["Krol'dok Stronghold"] = {
+        id = 32,
+        name = "Krol'dok Stronghold",
+        continent = "Eastern Kingdoms",
+        zone = "Riverglades",
+        location = { mapId = 2548, x = 0.448, y = 0.27 },
+        minLevel = 40,
+        suggestedLevel = 42,
+        maxLevel = 45
+    },
     ["Uldaman"] = {
         id = 18,
         name = "Uldaman",
@@ -190,6 +211,16 @@ Q.Instances = {
         minLevel = 45,
         suggestedLevel = 44,
         maxLevel = 51
+    },
+    ["Alcaz Prison"] = {
+        id = 33,
+        name = "Alcaz Prison",
+        continent = "Kalimdor",
+        zone = "Dustwallow Marsh",
+        location = { mapId = 1445, x = 0.755, y = 0.178 },
+        minLevel = 48,
+        suggestedLevel = 50,
+        maxLevel = 53
     },
     ["Maraudon"] = {
         id = 20,
@@ -221,6 +252,16 @@ Q.Instances = {
         suggestedLevel = 55,
         maxLevel = 60
     },
+    ["Blackmaw Hold"] = {
+        id = 34,
+        name = "Blackmaw Hold",
+        continent = "Kalimdor",
+        zone = "Azshara",
+        location = { mapId = 1447, x = 0.393, y = 0.322 },
+        minLevel = 55,
+        suggestedLevel = 57,
+        maxLevel = 60
+    },
     ["Dire Maul: East"] = {
         id = 23,
         name = "Dire Maul: East",
@@ -229,6 +270,16 @@ Q.Instances = {
         location = { mapId = 1444, x = 0.59, y = 0.45 },
         minLevel = 55,
         suggestedLevel = 54,
+        maxLevel = 60
+    },
+    ["Shaper's Terrace"] = {
+        id = 35,
+        name = "Shaper's Terrace",
+        continent = "Kalimdor",
+        zone = "Un'Goro Crater",
+        location = { mapId = 1449, x = 0.329, y = 0.197 },
+        minLevel = 58,
+        suggestedLevel = 59,
         maxLevel = 60
     },
     ["Dire Maul: West"] = {
@@ -291,4 +342,87 @@ Q.Instances = {
         suggestedLevel = 58,
         maxLevel = 60
     },
+    --#endregion
+    --#region Raids
+    ["Onyxia's Lair"] = {
+        id = 36,
+        name = "Onyxia's Lair",
+        continent = "Eastern Kingdoms",
+        zone = "Dustwallow Marsh",
+        location = { mapId = 1430, x = 0.45, y = 0.75 },
+        minLevel = 60,
+        suggestedLevel = 60,
+        maxLevel = 60
+    },
+    ["Molten Core"] = {
+        id = 37,
+        name = "Molten Core",
+        continent = "Eastern Kingdoms",
+        zone = "Blackrock Mountain",
+        location = { mapId = 1428, x = 0.284, y = 0.285},
+        minLevel = 60,
+        suggestedLevel = 60,
+        maxLevel = 60
+    },
+    ["Blackwing Lair"] = {
+        id = 38,
+        name = "Blackwing Lair",
+        continent = "Eastern Kingdoms",
+        zone = "Blackrock Mountain",
+        location = { mapId = 1428, x = 0.284, y = 0.285 },
+        minLevel = 60,
+        suggestedLevel = 60,
+        maxLevel = 60
+    },
+    ["The Barrow Deeps"] = {
+        id = 39,
+        name = "The Barrow Deeps",
+        continent = "Kalimdor",
+        zone = "Mount Hyjal",
+        location = { mapId = 2482, x = 0.36, y = 0.68 },
+        minLevel = 60,
+        suggestedLevel = 60,
+        maxLevel = 60
+    },
+    ["Hyjal Summit"] = {
+        id = 40,
+        name = "Hyjal Summit",
+        continent = "Kalimdor",
+        zone = "Mount Hyjal",
+        location = { mapId = 2482, x = 0.36, y = 0.68 },
+        minLevel = 60,
+        suggestedLevel = 60,
+        maxLevel = 60
+    },
+    ["Temple of Ahn'Qiraj"] = {
+        id = 41,
+        name = "Temple of Ahn'Qiraj",
+        continent = "Kalimdor",
+        zone = "Silithus",
+        location = { mapId = 1451, x = 0.35, y = 0.79 },
+        minLevel = 60,
+        suggestedLevel = 60,
+        maxLevel = 60
+    },
+    ["Ruins of Ahn'Qiraj"] = {
+        id = 42,
+        name = "Ruins of Ahn'Qiraj",
+        continent = "Kalimdor",
+        zone = "Silithus",
+        location = { mapId = 1451, x = 0.35, y = 0.79 },
+        minLevel = 60,
+        suggestedLevel = 60,
+        maxLevel = 60
+    },
+    ["Naxxramas"] = {
+        id = 43,
+        name = "Naxxramas",
+        continent = "Eastern Kingdoms",
+        zone = "Eastern Plaguelands",
+        location = { mapId = 1423, x = 0.27, y = 0.17 },
+        minLevel = 60,
+        suggestedLevel = 60,
+        maxLevel = 60
+    }
+    --#endregion
 }

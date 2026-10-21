@@ -1695,7 +1695,7 @@ Q.Quests = {
         faction = "Horde",
         name = "Source of Power",
         suggestedLevel = 33,
-        requiredLevel = 30,
+        requiredLevel = 24,
         source = {
             type = "npc",
             name = "Doctor Martin Felben",
@@ -6320,4 +6320,76 @@ Q.Quests = {
     },
     --#endregion
 
+    --#region The Drowned City
+    {
+        id = 95775,
+        faction = "Horde",
+        name = "The Drowned City",
+        suggestedLevel = 40,
+        requiredLevel = 30,
+        source = {
+            type = "npc",
+            name = "Unknown",
+            zone = "Unknown",
+            location = { mapId = 0, x = 0, y = 0 },
+        },
+        instances = { Q.Instances["The Drowned City"] }
+    },
+    {
+        id = 95787,
+        faction = "Alliance",
+        name = "Take Two With Water",
+        suggestedLevel = 40,
+        requiredLevel = 30,
+        source = {
+            type = "npc",
+            name = "Unknown",
+            zone = "Unknown",
+            location = { mapId = 0, x = 0, y = 0 },
+        },
+        instances = { Q.Instances["The Drowned City"] }
+    },
+    {
+        id = 95778,
+        faction = "Alliance",
+        name = "Magic of the Drowned City",
+        suggestedLevel = 40,
+        requiredLevel = 30,
+        source = {
+            type = "npc",
+            name = "Unknown",
+            zone = "Unknown",
+            location = { mapId = 0, x = 0, y = 0 },
+        },
+        instances = { Q.Instances["The Drowned City"] }
+    },
+    {
+        id = 96774,
+        faction = "Horde",
+        name = "Ancient Gurubashi Idol",
+        suggestedLevel = 40,
+        requiredLevel = 30,
+        source = {
+            type = "npc",
+            name = "Mazu'kon",
+            zone = "Mulgore",
+            location = { mapId = 1412, x = 0.326, y = 0.206 },
+        },
+        instances = { Q.Instances["The Drowned City"] }
+    },
+    {
+        id = 95776,
+        faction = "Horde",
+        name = "The Only Good Brinescale...",
+        suggestedLevel = 38,
+        requiredLevel = 30,
+        source = {
+            type = "npc",
+            name = "Unknown",
+            zone = "Unknown",
+            location = { mapId = 0, x = 0, y = 0 },
+        },
+        instances = { Q.Instances["The Drowned City"] }
+    }, 
+    --#endregion
 }
