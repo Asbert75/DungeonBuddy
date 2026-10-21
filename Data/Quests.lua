@@ -8,8 +8,8 @@ Q.PrerequisiteType = {
 }
 
 --[[
-    The "dungeons" property on a quest only tells the addon which dungeons that this particular quest
-    should be displayed as a "main" quest, that is; which dungeon in the quest tracker it is displayed
+    The "instances" property on a quest only tells the addon which instances that this particular quest
+    should be displayed as a "main" quest, that is; which instance in the quest tracker it is displayed
     on the "main" level.
 ]]
 Q.Quests = {
@@ -26,7 +26,7 @@ Q.Quests = {
             zone = "Ironforge",
             location = { mapId = 1455, x = 0.326, y = 0.446 }
         },
-        dungeons = { Q.Dungeons["Hall of Thanes"] }
+        instances = { Q.Instances["Hall of Thanes"] }
     },
     {
         id = 96394,
@@ -40,7 +40,7 @@ Q.Quests = {
             zone = "Ironforge",
             location = { mapId = 1455, x = 0.340, y = 0.488 }
         },
-        dungeons = { Q.Dungeons["Hall of Thanes"] }
+        instances = { Q.Instances["Hall of Thanes"] }
     },
     {
         id = 96395,
@@ -54,7 +54,7 @@ Q.Quests = {
             zone = "Hall of Thanes",
             location = { mapId = 1455, x = 0.614, y = 0.892 }
         },
-        dungeons = { Q.Dungeons["Hall of Thanes"] }
+        instances = { Q.Instances["Hall of Thanes"] }
     },
     {
         id = 96393,
@@ -71,7 +71,7 @@ Q.Quests = {
             zone = "Dun Morogh",
             location = { mapId = 1426, x = 0.648, y = 0.584 }
         },
-        dungeons = { Q.Dungeons["Hall of Thanes"] }
+        instances = { Q.Instances["Hall of Thanes"] }
     },
     {
         id = 96391,
@@ -87,7 +87,7 @@ Q.Quests = {
             location = { mapId = 1426, x = 0.65, y = 0.58 },
             text = "Dropped by Captain Beld and Dark Iron spies"
         },
-        dungeons = { Q.Dungeons["Hall of Thanes"] }
+        instances = { Q.Instances["Hall of Thanes"] }
     },
     {
         id = 98423,
@@ -103,7 +103,7 @@ Q.Quests = {
             location = { mapId = 1455, x = 0.614, y = 0.892 },
             text = "Found inside the vault in the Reliquary of Kings"
         },
-        dungeons = { Q.Dungeons["Hall of Thanes"] }
+        instances = { Q.Instances["Hall of Thanes"] }
     },
     --#endregion
 
@@ -152,7 +152,7 @@ Q.Quests = {
             zone = "Orgrimmar",
             location = { mapId = 1454, x = 0.31, y = 0.37 },
         },
-        dungeons = { Q.Dungeons["Ragefire Chasm"] }
+        instances = { Q.Instances["Ragefire Chasm"] }
     },
     {
         id = 5761,
@@ -166,7 +166,7 @@ Q.Quests = {
             zone = "Orgrimmar",
             location = { mapId = 1454, x = 0.49, y = 0.50 },
         },
-        dungeons = { Q.Dungeons["Ragefire Chasm"] }
+        instances = { Q.Instances["Ragefire Chasm"] }
     },
     {
         id = 5725,
@@ -180,7 +180,7 @@ Q.Quests = {
             zone = "Undercity",
             location = { mapId = 1458, x = 0.56, y = 0.92 },
         },
-        dungeons = { Q.Dungeons["Ragefire Chasm"] }
+        instances = { Q.Instances["Ragefire Chasm"] }
     },
     {
         id = 5723,
@@ -194,7 +194,7 @@ Q.Quests = {
             zone = "Thunder Bluff",
             location = { mapId = 1456, x = 0.70, y = 0.30 },
         },
-        dungeons = { Q.Dungeons["Ragefire Chasm"] }
+        instances = { Q.Instances["Ragefire Chasm"] }
     },
     {
         id = 5724,
@@ -211,7 +211,7 @@ Q.Quests = {
             zone = "Ragefire Chasm",
             location = { mapId = 1454, x = 0.53, y = 0.50 },
         },
-        dungeons = { Q.Dungeons["Ragefire Chasm"] }
+        instances = { Q.Instances["Ragefire Chasm"] }
     },
     {
         id = 5722,
@@ -241,7 +241,7 @@ Q.Quests = {
             zone = "Silverpine Forest",
             location = { mapId = 1421, x = 0.446, y = 0.429 }
         },
-        dungeons = { Q.Dungeons["Ruins of Lordaeron"] }
+        instances = { Q.Instances["Ruins of Lordaeron"] }
     },
     {
         id = 95204,
@@ -257,7 +257,7 @@ Q.Quests = {
             location = { mapId = 1420, x = 0.61, y = 0.60 },
             text = "Search the ruins; the crest can appear in several locations"
         },
-        dungeons = { Q.Dungeons["Ruins of Lordaeron"] }
+        instances = { Q.Instances["Ruins of Lordaeron"] }
     },
     {
         id = 95189,
@@ -273,7 +273,7 @@ Q.Quests = {
             location = { mapId = 1420, x = 0.61, y = 0.60 },
             text = "Search the ruins; the crest can appear in several locations"
         },
-        dungeons = { Q.Dungeons["Ruins of Lordaeron"] }
+        instances = { Q.Instances["Ruins of Lordaeron"] }
     },
     {
         id = 92421,
@@ -287,7 +287,7 @@ Q.Quests = {
             zone = "Undercity",
             location = { mapId = 1458, x = 0.578, y = 0.897 }
         },
-        dungeons = { Q.Dungeons["Ruins of Lordaeron"] }
+        instances = { Q.Instances["Ruins of Lordaeron"] }
     },
     {
         id = 95216,
@@ -301,7 +301,7 @@ Q.Quests = {
             zone = "Undercity",
             location = { mapId = 1458, x = 0.467, y = 0.719 }
         },
-        dungeons = { Q.Dungeons["Ruins of Lordaeron"] }
+        instances = { Q.Instances["Ruins of Lordaeron"] }
     },
     {
         id = 92422,
@@ -315,7 +315,7 @@ Q.Quests = {
             zone = "Tirisfal Glades",
             location = { mapId = 1420, x = 0.652, y = 0.602 }
         },
-        dungeons = { Q.Dungeons["Ruins of Lordaeron"] }
+        instances = { Q.Instances["Ruins of Lordaeron"] }
     },
     {
         id = 97288,
@@ -329,9 +329,9 @@ Q.Quests = {
             itemId = 280438,
             zone = "Ruins of Lordaeron",
             location = { mapId = 1420, x = 0.61, y = 0.60 },
-            text = "Dropped by The Baron inside the dungeon"
+            text = "Dropped by The Baron inside the instance"
         },
-        dungeons = { Q.Dungeons["Ruins of Lordaeron"] }
+        instances = { Q.Instances["Ruins of Lordaeron"] }
     },
     {
         id = 95250,
@@ -344,9 +344,9 @@ Q.Quests = {
             name = "Captain Truman",
             zone = "Ruins of Lordaeron",
             location = { mapId = 1420, x = 0.61, y = 0.60 },
-            text = "Found inside the dungeon at the entrance"
+            text = "Found inside the instance at the entrance"
         },
-        dungeons = { Q.Dungeons["Ruins of Lordaeron"] }
+        instances = { Q.Instances["Ruins of Lordaeron"] }
     },
     {
         id = 92415,
@@ -360,9 +360,9 @@ Q.Quests = {
             itemId = 251522,
             zone = "Ruins of Lordaeron",
             location = { mapId = 1420, x = 0.61, y = 0.60 },
-            text = "Found in the dungeon near Rath'mael"
+            text = "Found in the instance near Rath'mael"
         },
-        dungeons = { Q.Dungeons["Ruins of Lordaeron"] }
+        instances = { Q.Instances["Ruins of Lordaeron"] }
     },
     {
         id = 95195,
@@ -378,7 +378,7 @@ Q.Quests = {
             location = { mapId = 1420, x = 0.61, y = 0.60 },
             text = "Dropped by undead mobs in the ruins"
         },
-        dungeons = { Q.Dungeons["Ruins of Lordaeron"] }
+        instances = { Q.Instances["Ruins of Lordaeron"] }
     },
     --#endregion
 
@@ -488,7 +488,7 @@ Q.Quests = {
             zone = "Stormwind City",
             location = { mapId = 1453, x = 0.65, y = 0.21 }
         },
-        dungeons = { Q.Dungeons["The Deadmines"] },
+        instances = { Q.Instances["The Deadmines"] },
     },
     {
         id = 167,
@@ -502,7 +502,7 @@ Q.Quests = {
             zone = "Stormwind City",
             location = { mapId = 1453, x = 0.65, y = 0.21 }
         },
-        dungeons = { Q.Dungeons["The Deadmines"] },
+        instances = { Q.Instances["The Deadmines"] },
     },
     {
         id = 2040,
@@ -516,7 +516,7 @@ Q.Quests = {
             zone = "Stormwind City",
             location = { mapId = 1453, x = 0.55, y = 0.13 }
         },
-        dungeons = { Q.Dungeons["The Deadmines"] },
+        instances = { Q.Instances["The Deadmines"] },
     },
     {
         id = 214,
@@ -533,7 +533,7 @@ Q.Quests = {
             zone = "Westfall",
             location = { mapId = 1436, x = 0.56, y = 0.47 }
         },
-        dungeons = { Q.Dungeons["The Deadmines"] },
+        instances = { Q.Instances["The Deadmines"] },
     },
     {
         id = 373,
@@ -549,7 +549,7 @@ Q.Quests = {
             location = { mapId = 1436, x = 0.42, y = 0.71 },
             text = "Drops from the last boss, Edwin VanCleef",
         },
-        dungeons = { Q.Dungeons["The Deadmines"] },
+        instances = { Q.Instances["The Deadmines"] },
     },
     {
         id = 166,
@@ -566,7 +566,7 @@ Q.Quests = {
             zone = "Westfall",
             location = { mapId = 1436, x = 0.56, y = 0.47 },
         },
-        dungeons = { Q.Dungeons["The Deadmines"] },
+        instances = { Q.Instances["The Deadmines"] },
     },
     --#endregion
 
@@ -676,7 +676,7 @@ Q.Quests = {
             zone = "The Barrens",
             location = { mapId = 1413, x = 0.46, y = 0.35 }
         },
-        dungeons = { Q.Dungeons["Wailing Caverns"] },
+        instances = { Q.Instances["Wailing Caverns"] },
     },
     {
         id = 1487,
@@ -690,7 +690,7 @@ Q.Quests = {
             zone = "The Barrens",
             location = { mapId = 1413, x = 0.46, y = 0.35 }
         },
-        dungeons = { Q.Dungeons["Wailing Caverns"] },
+        instances = { Q.Instances["Wailing Caverns"] },
     },
     {
         id = 959,
@@ -704,7 +704,7 @@ Q.Quests = {
             zone = "The Barrens",
             location = { mapId = 1413, x = 0.63, y = 0.37 }
         },
-        dungeons = { Q.Dungeons["Wailing Caverns"] },
+        instances = { Q.Instances["Wailing Caverns"] },
     },
     {
         id = 1491,
@@ -721,7 +721,7 @@ Q.Quests = {
             zone = "The Barrens",
             location = { mapId = 1413, x = 0.62, y = 0.37 }
         },
-        dungeons = { Q.Dungeons["Wailing Caverns"] },
+        instances = { Q.Instances["Wailing Caverns"] },
     },
     {
         id = 865,
@@ -749,7 +749,7 @@ Q.Quests = {
             zone = "Thunder Bluff",
             location = { mapId = 1456, x = 0.34, y = 0.21 }
         },
-        dungeons = { Q.Dungeons["Wailing Caverns"] },
+        instances = { Q.Instances["Wailing Caverns"] },
     },
     {
         id = 914,
@@ -766,7 +766,7 @@ Q.Quests = {
             zone = "Thunder Bluff",
             location = { mapId = 1456, x = 0.45, y = 0.23 }
         },
-        dungeons = { Q.Dungeons["Wailing Caverns"] },
+        instances = { Q.Instances["Wailing Caverns"] },
     },
     {
         id = 6981,
@@ -780,9 +780,9 @@ Q.Quests = {
             itemId = 10441,
             zone = "Wailing Caverns",
             location = { mapId = 1413, x = 0.458, y = 0.344 },
-            text = "Dropped by Mutanus the Devourer at the end of the dungeon",
+            text = "Dropped by Mutanus the Devourer at the end of the instance",
         },
-        dungeons = { Q.Dungeons["Wailing Caverns"] },
+        instances = { Q.Instances["Wailing Caverns"] },
     },
     --#endregion
 
@@ -799,7 +799,7 @@ Q.Quests = {
             zone = "Ironforge",
             location = { mapId = 1455, x = 0.50, y = 0.08 }
         },
-        dungeons = { Q.Dungeons["Blackfathom Deeps"] },
+        instances = { Q.Instances["Blackfathom Deeps"] },
     },
     {
         id = 1275,
@@ -816,7 +816,7 @@ Q.Quests = {
             zone = "Darkshore",
             location = { mapId = 1439, x = 0.37, y = 0.44 }
         },
-        dungeons = { Q.Dungeons["Blackfathom Deeps"] },
+        instances = { Q.Instances["Blackfathom Deeps"] },
     },
     {
         id = 376,
@@ -830,7 +830,7 @@ Q.Quests = {
             zone = "Stormwind City",
             location = { mapId = 1453, x = 0.21, y = 0.56 }
         },
-        dungeons = { Q.Dungeons["Blackfathom Deeps"] },
+        instances = { Q.Instances["Blackfathom Deeps"] },
     },
     {
         id = 1199,
@@ -844,7 +844,7 @@ Q.Quests = {
             zone = "Darnassus",
             location = { mapId = 1457, x = 0.55, y = 0.23 }
         },
-        dungeons = { Q.Dungeons["Blackfathom Deeps"] },
+        instances = { Q.Instances["Blackfathom Deeps"] },
     },
     {
         id = 6565,
@@ -860,7 +860,7 @@ Q.Quests = {
             location = { mapId = 1440, x = 0.13, y = 0.12 },
             text = "Dropped by Blackfathom Tide Priestesses outside the instance"
         },
-        dungeons = { Q.Dungeons["Blackfathom Deeps"] },
+        instances = { Q.Instances["Blackfathom Deeps"] },
     },
     {
         id = 6921,
@@ -874,7 +874,7 @@ Q.Quests = {
             zone = "Ashenvale",
             location = { mapId = 1440, x = 0.12, y = 0.34 }
         },
-        dungeons = { Q.Dungeons["Blackfathom Deeps"] },
+        instances = { Q.Instances["Blackfathom Deeps"] },
     },
     {
         id = 6563,
@@ -888,7 +888,7 @@ Q.Quests = {
             zone = "Ashenvale",
             location = { mapId = 1440, x = 0.12, y = 0.34 }
         },
-        dungeons = { Q.Dungeons["Blackfathom Deeps"] },
+        instances = { Q.Instances["Blackfathom Deeps"] },
     },
     {
         id = 1200,
@@ -905,7 +905,7 @@ Q.Quests = {
             zone = "Blackfathom Deeps",
             location = { mapId = 1440, x = 0.14, y = 0.15 }
         },
-        dungeons = { Q.Dungeons["Blackfathom Deeps"] },
+        instances = { Q.Instances["Blackfathom Deeps"] },
     },
     {
         id = 1198,
@@ -919,7 +919,7 @@ Q.Quests = {
             zone = "Darnassus",
             location = { mapId = 1457, x = 0.55, y = 0.24 }
         },
-        dungeons = { Q.Dungeons["Blackfathom Deeps"] },
+        instances = { Q.Instances["Blackfathom Deeps"] },
     },
     {
         id = 6561,
@@ -933,7 +933,7 @@ Q.Quests = {
             zone = "Blackfathom Deeps",
             location = { mapId = 1440, x = 0.14, y = 0.15 }
         },
-        dungeons = { Q.Dungeons["Blackfathom Deeps"] },
+        instances = { Q.Instances["Blackfathom Deeps"] },
     },
     {
         id = 6922,
@@ -947,9 +947,9 @@ Q.Quests = {
             itemId = 16782,
             zone = "Blackfathom Deeps",
             location = { mapId = 1440, x = 0.14, y = 0.15 },
-            text = "Dropped by Baron Aquanis inside the dungeon"
+            text = "Dropped by Baron Aquanis inside the instance"
         },
-        dungeons = { Q.Dungeons["Blackfathom Deeps"] },
+        instances = { Q.Instances["Blackfathom Deeps"] },
     },
     --#endregion
 
@@ -984,7 +984,7 @@ Q.Quests = {
             zone = "Feralas",
             location = { mapId = 1444, x = 0.89, y = 0.46 },
         },
-        dungeons = { Q.Dungeons["Razorfen Kraul"] },
+        instances = { Q.Instances["Razorfen Kraul"] },
     },
     {
         id = 1102,
@@ -998,7 +998,7 @@ Q.Quests = {
             zone = "Thunder Bluff",
             location = { mapId = 1456, x = 0.37, y = 0.29 }
         },
-        dungeons = { Q.Dungeons["Razorfen Kraul"] },
+        instances = { Q.Instances["Razorfen Kraul"] },
     },
     {
         id = 1221,
@@ -1013,7 +1013,7 @@ Q.Quests = {
             location = { mapId = 1413, x = 0.62, y = 0.38 },
             text = "Don't forget to pick up the items next to him"
         },
-        dungeons = { Q.Dungeons["Razorfen Kraul"] },
+        instances = { Q.Instances["Razorfen Kraul"] },
     },
     {
         id = 1142,
@@ -1027,7 +1027,7 @@ Q.Quests = {
             zone = "Razorfen Kraul",
             location = { mapId = 1413, x = 0.43, y = 0.90 }
         },
-        dungeons = { Q.Dungeons["Razorfen Kraul"] },
+        instances = { Q.Instances["Razorfen Kraul"] },
     },
     {
         id = 1144,
@@ -1040,9 +1040,9 @@ Q.Quests = {
             name = "Willix the Importer",
             zone = "Razorfen Kraul",
             location = { mapId = 1413, x = 0.43, y = 0.90 },
-            text = "Near the final boss, inside the dungeon"
+            text = "Near the final boss, inside the instance"
         },
-        dungeons = { Q.Dungeons["Razorfen Kraul"] },
+        instances = { Q.Instances["Razorfen Kraul"] },
     },
     {
         id = 1109,
@@ -1056,7 +1056,7 @@ Q.Quests = {
             zone = "Undercity",
             location = { mapId = 1458, x = 0.49, y = 0.69 },
         },
-        dungeons = { Q.Dungeons["Razorfen Kraul"] },
+        instances = { Q.Instances["Razorfen Kraul"] },
     },
     {
         id = 6522,
@@ -1070,9 +1070,9 @@ Q.Quests = {
             itemId = 17008,
             zone = "Razorfen Kraul",
             location = { mapId = 1413, x = 0.43, y = 0.90 },
-            text = "Dropped by Charlga Razorflank inside the dungeon",
+            text = "Dropped by Charlga Razorflank inside the instance",
         },
-        dungeons = { Q.Dungeons["Razorfen Kraul"] },
+        instances = { Q.Instances["Razorfen Kraul"] },
     },
     --#endregion
 
@@ -1089,7 +1089,7 @@ Q.Quests = {
             zone = "Undercity",
             location = { mapId = 1458, x = 0.53, y = 0.54 }
         },
-        dungeons = { Q.Dungeons["Shadowfang Keep"] },
+        instances = { Q.Instances["Shadowfang Keep"] },
     },
     {
         id = 1098,
@@ -1103,7 +1103,7 @@ Q.Quests = {
             zone = "Silverpine Forest",
             location = { mapId = 1421, x = 0.43, y = 0.41 }
         },
-        dungeons = { Q.Dungeons["Shadowfang Keep"] },
+        instances = { Q.Instances["Shadowfang Keep"] },
     },
     {
         id = 1014,
@@ -1117,7 +1117,7 @@ Q.Quests = {
             zone = "Silverpine Forest",
             location = { mapId = 1421, x = 0.44, y = 0.39 }
         },
-        dungeons = { Q.Dungeons["Shadowfang Keep"] },
+        instances = { Q.Instances["Shadowfang Keep"] },
     },
     --#endregion
 
@@ -1147,7 +1147,7 @@ Q.Quests = {
             zone = "Orgrimmar",
             location = { mapId = 1454, x = 0.576, y = 0.534 }
         },
-        dungeons = { Q.Dungeons["Excavation Site: Wetlands"] },
+        instances = { Q.Instances["Excavation Site: Wetlands"] },
     },
     {
         id = 95664,
@@ -1162,7 +1162,7 @@ Q.Quests = {
             zone = "Excavation Site: Wetlands",
             text = "Dropped by the Relic Guardian boss"
         },
-        dungeons = { Q.Dungeons["Excavation Site: Wetlands"] },
+        instances = { Q.Instances["Excavation Site: Wetlands"] },
     },
     {
         id = 95682,
@@ -1179,7 +1179,7 @@ Q.Quests = {
             zone = "Wetlands",
             location = { mapId = 1437, x = 0.514, y = 0.592 }
         },
-        dungeons = { Q.Dungeons["Excavation Site: Wetlands"] },
+        instances = { Q.Instances["Excavation Site: Wetlands"] },
     },
     {
         id = 98815,
@@ -1193,7 +1193,7 @@ Q.Quests = {
             zone = "Wetlands",
             location = { mapId = 1437, x = 0.08, y = 0.55 }
         },
-        dungeons = { Q.Dungeons["Excavation Site: Wetlands"] },
+        instances = { Q.Instances["Excavation Site: Wetlands"] },
     },
     {
         id = 95772,
@@ -1207,7 +1207,7 @@ Q.Quests = {
             zone = "Redridge Mountains",
             location = { mapId = 1433, x = 0.308, y = 0.466 }
         },
-        dungeons = { Q.Dungeons["Excavation Site: Wetlands"] },
+        instances = { Q.Instances["Excavation Site: Wetlands"] },
     },
     {
         id = 95646,
@@ -1221,7 +1221,7 @@ Q.Quests = {
             zone = "Wetlands",
             location = { mapId = 1437, x = 0.562, y = 0.406 }
         },
-        dungeons = { Q.Dungeons["Excavation Site: Wetlands"] },
+        instances = { Q.Instances["Excavation Site: Wetlands"] },
     },
     {
         id = 95647,
@@ -1235,7 +1235,7 @@ Q.Quests = {
             zone = "Wetlands",
             location = { mapId = 1437, x = 0.118, y = 0.586 }
         },
-        dungeons = { Q.Dungeons["Excavation Site: Wetlands"] },
+        instances = { Q.Instances["Excavation Site: Wetlands"] },
     },
     {
         id = 95810,
@@ -1248,9 +1248,9 @@ Q.Quests = {
             name = "Titan Relic",
             itemId = 270865,
             zone = "Excavation Site: Wetlands",
-            text = "Dropped by the boss Relic Guardian in the dungeon"
+            text = "Dropped by the boss Relic Guardian in the instance"
         },
-        dungeons = { Q.Dungeons["Excavation Site: Wetlands"] },
+        instances = { Q.Instances["Excavation Site: Wetlands"] },
     },
     --#endregion
 
@@ -1296,7 +1296,7 @@ Q.Quests = {
             zone = "Redridge Mountains",
             location = { mapId = 1433, x = 0.26, y = 0.46 }
         },
-        dungeons = { Q.Dungeons["The Stockade"] },
+        instances = { Q.Instances["The Stockade"] },
     },
     {
         id = 377,
@@ -1310,7 +1310,7 @@ Q.Quests = {
             zone = "Duskwood",
             location = { mapId = 1431, x = 0.71, y = 0.47 }
         },
-        dungeons = { Q.Dungeons["The Stockade"] },
+        instances = { Q.Instances["The Stockade"] },
     },
     {
         id = 387,
@@ -1324,7 +1324,7 @@ Q.Quests = {
             zone = "Stormwind City",
             location = { mapId = 1453, x = 0.518, y = 0.693 }
         },
-        dungeons = { Q.Dungeons["The Stockade"] },
+        instances = { Q.Instances["The Stockade"] },
     },
     {
         id = 388,
@@ -1338,7 +1338,7 @@ Q.Quests = {
             zone = "Stormwind City",
             location = { mapId = 1453, x = 0.73, y = 0.50 }
         },
-        dungeons = { Q.Dungeons["The Stockade"] },
+        instances = { Q.Instances["The Stockade"] },
     },
     {
         id = 378,
@@ -1355,7 +1355,7 @@ Q.Quests = {
             zone = "Wetlands",
             location = { mapId = 1437, x = 0.49, y = 0.18 }
         },
-        dungeons = { Q.Dungeons["The Stockade"] },
+        instances = { Q.Instances["The Stockade"] },
     },
     {
         id = 391,
@@ -1372,7 +1372,7 @@ Q.Quests = {
             zone = "Stormwind City",
             location = { mapId = 1453, x = 0.518, y = 0.693 }
         },
-        dungeons = { Q.Dungeons["The Stockade"] },
+        instances = { Q.Instances["The Stockade"] },
     },
     --#endregion
 
@@ -1389,7 +1389,7 @@ Q.Quests = {
             zone = "Gnomeregan",
             location = { mapId = 1426, x = 0.30, y = 0.36 },
         },
-        dungeons = { Q.Dungeons["Gnomeregan"] },
+        instances = { Q.Instances["Gnomeregan"] },
     },
     {
         id = 2927,
@@ -1403,7 +1403,7 @@ Q.Quests = {
             zone = "Ironforge",
             location = { mapId = 1455, x = 0.69, y = 0.50 }
         },
-        dungeons = { Q.Dungeons["Gnomeregan"] },
+        instances = { Q.Instances["Gnomeregan"] },
     },
     {
         id = 2931,
@@ -1430,7 +1430,7 @@ Q.Quests = {
             zone = "Orgrimmar",
             location = { mapId = 1454, x = 0.76, y = 0.25 }
         },
-        dungeons = { Q.Dungeons["Gnomeregan"] },
+        instances = { Q.Instances["Gnomeregan"] },
     },
     {
         id = 2842,
@@ -1458,7 +1458,7 @@ Q.Quests = {
             zone = "Ironforge",
             location = { mapId = 1455, x = 0.682, y = 0.462 }
         },
-        dungeons = { Q.Dungeons["Gnomeregan"] },
+        instances = { Q.Instances["Gnomeregan"] },
     },
     {
         id = 2930,
@@ -1475,7 +1475,7 @@ Q.Quests = {
             zone = "Ironforge",
             location = { mapId = 1455, x = 0.700, y = 0.474 }
         },
-        dungeons = { Q.Dungeons["Gnomeregan"] },
+        instances = { Q.Instances["Gnomeregan"] },
     },
     {
         id = 2962,
@@ -1492,7 +1492,7 @@ Q.Quests = {
             zone = "Dun Morogh",
             location = { mapId = 1426, x = 0.45, y = 0.49 }
         },
-        dungeons = { Q.Dungeons["Gnomeregan"] },
+        instances = { Q.Instances["Gnomeregan"] },
     },
     {
         id = 2945,
@@ -1505,9 +1505,9 @@ Q.Quests = {
             name = "Grime-Encrusted Ring",
             itemId = 9326,
             zone = "Gnomeregan",
-            text = "Dropped by Dark Iron Agents inside the dungeon"
+            text = "Dropped by Dark Iron Agents inside the instance"
         },
-        dungeons = { Q.Dungeons["Gnomeregan"] },
+        instances = { Q.Instances["Gnomeregan"] },
     },
     {
         id = 2926,
@@ -1537,7 +1537,7 @@ Q.Quests = {
             zone = "Ironforge",
             location = { mapId = 1455, x = 0.69, y = 0.50 }
         },
-        dungeons = { Q.Dungeons["Gnomeregan"] },
+        instances = { Q.Instances["Gnomeregan"] },
     },
     {
         id = 2929,
@@ -1551,7 +1551,7 @@ Q.Quests = {
             zone = "Ironforge",
             location = { mapId = 1455, x = 0.68, y = 0.49 }
         },
-        dungeons = { Q.Dungeons["Gnomeregan"] },
+        instances = { Q.Instances["Gnomeregan"] },
     },
     {
         id = 2928,
@@ -1565,7 +1565,7 @@ Q.Quests = {
             zone = "Stormwind City",
             location = { mapId = 1453, x = 0.55, y = 0.12 }
         },
-        dungeons = { Q.Dungeons["Gnomeregan"] },
+        instances = { Q.Instances["Gnomeregan"] },
     },
     {
         id = 2843,
@@ -1582,7 +1582,7 @@ Q.Quests = {
             zone = "The Cape of Stranglethorn",
             location = { mapId = 1434, x = 0.27, y = 0.77 }
         },
-        dungeons = { Q.Dungeons["Gnomeregan"] },
+        instances = { Q.Instances["Gnomeregan"] },
     },
     {
         id = 2904,
@@ -1594,9 +1594,9 @@ Q.Quests = {
             type = "npc",
             name = "Kernobee",
             zone = "Gnomeregan",
-            text = "Found inside the dungeon in the room right of the Clean Room."
+            text = "Found inside the instance in the room right of the Clean Room."
         },
-        dungeons = { Q.Dungeons["Gnomeregan"] },
+        instances = { Q.Instances["Gnomeregan"] },
     },
     --#endregion
 
@@ -1606,14 +1606,14 @@ Q.Quests = {
         faction = "Horde",
         name = "The Grave Knight",
         suggestedLevel = 33,
-        requiredLevel = 30,
+        requiredLevel = 24,
         source = {
             type = "npc",
             name = "Melisara",
             zone = "Hillsbrad Foothills",
             location = { mapId = 1424, x = 0.626, y = 0.206 }
         },
-        dungeons = { Q.Dungeons["City of Dalaran"] },
+        instances = { Q.Instances["City of Dalaran"] },
     },
     {
         id = 96987,
@@ -1627,7 +1627,7 @@ Q.Quests = {
             zone = "City of Dalaran",
             location = { mapId = 1421, x = 0.686, y = 0.452 }
         },
-        dungeons = { Q.Dungeons["City of Dalaran"] },
+        instances = { Q.Instances["City of Dalaran"] },
     },
     {
         id = 96984,
@@ -1657,7 +1657,7 @@ Q.Quests = {
             zone = "City of Dalaran",
             location = { mapId = 1421, x = 0.686, y = 0.452 }
         },
-        dungeons = { Q.Dungeons["City of Dalaran"] },
+        instances = { Q.Instances["City of Dalaran"] },
     },
     {
         id = 92489,
@@ -1671,7 +1671,7 @@ Q.Quests = {
             zone = "Stormwind City",
             location = { mapId = 1453, x = 0.376, y = 0.816 }
         },
-        dungeons = { Q.Dungeons["City of Dalaran"] },
+        instances = { Q.Instances["City of Dalaran"] },
     },
     {
         id = 92458,
@@ -1688,21 +1688,21 @@ Q.Quests = {
             zone = "City of Dalaran",
             location = { mapId = 1421, x = 0.686, y = 0.452 }
         },
-        dungeons = { Q.Dungeons["City of Dalaran"] },
+        instances = { Q.Instances["City of Dalaran"] },
     },
     {
         id = 96988,
         faction = "Horde",
         name = "Source of Power",
         suggestedLevel = 33,
-        requiredLevel = 30,
+        requiredLevel = 24,
         source = {
             type = "npc",
             name = "Doctor Martin Felben",
             zone = "Undercity",
             location = { mapId = 1458, x = 0.466, y = 0.746 }
         },
-        dungeons = { Q.Dungeons["City of Dalaran"] },
+        instances = { Q.Instances["City of Dalaran"] },
     },
     {
         id = 97287,
@@ -1719,7 +1719,7 @@ Q.Quests = {
             zone = "Hillsbrad Foothills",
             location = { mapId = 1424, x = 0.616, y = 0.208 }
         },
-        dungeons = { Q.Dungeons["City of Dalaran"] },
+        instances = { Q.Instances["City of Dalaran"] },
     },
 
     {
@@ -1822,7 +1822,7 @@ Q.Quests = {
             zone = "Stormwind City",
             location = { mapId = 1453, x = 0.313, y = 0.629 }
         },
-        dungeons = { Q.Dungeons["City of Dalaran"] },
+        instances = { Q.Instances["City of Dalaran"] },
     },
     {
         id = 92432,
@@ -1897,7 +1897,7 @@ Q.Quests = {
             zone = "Undercity",
             location = { mapId = 1458, x = 0.56, y = 0.92 }
         },
-        dungeons = { Q.Dungeons["SM: Library"], Q.Dungeons["SM: Armory"], Q.Dungeons["SM: Cathedral"] },
+        instances = { Q.Instances["SM: Library"], Q.Instances["SM: Armory"], Q.Instances["SM: Cathedral"] },
     },
     {
         id = 1113,
@@ -1914,7 +1914,7 @@ Q.Quests = {
             zone = "Undercity",
             location = { mapId = 1458, x = 0.48, y = 0.69 }
         },
-        dungeons = { Q.Dungeons["SM: Library"], Q.Dungeons["SM: Armory"], Q.Dungeons["SM: Cathedral"] },
+        instances = { Q.Instances["SM: Library"], Q.Instances["SM: Armory"], Q.Instances["SM: Cathedral"] },
     },
     {
         id = 1053,
@@ -1931,7 +1931,7 @@ Q.Quests = {
             zone = "Hillsbrad Foothills",
             location = { mapId = 1424, x = 0.51, y = 0.58 }
         },
-        dungeons = { Q.Dungeons["SM: Library"], Q.Dungeons["SM: Armory"], Q.Dungeons["SM: Cathedral"] },
+        instances = { Q.Instances["SM: Library"], Q.Instances["SM: Armory"], Q.Instances["SM: Cathedral"] },
     },
     --#endregion
 
@@ -1947,9 +1947,9 @@ Q.Quests = {
             name = "Vorrel Sengutz",
             zone = "Scarlet Monastery",
             location = { mapId = 1420, x = 0.84, y = 0.32 },
-            text = "Vorrel is found in the first room after the corridor, inside the dungeon."
+            text = "Vorrel is found in the first room after the corridor, inside the instance."
         },
-        dungeons = { Q.Dungeons["SM: Graveyard"] },
+        instances = { Q.Instances["SM: Graveyard"] },
     },
     --#endregion
 
@@ -1966,7 +1966,7 @@ Q.Quests = {
             zone = "Thunder Bluff",
             location = { mapId = 1456, x = 0.36, y = 0.26 },
         },
-        dungeons = { Q.Dungeons["SM: Library"] },
+        instances = { Q.Instances["SM: Library"] },
     },
     {
         id = 1149,
@@ -2092,7 +2092,7 @@ Q.Quests = {
             zone = "Undercity",
             location = { mapId = 1458, x = 0.57, y = 0.65 }
         },
-        dungeons = { Q.Dungeons["SM: Library"] },
+        instances = { Q.Instances["SM: Library"] },
     },
     {
         id = 1050,
@@ -2106,7 +2106,7 @@ Q.Quests = {
             zone = "Ironforge",
             location = { mapId = 1455, x = 0.75, y = 0.12 }
         },
-        dungeons = { Q.Dungeons["SM: Library"] },
+        instances = { Q.Instances["SM: Library"] },
     },
     --#endregion
 
@@ -2123,7 +2123,7 @@ Q.Quests = {
             zone = "Undercity",
             location = { mapId = 1458, x = 0.74, y = 0.33 }
         },
-        dungeons = { Q.Dungeons["Razorfen Downs"] },
+        instances = { Q.Instances["Razorfen Downs"] },
     },
     {
         id = 6521,
@@ -2140,7 +2140,7 @@ Q.Quests = {
             zone = "Undercity",
             location = { mapId = 1458, x = 0.56, y = 0.92 }
         },
-        dungeons = { Q.Dungeons["Razorfen Downs"] },
+        instances = { Q.Instances["Razorfen Downs"] },
     },
     {
         id = 3636,
@@ -2154,7 +2154,7 @@ Q.Quests = {
             zone = "Stormwind City",
             location = { mapId = 1453, x = 0.39, y = 0.27 }
         },
-        dungeons = { Q.Dungeons["Razorfen Downs"] },
+        instances = { Q.Instances["Razorfen Downs"] },
     },
     {
         id = 6626,
@@ -2168,7 +2168,7 @@ Q.Quests = {
             zone = "The Barrens",
             location = { mapId = 1413, x = 0.49, y = 0.95 }
         },
-        dungeons = { Q.Dungeons["Razorfen Downs"] },
+        instances = { Q.Instances["Razorfen Downs"] },
     },
     {
         id = 3525,
@@ -2185,7 +2185,7 @@ Q.Quests = {
             zone = "Razorfen Downs",
             location = { mapId = 1413, x = 0.49, y = 0.92 }
         },
-        dungeons = { Q.Dungeons["Razorfen Downs"] },
+        instances = { Q.Instances["Razorfen Downs"] },
     },
     {
         id = 3523,
@@ -2198,7 +2198,7 @@ Q.Quests = {
             name = "Belnistrasz",
             zone = "Razorfen Downs",
             location = { mapId = 1413, x = 0.49, y = 0.92 },
-            text = "Located inside the dungeon"
+            text = "Located inside the instance"
         }
     },
     --#endregion
@@ -2216,7 +2216,7 @@ Q.Quests = {
             zone = "Undercity",
             location = { mapId = 1458, x = 0.626, y = 0.486 }
         },
-        dungeons = { Q.Dungeons["Uldaman"] },
+        instances = { Q.Instances["Uldaman"] },
     },
     {
         id = 1360,
@@ -2230,7 +2230,7 @@ Q.Quests = {
             zone = "Ironforge",
             location = { mapId = 1455, x = 0.746, y = 0.10 }
         },
-        dungeons = { Q.Dungeons["Uldaman"] },
+        instances = { Q.Instances["Uldaman"] },
     },
     {
         id = 17,
@@ -2247,7 +2247,7 @@ Q.Quests = {
             zone = "Loch Modan",
             location = { mapId = 1432, x = 0.37, y = 0.492 }
         },
-        dungeons = { Q.Dungeons["Uldaman"] },
+        instances = { Q.Instances["Uldaman"] },
     },
     {
         id = 2339,
@@ -2264,7 +2264,7 @@ Q.Quests = {
             zone = "Badlands",
             location = { mapId = 1418, x = 0.024, y = 0.460 }
         },
-        dungeons = { Q.Dungeons["Uldaman"] },
+        instances = { Q.Instances["Uldaman"] },
     },
     {
         id = 2240,
@@ -2280,9 +2280,9 @@ Q.Quests = {
             name = "Baelog",
             zone = "Uldaman",
             location = { mapId = 1418, x = 0.426, y = 0.122 },
-            text = "Found inside the dungeon"
+            text = "Found inside the instance"
         },
-        dungeons = { Q.Dungeons["Uldaman"] },
+        instances = { Q.Instances["Uldaman"] },
     },
     {
         id = 2418,
@@ -2296,7 +2296,7 @@ Q.Quests = {
             zone = "Badlands",
             location = { mapId = 1418, x = 0.424, y = 0.528 }
         },
-        dungeons = { Q.Dungeons["Uldaman"] },
+        instances = { Q.Instances["Uldaman"] },
     },
     {
         id = 720,
@@ -2341,7 +2341,7 @@ Q.Quests = {
             name = "Hammertoe Grez",
             zone = "Uldaman",
             location = { mapId = 1418, x = 0.426, y = 0.122 },
-            text = "Found inside the dungeon"
+            text = "Found inside the instance"
         }
     },
     {
@@ -2358,7 +2358,7 @@ Q.Quests = {
             name = "Hammertoe Grez",
             zone = "Uldaman",
             location = { mapId = 1418, x = 0.426, y = 0.122 },
-            text = "Found inside the dungeon"
+            text = "Found inside the instance"
         }
     },
     {
@@ -2440,7 +2440,7 @@ Q.Quests = {
             zone = "Ironforge",
             location = { mapId = 1455, x = 0.764, y = 0.12 }
         },
-        dungeons = { Q.Dungeons["Uldaman"] },
+        instances = { Q.Instances["Uldaman"] },
     },
     {
         id = 2198,
@@ -2454,9 +2454,9 @@ Q.Quests = {
             name = "Shattered Necklace",
             zone = "Uldaman",
             location = { mapId = 1418, x = 0.426, y = 0.122 },
-            text = "Drops from Stonevault troggs and Shadowforge Ruffian/Diggers around/inside the dungeon"
+            text = "Drops from Stonevault troggs and Shadowforge Ruffian/Diggers around/inside the instance"
         },
-        dungeons = { Q.Dungeons["Uldaman"] },
+        instances = { Q.Instances["Uldaman"] },
     },
     {
         id = 2199,
@@ -2523,7 +2523,7 @@ Q.Quests = {
             location = { mapId = 1418, x = 0.426, y = 0.122, },
             text = "Summoned by using Talvah's Phial of Scrying from your bags."
         },
-        dungeons = { Q.Dungeons["Uldaman"] },
+        instances = { Q.Instances["Uldaman"] },
     },
     {
         id = 2398,
@@ -2566,7 +2566,7 @@ Q.Quests = {
             zone = "Badlands",
             location = { mapId = 1418, x = 0.024, y = 0.460 }
         },
-        dungeons = { Q.Dungeons["Uldaman"] },
+        instances = { Q.Instances["Uldaman"] },
     },
     {
         id = 2258,
@@ -2594,7 +2594,7 @@ Q.Quests = {
             location = { mapId = 1418, x = 0.426, y = 0.122 },
             text = "Started in the vault after the final boss"
         },
-        dungeons = { Q.Dungeons["Uldaman"] },
+        instances = { Q.Instances["Uldaman"] },
     },
     {
         id = 707,
@@ -2624,7 +2624,7 @@ Q.Quests = {
             zone = "Loch Modan",
             location = { mapId = 1432, x = 0.658, y = 0.656 }
         },
-        dungeons = { Q.Dungeons["Uldaman"] },
+        instances = { Q.Instances["Uldaman"] },
     },
     {
         id = 739,
@@ -2670,7 +2670,7 @@ Q.Quests = {
             name = "Shattered Necklace",
             zone = "Uldaman",
             location = { mapId = 1418, x = 0.426, y = 0.122 },
-            text = "Drops from Stonevault troggs and Shadowforge Ruffian/Diggers around/inside the dungeon"
+            text = "Drops from Stonevault troggs and Shadowforge Ruffian/Diggers around/inside the instance"
         }
     },
     {
@@ -2734,7 +2734,7 @@ Q.Quests = {
             zone = "Badlands",
             location = { mapId = 1418, x = 0.514, y = 0.768 }
         },
-        dungeons = { Q.Dungeons["Uldaman"] },
+        instances = { Q.Instances["Uldaman"] },
     },
     --#endregion
 
@@ -2801,7 +2801,7 @@ Q.Quests = {
             zone = "Durotar",
             location = { mapId = 1411, x = 0.56, y = 0.74 }
         },
-        dungeons = { Q.Dungeons["Zul'Farrak"] },
+        instances = { Q.Instances["Zul'Farrak"] },
     },
     {
         id = 3042,
@@ -2815,7 +2815,7 @@ Q.Quests = {
             zone = "Tanaris",
             location = { mapId = 440, x = 0.51, y = 0.28 }
         },
-        dungeons = { Q.Dungeons["Zul'Farrak"] },
+        instances = { Q.Instances["Zul'Farrak"] },
     },
     {
         id = 2768,
@@ -2829,7 +2829,7 @@ Q.Quests = {
             zone = "Tanaris",
             location = { mapId = 440, x = 0.52, y = 0.28 }
         },
-        dungeons = { Q.Dungeons["Zul'Farrak"] },
+        instances = { Q.Instances["Zul'Farrak"] },
     },
     {
         id = 2865,
@@ -2843,7 +2843,7 @@ Q.Quests = {
             zone = "Dustwallow Marsh",
             location = { mapId = 1445, x = 0.46, y = 0.57 }
         },
-        dungeons = { Q.Dungeons["Zul'Farrak"] },
+        instances = { Q.Instances["Zul'Farrak"] },
     },
     {
         id = 2770,
@@ -2857,7 +2857,7 @@ Q.Quests = {
             zone = "Thousand Needles",
             location = { mapId = 1441, x = 0.78, y = 0.77 }
         },
-        dungeons = { Q.Dungeons["Zul'Farrak"] },
+        instances = { Q.Instances["Zul'Farrak"] },
     },
 
     {
@@ -2920,7 +2920,7 @@ Q.Quests = {
             zone = "Blasted Lands",
             location = { mapId = 1419, x = 0.87, y = 0.194 }
         },
-        dungeons = { Q.Dungeons["Zul'Farrak"] },
+        instances = { Q.Instances["Zul'Farrak"] },
     },
     {
         id = 3520,
@@ -2950,7 +2950,7 @@ Q.Quests = {
             zone = "Tanaris",
             location = { mapId = 440, x = 0.67, y = 0.22 }
         },
-        dungeons = { Q.Dungeons["Zul'Farrak"] },
+        instances = { Q.Instances["Zul'Farrak"] },
     },
     --#endregion
 
@@ -2967,7 +2967,7 @@ Q.Quests = {
             zone = "Dustwallow Marsh",
             location = { mapId = 1445, x = 0.66, y = 0.49 }
         },
-        dungeons = { Q.Dungeons["Maraudon"] },
+        instances = { Q.Instances["Maraudon"] },
     },
     {
         id = 7068,
@@ -2981,7 +2981,7 @@ Q.Quests = {
             zone = "Orgrimmar",
             location = { mapId = 1454, x = 0.39, y = 0.86 }
         },
-        dungeons = { Q.Dungeons["Maraudon"] },
+        instances = { Q.Instances["Maraudon"] },
     },
     {
         id = 7028,
@@ -2995,7 +2995,7 @@ Q.Quests = {
             zone = "Desolace",
             location = { mapId = 1443, x = 0.62, y = 0.39 }
         },
-        dungeons = { Q.Dungeons["Maraudon"] },
+        instances = { Q.Instances["Maraudon"] },
     },
     {
         id = 7044,
@@ -3022,7 +3022,7 @@ Q.Quests = {
             zone = "Desolace",
             location = { mapId = 1443, x = 0.232, y = 0.702 }
         },
-        dungeons = { Q.Dungeons["Maraudon"] },
+        instances = { Q.Instances["Maraudon"] },
     },
     {
         id = 7041,
@@ -3036,7 +3036,7 @@ Q.Quests = {
             zone = "Desolace",
             location = { mapId = 1443, x = 0.684, y = 0.088 }
         },
-        dungeons = { Q.Dungeons["Maraudon"] },
+        instances = { Q.Instances["Maraudon"] },
     },
     {
         id = 7069,
@@ -3050,7 +3050,7 @@ Q.Quests = {
             zone = "Desolace",
             location = { mapId = 1443, x = 0.63, y = 0.10 }
         },
-        dungeons = { Q.Dungeons["Maraudon"] },
+        instances = { Q.Instances["Maraudon"] },
     },
     {
         id = 7046,
@@ -3066,9 +3066,9 @@ Q.Quests = {
             name = "Celebras the Redeemed",
             zone = "Desolace",
             location = { mapId = 1443, x = 0.38, y = 0.58 },
-            text = "Inside the dungeon, spawns after killing Celebras the Cursed"
+            text = "Inside the instance, spawns after killing Celebras the Cursed"
         },
-        dungeons = { Q.Dungeons["Maraudon"] },
+        instances = { Q.Instances["Maraudon"] },
     },
     {
         id = 7066,
@@ -3081,9 +3081,9 @@ Q.Quests = {
             name = "Zaetar's Spirit",
             zone = "Desolace",
             location = { mapId = 1443, x = 0.38, y = 0.58 },
-            text = "Inside the dungeon, spawns after killing Princess Theradras"
+            text = "Inside the instance, spawns after killing Princess Theradras"
         },
-        dungeons = { Q.Dungeons["Maraudon"] },
+        instances = { Q.Instances["Maraudon"] },
     },
     {
         id = 7067,
@@ -3098,7 +3098,7 @@ Q.Quests = {
             location = { mapId = 1443, x = 0.462, y = 0.866 },
             text = "Patrols the area"
         },
-        dungeons = { Q.Dungeons["Maraudon"] },
+        instances = { Q.Instances["Maraudon"] },
     },
     --#endregion
 
@@ -3163,7 +3163,7 @@ Q.Quests = {
             zone = "Swamp of Sorrows",
             location = { mapId = 1435, x = 0.47, y = 0.54 }
         },
-        dungeons = { Q.Dungeons["Temple of Atal'Hakkar"] },
+        instances = { Q.Instances["Temple of Atal'Hakkar"] },
     },
     {
         id = 4143,
@@ -3180,7 +3180,7 @@ Q.Quests = {
             zone = "Feralas",
             location = { mapId = 1444, x = 0.45, y = 0.256 }
         },
-        dungeons = { Q.Dungeons["Temple of Atal'Hakkar"] },
+        instances = { Q.Instances["Temple of Atal'Hakkar"] },
     },
     {
         id = 1448,
@@ -3239,7 +3239,7 @@ Q.Quests = {
             zone = "Feralas",
             location = { mapId = 1444, x = 0.624, y = 0.386 }
         },
-        dungeons = { Q.Dungeons["Temple of Atal'Hakkar"] },
+        instances = { Q.Instances["Temple of Atal'Hakkar"] },
     },
     {
         id = 4141,
@@ -3365,7 +3365,7 @@ Q.Quests = {
             zone = "Stormwind City",
             location = { mapId = 1453, x = 0.64, y = 0.21 }
         },
-        dungeons = { Q.Dungeons["Temple of Atal'Hakkar"] },
+        instances = { Q.Instances["Temple of Atal'Hakkar"] },
     },
     {
         id = 3446,
@@ -3379,9 +3379,9 @@ Q.Quests = {
             itemId = 10454,
             zone = "Temple of Atal'Hakkar",
             location = { mapId = 1435, x = 0.43, y = 0.53 },
-            text = "Dropped by Shade of Eranikus inside the dungeon"
+            text = "Dropped by Shade of Eranikus inside the instance"
         },
-        dungeons = { Q.Dungeons["Temple of Atal'Hakkar"] },
+        instances = { Q.Instances["Temple of Atal'Hakkar"] },
     },
     {
         id = 3528,
@@ -3398,7 +3398,7 @@ Q.Quests = {
             zone = "Tanaris",
             location = { mapId = 440, x = 0.67, y = 0.22 }
         },
-        dungeons = { Q.Dungeons["Temple of Atal'Hakkar"] },
+        instances = { Q.Instances["Temple of Atal'Hakkar"] },
     },
     {
         id = 4786,
@@ -3428,7 +3428,7 @@ Q.Quests = {
             zone = "The Hinterlands",
             location = { mapId = 1425, x = 0.336, y = 0.752 }
         },
-        dungeons = { Q.Dungeons["Temple of Atal'Hakkar"] },
+        instances = { Q.Instances["Temple of Atal'Hakkar"] },
     },
     {
         id = 3380,
@@ -3488,7 +3488,7 @@ Q.Quests = {
             zone = "Tanaris",
             location = { mapId = 1446, x = 0.526, y = 0.458 }
         },
-        dungeons = { Q.Dungeons["Temple of Atal'Hakkar"] },
+        instances = { Q.Instances["Temple of Atal'Hakkar"] },
     },
     {
         id = 3447,
@@ -3505,7 +3505,7 @@ Q.Quests = {
             zone = "Tanaris",
             location = { mapId = 1446, x = 0.526, y = 0.458 }
         },
-        dungeons = { Q.Dungeons["Temple of Atal'Hakkar"] },
+        instances = { Q.Instances["Temple of Atal'Hakkar"] },
     },
     --#endregion
 
@@ -3540,7 +3540,7 @@ Q.Quests = {
             name = "Commander Gor'shak",
             zone = "Blackrock Depths",
             location = { mapId = 1428, x = 0.284, y = 0.285 },
-            text = "Located inside the dungeon"
+            text = "Located inside the instance"
         },
     },
     {
@@ -3557,7 +3557,7 @@ Q.Quests = {
             name = "Commander Gor'shak",
             zone = "Blackrock Depths",
             location = { mapId = 1428, x = 0.284, y = 0.285 },
-            text = "Located inside the dungeon"
+            text = "Located inside the instance"
         },
     },
     {
@@ -3591,7 +3591,7 @@ Q.Quests = {
             zone = "Orgrimmar",
             location = { mapId = 1454, x = 0.32, y = 0.378 }
         },
-        dungeons = { Q.Dungeons["Blackrock Depths"] }
+        instances = { Q.Instances["Blackrock Depths"] }
     },
     {
         id = 4061,
@@ -3637,7 +3637,7 @@ Q.Quests = {
             zone = "Badlands",
             location = { mapId = 1418, x = 0.258, y = 0.45 }
         },
-        dungeons = { Q.Dungeons["Blackrock Depths"] }
+        instances = { Q.Instances["Blackrock Depths"] }
     },
     {
         id = 4122,
@@ -3686,7 +3686,7 @@ Q.Quests = {
             zone = "Badlands",
             location = { mapId = 1418, x = 0.058, y = 0.474 }
         },
-        dungeons = { Q.Dungeons["Blackrock Depths"] }
+        instances = { Q.Instances["Blackrock Depths"] }
     },
     {
         id = 4081,
@@ -3906,7 +3906,7 @@ Q.Quests = {
             zone = "Burning Steppes",
             location = { mapId = 1428, x = 0.95, y = 0.314 }
         },
-        dungeons = { Q.Dungeons["Blackrock Depths"] }
+        instances = { Q.Instances["Blackrock Depths"] }
     },
     {
         id = 4262,
@@ -3936,7 +3936,7 @@ Q.Quests = {
             zone = "Burning Steppes",
             location = { mapId = 1428, x = 0.854, y = 0.70 }
         },
-        dungeons = { Q.Dungeons["Blackrock Depths"] }
+        instances = { Q.Instances["Blackrock Depths"] }
     },
     {
         id = 3906,
@@ -3966,7 +3966,7 @@ Q.Quests = {
             zone = "Badlands",
             location = { mapId = 1418, x = 0.036, y = 0.48 }
         },
-        dungeons = { Q.Dungeons["Blackrock Depths"] }
+        instances = { Q.Instances["Blackrock Depths"] }
     },
     {
         id = 7201,
@@ -3983,7 +3983,7 @@ Q.Quests = {
             zone = "Badlands",
             location = { mapId = 1418, x = 0.03, y = 0.476 }
         },
-        dungeons = { Q.Dungeons["Blackrock Depths"] }
+        instances = { Q.Instances["Blackrock Depths"] }
     },
     {
         id = 4134,
@@ -3997,7 +3997,7 @@ Q.Quests = {
             zone = "Badlands",
             location = { mapId = 1418, x = 0.03, y = 0.476 }
         },
-        dungeons = { Q.Dungeons["Blackrock Depths"] }
+        instances = { Q.Instances["Blackrock Depths"] }
     },
     {
         id = 4123,
@@ -4011,7 +4011,7 @@ Q.Quests = {
             zone = "Burning Steppes",
             location = { mapId = 1428, x = 0.652, y = 0.238 }
         },
-        dungeons = { Q.Dungeons["Blackrock Depths"] }
+        instances = { Q.Instances["Blackrock Depths"] }
     },
     {
         id = 7848,
@@ -4024,9 +4024,9 @@ Q.Quests = {
             name = "Lothos Riftwaker",
             zone = "Blackrock Mountain",
             location = { mapId = 1428, x = 0.49, y = 0.63 },
-            text = "Found at the bottom of the chain inside the mountain on the way to the dungeon"
+            text = "Found at the bottom of the chain inside the mountain on the way to the instance"
         },
-        dungeons = { Q.Dungeons["Blackrock Depths"] }
+        instances = { Q.Instances["Blackrock Depths"] }
     },
     {
         id = 3702,
@@ -4087,7 +4087,7 @@ Q.Quests = {
             name = "Kharan Mighthammer",
             zone = "Blackrock Depths",
             location = { mapId = 1428, x = 0.284, y = 0.285 },
-            text = "Located inside the dungeon"
+            text = "Located inside the instance"
         }
     },
     {
@@ -4104,7 +4104,7 @@ Q.Quests = {
             name = "Kharan Mighthammer",
             zone = "Blackrock Depths",
             location = { mapId = 1428, x = 0.284, y = 0.285 },
-            text = "Located inside the dungeon"
+            text = "Located inside the instance"
         }
     },
     {
@@ -4140,7 +4140,7 @@ Q.Quests = {
             text =
             "You must defeat Emperor Thaurissan without killing her and she'll become friendly and offer the quest"
         },
-        dungeons = { Q.Dungeons["Blackrock Depths"] }
+        instances = { Q.Instances["Blackrock Depths"] }
     },
     {
         id = 4324,
@@ -4170,7 +4170,7 @@ Q.Quests = {
             zone = "Burning Steppes",
             location = { mapId = 1428, x = 0.66, y = 0.22 }
         },
-        dungeons = { Q.Dungeons["Blackrock Depths"] }
+        instances = { Q.Instances["Blackrock Depths"] }
     },
     {
         id = 4286,
@@ -4184,7 +4184,7 @@ Q.Quests = {
             zone = "Burning Steppes",
             location = { mapId = 1428, x = 0.846, y = 0.686 }
         },
-        dungeons = { Q.Dungeons["Blackrock Depths"] }
+        instances = { Q.Instances["Blackrock Depths"] }
     },
     {
         id = 4126,
@@ -4198,7 +4198,7 @@ Q.Quests = {
             zone = "Dun Morogh",
             location = { mapId = 1426, x = 0.468, y = 0.524 }
         },
-        dungeons = { Q.Dungeons["Blackrock Depths"] }
+        instances = { Q.Instances["Blackrock Depths"] }
     },
     {
         id = 3801,
@@ -4232,7 +4232,7 @@ Q.Quests = {
             text =
             "You must be dead to speak to him, he's located in the middle of Blackrock Mountains inside the building"
         },
-        dungeons = { Q.Dungeons["Blackrock Depths"] }
+        instances = { Q.Instances["Blackrock Depths"] }
     },
     {
         id = 5125,
@@ -4245,9 +4245,9 @@ Q.Quests = {
             name = "Mistress Nagmara",
             zone = "Blackrock Depths",
             location = { mapId = 1428, x = 0.284, y = 0.285 },
-            text = "Found in the bar inside the dungeon"
+            text = "Found in the bar inside the instance"
         },
-        dungeons = { Q.Dungeons["Blackrock Depths"] }
+        instances = { Q.Instances["Blackrock Depths"] }
     },
     --#endregion
 
@@ -4265,7 +4265,7 @@ Q.Quests = {
             location = { mapId = 1448, x = 0.59, y = 0.45 },
             text = "Found inside DM: West"
         },
-        dungeons = { Q.Dungeons["Dire Maul: West"] }
+        instances = { Q.Instances["Dire Maul: West"] }
     },
     {
         id = 7877,
@@ -4280,7 +4280,7 @@ Q.Quests = {
             location = { mapId = 1448, x = 0.59, y = 0.45 },
             text = "Found inside DM: West"
         },
-        dungeons = { Q.Dungeons["Dire Maul: West"] }
+        instances = { Q.Instances["Dire Maul: West"] }
     },
     {
         id = 5527,
@@ -4310,7 +4310,7 @@ Q.Quests = {
             zone = "Moonglade",
             location = { mapId = 1450, x = 0.516, y = 0.448 }
         },
-        dungeons = { Q.Dungeons["Dire Maul: West"] }
+        instances = { Q.Instances["Dire Maul: West"] }
     },
     --#endregion
 
@@ -4327,7 +4327,7 @@ Q.Quests = {
             zone = "Feralas",
             location = { mapId = 1444, x = 0.304, y = 0.46 }
         },
-        dungeons = { Q.Dungeons["Dire Maul: East"] }
+        instances = { Q.Instances["Dire Maul: East"] }
     },
     {
         id = 7489,
@@ -4341,7 +4341,7 @@ Q.Quests = {
             zone = "Feralas",
             location = { mapId = 1444, x = 0.76, y = 0.43 }
         },
-        dungeons = { Q.Dungeons["Dire Maul: East"] }
+        instances = { Q.Instances["Dire Maul: East"] }
     },
     {
         id = 7441,
@@ -4355,7 +4355,7 @@ Q.Quests = {
             zone = "Feralas",
             location = { mapId = 1444, x = 0.76, y = 0.37 }
         },
-        dungeons = { Q.Dungeons["Dire Maul: East"] }
+        instances = { Q.Instances["Dire Maul: East"] }
     },
     --#endregion
 
@@ -4371,9 +4371,9 @@ Q.Quests = {
             name = "Knot Thimblejack",
             zone = "Dire Maul",
             location = { mapId = 1444, x = 0.59, y = 0.45 },
-            text = "Located inside the dungeon"
+            text = "Located inside the instance"
         },
-        dungeons = { Q.Dungeons["Dire Maul: North"] }
+        instances = { Q.Instances["Dire Maul: North"] }
     },
     {
         id = 7481,
@@ -4387,7 +4387,7 @@ Q.Quests = {
             zone = "Feralas",
             location = { mapId = 1444, x = 0.74, y = 0.43 }
         },
-        dungeons = { Q.Dungeons["Dire Maul: North"] }
+        instances = { Q.Instances["Dire Maul: North"] }
     },
     {
         id = 7482,
@@ -4401,7 +4401,7 @@ Q.Quests = {
             zone = "Feralas",
             location = { mapId = 1444, x = 0.318, y = 0.444 }
         },
-        dungeons = { Q.Dungeons["Dire Maul: North"] }
+        instances = { Q.Instances["Dire Maul: North"] }
     },
     --#endregion
 
@@ -4437,7 +4437,7 @@ Q.Quests = {
             zone = "Tanaris",
             location = { mapId = 1446, x = 0.668, y = 0.24 }
         },
-        dungeons = { Q.Dungeons["Lower Blackrock Spire"] }
+        instances = { Q.Instances["Lower Blackrock Spire"] }
     },
     {
         id = 5001,
@@ -4485,7 +4485,7 @@ Q.Quests = {
             zone = "Burning Steppes",
             location = { mapId = 1428, x = 0.846, y = 0.688 }
         },
-        dungeons = { Q.Dungeons["Lower Blackrock Spire"] }
+        instances = { Q.Instances["Lower Blackrock Spire"] }
     },
     {
         id = 5089,
@@ -4501,7 +4501,7 @@ Q.Quests = {
             location = { mapId = 1428, x = 0.284, y = 0.285 },
             text = "Dropped by General Drakkisath inside Lower Blackrock Spire"
         },
-        dungeons = { Q.Dungeons["Lower Blackrock Spire"] }
+        instances = { Q.Instances["Lower Blackrock Spire"] }
     },
     {
         id = 4862,
@@ -4515,7 +4515,7 @@ Q.Quests = {
             zone = "Burning Steppes",
             location = { mapId = 1428, x = 0.658, y = 0.22 }
         },
-        dungeons = { Q.Dungeons["Lower Blackrock Spire"] }
+        instances = { Q.Instances["Lower Blackrock Spire"] }
     },
     {
         id = 4724,
@@ -4529,7 +4529,7 @@ Q.Quests = {
             zone = "Badlands",
             location = { mapId = 1418, x = 0.06, y = 0.47 }
         },
-        dungeons = { Q.Dungeons["Lower Blackrock Spire"] }
+        instances = { Q.Instances["Lower Blackrock Spire"] }
     },
     {
         id = 4701,
@@ -4543,7 +4543,7 @@ Q.Quests = {
             zone = "Burning Steppes",
             location = { mapId = 1428, x = 0.856, y = 0.69 }
         },
-        dungeons = { Q.Dungeons["Lower Blackrock Spire"] }
+        instances = { Q.Instances["Lower Blackrock Spire"] }
     },
     {
         id = 4981,
@@ -4574,7 +4574,7 @@ Q.Quests = {
             location = { mapId = 1428, x = 0.284, y = 0.285 },
             text = "Found on a ledge inside Lower Blackrock Spire"
         },
-        dungeons = { Q.Dungeons["Lower Blackrock Spire"] }
+        instances = { Q.Instances["Lower Blackrock Spire"] }
     },
     {
         id = 4702,
@@ -4588,7 +4588,7 @@ Q.Quests = {
             zone = "Badlands",
             location = { mapId = 1418, x = 0.05, y = 0.47 }
         },
-        dungeons = { Q.Dungeons["Lower Blackrock Spire"] }
+        instances = { Q.Instances["Lower Blackrock Spire"] }
     },
     {
         id = 4729,
@@ -4602,7 +4602,7 @@ Q.Quests = {
             zone = "Burning Steppes",
             location = { mapId = 1428, x = 0.658, y = 0.22 }
         },
-        dungeons = { Q.Dungeons["Lower Blackrock Spire"] }
+        instances = { Q.Instances["Lower Blackrock Spire"] }
     },
     {
         id = 4742,
@@ -4618,7 +4618,7 @@ Q.Quests = {
             location = { mapId = 1428, x = 0.48, y = 0.62 },
             text = "A random drop from mobs in Lower Blackrock Spire"
         },
-        dungeons = { Q.Dungeons["Lower Blackrock Spire"] }
+        instances = { Q.Instances["Lower Blackrock Spire"] }
     },
     --#endregion
 
@@ -4635,9 +4635,9 @@ Q.Quests = {
             name = "Healthy Dragon Scale",
             zone = "Scholomance",
             location = { mapId = 1422, x = 0.69, y = 0.73 },
-            text = "Dropped by Plagued Hatchlings inside the dungeon"
+            text = "Dropped by Plagued Hatchlings inside the instance"
         },
-        dungeons = { Q.Dungeons["Scholomance"] }
+        instances = { Q.Instances["Scholomance"] }
     },
     {
         id = 5341,
@@ -4651,7 +4651,7 @@ Q.Quests = {
             zone = "Tirisfal Glades",
             location = { mapId = 1420, x = 0.83, y = 0.716 }
         },
-        dungeons = { Q.Dungeons["Scholomance"] }
+        instances = { Q.Instances["Scholomance"] }
     },
     {
         id = 5343,
@@ -4665,7 +4665,7 @@ Q.Quests = {
             zone = "Western Plaguelands",
             location = { mapId = 1422, x = 0.436, y = 0.836 }
         },
-        dungeons = { Q.Dungeons["Scholomance"] }
+        instances = { Q.Instances["Scholomance"] }
     },
     {
         id = 5382,
@@ -4711,7 +4711,7 @@ Q.Quests = {
             zone = "Western Plaguelands",
             location = { mapId = 1422, x = 0.702, y = 0.738 }
         },
-        dungeons = { Q.Dungeons["Scholomance"] }
+        instances = { Q.Instances["Scholomance"] }
     },
     {
         id = 5461,
@@ -4757,7 +4757,7 @@ Q.Quests = {
             zone = "Eastern Plaguelands",
             location = { mapId = 1423, x = 0.81, y = 0.59 }
         },
-        dungeons = { Q.Dungeons["Scholomance"] }
+        instances = { Q.Instances["Scholomance"] }
     },
     {
         id = 5466,
@@ -4774,7 +4774,7 @@ Q.Quests = {
             zone = "Western Plaguelands",
             location = { mapId = 1422, x = 0.70, y = 0.74 }
         },
-        dungeons = { Q.Dungeons["Scholomance"] }
+        instances = { Q.Instances["Scholomance"] }
     },
     --#endregion
 
@@ -4855,7 +4855,7 @@ Q.Quests = {
             zone = "Western Plaguelands",
             location = { mapId = 1422, x = 0.656, y = 0.754 }
         },
-        dungeons = { Q.Dungeons["Stratholme"] }
+        instances = { Q.Instances["Stratholme"] }
     },
     {
         id = 5214,
@@ -4869,7 +4869,7 @@ Q.Quests = {
             zone = "Eastern Plaguelands",
             location = { mapId = 1423, x = 0.80, y = 0.58 }
         },
-        dungeons = { Q.Dungeons["Stratholme"] }
+        instances = { Q.Instances["Stratholme"] }
     },
     {
         id = 5212,
@@ -4883,7 +4883,7 @@ Q.Quests = {
             zone = "Eastern Plaguelands",
             location = { mapId = 1423, x = 0.814, y = 0.596 }
         },
-        dungeons = { Q.Dungeons["Stratholme"] }
+        instances = { Q.Instances["Stratholme"] }
     },
     {
         id = 5251,
@@ -4926,7 +4926,7 @@ Q.Quests = {
             zone = "Eastern Plaguelands",
             location = { mapId = 1423, x = 0.144, y = 0.336 }
         },
-        dungeons = { Q.Dungeons["Stratholme"] }
+        instances = { Q.Instances["Stratholme"] }
     },
     {
         id = 5122,
@@ -4941,7 +4941,7 @@ Q.Quests = {
             location = { mapId = 1423, x = 0.267, y = 0.116 },
             text = "Found inside Stratholme"
         },
-        dungeons = { Q.Dungeons["Stratholme"] }
+        instances = { Q.Instances["Stratholme"] }
     },
     {
         id = 5243,
@@ -4955,7 +4955,7 @@ Q.Quests = {
             zone = "Eastern Plaguelands",
             location = { mapId = 1423, x = 0.81, y = 0.578 }
         },
-        dungeons = { Q.Dungeons["Stratholme"] }
+        instances = { Q.Instances["Stratholme"] }
     },
     {
         id = 5262,
@@ -4990,7 +4990,7 @@ Q.Quests = {
             zone = "Eastern Plaguelands",
             location = { mapId = 1423, x = 0.814, y = 0.598 }
         },
-        dungeons = { Q.Dungeons["Stratholme"] }
+        instances = { Q.Instances["Stratholme"] }
     },
     {
         id = 6133,
@@ -5036,7 +5036,7 @@ Q.Quests = {
             zone = "Eastern Plaguelands",
             location = { mapId = 1423, x = 0.266, y = 0.748 }
         },
-        dungeons = { Q.Dungeons["Stratholme"] }
+        instances = { Q.Instances["Stratholme"] }
     },
     {
         id = 5463,
@@ -5070,7 +5070,7 @@ Q.Quests = {
             location = { mapId = 1423, x = 0.81, y = 0.578 },
             text = "Use the red circle on the floor in Baron Rivendares room"
         },
-        dungeons = { Q.Dungeons["Stratholme"] }
+        instances = { Q.Instances["Stratholme"] }
     },
     {
         id = 5465,
@@ -5122,7 +5122,7 @@ Q.Quests = {
             zone = "Orgrimmar",
             location = { mapId = 1454, x = 0.32, y = 0.378 }
         },
-        dungeons = { Q.Dungeons["Upper Blackrock Spire"] }
+        instances = { Q.Instances["Upper Blackrock Spire"] }
     },
     {
         id = 5102,
@@ -5139,7 +5139,7 @@ Q.Quests = {
             zone = "Burning Steppes",
             location = { mapId = 1428, x = 0.846, y = 0.688 }
         },
-        dungeons = { Q.Dungeons["Upper Blackrock Spire"] }
+        instances = { Q.Instances["Upper Blackrock Spire"] }
     },
     {
         id = 6805,
@@ -5183,7 +5183,7 @@ Q.Quests = {
             zone = "Azshara",
             location = { mapId = 1447, x = 0.792, y = 0.736 }
         },
-        dungeons = { Q.Dungeons["Upper Blackrock Spire"] }
+        instances = { Q.Instances["Upper Blackrock Spire"] }
     },
     {
         id = 5160,
@@ -5198,7 +5198,7 @@ Q.Quests = {
             location = { mapId = 1428, x = 0.284, y = 0.285 },
             text = "Found through the door after the Rend"
         },
-        dungeons = { Q.Dungeons["Upper Blackrock Spire"] }
+        instances = { Q.Instances["Upper Blackrock Spire"] }
     },
     {
         id = 5047,
@@ -5213,7 +5213,7 @@ Q.Quests = {
             location = { mapId = 1428, x = 0.284, y = 0.285 },
             text = "Spawns after killing and skinning The Beast (requires 315 skinning)"
         },
-        dungeons = { Q.Dungeons["Upper Blackrock Spire"] }
+        instances = { Q.Instances["Upper Blackrock Spire"] }
     },
     {
         id = 7761,
@@ -5229,7 +5229,7 @@ Q.Quests = {
             location = { mapId = 1428, x = 0.284, y = 0.285 },
             text = "Kill the Scarshield Quartermaster found outside the UBRS/LBRS entrance"
         },
-        dungeons = { Q.Dungeons["Upper Blackrock Spire"] }
+        instances = { Q.Instances["Upper Blackrock Spire"] }
     },
     {
         id = 4766,
@@ -5243,7 +5243,7 @@ Q.Quests = {
             zone = "Stormwind City",
             location = { mapId = 1453, x = 0.74, y = 0.30 }
         },
-        dungeons = { Q.Dungeons["Upper Blackrock Spire"] }
+        instances = { Q.Instances["Upper Blackrock Spire"] }
     },
     {
         id = 4764,
@@ -5260,7 +5260,7 @@ Q.Quests = {
             zone = "Burning Steppes",
             location = { mapId = 1428, x = 0.848, y = 0.69 }
         },
-        dungeons = { Q.Dungeons["Upper Blackrock Spire"] }
+        instances = { Q.Instances["Upper Blackrock Spire"] }
     },
     {
         id = 4768,
@@ -5277,7 +5277,7 @@ Q.Quests = {
             zone = "Badlands",
             location = { mapId = 1418, x = 0.030, y = 0.476 }
         },
-        dungeons = { Q.Dungeons["Upper Blackrock Spire"] }
+        instances = { Q.Instances["Upper Blackrock Spire"] }
     },
     {
         id = 4769,
@@ -5311,7 +5311,7 @@ Q.Quests = {
             zone = "Ironforge",
             location = { mapId = 1455, x = 0.52, y = 0.36 }
         },
-        dungeons = { Q.Dungeons["Shadowfang Keep"], Q.Dungeons["The Deadmines"], Q.Dungeons["Blackfathom Deeps"] },
+        instances = { Q.Instances["Shadowfang Keep"], Q.Instances["The Deadmines"], Q.Instances["Blackfathom Deeps"] },
     },
     {
         id = 1649,
@@ -5511,7 +5511,7 @@ Q.Quests = {
             zone = "Stormwind City",
             location = { mapId = 1453, x = 0.372, y = 0.33 }
         },
-        dungeons = { Q.Dungeons["Dire Maul: West"] }
+        instances = { Q.Instances["Dire Maul: West"] }
     },
     {
         id = 7644,
@@ -5564,7 +5564,7 @@ Q.Quests = {
             zone = "Stormwind City",
             location = { mapId = 1453, x = 0.372, y = 0.33 }
         },
-        dungeons = { Q.Dungeons["Scholomance"] }
+        instances = { Q.Instances["Scholomance"] }
     },
     {
         id = 91858,
@@ -5682,7 +5682,7 @@ Q.Quests = {
             zone = "Silverpine Forest",
             location = { mapId = 1421, x = 0.657, y = 0.274 },
         },
-        dungeons = { Q.Dungeons["Shadowfang Keep"], Q.Dungeons["The Deadmines"], Q.Dungeons["Blackfathom Deeps"] },
+        instances = { Q.Instances["Shadowfang Keep"], Q.Instances["The Deadmines"], Q.Instances["Blackfathom Deeps"] },
     },
     --#endregion
 
@@ -5700,7 +5700,7 @@ Q.Quests = {
             zone = "The Barrens",
             location = { mapId = 1413, x = 0.49, y = 0.57 }
         },
-        dungeons = { Q.Dungeons["Shadowfang Keep"], Q.Dungeons["Blackfathom Deeps"] }
+        instances = { Q.Instances["Shadowfang Keep"], Q.Instances["Blackfathom Deeps"] }
     },
     {
         id = 7562,
@@ -5842,7 +5842,7 @@ Q.Quests = {
             zone = "Burning Steppes",
             location = { mapId = 1428, x = 0.124, y = 0.316 }
         },
-        dungeons = { Q.Dungeons["Scholomance"] }
+        instances = { Q.Instances["Scholomance"] }
     },
     {
         id = 7630,
@@ -5933,7 +5933,7 @@ Q.Quests = {
             zone = "Stormwind City",
             location = { mapId = 1453, x = 0.63, y = 0.33 }
         },
-        dungeons = { Q.Dungeons["Razorfen Kraul"] }
+        instances = { Q.Instances["Razorfen Kraul"] }
     },
     {
         id = 1699,
@@ -5982,7 +5982,7 @@ Q.Quests = {
             zone = "The Barrens",
             location = { mapId = 1413, x = 0.57, y = 0.30 }
         },
-        dungeons = { Q.Dungeons["Razorfen Kraul"] }
+        instances = { Q.Instances["Razorfen Kraul"] }
     },
     {
         id = 1823,
@@ -6218,7 +6218,7 @@ Q.Quests = {
             zone = "Dustwallow Marsh",
             location = { mapId = 1445, x = 0.460, y = 0.570 }
         },
-        dungeons = { Q.Dungeons["Uldaman"] },
+        instances = { Q.Instances["Uldaman"] },
     },
     {
         id = 1951,
@@ -6235,7 +6235,7 @@ Q.Quests = {
             zone = "Thousand Needles",
             location = { mapId = 1441, x = 0.784, y = 0.754 }
         },
-        dungeons = { Q.Dungeons["SM: Library"] },
+        instances = { Q.Instances["SM: Library"] },
     },
     {
         id = 7463,
@@ -6250,7 +6250,7 @@ Q.Quests = {
             location = { mapId = 1444, x = 0.59, y = 0.45 },
             text = "Found inside DM: West"
         },
-        dungeons = { Q.Dungeons["DM: West"] },
+        instances = { Q.Instances["DM: West"] },
     },
     --#endregion
 
@@ -6283,7 +6283,7 @@ Q.Quests = {
             zone = "Orgrimmar",
             location = { mapId = 1454, x = 0.386, y = 0.362 },
         },
-        dungeons = { Q.Dungeons["Scholomance"] }
+        instances = { Q.Instances["Scholomance"] }
     },
     --#endregion
 
@@ -6316,8 +6316,80 @@ Q.Quests = {
             zone = "Winterspring",
             location = { mapId = 1452, x = 0.638, y = 0.738 },
         },
-        dungeons = { Q.Dungeons["Upper Blackrock Spire"] }
+        instances = { Q.Instances["Upper Blackrock Spire"] }
     },
     --#endregion
 
+    --#region The Drowned City
+    {
+        id = 95775,
+        faction = "Horde",
+        name = "The Drowned City",
+        suggestedLevel = 40,
+        requiredLevel = 30,
+        source = {
+            type = "npc",
+            name = "Unknown",
+            zone = "Unknown",
+            location = { mapId = 0, x = 0, y = 0 },
+        },
+        instances = { Q.Instances["The Drowned City"] }
+    },
+    {
+        id = 95787,
+        faction = "Alliance",
+        name = "Take Two With Water",
+        suggestedLevel = 40,
+        requiredLevel = 30,
+        source = {
+            type = "npc",
+            name = "Unknown",
+            zone = "Unknown",
+            location = { mapId = 0, x = 0, y = 0 },
+        },
+        instances = { Q.Instances["The Drowned City"] }
+    },
+    {
+        id = 95778,
+        faction = "Alliance",
+        name = "Magic of the Drowned City",
+        suggestedLevel = 40,
+        requiredLevel = 30,
+        source = {
+            type = "npc",
+            name = "Unknown",
+            zone = "Unknown",
+            location = { mapId = 0, x = 0, y = 0 },
+        },
+        instances = { Q.Instances["The Drowned City"] }
+    },
+    {
+        id = 96774,
+        faction = "Horde",
+        name = "Ancient Gurubashi Idol",
+        suggestedLevel = 40,
+        requiredLevel = 30,
+        source = {
+            type = "npc",
+            name = "Mazu'kon",
+            zone = "Mulgore",
+            location = { mapId = 1412, x = 0.326, y = 0.206 },
+        },
+        instances = { Q.Instances["The Drowned City"] }
+    },
+    {
+        id = 95776,
+        faction = "Horde",
+        name = "The Only Good Brinescale...",
+        suggestedLevel = 38,
+        requiredLevel = 30,
+        source = {
+            type = "npc",
+            name = "Unknown",
+            zone = "Unknown",
+            location = { mapId = 0, x = 0, y = 0 },
+        },
+        instances = { Q.Instances["The Drowned City"] }
+    }, 
+    --#endregion
 }

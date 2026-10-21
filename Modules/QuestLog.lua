@@ -3,7 +3,7 @@ local QuestLog = Q.Addon:NewModule("QuestLog", "AceEvent-3.0", "AceConsole-3.0")
 Q.QuestLog = QuestLog
 
 local DB_ROW_HEIGHT = Q.Theme.Font.XL + 6
-local DUNGEON_ROW_EXTRA_HEIGHT = 20
+local INSTANCE_ROW_EXTRA_HEIGHT = 20
 
 function QuestLog:Create()
     if self.frame then
@@ -63,26 +63,26 @@ function QuestLog:Create()
     --------------------------------------------------
     local actionHandlers = {
         OnClick = function(self)
-            if #Q:GetSetting("CollapsedQuests") > 0 or #Q:GetSetting("CollapsedDungeons") > 0 then
+            if #Q:GetSetting("CollapsedQuests") > 0 or #Q:GetSetting("CollapsedInstances") > 0 then
                 Q:SetSetting("CollapsedQuests", {})
-                Q:SetSetting("CollapsedDungeons", {})
+                Q:SetSetting("CollapsedInstances", {})
                 Q.QuestLog:RefreshAndPopulate()
 
                 self.label:SetText("-")
             else
                 local quests = {}
-                local dungeons = {}
+                local instances = {}
 
                 for _, row in ipairs(Q.API:GetQuests()) do
                     table.insert(quests, row.id)
                 end
 
-                for _, row in ipairs(Q.API:GetDungeons()) do
-                    table.insert(dungeons, row.id)
+                for _, row in ipairs(Q.API:GetInstances()) do
+                    table.insert(instances, row.id)
                 end
                 
                 Q:SetSetting("CollapsedQuests", quests)
-                Q:SetSetting("CollapsedDungeons", dungeons)
+                Q:SetSetting("CollapsedInstances", instances)
                 Q.QuestLog:RefreshAndPopulate()
 
                 self.label:SetText("+")
@@ -104,7 +104,7 @@ function QuestLog:Create()
         end
     }
 
-    local initialText = (#Q:GetSetting("CollapsedQuests") > 0 or #Q:GetSetting("CollapsedDungeons") > 0) and "+" or "-"
+    local initialText = (#Q:GetSetting("CollapsedQuests") > 0 or #Q:GetSetting("CollapsedInstances") > 0) and "+" or "-"
     local collapseAndExpandButton = Q:CreateButton("DungeonBuddy_CollapseAndExpandButton", self.frame, initialText, 24, 24, Q.Theme.Font.M, Q.Theme.Text.Secondary, actionHandlers)
     collapseAndExpandButton:SetPoint("RIGHT", closeButton, "LEFT", -2, 0)
     
@@ -175,8 +175,8 @@ function QuestLog:Create()
 end
 
 local function IsRowCollapsed(row)
-    if row.isDungeon then
-        return Q:GetSetting("CollapsedDungeons")[row.id] or false
+    if row.isInstance then
+        return Q:GetSetting("CollapsedInstances")[row.id] or false
     else
         return Q:GetSetting("CollapsedQuests")[row.id] or false
     end
@@ -227,7 +227,7 @@ end
 -- Adds a chain-style info row below a quest the player is too low level for. It reuses the
 -- isSharedSummary row type, which has no buttons, a disabled colour and no quest-specific text.
 local function InsertLevelRequirementRow(row, depth)
-    if row.isDungeon or not row.requiredLevel or not Q:GetSetting("ShowAllQuestsForAvailableDungeon") then
+    if row.isInstance or not row.requiredLevel or not Q:GetSetting("ShowAllQuestsForAvailableInstance") then
         return
     end
 
@@ -325,8 +325,8 @@ end
 local function UpdateClassIcon(frame)
     local classIcon = frame.titleFrame.classIcon
     local professionIcon = frame.titleFrame.professionIcon
-    local classIconTexture = not frame.row.isDungeon and Q.API:GetClassIconTexture(frame.row.class)
-    local professionIconTexture = not frame.row.isDungeon and Q.API:GetProfessionIconTexture(frame.row.profession)
+    local classIconTexture = not frame.row.isInstance and Q.API:GetClassIconTexture(frame.row.class)
+    local professionIconTexture = not frame.row.isInstance and Q.API:GetProfessionIconTexture(frame.row.profession)
 
     if classIconTexture then
         classIcon:SetTexture(classIconTexture)
@@ -357,15 +357,15 @@ local function UpdateRowAppearance(frame, playerInfo)
         Q:SetTextColor(frame.titleFrame.title, "Disabled")
         frame.leftBorder:SetColorTexture(unpack(Q.Theme.Border.Accent))
         frame.sideGradient:SetGradient("HORIZONTAL", CreateColor(Q.Theme.Border.Accent[1], Q.Theme.Border.Accent[2], Q.Theme.Border.Accent[3], 0.03), CreateColor(0, 0, 0, 0))
-    elseif frame.row.isDungeon then
+    elseif frame.row.isInstance then
         local levelColor = Q.API:GetDifficultyColor(playerInfo.level, frame.row.minLevel)
         frame.titleFrame.level:SetTextColor(levelColor.r, levelColor.g, levelColor.b, 1)
 
         Q:SetTextColor(frame.titleFrame.title, "Primary")
         frame.leftBorder:SetColorTexture(unpack(Q.Theme.Text.Primary))
 
-        Q:SetPixelPerfectHeight(frame, DB_ROW_HEIGHT + DUNGEON_ROW_EXTRA_HEIGHT)
-        Q:SetPixelPerfectHeight(frame.titleFrame, DB_ROW_HEIGHT + DUNGEON_ROW_EXTRA_HEIGHT)
+        Q:SetPixelPerfectHeight(frame, DB_ROW_HEIGHT + INSTANCE_ROW_EXTRA_HEIGHT)
+        Q:SetPixelPerfectHeight(frame.titleFrame, DB_ROW_HEIGHT + INSTANCE_ROW_EXTRA_HEIGHT)
 
 
         frame.gradient:SetGradient("VERTICAL", CreateColor(levelColor.r, levelColor.g, levelColor.b, 0.15), CreateColor(0, 0, 0, 0))
@@ -392,7 +392,7 @@ end
 local function UpdateCollapseButton(frame)
     local row = frame.row
 
-    if row.isDungeon or (not row.isSharedSummary and #(row.prerequisites or {}) > 0) then
+    if row.isInstance or (not row.isSharedSummary and #(row.prerequisites or {}) > 0) then
         frame.collapseButton:Show()
     else
         frame.collapseButton:Hide()
@@ -409,7 +409,7 @@ local function UpdateCollapseButton(frame)
 end
 
 local function UpdateWaypointButton(frame)
-    if not frame.row.isSharedSummary and (frame.row.isDungeon or Q.API:IsQuestAvailable(frame.row.id)) then
+    if not frame.row.isSharedSummary and (frame.row.isInstance or Q.API:IsQuestAvailable(frame.row.id)) then
         frame.waypointButton:Show()
     else
         frame.waypointButton:Hide()
@@ -420,7 +420,7 @@ local function UpdateRowText(frame)
     local row = frame.row
     local pixelPerfect = Q:PixelPerfect(1)
 
-    if row.isDungeon then
+    if row.isInstance then
         frame.titleFrame.level:SetText(string.format(" %s-%s", row.minLevel, row.maxLevel))
 
         frame.titleFrame.title:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * Q.Theme.Font.XL)
@@ -437,7 +437,7 @@ local function UpdateRowText(frame)
         end
     end
 
-    local title = not row.isDungeon and not row.isSharedSummary and Q:GetSetting("ShowSuggestedQuestLevel") and string.format("[%d] %s", row.suggestedLevel or 0, row.name) or row.name
+    local title = not row.isInstance and not row.isSharedSummary and Q:GetSetting("ShowSuggestedQuestLevel") and string.format("[%d] %s", row.suggestedLevel or 0, row.name) or row.name
     if row.prerequisiteType and row.prerequisiteType == "any" then
         title = "*" .. title
     elseif row.prerequisiteType and row.prerequisiteType == "breadcrumb" then
@@ -513,7 +513,7 @@ local function CreateRowFrame(index, row)
     Q:SetPixelPerfectHeight(frame.titleFrame, DB_ROW_HEIGHT)
     Q:SetPixelPerfectPoint(frame.titleFrame, "TOPLEFT", frame, "TOPLEFT", 0, 0)
 
-    frame.titleFrame.title = Q:CreateText(nil, frame.titleFrame, row.name, row.isDungeon and Q.Theme.Font.XL or Q.Theme.Font.M)
+    frame.titleFrame.title = Q:CreateText(nil, frame.titleFrame, row.name, row.isInstance and Q.Theme.Font.XL or Q.Theme.Font.M)
     Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", Q.Theme.Padding.S, 0)
     frame.titleFrame.title:SetJustifyH("LEFT")
 
@@ -561,8 +561,8 @@ local function CreateRowFrame(index, row)
                 return
             end
 
-            local settingPath = clickedRow.isDungeon and "CollapsedDungeons" or "CollapsedQuests"
-            local collapsedRows = clickedRow.isDungeon and Q:GetSetting("CollapsedDungeons") or Q:GetSetting("CollapsedQuests")
+            local settingPath = clickedRow.isInstance and "CollapsedInstances" or "CollapsedQuests"
+            local collapsedRows = clickedRow.isInstance and Q:GetSetting("CollapsedInstances") or Q:GetSetting("CollapsedQuests")
             if collapsedRows[clickedRow.id] then
                 collapsedRows[clickedRow.id] = nil
             else
@@ -601,7 +601,7 @@ local function CreateRowFrame(index, row)
 
             self.isDisabled = true
             self:SetAlpha(0.5)
-            Q.API:SetWaypoint(frame.row, frame.row.isDungeon)
+            Q.API:SetWaypoint(frame.row, frame.row.isInstance)
 
             C_Timer.After(2, function()
                 self.isDisabled = false
@@ -615,8 +615,8 @@ local function CreateRowFrame(index, row)
 
             tooltip:SetOwner(self, "ANCHOR_RIGHT")
             if tomtom and tomtom.AddWaypoint then
-                tooltip:SetText(frame.row.isDungeon and "Find Entrance" or "Find Source", unpack(Q.Theme.Text.Accent))
-                tooltip:AddLine(string.format("Add a waypoint at %s.", frame.row.isDungeon and "the dungeon entrance" or "this quests source(s)"), r, g, b, true)
+                tooltip:SetText(frame.row.isInstance and "Find Entrance" or "Find Source", unpack(Q.Theme.Text.Accent))
+                tooltip:AddLine(string.format("Add a waypoint at %s.", frame.row.isInstance and "the instance entrance" or "this quests source(s)"), r, g, b, true)
                 if frame.row.source and frame.row.source.text then
                     tooltip:AddLine("-", r, g, b, true)
                     tooltip:AddLine("Info: "..frame.row.source.text, r, g, b, true)
@@ -650,17 +650,17 @@ function QuestLog:RefreshAndPopulate()
 
     CreateOrUpdateNoQuestsFoundFrame(playerInfo)
 
-    local dungeons = Q.API:GetDungeons()
+    local instances = Q.API:GetInstances()
 
-    -- First build the rows table with all dungeons, quests, and chain quests, only adding rows that are not hidden
-    for _, dungeon in pairs(dungeons) do
-        if Q.API:DungeonHasAvailableQuests(dungeon.id, playerInfo) and playerInfo.level <= dungeon.maxLevel then
-            local isCollapsed = Q:GetSetting("CollapsedDungeons")[dungeon.id] or false
-            local quests = (Q:GetSetting("ShowAllQuestsForAvailableDungeon") and Q.API:GetQuestsByDungeonId(dungeon.id)) or Q.API:GetAvailableQuestsByDungeonId(dungeon.id, playerInfo)
+    -- First build the rows table with all instances, quests, and chain quests, only adding rows that are not hidden
+    for _, instance in pairs(instances) do
+        if Q.API:InstanceHasAvailableQuests(instance.id, playerInfo) and playerInfo.level <= instance.maxLevel then
+            local isCollapsed = Q:GetSetting("CollapsedInstances")[instance.id] or false
+            local quests = (Q:GetSetting("ShowAllQuestsForAvailableInstance") and Q.API:GetQuestsByInstanceId(instance.id)) or Q.API:GetAvailableQuestsByInstanceId(instance.id, playerInfo)
             table.sort(quests, function(a, b) return a.name < b.name end)
-            dungeon.isDungeon = true
+            instance.isInstance = true
 
-            table.insert(self.rows, dungeon)
+            table.insert(self.rows, instance)
             
             if not isCollapsed then
                 for _, quest in ipairs(quests) do
@@ -701,10 +701,10 @@ function QuestLog:RefreshAndPopulate()
         UpdateWaypointButton(frame)
         UpdateRowText(frame)
         
-        frame.sideGradient:SetShown(not row.isDungeon and true or false)
-        frame.gradient:SetShown(row.isDungeon and true or false)
-        frame.bottomBorder:SetShown(row.isDungeon and true or false)
-        if row.isDungeon then
+        frame.sideGradient:SetShown(not row.isInstance and true or false)
+        frame.gradient:SetShown(row.isInstance and true or false)
+        frame.bottomBorder:SetShown(row.isInstance and true or false)
+        if row.isInstance then
             frame.background:SetAlpha(0)
             frame.leftBorder:SetAlpha(0)
         else
@@ -717,11 +717,11 @@ function QuestLog:RefreshAndPopulate()
             rowOffset = 0
         else
             rowOffset = prevRowHeight + 2
-            if row.isDungeon then
+            if row.isInstance then
                 rowOffset = rowOffset + 10
             end
         end
-        prevRowHeight = row.isDungeon and (DB_ROW_HEIGHT + DUNGEON_ROW_EXTRA_HEIGHT) or DB_ROW_HEIGHT
+        prevRowHeight = row.isInstance and (DB_ROW_HEIGHT + INSTANCE_ROW_EXTRA_HEIGHT) or DB_ROW_HEIGHT
 
         Q:SetPixelPerfectPoint(frame, "TOPLEFT", self.scrollChild, "TOPLEFT", 1, -(rowOffset + totalOffset))
         totalOffset = totalOffset + rowOffset

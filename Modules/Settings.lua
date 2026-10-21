@@ -29,7 +29,7 @@ local function GetSectionSettings(sectionName)
             type = "checkbox",
             path = "ShowNotificationOnLevelUp",
             title = "Notifications on level up",
-            description = "Show a notification on level up when the first quest of a chain leading to a dungeon quest is available.",
+            description = "Show a notification on level up when the first quest of a chain leading to a instance quest is available.",
             onChange = function()
                 Q.Notification:UpdateLevelUpRegistration()
             end,
@@ -39,7 +39,7 @@ local function GetSectionSettings(sectionName)
             type = "checkbox",
             path = "ShowNotificationForAllQuests",
             title = "Notifications for all quests",
-            description = "Enable notifications for all dungeon quests, not just the first quest in a chain."
+            description = "Enable notifications for all instance quests, not just the first quest in a chain."
         },
         {
             section = Sections.Notifications.name,
@@ -63,7 +63,7 @@ local function GetSectionSettings(sectionName)
             type = "checkbox",
             path = "HideCompletedQuests",
             title = "Hide completed quests",
-            description = "Remove completed quests from the dungeon buddy tracker.",
+            description = "Remove completed quests from the Dungeon Buddy tracker.",
             onChange = function()
                 if Q.QuestLog and Q.QuestLog.frame then
                     Q.QuestLog:RefreshAndPopulate()
@@ -73,9 +73,9 @@ local function GetSectionSettings(sectionName)
         {
             section = Sections.QuestLog.name,
             type = "checkbox",
-            path = "ShowAllQuestsForAvailableDungeon",
-            title = "Instantly show all dungeon quests when one is available",
-            description = "Enable showing all quests for a dungeon as soon as you have a single quest available in that dungeon. Also adds a required level display row to quests you are not high enough level for.",
+            path = "ShowAllQuestsForAvailableInstance",
+            title = "Instantly show all instance quests when one is available",
+            description = "Enable showing all quests for a instance as soon as you have a single quest available in that instance. Also adds a required level display row to quests you are not high enough level for.",
             onChange = function()
                 if Q.QuestLog and Q.QuestLog.frame then
                     Q.QuestLog:RefreshAndPopulate()

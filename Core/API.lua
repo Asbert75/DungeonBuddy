@@ -35,9 +35,9 @@ function Q.API:BuildLookupTables()
     end
 
     wipe(Q.QuestById)
-    wipe(Q.QuestsByDungeonId)
-    wipe(Q.DungeonById)
-    wipe(Q.DungeonByQuestId)
+    wipe(Q.QuestsByInstanceId)
+    wipe(Q.InstanceById)
+    wipe(Q.InstanceByQuestId)
 
     -- Filter out quests that do not match the player's faction and class, we do this when building lookups so that we can completely ignore faction/class in all other functions
     FilterArray(Q.Quests, function(quest)
@@ -46,51 +46,51 @@ function Q.API:BuildLookupTables()
 
     for _, quest in ipairs(Q.Quests) do
         Q.QuestById[quest.id] = quest
-        for _, dungeon in ipairs(quest.dungeons or {}) do
-            local quests = Q.QuestsByDungeonId[dungeon.id]
+        for _, instance in ipairs(quest.instances or {}) do
+            local quests = Q.QuestsByInstanceId[instance.id]
             if not quests then
                 quests = {}
-                Q.QuestsByDungeonId[dungeon.id] = quests
+                Q.QuestsByInstanceId[instance.id] = quests
             end
             table.insert(quests, quest)
         end
     end
 
-    for _, dungeon in pairs(Q.Dungeons) do
-        Q.DungeonById[dungeon.id] = dungeon
+    for _, instance in pairs(Q.Instances) do
+        Q.InstanceById[instance.id] = instance
     end
 
-    local function addQuestDungeon(questId, dungeon)
-        local dungeons = Q.DungeonByQuestId[questId]
-        if not dungeons then
-            dungeons = {}
-            Q.DungeonByQuestId[questId] = dungeons
+    local function addQuestInstance(questId, instance)
+        local instances = Q.InstanceByQuestId[questId]
+        if not instances then
+            instances = {}
+            Q.InstanceByQuestId[questId] = instances
         end
 
-        for _, existingDungeon in ipairs(dungeons) do
-            if existingDungeon.id == dungeon.id then
+        for _, existingInstance in ipairs(instances) do
+            if existingInstance.id == instance.id then
                 return
             end
         end
-        table.insert(dungeons, dungeon)
+        table.insert(instances, instance)
     end
 
-    -- Dungeon relevance follows every unlock path back to its starting quests.
-    local function AddDungeonToLineage(quest, dungeon, visited)
+    -- Instance relevance follows every unlock path back to its starting quests.
+    local function AddInstanceToLineage(quest, instance, visited)
         if not quest or visited[quest.id] then
             return
         end
         visited[quest.id] = true
-        addQuestDungeon(quest.id, dungeon)
+        addQuestInstance(quest.id, instance)
 
         for _, prerequisite in ipairs(quest.prerequisites or {}) do
-            AddDungeonToLineage(self:GetQuestById(prerequisite.id), dungeon, visited)
+            AddInstanceToLineage(self:GetQuestById(prerequisite.id), instance, visited)
         end
     end
 
     for _, quest in ipairs(Q.Quests) do
-        for _, dungeon in ipairs(quest.dungeons or {}) do
-            AddDungeonToLineage(quest, dungeon, {})
+        for _, instance in ipairs(quest.instances or {}) do
+            AddInstanceToLineage(quest, instance, {})
         end
     end
 end
@@ -222,21 +222,21 @@ function Q.API:GetQuestById(questId)
     return Q.QuestById[questId]
 end
 
-function Q.API:GetDungeonById(dungeonId)
-    return Q.DungeonById[dungeonId]
+function Q.API:GetInstanceById(instanceId)
+    return Q.InstanceById[instanceId]
 end
 
-function Q.API:GetDungeons()
-    local dungeons = {}
-    for _, dungeon in pairs(Q.Dungeons) do
-        table.insert(dungeons, dungeon)
+function Q.API:GetInstances()
+    local instances = {}
+    for _, instance in pairs(Q.Instances) do
+        table.insert(instances, instance)
     end
 
-    table.sort(dungeons, function(a, b) return a.minLevel < b.minLevel or (a.minLevel == b.minLevel and a.maxLevel < b.maxLevel) end)
-    return dungeons
+    table.sort(instances, function(a, b) return a.minLevel < b.minLevel or (a.minLevel == b.minLevel and a.maxLevel < b.maxLevel) end)
+    return instances
 end
 
-function Q.API:IsDungeonQuestChainStart(questId)
+function Q.API:IsInstanceQuestChainStart(questId)
     local quest = self:GetQuestById(questId)
     if not quest then
         return false
@@ -275,11 +275,11 @@ function Q.API:IsQuestLineageStart(questId)
     return true
 end
 
-function Q.API:IsDungeonQuestLineageStart(questId)
+function Q.API:IsInstanceQuestLineageStart(questId)
     if not self:IsQuestLineageStart(questId) then
         return false
     end
-    return #self:GetDungeonsForQuest(questId) > 0
+    return #self:GetInstancesForQuest(questId) > 0
 end
 
 function Q.API:GetRelevantQuestsForZone()
@@ -308,20 +308,20 @@ function Q.API:GetRelevantQuestsForZone()
     return quests
 end
 
-function Q.API:GetQuestsByDungeonId(dungeonId)
-    return Q.QuestsByDungeonId[dungeonId] or {}
+function Q.API:GetQuestsByInstanceId(instanceId)
+    return Q.QuestsByInstanceId[instanceId] or {}
 end
 
-function Q.API:GetDungeonsForQuest(questId)
-    return Q.DungeonByQuestId[questId] or {}
+function Q.API:GetInstancesForQuest(questId)
+    return Q.InstanceByQuestId[questId] or {}
 end
 
-function Q.API:IsQuestRelatedToDungeon(questId, dungeonId)
-    if not questId or not dungeonId then
+function Q.API:IsQuestRelatedToInstance(questId, instanceId)
+    if not questId or not instanceId then
         return false
     end
 
-    local quests = Q.QuestsByDungeonId[dungeonId] or {}
+    local quests = Q.QuestsByInstanceId[instanceId] or {}
     for _, quest in ipairs(quests) do
         if quest.id == questId then
             return true
@@ -330,9 +330,9 @@ function Q.API:IsQuestRelatedToDungeon(questId, dungeonId)
     return false
 end
 
-function Q.API:GetAvailableQuestsByDungeonId(dungeonId, playerInfo)
+function Q.API:GetAvailableQuestsByInstanceId(instanceId, playerInfo)
     local quests = {}
-    for _, quest in ipairs(self:GetQuestsByDungeonId(dungeonId) or {}) do
+    for _, quest in ipairs(self:GetQuestsByInstanceId(instanceId) or {}) do
         if self:IsQuestAvailableToLevel(quest.id, playerInfo) and self:PlayerHasProfession(quest.profession) then
             table.insert(quests, quest)
         end
@@ -340,8 +340,8 @@ function Q.API:GetAvailableQuestsByDungeonId(dungeonId, playerInfo)
     return quests
 end
 
-function Q.API:DungeonHasAvailableQuests(dungeonId, playerInfo)
-    for _, quest in ipairs(self:GetQuestsByDungeonId(dungeonId)) do
+function Q.API:InstanceHasAvailableQuests(instanceId, playerInfo)
+    for _, quest in ipairs(self:GetQuestsByInstanceId(instanceId)) do
         if  self:IsQuestAvailableToLevel(quest.id, playerInfo) and
             self:PlayerHasProfession(quest.profession) and
             (Q:GetSetting("HideCompletedQuests") == false or not self:IsQuestCompleted(quest.id))
@@ -464,14 +464,14 @@ local function AddWaypoint(location, title)
     })
 end
 
-function Q.API:SetWaypoint(entity, isDungeon)
+function Q.API:SetWaypoint(entity, isInstance)
     local tomtom = rawget(_G, "TomTom")
     if not tomtom or not tomtom.AddWaypoint then
         Q:PrettyPrint("Waypoints requires the TomTom addon to be enabled.")
         return
     end
 
-    if isDungeon then
+    if isInstance then
         AddWaypoint(entity.location, entity.name.." (Entrance)")
     else
         local playerInfo = Q.API:GetPlayerInfo()
