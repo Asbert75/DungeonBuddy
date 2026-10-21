@@ -1,6 +1,6 @@
 ## Interface: 16001, 16000
 ## Title: DungeonBuddy
-## Notes: Reminds you of quest chains that lead into dungeon quests and tracks them by dungeon.
+## Notes: Reminds you of quest chains that lead into instance quests and tracks them by instance.
 ## Author: Wicked
 ## Version: 1.5.6
 ## X-Curse-Project-ID: 1730648
@@ -28,7 +28,7 @@ Core\Database.lua
 Core\MinimapButton.lua
 Core\API.lua
 
-Data\Dungeons.lua
+Data\Instances.lua
 Data\Quests.lua
 Data\Theme.lua
 

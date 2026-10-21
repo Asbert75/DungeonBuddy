@@ -1,12 +1,12 @@
 local ADDON_NAME, Q = ...
 local Addon = LibStub("AceAddon-3.0"):NewAddon(ADDON_NAME, "AceConsole-3.0", "AceEvent-3.0")
 
-Q.Dungeons = {}
+Q.Instances = {}
 Q.Quests = {}
-Q.DungeonById = {}
+Q.InstanceById = {}
 Q.QuestById = {}
-Q.QuestsByDungeonId = {}
-Q.DungeonByQuestId =  {}
+Q.QuestsByInstanceId = {}
+Q.InstanceByQuestId =  {}
 
 Q.Debug = {
     Enabled = false,

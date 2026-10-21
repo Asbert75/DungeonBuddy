@@ -1,6 +1,6 @@
 local _, Q = ...
 
-Q.Dungeons = {
+Q.Instances = {
     ["Hall of Thanes"] = {
         id = 1,
         name = "Hall of Thanes",
