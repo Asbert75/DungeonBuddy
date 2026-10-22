@@ -515,7 +515,7 @@ local function CreateRowFrame(index, row)
 
     frame.titleFrame.trackedIcon = frame.titleFrame:CreateTexture(nil, "ARTWORK")
     frame.titleFrame.trackedIcon:SetTexture("Interface\\Buttons\\UI-CheckBox-Check")
-    Q:SetPixelPerfectSize(frame.titleFrame.trackedIcon, 12, 12)
+    Q:SetPixelPerfectSize(frame.titleFrame.trackedIcon, 20, 20)
     frame.titleFrame.trackedIcon:Hide()
 
     frame.titleFrame.level = Q:CreateText(nil, frame.titleFrame, "", Q.Theme.Font.L)
@@ -524,11 +524,11 @@ local function CreateRowFrame(index, row)
 
     frame.titleFrame.classIcon = frame.titleFrame:CreateTexture(nil, "ARTWORK")
     Q:SetPixelPerfectPoint(frame.titleFrame.classIcon, "LEFT", frame.titleFrame.title, "RIGHT", Q.Theme.Padding.S, 0)
-    Q:SetPixelPerfectSize(frame.titleFrame.classIcon, 16, 16)
+    Q:SetPixelPerfectSize(frame.titleFrame.classIcon, 20, 20)
     frame.titleFrame.classIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 
     frame.titleFrame.professionIcon = frame.titleFrame:CreateTexture(nil, "ARTWORK")
-    Q:SetPixelPerfectSize(frame.titleFrame.professionIcon, 16, 16)
+    Q:SetPixelPerfectSize(frame.titleFrame.professionIcon, 20, 20)
     frame.titleFrame.professionIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 
     --------------------------------------------------
