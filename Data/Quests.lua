@@ -1955,6 +1955,20 @@ Q.Quests = {
 
     --#region SM: Library
     {
+        id = 96800,
+        faction = "Alliance",
+        name = "Past Due",
+        suggestedLevel = 38,
+        requiredLevel = 30,
+        source = {
+            type = "npc",
+            name = "Magus Olvek",
+            zone = "Alterac Mountains",
+            location = { mapId = 1416, x = 0.095, y = 0.625 },
+        },
+        instances = { Q.Instances["SM: Library"] },
+    },
+    {
         id = 1049,
         faction = "Horde",
         name = "Compendium of the Fallen",
@@ -6285,6 +6299,52 @@ Q.Quests = {
         },
         instances = { Q.Instances["Scholomance"] }
     },
+    {
+        id = 79360,
+        class = "SHAMAN",
+        name = "Elemental Aid ",
+        suggestedLevel = 33,
+        requiredLevel = 30,
+        prerequisites = {
+            { id = 1532, type = Q.PrerequisiteType.CHAIN }
+        },
+        sources = {
+            {
+                type = "npc",
+                name = "Rau Cliffrunner",
+                zone = "Thousand Needles",
+                location = { mapId = 1441, x = 0.46, y = 0.516 },
+            },
+            {
+                type = "npc",
+                name = "Prate Cloudseer",
+                zone = "Thousand Needles",
+                location = { mapId = 1441, x = 0.536, y = 0.428 },
+            }
+        },
+        instances = { Q.Instances["Razorfen Kraul"] }
+    },
+    {
+        id = 1532,
+        class = "SHAMAN",
+        name = "Call of Air",
+        suggestedLevel = 30,
+        requiredLevel = 30,
+        sources = {
+            {
+                type = "npc",
+                name = "Searn Firewarder",
+                zone = "Orgrimmar",
+                location = { mapId = 1454, x = 0.386, y = 0.376 },
+            },
+            {
+                type = "npc",
+                name = "Xanis Flameweaver",
+                zone = "Thunder Bluff",
+                location = { mapId = 1456, x = 0.252, y = 0.210 },
+            }
+        }
+    },
     --#endregion
 
     --#region Blacksmithing Quests
@@ -6390,6 +6450,38 @@ Q.Quests = {
             location = { mapId = 0, x = 0, y = 0 },
         },
         instances = { Q.Instances["The Drowned City"] }
+    }, 
+    --#endregion
+    --#region Rogue Quests
+    {
+        id = 78676,
+        class = "ROGUE",
+        name = "The Eye of Bhossca",
+        suggestedLevel = 35,
+        requiredLevel = 30,
+        source = {
+            type = "npc",
+            name = "Dead Drop",
+            zone = "Silverpine Forest",
+            location = { mapId = 1421, x = 0.471, y = 0.711 },
+            text = "You must visit a capital city once hitting level 30 for the letter to arrive before the quest is available from Dead Drop"
+        },
+        instances = { Q.Instances["SM: Library"], Q.Instances["SM: Graveyard"] }
+    }, 
+    {
+        id = 78261,
+        class = "ROGUE",
+        name = "The Horn of Xelthos",
+        suggestedLevel = 23,
+        requiredLevel = 20,
+        source = {
+            type = "npc",
+            name = "Dead Drop",
+            zone = "Silverpine Forest",
+            location = { mapId = 1421, x = 0.471, y = 0.711 },
+            text = "You must visit a capital city once hitting level 20 for the letter to arrive before the quest is available from Dead Drop"
+        },
+        instances = { Q.Instances["Shadowfang Keep"] }
     }, 
     --#endregion
 }
