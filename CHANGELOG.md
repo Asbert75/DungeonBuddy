@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Blizzard default waypoints are now used as a backup if TomTom is not installed
+- Row-level tooltips now display source info beneath a source name if there is any
 
 ## [1.6.0] - 2026-10-22
 
