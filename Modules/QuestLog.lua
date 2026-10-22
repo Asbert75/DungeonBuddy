@@ -517,27 +517,6 @@ local function CreateRowFrame(index, row)
     Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", Q.Theme.Padding.S, 0)
     frame.titleFrame.title:SetJustifyH("LEFT")
 
-    frame.titleFrame.title:EnableMouse(true)
-    frame.titleFrame.title:SetScript("OnEnter", function(self)
-        local hoveredRow = frame.row
-        local tooltip = Q:GetTooltip()
-        if hoveredRow and hoveredRow.prerequisiteType == Q.PrerequisiteType.ANY then
-            tooltip:SetOwner(self, "ANCHOR_RIGHT")
-            tooltip:SetText("Optional Choice", Q.Theme.Text.Accent[1], Q.Theme.Text.Accent[2], Q.Theme.Text.Accent[3])
-            tooltip:AddLine("You only need to complete one of the quests marked with * to unlock the next quest.", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
-            tooltip:Show()
-        elseif hoveredRow and hoveredRow.prerequisiteType == Q.PrerequisiteType.BREADCRUMB then
-            tooltip:SetOwner(self, "ANCHOR_RIGHT")
-            tooltip:SetText("Breadcrumb", Q.Theme.Text.Accent[1], Q.Theme.Text.Accent[2], Q.Theme.Text.Accent[3])
-            tooltip:AddLine("Not required to unlock the next quest. Breadcrumb quests are only meant to help players find a quest.", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
-            tooltip:Show()
-        end
-    end)
-    frame.titleFrame.title:SetScript("OnLeave", function()
-        local tooltip = Q:GetTooltip()
-        tooltip:Hide()
-    end)
-
     frame.titleFrame.level = Q:CreateText(nil, frame.titleFrame, "", Q.Theme.Font.L)
     Q:SetPixelPerfectPoint(frame.titleFrame.level, "LEFT", frame.titleFrame.title, "RIGHT", 2, 0)
     frame.titleFrame.level:SetJustifyH("LEFT")
@@ -637,6 +616,43 @@ local function CreateRowFrame(index, row)
     frame.waypointButton.icon:SetSize(DB_ROW_HEIGHT * 0.9, DB_ROW_HEIGHT * 0.9)
     frame.waypointButton.icon:SetPoint("CENTER")
     frame.waypointButton:SetPoint("RIGHT", frame.collapseButton, "LEFT", -Q:PixelPerfect(2), 0)
+
+    -- Keep hover detection out from under the action buttons so they remain clickable.
+    frame.titleHover = CreateFrame("Frame", nil, frame)
+    frame.titleHover:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
+    frame.titleHover:SetPoint("BOTTOMRIGHT", frame.waypointButton, "BOTTOMLEFT", -Q:PixelPerfect(2), 0)
+    frame.titleHover:EnableMouse(true)
+    frame.hoverHighlight = frame:CreateTexture(nil, "BACKGROUND", nil, 2)
+    frame.hoverHighlight:SetAllPoints(frame)
+    frame.hoverHighlight:SetColorTexture(unpack(Q.Theme.Text.Primary))
+    frame.hoverHighlight:SetAlpha(0.03)
+    frame.hoverHighlight:Hide()
+    frame.titleHover:SetScript("OnEnter", function()
+        if not frame.row.isInstance then
+            frame.hoverHighlight:Show()
+        end
+        local hoveredRow = frame.row
+        if not hoveredRow then
+            return
+        end
+
+        local tooltip = Q:GetTooltip()
+        if hoveredRow.prerequisiteType == Q.PrerequisiteType.ANY then
+            tooltip:SetOwner(frame.titleFrame, "ANCHOR_RIGHT")
+            tooltip:SetText("Optional Choice", Q.Theme.Text.Accent[1], Q.Theme.Text.Accent[2], Q.Theme.Text.Accent[3])
+            tooltip:AddLine("You only need to complete one of the quests marked with * to unlock the next quest.", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
+            tooltip:Show()
+        elseif hoveredRow.prerequisiteType == Q.PrerequisiteType.BREADCRUMB then
+            tooltip:SetOwner(frame.titleFrame, "ANCHOR_RIGHT")
+            tooltip:SetText("Breadcrumb", Q.Theme.Text.Accent[1], Q.Theme.Text.Accent[2], Q.Theme.Text.Accent[3])
+            tooltip:AddLine("Not required to unlock the next quest. Breadcrumb quests are only meant to help players find a quest.", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
+            tooltip:Show()
+        end
+    end)
+    frame.titleHover:SetScript("OnLeave", function()
+        frame.hoverHighlight:Hide()
+        Q:GetTooltip():Hide()
+    end)
 
     return frame
 end
