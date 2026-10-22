@@ -275,10 +275,8 @@ local function AppendRelatedRows(quest, depth, visited)
     end
 
     -- Breadcrumb quests stop being available once the quest they point to is completed.
-    local hideBreadcrumbs = Q.API:IsQuestCompleted(quest.id)
-
     for _, prerequisite in ipairs(quest.prerequisites or {}) do
-        local isHiddenBreadcrumb = hideBreadcrumbs and prerequisite.type == Q.PrerequisiteType.BREADCRUMB
+        local isHiddenBreadcrumb = Q.API:IsQuestCompleted(quest.id) and prerequisite.type == Q.PrerequisiteType.BREADCRUMB
         if not isHiddenBreadcrumb and Q.API:GetQuestById(prerequisite.id) then
             AddDependency(prerequisite.id, prerequisite.type)
         end
