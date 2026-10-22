@@ -591,14 +591,11 @@ local function CreateRowFrame(index, row)
         OnMouseEnter = function(self)
             local tooltip = Q:GetTooltip()
             local r, g, b = unpack(Q.Theme.Text.Primary)
+            local hasMultipleSources = frame.row.sources and #frame.row.sources > 1
 
             tooltip:SetOwner(self, "ANCHOR_TOPLEFT", 5, 5)
             tooltip:SetText(frame.row.isInstance and "Find Entrance" or "Find Source", unpack(Q.Theme.Text.Accent))
-            tooltip:AddLine(string.format("Add a waypoint at %s.", frame.row.isInstance and "the instance entrance" or "this quests source(s)"), r, g, b, true)
-            if frame.row.source and frame.row.source.text then
-                tooltip:AddLine("-", r, g, b, true)
-                tooltip:AddLine("Info: "..frame.row.source.text, r, g, b, true)
-            end
+            tooltip:AddLine(string.format("Add a waypoint to %s.", frame.row.isInstance and "the instance entrance" or (hasMultipleSources and "all of this quests sources" or "this quest's source")), r, g, b, true)
             tooltip:Show()
         end,
         OnMouseLeave = function()
@@ -784,11 +781,17 @@ local function CreateRowFrame(index, row)
                 local source = sources[1]
                 local location = source.zone and (" in " .. source.zone) or ""
                 tooltip:AddLine("Started by " .. successColorCode .. source.name .. "|r" .. location .. ".", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
+                if source.text then
+                    tooltip:AddLine(source.text, Q.Theme.Status.Info[1], Q.Theme.Status.Info[2], Q.Theme.Status.Info[3], true)
+                end
             elseif #sources > 1 then
                 tooltip:AddLine("Started by:", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
                 for _, source in ipairs(sources) do
                     local location = source.zone and (" in " .. source.zone) or ""
                     tooltip:AddLine(successColorCode .. source.name .. "|r" .. location, Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
+                    if source.text then
+                        tooltip:AddLine(source.text, Q.Theme.Status.Info[1], Q.Theme.Status.Info[2], Q.Theme.Status.Info[3], true)
+                    end
                 end
             end
             doShowTooltip = true

@@ -1443,7 +1443,7 @@ Q.Quests = {
             name = "Sovik",
             zone = "Orgrimmar",
             location = { mapId = 1454, x = 0.76, y = 0.25 },
-            text = "You must pick up the quest 'Rig Wars' right beside Sovik first."
+            text = "You must pick up the quest 'Rig Wars' right beside Sovik first"
         },
     },
     {
@@ -1594,7 +1594,7 @@ Q.Quests = {
             type = "npc",
             name = "Kernobee",
             zone = "Gnomeregan",
-            text = "Found inside the instance in the room right of the Clean Room."
+            text = "Found inside the instance in the room right of the Clean Room"
         },
         instances = { Q.Instances["Gnomeregan"] },
     },
@@ -1947,7 +1947,7 @@ Q.Quests = {
             name = "Vorrel Sengutz",
             zone = "Scarlet Monastery",
             location = { mapId = 1420, x = 0.84, y = 0.32 },
-            text = "Vorrel is found in the first room after the corridor, inside the instance."
+            text = "Vorrel is found in the first room after the corridor inside the instance"
         },
         instances = { Q.Instances["SM: Graveyard"] },
     },
@@ -2198,7 +2198,7 @@ Q.Quests = {
             name = "Belnistrasz",
             zone = "Razorfen Downs",
             location = { mapId = 1413, x = 0.49, y = 0.92 },
-            text = "Located inside the instance"
+            text = "Found inside the instance"
         }
     },
     --#endregion
@@ -2521,7 +2521,7 @@ Q.Quests = {
             name = "Talvash's Scrying Bowl",
             zone = "Uldaman",
             location = { mapId = 1418, x = 0.426, y = 0.122, },
-            text = "Summoned by using Talvah's Phial of Scrying from your bags."
+            text = "Summoned by using Talvah's Phial of Scrying from your bags"
         },
         instances = { Q.Instances["Uldaman"] },
     },
