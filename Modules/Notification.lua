@@ -10,8 +10,8 @@ local function FormatInstanceRelationships(quest)
 
     for _, instance in ipairs(Q.API:GetInstancesForQuest(quest.id)) do
         if instance then
-            local instance, wing = instance.name:match("^(.+):%s*(.+)$")
-            local groupName = instance or instance.name
+            local entity, wing = instance.name:match("^(.+):%s*(.+)$")
+            local groupName = entity or instance.name
             local group = groups[groupName]
 
             if not group then

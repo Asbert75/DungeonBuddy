@@ -193,7 +193,7 @@ function Settings:Create()
     end
 
     local paddingS, paddingM = Q.Theme.Padding.S, Q.Theme.Padding.M
-    local frame = Q:CreateBackdropFrame("DungeonBuddy_SettingsFrame", UIParent, PANEL_WIDTH, 700, "TOOLTIP", "Primary", "Default", 0.9, 0.25)
+    local frame = Q:CreateBackdropFrame("DungeonBuddy_SettingsFrame", UIParent, PANEL_WIDTH, 700, "DIALOG", "Primary", "Default", 0.9, 0.25)
     self.frame = frame
     Q:SetPixelPerfectPoint(frame, "CENTER", UIParent, "CENTER", 0, 0)
     

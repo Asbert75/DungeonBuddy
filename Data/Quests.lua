@@ -1964,7 +1964,7 @@ Q.Quests = {
             type = "npc",
             name = "Sage Truthseeker",
             zone = "Thunder Bluff",
-            location = { mapId = 1456, x = 0.36, y = 0.26 },
+            location = { mapId = 1456, x = 0.344, y = 0.47 },
         },
         instances = { Q.Instances["SM: Library"] },
     },
@@ -2016,7 +2016,7 @@ Q.Quests = {
     {
         id = 1152,
         faction = "Horde",
-        name = "Test of Lore",
+        name = "Test of Lore (1/5)",
         suggestedLevel = 30,
         requiredLevel = 25,
         prerequisites = {
@@ -2032,7 +2032,7 @@ Q.Quests = {
     {
         id = 1154,
         faction = "Horde",
-        name = "Test of Lore",
+        name = "Test of Lore (2/5)",
         suggestedLevel = 30,
         requiredLevel = 25,
         prerequisites = {
@@ -2048,7 +2048,7 @@ Q.Quests = {
     {
         id = 6627,
         faction = "Horde",
-        name = "Test of Lore",
+        name = "Test of Lore (3/5)",
         suggestedLevel = 30,
         requiredLevel = 25,
         prerequisites = {
@@ -2064,7 +2064,7 @@ Q.Quests = {
     {
         id = 1159,
         faction = "Horde",
-        name = "Test of Lore",
+        name = "Test of Lore (4/5)",
         suggestedLevel = 30,
         requiredLevel = 25,
         prerequisites = {
@@ -2080,7 +2080,7 @@ Q.Quests = {
     {
         id = 1160,
         faction = "Horde",
-        name = "Test of Lore",
+        name = "Test of Lore (5/5)",
         suggestedLevel = 35,
         requiredLevel = 25,
         prerequisites = {

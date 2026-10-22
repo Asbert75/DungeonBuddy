@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-10-22
+
+### Added
+
+- Added tooltip information to each quest row
+- Added the ability to toggle tracking a quest with shift-click once it's in your log
+- Collapsing/Expanding an entire row can now be done by just clicking the row
+
+### Fixed
+
+- Corrected some quest data
+
+
 ## [1.5.6] - 2026-10-18
 
 ### Fixed

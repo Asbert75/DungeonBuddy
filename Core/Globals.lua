@@ -9,6 +9,16 @@ function Q:PrettyPrint(message)
     DEFAULT_CHAT_FRAME:AddMessage("|cfff0c25a"..ADDON_NAME..":|r " .. tostring(message))
 end
 
+function Q:ColorToHex(color)
+    local r = color.r or color[1]
+    local g = color.g or color[2]
+    local b = color.b or color[3]
+    r = math.max(0, math.min(1, r))
+    g = math.max(0, math.min(1, g))
+    b = math.max(0, math.min(1, b))
+    return string.format("|cff%02x%02x%02x", math.floor(r * 255 + 0.5), math.floor(g * 255 + 0.5), math.floor(b * 255 + 0.5))
+end
+
 function Q:PixelPerfect(value)
     if not value then return 0 end
     local _, screenHeight = GetPhysicalScreenSize()
@@ -275,7 +285,7 @@ end
 function Q:GetTooltip()
     if not self.Tooltip then
         local tooltip = CreateFrame("GameTooltip", "DungeonBuddyTooltip", UIParent, "GameTooltipTemplate, BackdropTemplate")
-        Q:SetBackdrop(tooltip, "Primary", "Default")
+        Q:SetBackdrop(tooltip, "Primary", "Default", 0.9, 0.25)
         if tooltip.NineSlice then tooltip.NineSlice:SetAlpha(0) end
         self.Tooltip = tooltip
     end
