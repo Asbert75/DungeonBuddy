@@ -75,7 +75,7 @@ local function GetSectionSettings(sectionName)
             type = "checkbox",
             path = "ShowAllQuestsForAvailableInstance",
             title = "Instantly show all instance quests when one is available",
-            description = "Enable showing all quests for a instance as soon as you have a single quest available in that instance. Also adds a required level display row to quests you are not high enough level for.",
+            description = "Enable showing all quests for a instance as soon as you have a single quest available in that instance.",
             onChange = function()
                 if Q.QuestLog and Q.QuestLog.frame then
                     Q.QuestLog:RefreshAndPopulate()
