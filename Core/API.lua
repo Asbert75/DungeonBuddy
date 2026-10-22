@@ -2,6 +2,21 @@ local ADDON_NAME, Q = ...
 
 Q.API = {}
 
+local ProfessionIcons = {
+    Alchemy = "Trade_Alchemy",
+    Blacksmithing = "Trade_BlackSmithing",
+    Enchanting = "Trade_Engraving",
+    Engineering = "Trade_Engineering",
+    Herbalism = "Trade_Herbalism",
+    Leatherworking = "Trade_LeatherWorking",
+    Mining = "Trade_Mining",
+    Skinning = "INV_Misc_Pelt_Wolf_01",
+    Tailoring = "Trade_Tailoring",
+    Cooking = "INV_Misc_Food_15",
+    ["First Aid"] = "Spell_Holy_SealOfSacrifice",
+    Fishing = "Trade_Fishing",
+}
+
 local function FilterArray(table, predicate)
     local writeIndex = 1
 
@@ -114,21 +129,6 @@ function Q.API:GetPlayerInfo()
         class = self:GetPlayerClass(),
     }
 end
-
-local ProfessionIcons = {
-    Alchemy = "Trade_Alchemy",
-    Blacksmithing = "Trade_BlackSmithing",
-    Enchanting = "Trade_Engraving",
-    Engineering = "Trade_Engineering",
-    Herbalism = "Trade_Herbalism",
-    Leatherworking = "Trade_LeatherWorking",
-    Mining = "Trade_Mining",
-    Skinning = "INV_Misc_Pelt_Wolf_01",
-    Tailoring = "Trade_Tailoring",
-    Cooking = "INV_Misc_Food_15",
-    ["First Aid"] = "Spell_Holy_SealOfSacrifice",
-    Fishing = "Trade_Fishing",
-}
 
 function Q.API:GetProfessionIconTexture(profession)
     local icon = profession and ProfessionIcons[profession]
@@ -351,6 +351,10 @@ function Q.API:InstanceHasAvailableQuests(instanceId, playerInfo)
     end
 
     return false
+end
+
+function Q.API:IsQuestWatched(questId)
+    return C_QuestLog.GetQuestWatchType(questId) ~= nil
 end
 
 function Q.API:IsPrerequisiteSatisfied(questId)

@@ -224,23 +224,6 @@ local function HasLineage(quest)
     return false
 end
 
--- Adds a chain-style info row below a quest the player is too low level for. It reuses the
--- isSharedSummary row type, which has no buttons, a disabled colour and no quest-specific text.
-local function InsertLevelRequirementRow(row, depth)
-    if row.isInstance or not row.requiredLevel or not Q:GetSetting("ShowAllQuestsForAvailableInstance") then
-        return
-    end
-
-    if row.requiredLevel > Q.API:GetPlayerLevel() then
-        table.insert(QuestLog.rows, {
-            id = "level:" .. tostring(row.id) .. ":" .. #QuestLog.rows,
-            name = string.format("Requires Level %d", row.requiredLevel),
-            isSharedSummary = true,
-            lineageDepth = depth,
-        })
-    end
-end
-
 -- "visited" holds every quest already listed under the current main quest, so a chain shared by
 -- several alternatives is only expanded once and referenced with a summary row afterwards.
 local function AppendRelatedRows(quest, depth, visited)
@@ -253,6 +236,10 @@ local function AppendRelatedRows(quest, depth, visited)
 
     local function AddDependency(questId, dependencyType)
         local dependency = Q.API:GetQuestById(questId)
+        if dependency and not Q.API:PlayerHasProfession(dependency.profession) then
+            return
+        end
+
         local row = dependency and CopyRow(dependency) or {
             id = questId,
             name = "Missing QuestId [" .. tostring(questId) .. "]",
@@ -265,7 +252,6 @@ local function AppendRelatedRows(quest, depth, visited)
         local isHidden = Q:GetSetting("HideCompletedQuests") and Q.API:IsQuestCompleted(questId)
         if not isHidden then
             table.insert(QuestLog.rows, row)
-            InsertLevelRequirementRow(row, depth + 2)
         end
 
         if IsRowCollapsed(row) or not dependency then
@@ -288,11 +274,9 @@ local function AppendRelatedRows(quest, depth, visited)
         end
     end
 
-    -- A breadcrumb only points toward this quest, so it is pointless once this quest is hidden as completed.
-    local hideBreadcrumbs = Q:GetSetting("HideCompletedQuests") and Q.API:IsQuestCompleted(quest.id)
-
+    -- Breadcrumb quests stop being available once the quest they point to is completed.
     for _, prerequisite in ipairs(quest.prerequisites or {}) do
-        local isHiddenBreadcrumb = hideBreadcrumbs and prerequisite.type == Q.PrerequisiteType.BREADCRUMB
+        local isHiddenBreadcrumb = Q.API:IsQuestCompleted(quest.id) and prerequisite.type == Q.PrerequisiteType.BREADCRUMB
         if not isHiddenBreadcrumb and Q.API:GetQuestById(prerequisite.id) then
             AddDependency(prerequisite.id, prerequisite.type)
         end
@@ -346,6 +330,16 @@ local function UpdateClassIcon(frame)
         professionIcon:Show()
     else
         professionIcon:Hide()
+    end
+
+    local trackedIcon = frame.titleFrame.trackedIcon
+    trackedIcon:ClearAllPoints()
+    if professionIcon:IsShown() then
+        Q:SetPixelPerfectPoint(trackedIcon, "LEFT", professionIcon, "RIGHT", Q.Theme.Padding.S, 0)
+    elseif classIcon:IsShown() then
+        Q:SetPixelPerfectPoint(trackedIcon, "LEFT", classIcon, "RIGHT", Q.Theme.Padding.S, 0)
+    else
+        Q:SetPixelPerfectPoint(trackedIcon, "LEFT", frame.titleFrame.title, "RIGHT", Q.Theme.Padding.S, 0)
     end
 end
 
@@ -445,6 +439,8 @@ local function UpdateRowText(frame)
     end
 
     frame.titleFrame.title:SetText(title)
+
+    frame.titleFrame.trackedIcon:SetShown(not row.isInstance and not row.isSharedSummary and Q.API:IsQuestInQuestLog(row.id) and Q.API:IsQuestWatched(row.id))
 end
 
 local function CreateOrUpdateNoQuestsFoundFrame(playerInfo)
@@ -517,26 +513,10 @@ local function CreateRowFrame(index, row)
     Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", Q.Theme.Padding.S, 0)
     frame.titleFrame.title:SetJustifyH("LEFT")
 
-    frame.titleFrame.title:EnableMouse(true)
-    frame.titleFrame.title:SetScript("OnEnter", function(self)
-        local hoveredRow = frame.row
-        local tooltip = Q:GetTooltip()
-        if hoveredRow and hoveredRow.prerequisiteType == Q.PrerequisiteType.ANY then
-            tooltip:SetOwner(self, "ANCHOR_RIGHT")
-            tooltip:SetText("Optional Choice", Q.Theme.Text.Accent[1], Q.Theme.Text.Accent[2], Q.Theme.Text.Accent[3])
-            tooltip:AddLine("You only need to complete one of the quests marked with * to unlock the next quest.", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
-            tooltip:Show()
-        elseif hoveredRow and hoveredRow.prerequisiteType == Q.PrerequisiteType.BREADCRUMB then
-            tooltip:SetOwner(self, "ANCHOR_RIGHT")
-            tooltip:SetText("Breadcrumb", Q.Theme.Text.Accent[1], Q.Theme.Text.Accent[2], Q.Theme.Text.Accent[3])
-            tooltip:AddLine("Not required to unlock the next quest. Breadcrumb quests are only meant to help players find a quest.", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
-            tooltip:Show()
-        end
-    end)
-    frame.titleFrame.title:SetScript("OnLeave", function()
-        local tooltip = Q:GetTooltip()
-        tooltip:Hide()
-    end)
+    frame.titleFrame.trackedIcon = frame.titleFrame:CreateTexture(nil, "ARTWORK")
+    frame.titleFrame.trackedIcon:SetTexture("Interface\\Buttons\\UI-CheckBox-Check")
+    Q:SetPixelPerfectSize(frame.titleFrame.trackedIcon, 20, 20)
+    frame.titleFrame.trackedIcon:Hide()
 
     frame.titleFrame.level = Q:CreateText(nil, frame.titleFrame, "", Q.Theme.Font.L)
     Q:SetPixelPerfectPoint(frame.titleFrame.level, "LEFT", frame.titleFrame.title, "RIGHT", 2, 0)
@@ -544,11 +524,11 @@ local function CreateRowFrame(index, row)
 
     frame.titleFrame.classIcon = frame.titleFrame:CreateTexture(nil, "ARTWORK")
     Q:SetPixelPerfectPoint(frame.titleFrame.classIcon, "LEFT", frame.titleFrame.title, "RIGHT", Q.Theme.Padding.S, 0)
-    Q:SetPixelPerfectSize(frame.titleFrame.classIcon, 16, 16)
+    Q:SetPixelPerfectSize(frame.titleFrame.classIcon, 20, 20)
     frame.titleFrame.classIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 
     frame.titleFrame.professionIcon = frame.titleFrame:CreateTexture(nil, "ARTWORK")
-    Q:SetPixelPerfectSize(frame.titleFrame.professionIcon, 16, 16)
+    Q:SetPixelPerfectSize(frame.titleFrame.professionIcon, 20, 20)
     frame.titleFrame.professionIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 
     --------------------------------------------------
@@ -576,7 +556,7 @@ local function CreateRowFrame(index, row)
             local accentR, accentG, accentB = unpack(Q.Theme.Text.Accent)
             local primaryR, primaryG, primaryB = unpack(Q.Theme.Text.Primary)
 
-            tooltip:SetOwner(self, "ANCHOR_RIGHT")
+            tooltip:SetOwner(self, "ANCHOR_TOPLEFT", 5, 5)
             tooltip:SetText("Expand/Collapse Section", accentR, accentG, accentB)
             tooltip:AddLine("Click to expand/collapse this section.", primaryR, primaryG, primaryB, true)
             tooltip:Show()
@@ -613,7 +593,7 @@ local function CreateRowFrame(index, row)
             local tomtom = rawget(_G, "TomTom")
             local r, g, b = unpack(Q.Theme.Text.Primary)
 
-            tooltip:SetOwner(self, "ANCHOR_RIGHT")
+            tooltip:SetOwner(self, "ANCHOR_TOPLEFT", 5, 5)
             if tomtom and tomtom.AddWaypoint then
                 tooltip:SetText(frame.row.isInstance and "Find Entrance" or "Find Source", unpack(Q.Theme.Text.Accent))
                 tooltip:AddLine(string.format("Add a waypoint at %s.", frame.row.isInstance and "the instance entrance" or "this quests source(s)"), r, g, b, true)
@@ -638,6 +618,211 @@ local function CreateRowFrame(index, row)
     frame.waypointButton.icon:SetPoint("CENTER")
     frame.waypointButton:SetPoint("RIGHT", frame.collapseButton, "LEFT", -Q:PixelPerfect(2), 0)
 
+    frame.titleHover = CreateFrame("Frame", nil, frame)
+    frame.titleHover:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
+    -- End the hoverable area before the action buttons so they remain clickable.
+    frame.titleHover:SetPoint("BOTTOMRIGHT", frame.waypointButton, "BOTTOMLEFT", -Q:PixelPerfect(2), 0)
+    frame.titleHover:EnableMouse(true)
+    frame.titleHover:SetScript("OnMouseUp", function(_, button)
+        local clickedRow = frame.row
+        if button ~= "LeftButton" or not clickedRow or clickedRow.isSharedSummary then
+            return
+        end
+
+        -- Left click -> Collapse/Expand row
+        if not IsShiftKeyDown() then
+            if frame.collapseButton:IsShown() then
+                collapseHandlers.OnClick()
+            end
+            return
+        end
+
+        if clickedRow.isInstance then
+            return
+        end
+
+        if not Q.API:IsQuestInQuestLog(clickedRow.id) then
+            return
+        end
+
+        -- Shift-click -> Toggle quest tracking
+        if Q.API:IsQuestWatched(clickedRow.id) then
+            C_QuestLog.RemoveQuestWatch(clickedRow.id)
+        else
+            C_QuestLog.AddQuestWatch(clickedRow.id)
+        end
+        QuestLog:RefreshAndPopulate()
+    end)
+
+    frame.hoverHighlight = frame:CreateTexture(nil, "BACKGROUND", nil, 2)
+    frame.hoverHighlight:SetAllPoints(frame)
+    frame.hoverHighlight:SetColorTexture(unpack(Q.Theme.Text.Primary))
+    frame.hoverHighlight:SetAlpha(0.03)
+    frame.hoverHighlight:Hide()
+    frame.titleHover:SetScript("OnEnter", function()
+        if frame.row.isInstance or frame.row.isSharedSummary then
+            return
+        end
+
+        frame.hoverHighlight:Show()
+        local hoveredRow = frame.row
+        if not hoveredRow then
+            return
+        end
+
+        local doShowTooltip = false
+        local tooltip = Q:GetTooltip()
+        tooltip:SetOwner(frame.titleFrame, "ANCHOR_LEFT", -5, 5)
+
+        local colorInProgress = Q:GetSetting("QuestColorInProgress")
+        local colorUnavailable = Q:GetSetting("QuestColorUnavailable")
+        local colorAvailable = Q:GetSetting("QuestColorAvailable")
+
+        --------------------------------------------------
+        -- Determine tooltip content
+        --------------------------------------------------
+
+        -- Player has the quest in their quest log
+        if Q.API:IsQuestInQuestLog(hoveredRow.id) then
+            tooltip:SetText("Track Quest", colorInProgress.r, colorInProgress.g, colorInProgress.b)
+            tooltip:AddLine("Shift-click to toggle tracking this quest", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
+            doShowTooltip = true
+        -- Player does not meet the quest prerequisites (Too low level, prequests not completed, wrong class etc)
+        elseif not Q.API:IsQuestAvailableToLevel(hoveredRow.id) or not Q.API:IsPrerequisiteSatisfied(hoveredRow.id) then
+            tooltip:SetText("Prerequisite Not Met", colorUnavailable.r, colorUnavailable.g, colorUnavailable.b)
+            
+            if not Q.API:IsQuestAvailableToLevel(hoveredRow.id) then
+                tooltip:AddLine("Requires level " .. hoveredRow.requiredLevel, Q.Theme.Text.Disabled[1], Q.Theme.Text.Disabled[2], Q.Theme.Text.Disabled[3])
+            end
+
+            if not Q.API:IsPrerequisiteSatisfied(hoveredRow.id) then
+                local missingRequired = {}
+                local incompleteChoices = {}
+                local hasCompletedChoice = false
+                local quest = Q.API:GetQuestById(hoveredRow.id)
+
+                -- Because changing color of text without using multiple font strings requires hex codes, we need to convert colors
+                local function GetQuestColorCode(questId)
+                    local settingPath, fallbackKey
+                    if Q.API:IsQuestCompleted(questId) then
+                        settingPath, fallbackKey = "QuestColorCompleted", "Disabled"
+                    elseif Q.API:IsQuestInQuestLog(questId) then
+                        settingPath, fallbackKey = "QuestColorInProgress", "Success"
+                    elseif Q.API:IsQuestAvailable(questId) then
+                        settingPath, fallbackKey = "QuestColorAvailable", "Accent"
+                    else
+                        settingPath, fallbackKey = "QuestColorUnavailable", "Emphasized"
+                    end
+
+                    local color = Q:GetSetting(settingPath)
+                    local fallback = Q.Theme.Text[fallbackKey]
+                    local r = color and color.r or fallback[1]
+                    local g = color and color.g or fallback[2]
+                    local b = color and color.b or fallback[3]
+                    return Q:ColorToHex({ r = r, g = g, b = b })
+                end
+
+                for _, prerequisite in ipairs(quest and quest.prerequisites or {}) do
+                    local prerequisiteQuest = Q.API:GetQuestById(prerequisite.id)
+                    if prerequisiteQuest then
+                        if prerequisite.type == Q.PrerequisiteType.CHAIN or prerequisite.type == Q.PrerequisiteType.REQUIRED then
+                            if not Q.API:IsQuestCompleted(prerequisite.id) then
+                                table.insert(missingRequired, { id = prerequisite.id, name = prerequisiteQuest.name })
+                            end
+                        elseif prerequisite.type == Q.PrerequisiteType.ANY then
+                            if Q.API:IsQuestCompleted(prerequisite.id) then
+                                hasCompletedChoice = true
+                            else
+                                table.insert(incompleteChoices, { id = prerequisite.id, name = prerequisiteQuest.name })
+                            end
+                        end
+                    end
+                end
+
+                if #missingRequired > 1 then
+                    tooltip:AddLine("You must complete the following quests first:", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
+                    for _, prerequisiteQuest in ipairs(missingRequired) do
+                        local coloredName = GetQuestColorCode(prerequisiteQuest.id) .. prerequisiteQuest.name .. "|r"
+                        tooltip:AddLine(coloredName, Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
+                    end
+                elseif #missingRequired == 1 then
+                    local prerequisiteQuest = missingRequired[1]
+                    local coloredName = GetQuestColorCode(prerequisiteQuest.id) .. prerequisiteQuest.name .. "|r"
+                    tooltip:AddLine("You must complete the quest " .. coloredName .. " first.", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
+                end
+                if not hasCompletedChoice and #incompleteChoices > 0 then
+                    tooltip:AddLine("You must complete one of the following quests first:", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
+                    for _, prerequisiteQuest in ipairs(incompleteChoices) do
+                        local coloredName = GetQuestColorCode(prerequisiteQuest.id) .. prerequisiteQuest.name .. "|r"
+                        tooltip:AddLine(coloredName, Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
+                    end
+                end
+                if #missingRequired == 0 and (hasCompletedChoice or #incompleteChoices == 0) then
+                    tooltip:AddLine("You must complete the prerequisite quests before this quest becomes available.", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
+                end
+            end
+            doShowTooltip = true
+        -- Player meets all prerequisites and the quest is available
+        elseif Q.API:IsQuestAvailable(hoveredRow.id) then
+            tooltip:SetText("Available", colorAvailable.r, colorAvailable.g, colorAvailable.b)
+
+            local quest = Q.API:GetQuestById(hoveredRow.id)
+            local playerFaction = Q.API:GetPlayerFaction()
+            local sources = {}
+            local successColor = Q.Theme.Status.Success
+            local successColorCode = Q:ColorToHex(successColor)
+            if quest then
+                if quest.source then
+                    if not quest.source.faction or quest.source.faction == playerFaction then
+                        table.insert(sources, quest.source)
+                    end
+                else
+                    for _, source in ipairs(quest.sources or {}) do
+                        if not source.faction or source.faction == playerFaction then
+                            table.insert(sources, source)
+                        end
+                    end
+                end
+            end
+
+            if #sources == 1 then
+                local source = sources[1]
+                local location = source.zone and (" in " .. source.zone) or ""
+                tooltip:AddLine("Started by " .. successColorCode .. source.name .. "|r" .. location .. ".", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
+            elseif #sources > 1 then
+                tooltip:AddLine("Started by:", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
+                for _, source in ipairs(sources) do
+                    local location = source.zone and (" in " .. source.zone) or ""
+                    tooltip:AddLine(successColorCode .. source.name .. "|r" .. location, Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
+                end
+            end
+            doShowTooltip = true
+        end
+
+        -- If the quest being hovered is a breadcrumb quest or an optional choice, add the appropriate tooltip message to the already added texts.
+        if hoveredRow.prerequisiteType == Q.PrerequisiteType.ANY then
+            if not doShowTooltip then
+                tooltip:SetText("Optional Choice", Q.Theme.Text.Accent[1], Q.Theme.Text.Accent[2], Q.Theme.Text.Accent[3])
+            end
+            tooltip:AddLine("You only need to complete one of the quests marked with * to unlock the next quest.", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
+            doShowTooltip = true
+        elseif hoveredRow.prerequisiteType == Q.PrerequisiteType.BREADCRUMB then
+            if not doShowTooltip then
+                tooltip:SetText("Breadcrumb", Q.Theme.Text.Accent[1], Q.Theme.Text.Accent[2], Q.Theme.Text.Accent[3])
+            end
+            tooltip:AddLine("Not required to unlock the next quest. Breadcrumb quests are only meant to guide players to a quest giver.", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
+            doShowTooltip = true
+        end
+    
+        if doShowTooltip then
+            tooltip:Show()
+        end
+    end)
+    frame.titleHover:SetScript("OnLeave", function()
+        frame.hoverHighlight:Hide()
+        Q:GetTooltip():Hide()
+    end)
+
     return frame
 end
 
@@ -656,7 +841,17 @@ function QuestLog:RefreshAndPopulate()
     for _, instance in pairs(instances) do
         if Q.API:InstanceHasAvailableQuests(instance.id, playerInfo) and playerInfo.level <= instance.maxLevel then
             local isCollapsed = Q:GetSetting("CollapsedInstances")[instance.id] or false
-            local quests = (Q:GetSetting("ShowAllQuestsForAvailableInstance") and Q.API:GetQuestsByInstanceId(instance.id)) or Q.API:GetAvailableQuestsByInstanceId(instance.id, playerInfo)
+            local quests
+            if Q:GetSetting("ShowAllQuestsForAvailableInstance") then
+                quests = {}
+                for _, quest in ipairs(Q.API:GetQuestsByInstanceId(instance.id)) do
+                    if Q.API:PlayerHasProfession(quest.profession) then
+                        table.insert(quests, quest)
+                    end
+                end
+            else
+                quests = Q.API:GetAvailableQuestsByInstanceId(instance.id, playerInfo)
+            end
             table.sort(quests, function(a, b) return a.name < b.name end)
             instance.isInstance = true
 
@@ -670,7 +865,6 @@ function QuestLog:RefreshAndPopulate()
                     questRow.isMainQuest = true
                     if not Q:GetSetting("HideCompletedQuests") or not Q.API:IsQuestCompleted(quest.id) then
                         table.insert(self.rows, questRow)
-                        InsertLevelRequirementRow(questRow, 1)
                     end
 
                     if not questIsCollapsed and (not Q:GetSetting("HideCompletedQuests") or not Q.API:IsQuestCompleted(quest.id)) then
@@ -694,12 +888,22 @@ function QuestLog:RefreshAndPopulate()
         --------------------------------------------------
         frame:Show()
         frame.row = row
+
+        frame.titleHover:ClearAllPoints()
+        frame.titleHover:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
+        frame.titleHover:SetPoint(
+            "BOTTOMRIGHT",
+            frame.waypointButton,
+            "BOTTOMLEFT",
+            -Q:PixelPerfect(2),
+            row.isInstance and -Q:PixelPerfect(INSTANCE_ROW_EXTRA_HEIGHT / 2) or 0
+        )
         
+        UpdateRowText(frame)
         UpdateClassIcon(frame)
         UpdateRowAppearance(frame, playerInfo)
         UpdateCollapseButton(frame)
         UpdateWaypointButton(frame)
-        UpdateRowText(frame)
         
         frame.sideGradient:SetShown(not row.isInstance and true or false)
         frame.gradient:SetShown(row.isInstance and true or false)
@@ -717,9 +921,6 @@ function QuestLog:RefreshAndPopulate()
             rowOffset = 0
         else
             rowOffset = prevRowHeight + 2
-            if row.isInstance then
-                rowOffset = rowOffset + 10
-            end
         end
         prevRowHeight = row.isInstance and (DB_ROW_HEIGHT + INSTANCE_ROW_EXTRA_HEIGHT) or DB_ROW_HEIGHT
 
@@ -761,6 +962,7 @@ end
 
 function QuestLog:OnDisable()
     self:UnregisterEvent("QUEST_LOG_UPDATE")
+    self:UnregisterEvent("QUEST_WATCH_LIST_CHANGED")
     self:UnregisterEvent("QUEST_TURNED_IN")
     self:UnregisterEvent("QUEST_ACCEPTED")
     self:UnregisterEvent("PLAYER_LEVEL_UP")
@@ -772,6 +974,7 @@ end
 
 function QuestLog:OnEnable()
     self:RegisterEvent("QUEST_LOG_UPDATE", "OnQuestStateChanged")
+    self:RegisterEvent("QUEST_WATCH_LIST_CHANGED", "OnQuestStateChanged")
     self:RegisterEvent("QUEST_TURNED_IN", "OnQuestStateChanged")
     self:RegisterEvent("QUEST_ACCEPTED", "OnQuestStateChanged")
     self:RegisterEvent("PLAYER_LEVEL_UP", "OnQuestStateChanged")

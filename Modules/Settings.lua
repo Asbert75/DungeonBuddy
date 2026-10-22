@@ -75,7 +75,7 @@ local function GetSectionSettings(sectionName)
             type = "checkbox",
             path = "ShowAllQuestsForAvailableInstance",
             title = "Instantly show all instance quests when one is available",
-            description = "Enable showing all quests for a instance as soon as you have a single quest available in that instance. Also adds a required level display row to quests you are not high enough level for.",
+            description = "Enable showing all quests for a instance as soon as you have a single quest available in that instance.",
             onChange = function()
                 if Q.QuestLog and Q.QuestLog.frame then
                     Q.QuestLog:RefreshAndPopulate()
@@ -193,7 +193,7 @@ function Settings:Create()
     end
 
     local paddingS, paddingM = Q.Theme.Padding.S, Q.Theme.Padding.M
-    local frame = Q:CreateBackdropFrame("DungeonBuddy_SettingsFrame", UIParent, PANEL_WIDTH, 700, "TOOLTIP", "Primary", "Default", 0.9, 0.25)
+    local frame = Q:CreateBackdropFrame("DungeonBuddy_SettingsFrame", UIParent, PANEL_WIDTH, 700, "DIALOG", "Primary", "Default", 0.9, 0.25)
     self.frame = frame
     Q:SetPixelPerfectPoint(frame, "CENTER", UIParent, "CENTER", 0, 0)
     
