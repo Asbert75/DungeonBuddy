@@ -174,16 +174,12 @@ function Notification:Create()
     local waypointHandlers = {
         ["OnMouseEnter"] = function()
             local tooltip = Q:GetTooltip()
-            local tomtom = rawget(_G, "TomTom")
             local r, g, b = unpack(Q.Theme.Text.Primary)
 
             tooltip:SetOwner(self.waypointButton, "ANCHOR_RIGHT")
-            if tomtom and tomtom.AddWaypoint then
-                tooltip:SetText("Find Source", unpack(Q.Theme.Text.Accent))
-                tooltip:AddLine("Add a waypoint at this quests source(s)", r, g, b, true)
-            else
-                tooltip:AddLine("TomTom required for waypoint directions.", r, g, b, true)
-            end
+            tooltip:SetText("Find Source", unpack(Q.Theme.Text.Accent))
+            tooltip:AddLine("Add a waypoint at this quests source(s)", r, g, b, true)
+
             tooltip:Show()
         end,
         ["OnMouseLeave"] = function()

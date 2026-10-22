@@ -450,14 +450,18 @@ function Q.API:GetRandomQuest()
 end
 
 local function AddWaypoint(location, title)
-    local tomtom = rawget(_G, "TomTom")
-    if not tomtom or not tomtom.AddWaypoint then
-        Q:PrettyPrint("Waypoints requires the TomTom addon to be enabled.")
+    if not (location and location.mapId and location.x and location.y) then
+        Q:PrettyPrint("No waypoint location is available.")
         return
     end
 
-    if not (location and location.mapId and location.x and location.y) then
-        Q:PrettyPrint("No waypoint location is available.")
+    local tomtom = rawget(_G, "TomTom")
+    if not tomtom or not tomtom.AddWaypoint then
+        local point = CreateVector2D(location.x, location.y)
+        local waypoint = UiMapPoint.CreateFromVector2D(location.mapId, point)
+        C_Map.SetUserWaypoint(waypoint)
+        C_SuperTrack.SetSuperTrackedUserWaypoint(true)
+
         return
     end
 
@@ -469,12 +473,6 @@ local function AddWaypoint(location, title)
 end
 
 function Q.API:SetWaypoint(entity, isInstance)
-    local tomtom = rawget(_G, "TomTom")
-    if not tomtom or not tomtom.AddWaypoint then
-        Q:PrettyPrint("Waypoints requires the TomTom addon to be enabled.")
-        return
-    end
-
     if isInstance then
         AddWaypoint(entity.location, entity.name.." (Entrance)")
     else

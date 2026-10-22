@@ -29,6 +29,7 @@
         "ACCEPT",
         "AddonCompartmentFrame",
         "GossipFrame",
-        "ADD"
+        "ADD",
+        "UiMapPoint"
     ]
 }

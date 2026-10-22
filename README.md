@@ -9,7 +9,7 @@ It also adds a quest tracker that shows quests by instance, and shows the chain 
 - Browse instance quests in a scrollable quest log, organized by instance. Instances are only visible while you have quests available and you are not above the max level for the instance (Visible next to the instance name).
 - Class/profession specific quests have a class icon appended before (in notifications) or after (in quest log) their names.
 - Get extra automatic notifications when entering a zone with relevant available quests to pick up, can be turned off in settings.
-- Add directions to a quest source from the quest log or a notification (Requires TomTom).
+- Add directions to a quest source from the quest log or a notification.
 - Optionally show every quest for a instance as soon as one of its quests is available. Quests you are not high enough level for get a "Requires Level" row below them, like a step in a chain.
 - Customize the quest colors (available, unavailable, in quest log, completed) in settings to your liking, with a button to reset them to defaults.
 

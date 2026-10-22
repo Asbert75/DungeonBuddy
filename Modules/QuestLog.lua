@@ -590,19 +590,14 @@ local function CreateRowFrame(index, row)
         end,
         OnMouseEnter = function(self)
             local tooltip = Q:GetTooltip()
-            local tomtom = rawget(_G, "TomTom")
             local r, g, b = unpack(Q.Theme.Text.Primary)
 
             tooltip:SetOwner(self, "ANCHOR_TOPLEFT", 5, 5)
-            if tomtom and tomtom.AddWaypoint then
-                tooltip:SetText(frame.row.isInstance and "Find Entrance" or "Find Source", unpack(Q.Theme.Text.Accent))
-                tooltip:AddLine(string.format("Add a waypoint at %s.", frame.row.isInstance and "the instance entrance" or "this quests source(s)"), r, g, b, true)
-                if frame.row.source and frame.row.source.text then
-                    tooltip:AddLine("-", r, g, b, true)
-                    tooltip:AddLine("Info: "..frame.row.source.text, r, g, b, true)
-                end
-            else
-                tooltip:AddLine("TomTom required for waypoint directions.", r, g, b, true)
+            tooltip:SetText(frame.row.isInstance and "Find Entrance" or "Find Source", unpack(Q.Theme.Text.Accent))
+            tooltip:AddLine(string.format("Add a waypoint at %s.", frame.row.isInstance and "the instance entrance" or "this quests source(s)"), r, g, b, true)
+            if frame.row.source and frame.row.source.text then
+                tooltip:AddLine("-", r, g, b, true)
+                tooltip:AddLine("Info: "..frame.row.source.text, r, g, b, true)
             end
             tooltip:Show()
         end,
@@ -613,8 +608,8 @@ local function CreateRowFrame(index, row)
     }
     frame.waypointButton = Q:CreateButton(nil, frame, "", DB_ROW_HEIGHT, DB_ROW_HEIGHT, Q.Theme.Font.M, Q.Theme.Background.Accent, waypointHandlers)
     frame.waypointButton.icon = frame.waypointButton:CreateTexture(nil, "ARTWORK")
-    frame.waypointButton.icon:SetAtlas("waypoint-mappin-minimap-untracked")
-    frame.waypointButton.icon:SetSize(DB_ROW_HEIGHT * 0.9, DB_ROW_HEIGHT * 0.9)
+    frame.waypointButton.icon:SetTexture("Interface\\AddOns\\DungeonBuddy\\Media\\Waypoint.png")
+    frame.waypointButton.icon:SetSize(DB_ROW_HEIGHT * 0.6, DB_ROW_HEIGHT * 0.6)
     frame.waypointButton.icon:SetPoint("CENTER")
     frame.waypointButton:SetPoint("RIGHT", frame.collapseButton, "LEFT", -Q:PixelPerfect(2), 0)
 
