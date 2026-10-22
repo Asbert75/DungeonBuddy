@@ -314,32 +314,41 @@ local function UpdateClassIcon(frame)
 
     if classIconTexture then
         classIcon:SetTexture(classIconTexture)
+        local classColor = RAID_CLASS_COLORS and RAID_CLASS_COLORS[frame.row.class]
+        if classColor then
+            Q:SetIconBorderColor(frame.titleFrame.classIconBorder, { classColor.r, classColor.g, classColor.b })
+        end
+        Q:SetIconBorderShown(frame.titleFrame.classIconBorder, true)
         classIcon:Show()
     else
+        Q:SetIconBorderShown(frame.titleFrame.classIconBorder, false)
         classIcon:Hide()
     end
 
     if professionIconTexture then
         professionIcon:SetTexture(professionIconTexture)
+        Q:SetIconBorderColor(frame.titleFrame.professionIconBorder, Q.Theme.Text.Primary)
+        Q:SetIconBorderShown(frame.titleFrame.professionIconBorder, true)
         professionIcon:ClearAllPoints()
         if classIconTexture then
-            Q:SetPixelPerfectPoint(professionIcon, "LEFT", classIcon, "RIGHT", Q.Theme.Padding.S, 0)
+            Q:SetPixelPerfectPoint(professionIcon, "LEFT", classIcon, "RIGHT", 2, 0)
         else
-            Q:SetPixelPerfectPoint(professionIcon, "LEFT", frame.titleFrame.title, "RIGHT", Q.Theme.Padding.S, 0)
+            Q:SetPixelPerfectPoint(professionIcon, "LEFT", frame.titleFrame.title, "RIGHT", 2, 0)
         end
         professionIcon:Show()
     else
+        Q:SetIconBorderShown(frame.titleFrame.professionIconBorder, false)
         professionIcon:Hide()
     end
 
     local trackedIcon = frame.titleFrame.trackedIcon
     trackedIcon:ClearAllPoints()
     if professionIcon:IsShown() then
-        Q:SetPixelPerfectPoint(trackedIcon, "LEFT", professionIcon, "RIGHT", Q.Theme.Padding.S, 0)
+        Q:SetPixelPerfectPoint(trackedIcon, "LEFT", professionIcon, "RIGHT", 2, 0)
     elseif classIcon:IsShown() then
-        Q:SetPixelPerfectPoint(trackedIcon, "LEFT", classIcon, "RIGHT", Q.Theme.Padding.S, 0)
+        Q:SetPixelPerfectPoint(trackedIcon, "LEFT", classIcon, "RIGHT", 2, 0)
     else
-        Q:SetPixelPerfectPoint(trackedIcon, "LEFT", frame.titleFrame.title, "RIGHT", Q.Theme.Padding.S, 0)
+        Q:SetPixelPerfectPoint(trackedIcon, "LEFT", frame.titleFrame.title, "RIGHT", 2, 0)
     end
 end
 
@@ -526,10 +535,12 @@ local function CreateRowFrame(index, row)
     Q:SetPixelPerfectPoint(frame.titleFrame.classIcon, "LEFT", frame.titleFrame.title, "RIGHT", Q.Theme.Padding.S, 0)
     Q:SetPixelPerfectSize(frame.titleFrame.classIcon, 20, 20)
     frame.titleFrame.classIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+    frame.titleFrame.classIconBorder = Q:CreateIconBorder(frame.titleFrame, frame.titleFrame.classIcon)
 
     frame.titleFrame.professionIcon = frame.titleFrame:CreateTexture(nil, "ARTWORK")
     Q:SetPixelPerfectSize(frame.titleFrame.professionIcon, 20, 20)
     frame.titleFrame.professionIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+    frame.titleFrame.professionIconBorder = Q:CreateIconBorder(frame.titleFrame, frame.titleFrame.professionIcon)
 
     --------------------------------------------------
     -- Create Action Buttons

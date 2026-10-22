@@ -143,6 +143,45 @@ function Q:CreateTexture(frameName, parent, width, height, atlas)
 
     return texture
 end
+
+function Q:CreateIconBorder(parent, icon)
+    local border = {}
+    local thickness = Q:PixelPerfect(1)
+    local edges = {
+        { "TOPLEFT", "TOPRIGHT", true },
+        { "BOTTOMLEFT", "BOTTOMRIGHT", true },
+        { "TOPLEFT", "BOTTOMLEFT", false },
+        { "TOPRIGHT", "BOTTOMRIGHT", false },
+    }
+
+    for index, points in ipairs(edges) do
+        local edge = parent:CreateTexture(nil, "OVERLAY")
+        edge:SetColorTexture(1, 1, 1, 1)
+        edge:SetPoint(points[1], icon, points[1], 0, 0)
+        edge:SetPoint(points[2], icon, points[2], 0, 0)
+        if points[3] then
+            edge:SetHeight(thickness)
+        else
+            edge:SetWidth(thickness)
+        end
+        edge:Hide()
+        border[index] = edge
+    end
+
+    return border
+end
+
+function Q:SetIconBorderColor(border, color)
+    for _, edge in ipairs(border) do
+        edge:SetColorTexture(color[1], color[2], color[3], color[4] or 1)
+    end
+end
+
+function Q:SetIconBorderShown(border, shown)
+    for _, edge in ipairs(border) do
+        edge:SetShown(shown)
+    end
+end
   
 function Q:CreateBackdropFrame(frameName, parent, width, height, strata, backgroundKey, borderKey, backgroundAlpha, borderAlpha)
     local frame = CreateFrame("Frame", frameName, parent, "BackdropTemplate")

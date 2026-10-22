@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.6.1] - 2026-10-22
 
+## Added
+
+- Added some missing dungeon quests for shamans and rogues, as well as one missing Alliance quest in Scarlet Monastery
+- Class colored border around class icons
+
 ### Changed
 
 - Blizzard default waypoints are now used as a backup if TomTom is not installed

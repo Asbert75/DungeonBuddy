@@ -4,11 +4,11 @@ Q.API = {}
 
 local ProfessionIcons = {
     Alchemy = "Trade_Alchemy",
-    Blacksmithing = "Trade_BlackSmithing",
+    Blacksmithing = "Trade_Blacksmithing",
     Enchanting = "Trade_Engraving",
     Engineering = "Trade_Engineering",
     Herbalism = "Trade_Herbalism",
-    Leatherworking = "Trade_LeatherWorking",
+    Leatherworking = "Inv_misc_armorkit_17",
     Mining = "Trade_Mining",
     Skinning = "INV_Misc_Pelt_Wolf_01",
     Tailoring = "Trade_Tailoring",

@@ -137,16 +137,18 @@ function Notification:Create()
 
     self.questClassIcon = Q:CreateTexture("QuestClassIcon", self.frame, 20, 20)
     self.questClassIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-    Q:SetPixelPerfectPoint(self.questClassIcon, "TOPLEFT", self.instanceName, "BOTTOMLEFT", 0, -paddingS)
+    Q:SetPixelPerfectPoint(self.questClassIcon, "LEFT", self.questName, "RIGHT", 2, 0)
+    self.questClassIconBorder = Q:CreateIconBorder(self.frame, self.questClassIcon)
 
     self.questProfessionIcon = Q:CreateTexture("QuestProfessionIcon", self.frame, 20, 20)
     self.questProfessionIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+    self.questProfessionIconBorder = Q:CreateIconBorder(self.frame, self.questProfessionIcon)
 
     --------------------------------------------------
     -- Quest Source Label
     --------------------------------------------------
     self.questSourceLabel = Q:CreateText("QuestSourceLabel", self.frame, "QUEST STARTED BY", fontS, "Accent")
-    Q:SetPixelPerfectPoint(self.questSourceLabel, "TOPLEFT", self.questClassIcon, "BOTTOMLEFT", 0, -paddingM)
+    Q:SetPixelPerfectPoint(self.questSourceLabel, "TOPLEFT", self.questName, "BOTTOMLEFT", 0, -paddingM)
 
     --------------------------------------------------
     -- Quest Source Information
@@ -317,15 +319,17 @@ end
 local function UpdateClassIcon(questClass, questProfession)
     local classIconTexture = Q.API:GetClassIconTexture(questClass)
     local professionIconTexture = Q.API:GetProfessionIconTexture(questProfession)
-    local previous = Notification.instanceName
-    local previousPoint, offsetX, offsetY = "BOTTOMLEFT", 0, -Q.Theme.Padding.S
-    local paddingS = Q.Theme.Padding.S
 
     if classIconTexture then
         Notification.questClassIcon:SetTexture(classIconTexture)
+        local classColor = RAID_CLASS_COLORS and RAID_CLASS_COLORS[questClass]
+        if classColor then
+            Q:SetIconBorderColor(Notification.questClassIconBorder, { classColor.r, classColor.g, classColor.b })
+        end
+        Q:SetIconBorderShown(Notification.questClassIconBorder, true)
         Notification.questClassIcon:Show()
-        previous, previousPoint, offsetX, offsetY = Notification.questClassIcon, "TOPRIGHT", paddingS, 0
     else
+        Q:SetIconBorderShown(Notification.questClassIconBorder, false)
         Notification.questClassIcon:Hide()
     end
 
@@ -333,14 +337,15 @@ local function UpdateClassIcon(questClass, questProfession)
         local icon = Notification.questProfessionIcon
         icon:SetTexture(professionIconTexture)
         icon:ClearAllPoints()
-        Q:SetPixelPerfectPoint(icon, "TOPLEFT", previous, previousPoint, offsetX, offsetY)
+        local previous = classIconTexture and Notification.questClassIcon or Notification.questName
+        Q:SetPixelPerfectPoint(icon, "LEFT", previous, "RIGHT", 2, 0)
+        Q:SetIconBorderColor(Notification.questProfessionIconBorder, Q.Theme.Text.Primary)
+        Q:SetIconBorderShown(Notification.questProfessionIconBorder, true)
         icon:Show()
-        previous, previousPoint, offsetX, offsetY = icon, "TOPRIGHT", paddingS, 0
     else
+        Q:SetIconBorderShown(Notification.questProfessionIconBorder, false)
         Notification.questProfessionIcon:Hide()
     end
-
-    Q:SetPixelPerfectPoint(Notification.questName, "TOPLEFT", previous, previousPoint, offsetX, offsetY)
 end
 
 local function UpdateActionButtons()
