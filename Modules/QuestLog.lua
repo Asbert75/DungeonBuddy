@@ -419,24 +419,41 @@ local function UpdateWaypointButton(frame)
     end
 end
 
+local function RemoveLastUTF8Character(text)
+    local index = #text
+    while index > 1 do
+        local byte = string.byte(text, index)
+        if byte < 128 or byte >= 192 then
+            break
+        end
+        index = index - 1
+    end
+    return string.sub(text, 1, index - 1)
+end
+
 local function UpdateRowText(frame)
     local row = frame.row
     local pixelPerfect = Q:PixelPerfect(1)
+    local titleFontString = frame.titleFrame.title
+    local leftInset
 
     if row.isInstance then
         frame.titleFrame.level:SetText(string.format(" %s-%s", row.minLevel, row.maxLevel))
 
-        frame.titleFrame.title:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * Q.Theme.Font.XL)
-        Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", Q.Theme.Padding.S, 0)
+        titleFontString:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * Q.Theme.Font.XL)
+        leftInset = Q.Theme.Padding.S
+        Q:SetPixelPerfectPoint(titleFontString, "LEFT", frame.titleFrame, "LEFT", leftInset, 0)
     else
         frame.titleFrame.level:SetText("")
 
         if row.isMainQuest then
-            frame.titleFrame.title:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * Q.Theme.Font.M)
-            Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", 2 * Q.Theme.Padding.S, 0)
+            titleFontString:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * Q.Theme.Font.M)
+            leftInset = 2 * Q.Theme.Padding.S
+            Q:SetPixelPerfectPoint(titleFontString, "LEFT", frame.titleFrame, "LEFT", leftInset, 0)
         else
-            frame.titleFrame.title:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * Q.Theme.Font.M)
-            Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", (3 + (row.lineageDepth or 0)) * Q.Theme.Padding.S, 0)
+            titleFontString:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * Q.Theme.Font.M)
+            leftInset = (3 + (row.lineageDepth or 0)) * Q.Theme.Padding.S
+            Q:SetPixelPerfectPoint(titleFontString, "LEFT", frame.titleFrame, "LEFT", leftInset, 0)
         end
     end
 
@@ -447,9 +464,32 @@ local function UpdateRowText(frame)
         title = "B: " .. title
     end
 
-    frame.titleFrame.title:SetText(title)
-
     frame.titleFrame.trackedIcon:SetShown(not row.isInstance and not row.isSharedSummary and Q.API:IsQuestInQuestLog(row.id) and Q.API:IsQuestWatched(row.id))
+
+    -- Keep the text and any icons after it clear of the right-aligned row buttons.
+    local rightInset = frame.collapseButton:GetWidth() + frame.waypointButton:GetWidth() + Q:PixelPerfect(Q.Theme.Padding.L + 4)
+    local suffixWidth = frame.titleFrame.level:GetStringWidth()
+    for _, icon in ipairs({ frame.titleFrame.classIcon, frame.titleFrame.professionIcon, frame.titleFrame.trackedIcon }) do
+        if icon:IsShown() then
+            suffixWidth = suffixWidth + icon:GetWidth() + Q:PixelPerfect(2)
+        end
+    end
+    local availableWidth = frame.titleFrame:GetWidth() - Q:PixelPerfect(leftInset) - rightInset - suffixWidth
+
+    titleFontString:SetText(title)
+    local displayedTitle = title
+    if titleFontString:GetStringWidth() > availableWidth then
+        local ellipsis = "..."
+        local truncatedTitle = title
+        repeat
+            truncatedTitle = RemoveLastUTF8Character(truncatedTitle)
+            displayedTitle = truncatedTitle .. ellipsis
+            titleFontString:SetText(displayedTitle)
+        until truncatedTitle == "" or titleFontString:GetStringWidth() <= availableWidth
+    end
+    titleFontString.fullText = title
+    titleFontString.isTruncated = displayedTitle ~= title
+
 end
 
 local function CreateOrUpdateNoQuestsFoundFrame(playerInfo)
@@ -524,7 +564,7 @@ local function CreateRowFrame(index, row)
 
     frame.titleFrame.trackedIcon = frame.titleFrame:CreateTexture(nil, "ARTWORK")
     frame.titleFrame.trackedIcon:SetTexture("Interface\\Buttons\\UI-CheckBox-Check")
-    Q:SetPixelPerfectSize(frame.titleFrame.trackedIcon, 20, 20)
+    Q:SetPixelPerfectSize(frame.titleFrame.trackedIcon, DB_ROW_HEIGHT - 2, DB_ROW_HEIGHT - 2)
     frame.titleFrame.trackedIcon:Hide()
 
     frame.titleFrame.level = Q:CreateText(nil, frame.titleFrame, "", Q.Theme.Font.L)
@@ -533,12 +573,12 @@ local function CreateRowFrame(index, row)
 
     frame.titleFrame.classIcon = frame.titleFrame:CreateTexture(nil, "ARTWORK")
     Q:SetPixelPerfectPoint(frame.titleFrame.classIcon, "LEFT", frame.titleFrame.title, "RIGHT", Q.Theme.Padding.S, 0)
-    Q:SetPixelPerfectSize(frame.titleFrame.classIcon, 20, 20)
+    Q:SetPixelPerfectSize(frame.titleFrame.classIcon, DB_ROW_HEIGHT - 2, DB_ROW_HEIGHT - 2)
     frame.titleFrame.classIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
     frame.titleFrame.classIconBorder = Q:CreateIconBorder(frame.titleFrame, frame.titleFrame.classIcon)
 
     frame.titleFrame.professionIcon = frame.titleFrame:CreateTexture(nil, "ARTWORK")
-    Q:SetPixelPerfectSize(frame.titleFrame.professionIcon, 20, 20)
+    Q:SetPixelPerfectSize(frame.titleFrame.professionIcon, DB_ROW_HEIGHT - 2, DB_ROW_HEIGHT - 2)
     frame.titleFrame.professionIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
     frame.titleFrame.professionIconBorder = Q:CreateIconBorder(frame.titleFrame, frame.titleFrame.professionIcon)
 
@@ -673,26 +713,44 @@ local function CreateRowFrame(index, row)
             return
         end
 
-        local doShowTooltip = false
         local tooltip = Q:GetTooltip()
         tooltip:SetOwner(frame.titleFrame, "ANCHOR_LEFT", -5, 5)
 
         local colorInProgress = Q:GetSetting("QuestColorInProgress")
         local colorUnavailable = Q:GetSetting("QuestColorUnavailable")
         local colorAvailable = Q:GetSetting("QuestColorAvailable")
+        local tooltipStatus
+        local tooltipStatusColor
+        local isQuestInLog = Q.API:IsQuestInQuestLog(hoveredRow.id)
+        local meetsPrerequisites = Q.API:IsQuestAvailableToLevel(hoveredRow.id) and Q.API:IsPrerequisiteSatisfied(hoveredRow.id)
+        local isQuestAvailable = Q.API:IsQuestAvailable(hoveredRow.id)
+        
+        if isQuestInLog then
+            tooltipStatus = "Track Quest"
+            tooltipStatusColor = colorInProgress
+        elseif not meetsPrerequisites then
+            tooltipStatus = "Prerequisite Not Met"
+            tooltipStatusColor = colorUnavailable
+        elseif isQuestAvailable then
+            tooltipStatus = "Available"
+            tooltipStatusColor = colorAvailable
+        else
+            tooltipStatus = "Unavailable"
+            tooltipStatusColor = colorUnavailable
+        end
+
+        local questTitle = hoveredRow.name
+        tooltip:SetText(string.format("%s: %s", tooltipStatus, questTitle), tooltipStatusColor.r, tooltipStatusColor.g, tooltipStatusColor.b)
 
         --------------------------------------------------
         -- Determine tooltip content
         --------------------------------------------------
 
         -- Player has the quest in their quest log
-        if Q.API:IsQuestInQuestLog(hoveredRow.id) then
-            tooltip:SetText("Track Quest", colorInProgress.r, colorInProgress.g, colorInProgress.b)
+        if isQuestInLog then
             tooltip:AddLine("Shift-click to toggle tracking this quest", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
-            doShowTooltip = true
         -- Player does not meet the quest prerequisites (Too low level, prequests not completed, wrong class etc)
-        elseif not Q.API:IsQuestAvailableToLevel(hoveredRow.id) or not Q.API:IsPrerequisiteSatisfied(hoveredRow.id) then
-            tooltip:SetText("Prerequisite Not Met", colorUnavailable.r, colorUnavailable.g, colorUnavailable.b)
+        elseif not meetsPrerequisites then
             
             if not Q.API:IsQuestAvailableToLevel(hoveredRow.id) then
                 tooltip:AddLine("Requires level " .. hoveredRow.requiredLevel, Q.Theme.Text.Disabled[1], Q.Theme.Text.Disabled[2], Q.Theme.Text.Disabled[3])
@@ -764,11 +822,8 @@ local function CreateRowFrame(index, row)
                     tooltip:AddLine("You must complete the prerequisite quests before this quest becomes available.", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
                 end
             end
-            doShowTooltip = true
         -- Player meets all prerequisites and the quest is available
-        elseif Q.API:IsQuestAvailable(hoveredRow.id) then
-            tooltip:SetText("Available", colorAvailable.r, colorAvailable.g, colorAvailable.b)
-
+        elseif isQuestAvailable then
             local quest = Q.API:GetQuestById(hoveredRow.id)
             local playerFaction = Q.API:GetPlayerFaction()
             local sources = {}
@@ -805,27 +860,20 @@ local function CreateRowFrame(index, row)
                     end
                 end
             end
-            doShowTooltip = true
         end
 
         -- If the quest being hovered is a breadcrumb quest or an optional choice, add the appropriate tooltip message to the already added texts.
         if hoveredRow.prerequisiteType == Q.PrerequisiteType.ANY then
-            if not doShowTooltip then
-                tooltip:SetText("Optional Choice", Q.Theme.Text.Accent[1], Q.Theme.Text.Accent[2], Q.Theme.Text.Accent[3])
-            end
+            tooltip:AddLine(" ")
+            tooltip:AddLine("Optional Choice", Q.Theme.Text.Accent[1], Q.Theme.Text.Accent[2], Q.Theme.Text.Accent[3], true)
             tooltip:AddLine("You only need to complete one of the quests marked with * to unlock the next quest.", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
-            doShowTooltip = true
         elseif hoveredRow.prerequisiteType == Q.PrerequisiteType.BREADCRUMB then
-            if not doShowTooltip then
-                tooltip:SetText("Breadcrumb", Q.Theme.Text.Accent[1], Q.Theme.Text.Accent[2], Q.Theme.Text.Accent[3])
-            end
+            tooltip:AddLine(" ")
+            tooltip:AddLine("Breadcrumb", Q.Theme.Text.Accent[1], Q.Theme.Text.Accent[2], Q.Theme.Text.Accent[3], true)
             tooltip:AddLine("Not required to unlock the next quest. Breadcrumb quests are only meant to guide players to a quest giver.", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
-            doShowTooltip = true
         end
-    
-        if doShowTooltip then
-            tooltip:Show()
-        end
+
+        tooltip:Show()
     end)
     frame.titleHover:SetScript("OnLeave", function()
         frame.hoverHighlight:Hide()
@@ -908,8 +956,8 @@ function QuestLog:RefreshAndPopulate()
             row.isInstance and -Q:PixelPerfect(INSTANCE_ROW_EXTRA_HEIGHT / 2) or 0
         )
         
-        UpdateRowText(frame)
         UpdateClassIcon(frame)
+        UpdateRowText(frame)
         UpdateRowAppearance(frame, playerInfo)
         UpdateCollapseButton(frame)
         UpdateWaypointButton(frame)

@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.2] - 2026-10-26
+
+## Fixed
+
+- Added truncation to the quest title text on long quest rows so that they do not overlap the waypoint/collapse buttons
+
 ## [1.6.1] - 2026-10-22
 
 ## Added
