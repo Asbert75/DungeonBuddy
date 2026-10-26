@@ -141,7 +141,7 @@ function Q.API:PlayerHasProfession(profession)
     end
 
     if Q.Debug.Enabled then
-        return false
+        return true
     end
 
     if GetNumSkillLines and GetSkillLineInfo then
