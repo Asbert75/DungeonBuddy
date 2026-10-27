@@ -739,8 +739,8 @@ local function CreateRowFrame(index, row)
             tooltipStatusColor = colorUnavailable
         end
 
-        local questTitle = hoveredRow.name
-        tooltip:SetText(string.format("%s: %s", tooltipStatus, questTitle), tooltipStatusColor.r, tooltipStatusColor.g, tooltipStatusColor.b)
+        tooltip:SetText(hoveredRow.name, Q.Theme.Text.Accent[1], Q.Theme.Text.Accent[2], Q.Theme.Text.Accent[3])
+        tooltip:AddLine(tooltipStatus, tooltipStatusColor.r, tooltipStatusColor.g, tooltipStatusColor.b)
 
         --------------------------------------------------
         -- Determine tooltip content
@@ -865,11 +865,11 @@ local function CreateRowFrame(index, row)
         -- If the quest being hovered is a breadcrumb quest or an optional choice, add the appropriate tooltip message to the already added texts.
         if hoveredRow.prerequisiteType == Q.PrerequisiteType.ANY then
             tooltip:AddLine(" ")
-            tooltip:AddLine("Optional Choice", Q.Theme.Text.Accent[1], Q.Theme.Text.Accent[2], Q.Theme.Text.Accent[3], true)
+            tooltip:AddLine("Optional Choice", Q.Theme.Status.Info[1], Q.Theme.Status.Info[2], Q.Theme.Status.Info[3], true)
             tooltip:AddLine("You only need to complete one of the quests marked with * to unlock the next quest.", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
         elseif hoveredRow.prerequisiteType == Q.PrerequisiteType.BREADCRUMB then
             tooltip:AddLine(" ")
-            tooltip:AddLine("Breadcrumb", Q.Theme.Text.Accent[1], Q.Theme.Text.Accent[2], Q.Theme.Text.Accent[3], true)
+            tooltip:AddLine("Breadcrumb", Q.Theme.Status.Info[1], Q.Theme.Status.Info[2], Q.Theme.Status.Info[3], true)
             tooltip:AddLine("Not required to unlock the next quest. Breadcrumb quests are only meant to guide players to a quest giver.", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
         end
 
