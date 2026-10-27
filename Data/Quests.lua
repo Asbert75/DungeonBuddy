@@ -847,9 +847,9 @@ Q.Quests = {
         instances = { Q.Instances["Blackfathom Deeps"] },
     },
     {
-        id = 6565,
+        id = 6564,
         faction = "Horde",
-        name = "Allegiance to the Old Gods",
+        name = "Allegiance to the Old Gods (1/2)",
         suggestedLevel = 22,
         requiredLevel = 17,
         source = {
@@ -859,6 +859,22 @@ Q.Quests = {
             zone = "Ashenvale",
             location = { mapId = 1440, x = 0.13, y = 0.12 },
             text = "Dropped by Blackfathom Tide Priestesses outside the instance"
+        },
+    },
+    {
+        id = 6565,
+        faction = "Horde",
+        name = "Allegiance to the Old Gods (2/2)",
+        suggestedLevel = 26,
+        requiredLevel = 17,
+        prerequisites = {
+            { id = 6564, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Je'neu Sancrea",
+            zone = "Ashenvale",
+            location = { mapId = 1440, x = 0.12, y = 0.34 }
         },
         instances = { Q.Instances["Blackfathom Deeps"] },
     },

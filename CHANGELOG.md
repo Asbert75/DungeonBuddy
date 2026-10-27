@@ -13,6 +13,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated tooltip to more clearly convey quest information (status, started by etc) to the user
 - Collapsing a quest that is used in multiple different chains now only collapse it for that specific row
+- Changed default settings
+
+## Added
+
+- Added missing chain for Allegiance to the Old Gods in Blackfathom Deeps
 
 ## Fixed
 

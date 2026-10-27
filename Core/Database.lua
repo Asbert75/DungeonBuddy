@@ -30,9 +30,9 @@ local SharedDefaults = {
     ShowNotificationForAllQuests = false,
     ShowAllQuestsForAvailableInstance = false,
     RemindOnZoneChange = true,
-    HideCompletedQuests = false,
+    HideCompletedQuests = true,
     AutoWaypoint = false,
-    ShowSuggestedQuestLevel = true,
+    ShowSuggestedQuestLevel = false,
 
     -- Tracking Data
     CollapsedInstances = {},
