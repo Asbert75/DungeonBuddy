@@ -63,7 +63,7 @@ function QuestLog:Create()
     --------------------------------------------------
     local actionHandlers = {
         OnClick = function(self)
-            if #Q:GetSetting("CollapsedQuests") > 0 or #Q:GetSetting("CollapsedInstances") > 0 then
+            if next(Q:GetSetting("CollapsedQuests")) or next(Q:GetSetting("CollapsedInstances")) then
                 Q:SetSetting("CollapsedQuests", {})
                 Q:SetSetting("CollapsedInstances", {})
                 Q.QuestLog:RefreshAndPopulate()
@@ -73,12 +73,12 @@ function QuestLog:Create()
                 local quests = {}
                 local instances = {}
 
-                for _, row in ipairs(Q.API:GetQuests()) do
-                    table.insert(quests, row.id)
-                end
-
-                for _, row in ipairs(Q.API:GetInstances()) do
-                    table.insert(instances, row.id)
+                for _, row in ipairs(Q.QuestLog.rows) do
+                    if row.isInstance then
+                        instances[row.id] = true
+                    elseif not row.isSharedSummary and #(row.prerequisites or {}) > 0 then
+                        quests[row.collapseKey] = true
+                    end
                 end
                 
                 Q:SetSetting("CollapsedQuests", quests)
@@ -104,7 +104,7 @@ function QuestLog:Create()
         end
     }
 
-    local initialText = (#Q:GetSetting("CollapsedQuests") > 0 or #Q:GetSetting("CollapsedInstances") > 0) and "+" or "-"
+    local initialText = (next(Q:GetSetting("CollapsedQuests")) or next(Q:GetSetting("CollapsedInstances"))) and "+" or "-"
     local collapseAndExpandButton = Q:CreateButton("DungeonBuddy_CollapseAndExpandButton", self.frame, initialText, 24, 24, Q.Theme.Font.M, Q.Theme.Text.Secondary, actionHandlers)
     collapseAndExpandButton:SetPoint("RIGHT", closeButton, "LEFT", -2, 0)
     
@@ -178,7 +178,19 @@ local function IsRowCollapsed(row)
     if row.isInstance then
         return Q:GetSetting("CollapsedInstances")[row.id] or false
     else
-        return Q:GetSetting("CollapsedQuests")[row.id] or false
+        local collapsedQuests = Q:GetSetting("CollapsedQuests")
+        if collapsedQuests[row.collapseKey] ~= nil then
+            return collapsedQuests[row.collapseKey]
+        end
+
+        -- Preserve an old quest-id collapse on the first matching row encountered.
+        if collapsedQuests[row.id] then
+            collapsedQuests[row.collapseKey] = true
+            collapsedQuests[row.id] = nil
+            return true
+        end
+
+        return false
     end
 end
 
@@ -226,7 +238,7 @@ end
 
 -- "visited" holds every quest already listed under the current main quest, so a chain shared by
 -- several alternatives is only expanded once and referenced with a summary row afterwards.
-local function AppendRelatedRows(quest, depth, visited)
+local function AppendRelatedRows(quest, depth, visited, parentCollapseKey)
     if not quest then
         return
     end
@@ -248,6 +260,7 @@ local function AppendRelatedRows(quest, depth, visited)
         row.isPrerequisite = dependencyType ~= "chain"
         row.prerequisiteType = dependencyType
         row.lineageDepth = depth + 1
+        row.collapseKey = string.format("%s/quest:%s", parentCollapseKey or ("quest:" .. tostring(quest.id)), tostring(questId))
 
         local isHidden = Q:GetSetting("HideCompletedQuests") and Q.API:IsQuestCompleted(questId)
         if not isHidden then
@@ -260,7 +273,7 @@ local function AppendRelatedRows(quest, depth, visited)
 
         if not visited[questId] then
             visited[questId] = true
-            AppendRelatedRows(dependency, depth + 1, visited)
+            AppendRelatedRows(dependency, depth + 1, visited, row.collapseKey)
         elseif HasLineage(dependency) and not isHidden then
             local count = CountRemainingLineage(dependency)
             if count > 0 then
@@ -594,10 +607,11 @@ local function CreateRowFrame(index, row)
 
             local settingPath = clickedRow.isInstance and "CollapsedInstances" or "CollapsedQuests"
             local collapsedRows = clickedRow.isInstance and Q:GetSetting("CollapsedInstances") or Q:GetSetting("CollapsedQuests")
-            if collapsedRows[clickedRow.id] then
-                collapsedRows[clickedRow.id] = nil
+            local collapseKey = clickedRow.isInstance and clickedRow.id or clickedRow.collapseKey
+            if collapsedRows[collapseKey] then
+                collapsedRows[collapseKey] = nil
             else
-                collapsedRows[clickedRow.id] = true
+                collapsedRows[collapseKey] = true
             end
             Q:SetSetting(settingPath, collapsedRows)
             QuestLog:RefreshAndPopulate()
@@ -916,16 +930,16 @@ function QuestLog:RefreshAndPopulate()
             
             if not isCollapsed then
                 for _, quest in ipairs(quests) do
-                    local questIsCollapsed = Q:GetSetting("CollapsedQuests")[quest.id] or false
-                    
                     local questRow = CopyRow(quest)
                     questRow.isMainQuest = true
+                    questRow.collapseKey = string.format("instance:%s/quest:%s", tostring(instance.id), tostring(quest.id))
+                    local questIsCollapsed = IsRowCollapsed(questRow)
                     if not Q:GetSetting("HideCompletedQuests") or not Q.API:IsQuestCompleted(quest.id) then
                         table.insert(self.rows, questRow)
                     end
 
                     if not questIsCollapsed and (not Q:GetSetting("HideCompletedQuests") or not Q.API:IsQuestCompleted(quest.id)) then
-                        AppendRelatedRows(quest, 0)
+                        AppendRelatedRows(quest, 0, nil, questRow.collapseKey)
                     end
                 end
             end
