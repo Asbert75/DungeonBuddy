@@ -1817,7 +1817,8 @@ Q.Quests = {
         requiredLevel = 30,
         prerequisites = {
             { id = 93680, type = Q.PrerequisiteType.REQUIRED },
-            { id = 545,   type = Q.PrerequisiteType.REQUIRED }
+            { id = 545, type = Q.PrerequisiteType.REQUIRED },
+            { id = 557, type = Q.PrerequisiteType.REQUIRED }
         },
         source = {
             type = "npc",
