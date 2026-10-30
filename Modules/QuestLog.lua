@@ -10,6 +10,16 @@ function QuestLog:Create()
         return self.frame
     end
 
+    -- Quest log offsets were previously stored as raw UI units. Convert them
+    -- once so they remain stable when the UI scale changes.
+    if (Q:GetSetting("QuestLogFrame.PositionPixelVersion") or 0) < 1 then
+        local savedX = Q:GetSetting("QuestLogFrame.X") or 500
+        local savedY = Q:GetSetting("QuestLogFrame.Y") or 0
+        Q:SetSetting("QuestLogFrame.X", Q:UnitsToPixels(savedX, UIParent))
+        Q:SetSetting("QuestLogFrame.Y", Q:UnitsToPixels(savedY, UIParent))
+        Q:SetSetting("QuestLogFrame.PositionPixelVersion", 1)
+    end
+
     local containerWidth = 500
 
     --------------------------------------------------
@@ -27,15 +37,29 @@ function QuestLog:Create()
     self.frame:SetScript("OnDragStop", function(self)
         self:StopMovingOrSizing()
         Q:ClampFrameToScreen(self)
+        Q:SnapScreenFrame(self)
 
         local x, y = self:GetCenter()
         local centerX, centerY = UIParent:GetCenter()
-        Q:SetSetting("QuestLogFrame.X", Q:PixelPerfect(x - centerX))
-        Q:SetSetting("QuestLogFrame.Y", Q:PixelPerfect(y - centerY))
+        Q:SetSetting("QuestLogFrame.X", Q:UnitsToPixels(x - centerX, UIParent))
+        Q:SetSetting("QuestLogFrame.Y", Q:UnitsToPixels(y - centerY, UIParent))
     end)
 
-    self.frame:SetPoint("CENTER", UIParent, "CENTER", Q:GetSetting("QuestLogFrame.X") or 500, Q:GetSetting("QuestLogFrame.Y") or 0)
+    self.frame:SetPoint(
+        "CENTER",
+        UIParent,
+        "CENTER",
+        Q:PixelsToUnits(Q:GetSetting("QuestLogFrame.X") or 500, UIParent),
+        Q:PixelsToUnits(Q:GetSetting("QuestLogFrame.Y") or 0, UIParent)
+    )
+    Q:SnapScreenFrame(self.frame)
     Q:ClampFrameToScreen(self.frame)
+    Q:SnapScreenFrame(self.frame)
+
+    local x, y = self.frame:GetCenter()
+    local centerX, centerY = UIParent:GetCenter()
+    Q:SetSetting("QuestLogFrame.X", Q:UnitsToPixels(x - centerX, UIParent))
+    Q:SetSetting("QuestLogFrame.Y", Q:UnitsToPixels(y - centerY, UIParent))
 
     local closeButton = Q:CreateCloseButton(self.frame, "DungeonBuddy_QuestLogCloseButton")
 
@@ -165,7 +189,9 @@ function QuestLog:Create()
     self.contentContainer:SetScript("OnMouseWheel", function(self, delta)
         local step = 10
         local maxScroll = math.max(0, QuestLog.scrollChild:GetHeight() - self:GetHeight())
-        self:SetVerticalScroll(math.max(0, math.min(maxScroll, self:GetVerticalScroll() - delta * step)))
+        local offset = math.max(0, math.min(maxScroll, self:GetVerticalScroll() - delta * step))
+        local physicalOffset = Q:UnitsToPixels(offset, self)
+        self:SetVerticalScroll(Q:PixelsToUnits(physicalOffset, self))
     end)
 
     QuestLog:RefreshAndPopulate()

@@ -1,4 +1,4 @@
-## Interface: 16001, 16000
+## Interface: 16001, 16000, 120005
 ## Title: DungeonBuddy
 ## Notes: Reminds you of quest chains that lead into instance quests and tracks them by instance.
 ## Author: Wicked

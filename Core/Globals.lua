@@ -19,16 +19,70 @@ function Q:ColorToHex(color)
     return string.format("|cff%02x%02x%02x", math.floor(r * 255 + 0.5), math.floor(g * 255 + 0.5), math.floor(b * 255 + 0.5))
 end
 
-function Q:PixelPerfect(value)
-    if not value then return 0 end
+local function GetPixelsPerUnit(frame)
+    frame = frame or UIParent
     local _, screenHeight = GetPhysicalScreenSize()
-    local uiScale = UIParent:GetEffectiveScale()
-    local pixelSize = 768 / screenHeight / uiScale
-    return pixelSize * math.floor((value / pixelSize) + 0.5333)
+    local effectiveScale = frame:GetEffectiveScale()
+    if not screenHeight or screenHeight <= 0 or not effectiveScale or effectiveScale <= 0 then
+        return 1
+    end
+
+    -- WoW lays out UI in a virtual coordinate space that is 768 units tall.
+    return effectiveScale * screenHeight / 768
+end
+
+local function RoundToNearestInteger(value)
+    if value >= 0 then
+        return math.floor(value + 0.5)
+    end
+    return math.ceil(value - 0.5)
+end
+
+-- Convert between physical screen pixels and frame-local UI units. Supplying
+-- the target frame is important for nested frames with a different scale.
+function Q:PixelsToUnits(pixels, frame)
+    local pixelsPerUnit = GetPixelsPerUnit(frame)
+    return RoundToNearestInteger(pixels * pixelsPerUnit) / pixelsPerUnit
+end
+
+function Q:UnitsToPixels(units, frame)
+    return units * GetPixelsPerUnit(frame)
+end
+
+local function EnableRoundLayout(region)
+    if not region then return end
+
+    if region.SetRoundLayoutToNearestPixel then
+        region:SetRoundLayoutToNearestPixel(true)
+    end
+
+    if region.GetRegions then
+        for _, childRegion in ipairs({ region:GetRegions() }) do
+            EnableRoundLayout(childRegion)
+        end
+    end
+
+    if region.GetChildren then
+        for _, childFrame in ipairs({ region:GetChildren() }) do
+            EnableRoundLayout(childFrame)
+        end
+    end
+end
+
+-- Use WoW's native pixel rounding without rewriting relative anchors.
+function Q:SnapScreenFrame(frame)
+    EnableRoundLayout(frame)
+end
+
+-- Compatibility helper: its argument is a physical-pixel amount, as used by
+-- the existing addon call sites; the return value is frame-local UI units.
+function Q:PixelPerfect(value, frame)
+    if value == nil then return 0 end
+    return self:PixelsToUnits(value, frame or UIParent)
 end
 
 function Q:SetBackdrop(frame, backgroundKey, borderKey, backgroundAlpha, borderAlpha)
-    local pixelPerfect = Q:PixelPerfect(1)
+    local pixelPerfect = Q:PixelPerfect(1, frame)
 
     frame:SetBackdrop({
         bgFile = "Interface\\Buttons\\WHITE8X8",
@@ -50,23 +104,24 @@ function Q:SetTextColor(frame, textKey, textAlpha)
 end
 
 function Q:SetPixelPerfectSize(frame, width, height)
-    local pixelPerfect = Q:PixelPerfect(1)
-    frame:SetSize(pixelPerfect * width, pixelPerfect * height)
+    frame:SetSize(Q:PixelPerfect(width, frame), Q:PixelPerfect(height, frame))
+    Q:SnapScreenFrame(frame)
 end
 
 function Q:SetPixelPerfectHeight(frame, height)
-    local pixelPerfect = Q:PixelPerfect(1)
-    frame:SetHeight(pixelPerfect * height)
+    frame:SetHeight(Q:PixelPerfect(height, frame))
+    Q:SnapScreenFrame(frame)
 end
 
 function Q:SetPixelPerfectWidth(frame, width)
-    local pixelPerfect = Q:PixelPerfect(1)
-    frame:SetWidth(pixelPerfect * width)
+    frame:SetWidth(Q:PixelPerfect(width, frame))
+    Q:SnapScreenFrame(frame)
 end
 
 function Q:SetPixelPerfectPoint(frame, point, relativeTo, relativePoint, x, y)
-    local pixelPerfect = Q:PixelPerfect(1)
-    frame:SetPoint(point, relativeTo, relativePoint, pixelPerfect * x, pixelPerfect * y)
+    frame:SetPoint(point, relativeTo, relativePoint,
+        Q:PixelPerfect(x or 0, frame), Q:PixelPerfect(y or 0, frame))
+    Q:SnapScreenFrame(frame)
 end
 
 --#region UI Creation Functions
@@ -77,7 +132,7 @@ function Q:CreateCloseButton(parent, name)
     button:SetBackdrop({
         bgFile = "Interface\\Buttons\\WHITE8X8",
         edgeFile = "Interface\\Buttons\\WHITE8X8",
-        edgeSize = Q:PixelPerfect(1),
+        edgeSize = Q:PixelPerfect(1, button),
         insets = { left = 0, right = 0, top = 0, bottom = 0 },
     })
 
@@ -121,7 +176,7 @@ function Q:CreateCloseButton(parent, name)
 end
 
 function Q:CreateText(frameName, parent, text, fontSize, colorKey, textAlpha)
-    local pixelPerfect = Q:PixelPerfect(1)
+    local pixelPerfect = Q:PixelPerfect(1, parent)
 
     local fontString = parent:CreateFontString(frameName, "OVERLAY", "GameFontNormal")
     fontString:SetText(text)
@@ -146,7 +201,7 @@ end
 
 function Q:CreateIconBorder(parent, icon)
     local border = {}
-    local thickness = Q:PixelPerfect(1)
+    local thickness = Q:PixelPerfect(1, icon)
     local edges = {
         { "TOPLEFT", "TOPRIGHT", true },
         { "BOTTOMLEFT", "BOTTOMRIGHT", true },
@@ -164,6 +219,7 @@ function Q:CreateIconBorder(parent, icon)
         else
             edge:SetWidth(thickness)
         end
+        Q:SnapScreenFrame(edge)
         edge:Hide()
         border[index] = edge
     end
@@ -208,7 +264,7 @@ function Q:CreateButton(frameName, parent, text, width, height, fontSize, color,
     button:SetBackdrop({
         bgFile = "Interface\\Buttons\\WHITE8X8",
         edgeFile = "Interface\\Buttons\\WHITE8X8",
-        edgeSize = Q:PixelPerfect(1),
+        edgeSize = Q:PixelPerfect(1, button),
         insets = { left = 0, right = 0, top = 0, bottom = 0 },
     })
 
@@ -400,6 +456,7 @@ function Q:ClampFrameToScreen(frame)
 
     if needsClamp then
         frame:ClearAllPoints()
-        Q:SetPixelPerfectPoint(frame, "TOPLEFT", UIParent, "BOTTOMLEFT", clampedLeft, clampedTop)
+        frame:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", clampedLeft, clampedTop)
+        Q:SnapScreenFrame(frame)
     end
 end

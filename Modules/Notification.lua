@@ -65,6 +65,27 @@ function Notification:Create()
         return self.frame
     end
 
+    -- Position version 0 stored UI units. Version 1 stored pixel values using
+    -- an older scale conversion; normalize both to the current pixel format.
+    local positionVersion = Q:GetSetting("NotificationFrame.PositionPixelVersion") or 0
+    if positionVersion < 2 then
+        local savedX = Q:GetSetting("NotificationFrame.x") or 0
+        local savedY = Q:GetSetting("NotificationFrame.y") or 250
+        if positionVersion == 0 then
+            savedX = Q:UnitsToPixels(savedX, UIParent)
+            savedY = Q:UnitsToPixels(savedY, UIParent)
+        else
+            local oldScale = UIParent:GetEffectiveScale()
+            if oldScale and oldScale > 0 then
+                savedX = Q:UnitsToPixels(savedX / oldScale, UIParent)
+                savedY = Q:UnitsToPixels(savedY / oldScale, UIParent)
+            end
+        end
+        Q:SetSetting("NotificationFrame.x", savedX)
+        Q:SetSetting("NotificationFrame.y", savedY)
+        Q:SetSetting("NotificationFrame.PositionPixelVersion", 2)
+    end
+
     local fontS, fontM, fontL, fontXL = Q.Theme.Font.S, Q.Theme.Font.M, Q.Theme.Font.L, Q.Theme.Font.XL
     local paddingS, paddingM = Q.Theme.Padding.S, Q.Theme.Padding.M
 
@@ -83,20 +104,29 @@ function Notification:Create()
     self.frame:SetScript("OnDragStop", function(self)
         self:StopMovingOrSizing()
         Q:ClampFrameToScreen(self)
+        Q:SnapScreenFrame(self)
 
         local x, y = self:GetCenter()
         local centerX, centerY = UIParent:GetCenter()
-        Q:SetSetting("NotificationFrame.x", x - centerX)
-        Q:SetSetting("NotificationFrame.y", y - centerY)
+        Q:SetSetting("NotificationFrame.x", Q:UnitsToPixels(x - centerX, UIParent))
+        Q:SetSetting("NotificationFrame.y", Q:UnitsToPixels(y - centerY, UIParent))
     end)
 
-    self.frame:SetPoint("CENTER", UIParent, "CENTER", Q:GetSetting("NotificationFrame.x") or 0, Q:GetSetting("NotificationFrame.y") or 250)
+    self.frame:SetPoint(
+        "CENTER",
+        UIParent,
+        "CENTER",
+        Q:PixelsToUnits(Q:GetSetting("NotificationFrame.x") or 0, UIParent),
+        Q:PixelsToUnits(Q:GetSetting("NotificationFrame.y") or 250, UIParent)
+    )
+    Q:SnapScreenFrame(self.frame)
     Q:ClampFrameToScreen(self.frame)
+    Q:SnapScreenFrame(self.frame)
 
     local x, y = self.frame:GetCenter()
     local centerX, centerY = UIParent:GetCenter()
-    Q:SetSetting("NotificationFrame.x", x - centerX)
-    Q:SetSetting("NotificationFrame.y", y - centerY)
+    Q:SetSetting("NotificationFrame.x", Q:UnitsToPixels(x - centerX, UIParent))
+    Q:SetSetting("NotificationFrame.y", Q:UnitsToPixels(y - centerY, UIParent))
     self.frame:SetAlpha(0)
     self.frame:Hide()
 
@@ -166,7 +196,7 @@ function Notification:Create()
 
     self.questSourceText = Q:CreateText("QuestSourceText", self.frame, "Additional information about the quest source.", fontM, "Secondary")
     Q:SetPixelPerfectPoint(self.questSourceText, "TOPLEFT", self.questSourceName, "BOTTOMLEFT", 0, -paddingS)
-    Q:SetPixelPerfectWidth(self.questSourceText, self.frame:GetWidth() - paddingM * 2)
+    Q:SetPixelPerfectWidth(self.questSourceText, Q:UnitsToPixels(self.frame:GetWidth(), self.frame) - paddingM * 2)
     self.questSourceText:SetJustifyH("LEFT")
     self.questSourceText:SetWordWrap(true)
 
