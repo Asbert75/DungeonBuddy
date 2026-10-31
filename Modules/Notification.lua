@@ -65,13 +65,13 @@ function Notification:Create()
         return self.frame
     end
 
-    local fontS, fontM, fontL, fontXL = Q.Theme.Font.S, Q.Theme.Font.M, Q.Theme.Font.L, Q.Theme.Font.XL
+    local fontS, fontM, fontL, fontXL = Q.Theme.FontSize.S, Q.Theme.FontSize.M, Q.Theme.FontSize.L, Q.Theme.FontSize.XL
     local paddingS, paddingM = Q.Theme.Padding.S, Q.Theme.Padding.M
 
     --------------------------------------------------
     -- Create Notification Frame
     --------------------------------------------------
-    self.frame = Q:CreateBackdropFrame('DungeonBuddy_NotificationFrame', UIParent, 500, 300, "HIGH", "Primary", "Accent", 0.9, 0.9)
+    self.frame = Q:CreateBackdropFrame('DungeonBuddy_NotificationFrame', UIParent, 450, 280, "HIGH", "Primary", "Accent", 0.9, 0.9)
 
     self.frame:SetMovable(true)
     self.frame:EnableMouse(true)
@@ -82,21 +82,20 @@ function Notification:Create()
     end)
     self.frame:SetScript("OnDragStop", function(self)
         self:StopMovingOrSizing()
+        self:SetUserPlaced(false)
         Q:ClampFrameToScreen(self)
 
         local x, y = self:GetCenter()
         local centerX, centerY = UIParent:GetCenter()
-        Q:SetSetting("NotificationFrame.x", x - centerX)
-        Q:SetSetting("NotificationFrame.y", y - centerY)
+        Q:SetSetting("NotificationFrame.x", Q:PixelPerfect(x - centerX))
+        Q:SetSetting("NotificationFrame.y", Q:PixelPerfect(y - centerY))
+
+        Q:SetPixelPerfectCenterPoint(self, Q:GetSetting("NotificationFrame.x") or 0, Q:GetSetting("NotificationFrame.y") or 250)
     end)
 
-    self.frame:SetPoint("CENTER", UIParent, "CENTER", Q:GetSetting("NotificationFrame.x") or 0, Q:GetSetting("NotificationFrame.y") or 250)
-    Q:ClampFrameToScreen(self.frame)
+    Q:SetPixelPerfectCenterPoint(self.frame, Q:GetSetting("NotificationFrame.x") or 0, Q:GetSetting("NotificationFrame.y") or 250)
+    self.frame:SetUserPlaced(false)
 
-    local x, y = self.frame:GetCenter()
-    local centerX, centerY = UIParent:GetCenter()
-    Q:SetSetting("NotificationFrame.x", x - centerX)
-    Q:SetSetting("NotificationFrame.y", y - centerY)
     self.frame:SetAlpha(0)
     self.frame:Hide()
 
@@ -114,26 +113,26 @@ function Notification:Create()
     --------------------------------------------------
     -- Notification Window Title
     --------------------------------------------------
-    self.notificationIcon = Q:CreateTexture("NotificationIcon", self.frame, 40, 40, "UI-QuestPoiLegendary-QuestBang")
+    self.notificationIcon = Q:CreateTexture("NotificationIcon", self.frame, 40, 40, { atlas = "UI-QuestPoiLegendary-QuestBang" })
     Q:SetPixelPerfectPoint(self.notificationIcon, "TOPLEFT", self.frame, "TOPLEFT", paddingM, -paddingS)
 
     self.notificationTitle = Q:CreateText("notificationTitle", self.frame, "A NEW QUEST IS AVAILABLE", fontL, "Accent")
-    Q:SetPixelPerfectPoint(self.notificationTitle, "LEFT", self.notificationIcon, "RIGHT", paddingS, -2)
+    self.notificationTitle:SetPoint("LEFT", self.notificationIcon, "RIGHT", paddingS, -2)
 
-    self.notificationProgress = Q:CreateText("NotificationProgress", self.frame, "", fontM, "Accent")
-    Q:SetPixelPerfectPoint(self.notificationProgress, "LEFT", self.notificationTitle, "RIGHT", 5, 0)
+    self.notificationProgress = Q:CreateText("NotificationProgress", self.frame, "", fontL, "Primary")
+    self.notificationProgress:SetPoint("LEFT", self.notificationTitle, "RIGHT", 5, 0)
 
     --------------------------------------------------
     -- Instance Name
     --------------------------------------------------
     self.instanceName = Q:CreateText("InstanceName", self.frame, "INSTANCE NAME", fontS, "Accent")
-    Q:SetPixelPerfectPoint(self.instanceName, "TOPLEFT", self.notificationIcon, "BOTTOMLEFT", 0, -paddingM)
+    self.instanceName:SetPoint("TOPLEFT", self.notificationIcon, "BOTTOMLEFT", 0, -paddingM)
 
     --------------------------------------------------
     -- Quest Name
     --------------------------------------------------
     self.questName = Q:CreateText("QuestName", self.frame, "QUEST NAME", fontXL, "Primary")
-    Q:SetPixelPerfectPoint(self.questName, "TOPLEFT", self.instanceName, "BOTTOMLEFT", 0, -paddingS)
+    self.questName:SetPoint("TOPLEFT", self.instanceName, "BOTTOMLEFT", 0, -paddingS)
 
     self.questClassIcon = Q:CreateTexture("QuestClassIcon", self.frame, 20, 20)
     self.questClassIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
@@ -148,7 +147,7 @@ function Notification:Create()
     -- Quest Source Label
     --------------------------------------------------
     self.questSourceLabel = Q:CreateText("QuestSourceLabel", self.frame, "QUEST STARTED BY", fontS, "Accent")
-    Q:SetPixelPerfectPoint(self.questSourceLabel, "TOPLEFT", self.questName, "BOTTOMLEFT", 0, -paddingM)
+    self.questSourceLabel:SetPoint("TOPLEFT", self.questName, "BOTTOMLEFT", 0, -paddingM)
 
     --------------------------------------------------
     -- Quest Source Information
@@ -158,15 +157,15 @@ function Notification:Create()
     Q:SetPixelPerfectPoint(self.sourceIcon, "TOPLEFT", self.questSourceLabel, "BOTTOMLEFT", 0, -paddingS)
     
     self.questSourceName = Q:CreateText("QuestSourceName", self.frame, "Name", fontM, "Primary")
-    Q:SetPixelPerfectPoint(self.questSourceName, "LEFT", self.sourceIcon, "RIGHT", paddingS, 0)
+    self.questSourceName:SetPoint("LEFT", self.sourceIcon, "RIGHT", paddingS, 0)
     self.questSourceName:SetTextColor(unpack(Q.Theme.Status.Success))
 
     self.questSourceZoneName = Q:CreateText("QuestSourceZoneName", self.frame, "- Orgrimmar", fontM, "Primary")
-    Q:SetPixelPerfectPoint(self.questSourceZoneName, "LEFT", self.questSourceName, "RIGHT", 0, 0)
+    self.questSourceZoneName:SetPoint("LEFT", self.questSourceName, "RIGHT", 0, 0)
 
     self.questSourceText = Q:CreateText("QuestSourceText", self.frame, "Additional information about the quest source.", fontM, "Secondary")
-    Q:SetPixelPerfectPoint(self.questSourceText, "TOPLEFT", self.questSourceName, "BOTTOMLEFT", 0, -paddingS)
-    Q:SetPixelPerfectWidth(self.questSourceText, self.frame:GetWidth() - paddingM * 2)
+    self.questSourceText:SetPoint("TOPLEFT", self.questSourceName, "BOTTOMLEFT", 0, -paddingS)
+    self.questSourceText:SetWidth(self.frame:GetWidth() - paddingM * 2)
     self.questSourceText:SetJustifyH("LEFT")
     self.questSourceText:SetWordWrap(true)
 
@@ -373,6 +372,9 @@ local function UpdateActionButtons()
 end
 
 function Notification:DisplayQuest(quest, isPrevious)
+    if not self.frame then
+        self:Create()
+    end
     self.quest = quest
 
     local playerInfo = Q.API:GetPlayerInfo()
@@ -380,7 +382,7 @@ function Notification:DisplayQuest(quest, isPrevious)
     -- Update window title
     self.notificationTitle:SetText("A NEW QUEST CHAIN IS AVAILABLE")
     if (not quest.prerequisites or #quest.prerequisites == 0) and (quest.instances and #quest.instances > 0) then
-        self.notificationTitle:SetText("A NEW INSTANCE QUEST IS AVAILABLE")
+        self.notificationTitle:SetText("A NEW QUEST IS AVAILABLE")
     end
 
     -- Update Instance Name Text
@@ -435,8 +437,4 @@ end
 
 function Notification:OnEnable()
     self:UpdateLevelUpRegistration()
-
-    if not self.frame then
-        self:Create()
-    end
 end

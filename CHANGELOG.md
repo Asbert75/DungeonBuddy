@@ -7,25 +7,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.3] - 2026-11-01
+
+### Added
+
+- Added missing quest chain for City of Dalaran
+
+### Changed
+
+- Available breadcrumb quests (marked with B) as well as optional quests (marked with *) are now marked in a blue color in the tracker
+
+### Fixed
+
+- Fixed pixel perfect scaling for borders so that they do not collapse into 0 pixels on some UI scales
+
 ## [1.6.2] - 2026-10-27
 
-## Changed
+### Changed
 
 - Updated tooltip to more clearly convey quest information (status, started by etc) to the user
 - Collapsing a quest that is used in multiple different chains now only collapse it for that specific row
 - Changed default settings
 
-## Added
+### Added
 
 - Added missing chain for Allegiance to the Old Gods in Blackfathom Deeps
 
-## Fixed
+### Fixed
 
 - Added truncation to the quest title text on long quest rows so that they do not overlap the waypoint/collapse buttons
 
 ## [1.6.1] - 2026-10-22
 
-## Added
+### Added
 
 - Added some missing dungeon quests for shamans and rogues, as well as one missing Alliance quest in Scarlet Monastery
 - Class colored border around class icons

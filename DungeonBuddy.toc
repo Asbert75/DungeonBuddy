@@ -2,7 +2,7 @@
 ## Title: DungeonBuddy
 ## Notes: Reminds you of quest chains that lead into instance quests and tracks them by instance.
 ## Author: Wicked
-## Version: 1.6.2
+## Version: 1.6.3
 ## X-Curse-Project-ID: 1730648
 ## Category: Quests & Leveling
 ## SavedVariablesPerCharacter: DungeonBuddyCharDB

@@ -50,23 +50,27 @@ function Q:SetTextColor(frame, textKey, textAlpha)
 end
 
 function Q:SetPixelPerfectSize(frame, width, height)
-    local pixelPerfect = Q:PixelPerfect(1)
-    frame:SetSize(pixelPerfect * width, pixelPerfect * height)
+    frame:SetSize(Q:PixelPerfect(width), Q:PixelPerfect(height))
 end
 
 function Q:SetPixelPerfectHeight(frame, height)
-    local pixelPerfect = Q:PixelPerfect(1)
-    frame:SetHeight(pixelPerfect * height)
+    frame:SetHeight(Q:PixelPerfect(height))
 end
 
 function Q:SetPixelPerfectWidth(frame, width)
-    local pixelPerfect = Q:PixelPerfect(1)
-    frame:SetWidth(pixelPerfect * width)
+    frame:SetWidth(Q:PixelPerfect(width))
 end
 
 function Q:SetPixelPerfectPoint(frame, point, relativeTo, relativePoint, x, y)
-    local pixelPerfect = Q:PixelPerfect(1)
-    frame:SetPoint(point, relativeTo, relativePoint, pixelPerfect * x, pixelPerfect * y)
+    frame:SetPoint(point, relativeTo, relativePoint, Q:PixelPerfect(x), Q:PixelPerfect(y))
+end
+
+-- Places a frame by its center offset from the screen center, but anchors its bottom-left corner on a whole pixel.
+function Q:SetPixelPerfectCenterPoint(frame, x, y)
+    local left = UIParent:GetWidth() / 2 + x - frame:GetWidth() / 2
+    local bottom = UIParent:GetHeight() / 2 + y - frame:GetHeight() / 2
+    frame:ClearAllPoints()
+    frame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", Q:PixelPerfect(left), Q:PixelPerfect(bottom))
 end
 
 --#region UI Creation Functions
@@ -81,7 +85,7 @@ function Q:CreateCloseButton(parent, name)
         insets = { left = 0, right = 0, top = 0, bottom = 0 },
     })
 
-    local text = Q:CreateText(nil, button, "x", Q.Theme.Font.L, "Accent")
+    local text = Q:CreateText(nil, button, "x", Q.Theme.FontSize.L, "Accent")
     button.cross = text
     Q:SetPixelPerfectPoint(text, "CENTER", button, "CENTER", 1, 1)
 
@@ -121,24 +125,26 @@ function Q:CreateCloseButton(parent, name)
 end
 
 function Q:CreateText(frameName, parent, text, fontSize, colorKey, textAlpha)
-    local pixelPerfect = Q:PixelPerfect(1)
-
     local fontString = parent:CreateFontString(frameName, "OVERLAY", "GameFontNormal")
     fontString:SetText(text)
 
     local textR, textG, textB, textA = unpack(Q.Theme.Text[colorKey or "Primary"])
     fontString:SetTextColor(textR, textG, textB, textAlpha or textA)
-    fontString:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * fontSize)
+    fontString:SetFont("Fonts\\FRIZQT__.TTF", Q:PixelPerfect(fontSize))
 
     return fontString
 end
 
-function Q:CreateTexture(frameName, parent, width, height, atlas)
+function Q:CreateTexture(frameName, parent, width, height, path)
+    path = path or {}
     local texture = parent:CreateTexture(frameName, "ARTWORK")
     Q:SetPixelPerfectSize(texture, width, height)
     
-    if atlas then
-        texture:SetAtlas(atlas)
+    if path.atlas then
+        texture:SetAtlas(path.atlas)
+    end
+    if path.texture then
+        texture:SetTexture(path.texture)
     end
 
     return texture

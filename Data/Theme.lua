@@ -48,14 +48,14 @@ Q.Theme = {
         M = 18,
         L  = 27,
     },
-    Font = {
-        XS = 10,
-        S  = 12,
-        M = 14,
-        L  = 16,
-        XL = 18,
-        XXL = 20,
-        XXXL = 22,
+    FontSize = {
+        XS = 8,
+        S  = 10,
+        M = 12,
+        L  = 14,
+        XL = 16,
+        XXL = 18,
+        XXXL = 20,
     },
     -- Defaults
     QuestColorUnavailable = { r = 163/255, g = 59/255, b = 57/255 },

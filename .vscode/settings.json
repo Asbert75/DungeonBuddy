@@ -30,6 +30,7 @@
         "AddonCompartmentFrame",
         "GossipFrame",
         "ADD",
-        "UiMapPoint"
+        "UiMapPoint",
+        "RAID_CLASS_COLORS"
     ]
 }

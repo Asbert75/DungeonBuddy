@@ -2,20 +2,19 @@ local _, Q = ...
 local QuestLog = Q.Addon:NewModule("QuestLog", "AceEvent-3.0", "AceConsole-3.0")
 Q.QuestLog = QuestLog
 
-local DB_ROW_HEIGHT = Q.Theme.Font.XL + 6
+local DB_ROW_HEIGHT = Q.Theme.FontSize.XL + 6
 local INSTANCE_ROW_EXTRA_HEIGHT = 20
+local CONTAINER_WIDTH = 500
 
 function QuestLog:Create()
     if self.frame then
         return self.frame
     end
 
-    local containerWidth = 500
-
     --------------------------------------------------
     -- Create QuestLog Frame
     --------------------------------------------------
-    self.frame = Q:CreateBackdropFrame('DungeonBuddy_QuestLogFrame', UIParent, containerWidth, 600, "HIGH", "Primary", "Default", 0.9, 0.25)
+    self.frame = Q:CreateBackdropFrame('DungeonBuddy_QuestLogFrame', UIParent, CONTAINER_WIDTH, 600, "HIGH", "Primary", "Default", 0.9, 0.5)
 
     self.frame:SetMovable(true)
     self.frame:EnableMouse(true)
@@ -26,23 +25,26 @@ function QuestLog:Create()
     end)
     self.frame:SetScript("OnDragStop", function(self)
         self:StopMovingOrSizing()
+        self:SetUserPlaced(false)
         Q:ClampFrameToScreen(self)
 
         local x, y = self:GetCenter()
         local centerX, centerY = UIParent:GetCenter()
         Q:SetSetting("QuestLogFrame.X", Q:PixelPerfect(x - centerX))
         Q:SetSetting("QuestLogFrame.Y", Q:PixelPerfect(y - centerY))
+
+        Q:SetPixelPerfectCenterPoint(self, Q:GetSetting("QuestLogFrame.X") or 500, Q:GetSetting("QuestLogFrame.Y") or 0)
     end)
 
-    self.frame:SetPoint("CENTER", UIParent, "CENTER", Q:GetSetting("QuestLogFrame.X") or 500, Q:GetSetting("QuestLogFrame.Y") or 0)
-    Q:ClampFrameToScreen(self.frame)
+    Q:SetPixelPerfectCenterPoint(self.frame, Q:GetSetting("QuestLogFrame.X") or 500, Q:GetSetting("QuestLogFrame.Y") or 0)
+    self.frame:SetUserPlaced(false)
 
     local closeButton = Q:CreateCloseButton(self.frame, "DungeonBuddy_QuestLogCloseButton")
 
     --------------------------------------------------
     -- QuestLog Header
     --------------------------------------------------
-    self.header = Q:CreateFrame("QuestLogHeader", self.frame, containerWidth, 50, "HIGH")
+    self.header = Q:CreateFrame("QuestLogHeader", self.frame, CONTAINER_WIDTH, 33, "HIGH")
     Q:SetPixelPerfectPoint(self.header, "TOP", self.frame, "TOP", 0, 0)
     Q:SetPixelPerfectPoint(self.header, "LEFT", self.frame, "LEFT", 0, 0)
     Q:SetPixelPerfectPoint(self.header, "RIGHT", self.frame, "RIGHT", 0, 0)
@@ -54,9 +56,9 @@ function QuestLog:Create()
     Q:SetPixelPerfectPoint(border, "BOTTOMLEFT", self.header, "BOTTOMLEFT", 0, 0)
     Q:SetPixelPerfectPoint(border, "BOTTOMRIGHT", self.header, "BOTTOMRIGHT", 0, 0)
 
-    self.header.text = Q:CreateText("QuestLogHeaderText", self.header, "Dungeon Buddy", Q.Theme.Font.XXL, "Accent", 1)
+    self.header.text = Q:CreateText("QuestLogHeaderText", self.header, "DUNGEON|cffEFE8D3BUDDY", Q.Theme.FontSize.L, "Accent", 1)
     self.header.text:SetJustifyH("LEFT")
-    Q:SetPixelPerfectPoint(self.header.text, "LEFT", self.header, "LEFT", Q.Theme.Padding.S, 0)
+    self.header.text:SetPoint("LEFT", self.header, "LEFT", Q.Theme.Padding.S, 0)
 
     --------------------------------------------------
     -- Action Buttons
@@ -105,7 +107,7 @@ function QuestLog:Create()
     }
 
     local initialText = (next(Q:GetSetting("CollapsedQuests")) or next(Q:GetSetting("CollapsedInstances"))) and "+" or "-"
-    local collapseAndExpandButton = Q:CreateButton("DungeonBuddy_CollapseAndExpandButton", self.frame, initialText, 24, 24, Q.Theme.Font.M, Q.Theme.Text.Secondary, actionHandlers)
+    local collapseAndExpandButton = Q:CreateButton("DungeonBuddy_CollapseAndExpandButton", self.frame, initialText, 24, 24, Q.Theme.FontSize.M, Q.Theme.Text.Secondary, actionHandlers)
     collapseAndExpandButton:SetPoint("RIGHT", closeButton, "LEFT", -2, 0)
     
     --------------------------------------------------
@@ -117,7 +119,7 @@ function QuestLog:Create()
     self.contentContainer:EnableMouseWheel(true)
 
     self.scrollChild = CreateFrame("Frame", "DungeonBuddy_QuestLogContentContainerChild", self.contentContainer)
-    Q:SetPixelPerfectSize(self.scrollChild, containerWidth, 1)
+    Q:SetPixelPerfectSize(self.scrollChild, CONTAINER_WIDTH, 1)
     self.contentContainer:SetScrollChild(self.scrollChild)
     self.contentContainer:SetScript("OnSizeChanged", function(self, width)
         QuestLog.scrollChild:SetWidth(width)
@@ -157,8 +159,8 @@ function QuestLog:Create()
         end
         if thumb then
             thumb:SetTexture(nil)
-            thumb:SetColorTexture(unpack(Q.Theme.Border.Default))
-            Q:SetPixelPerfectWidth(thumb, 4)
+            thumb:SetColorTexture(unpack(Q.Theme.Border.Accent))
+            Q:SetPixelPerfectWidth(thumb, 3)
         end
     end
 
@@ -395,9 +397,16 @@ local function UpdateRowAppearance(frame, playerInfo)
         SetBorderTextureColor(frame.leftBorder, "QuestColorInProgress")
         SetGradientColor(frame.sideGradient, "QuestColorInProgress")
     elseif Q.API:IsQuestAvailable(frame.row.id) then
-        SetQuestStatusColor(frame.titleFrame.title, "QuestColorAvailable", "Accent")
-        SetBorderTextureColor(frame.leftBorder, "QuestColorAvailable")
-        SetGradientColor(frame.sideGradient, "QuestColorAvailable")
+        if frame.row.prerequisiteType == Q.PrerequisiteType.BREADCRUMB or frame.row.prerequisiteType == Q.PrerequisiteType.ANY then
+            local infoR, infoG, infoB = unpack(Q.Theme.Status.Info)
+            frame.titleFrame.title:SetTextColor(infoR, infoG, infoB, 1)
+            frame.leftBorder:SetColorTexture(infoR, infoG, infoB)
+            frame.sideGradient:SetGradient("HORIZONTAL", CreateColor(infoR, infoG, infoB, 0.03), CreateColor(0, 0, 0, 0))
+        else
+            SetQuestStatusColor(frame.titleFrame.title, "QuestColorAvailable", "Accent")
+            SetBorderTextureColor(frame.leftBorder, "QuestColorAvailable")
+            SetGradientColor(frame.sideGradient, "QuestColorAvailable")
+        end
     else
         SetQuestStatusColor(frame.titleFrame.title, "QuestColorUnavailable", "Emphasized")
         SetBorderTextureColor(frame.leftBorder, "QuestColorUnavailable")
@@ -453,20 +462,20 @@ local function UpdateRowText(frame)
     if row.isInstance then
         frame.titleFrame.level:SetText(string.format(" %s-%s", row.minLevel, row.maxLevel))
 
-        titleFontString:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * Q.Theme.Font.XL)
+        titleFontString:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * Q.Theme.FontSize.XL)
         leftInset = Q.Theme.Padding.S
-        Q:SetPixelPerfectPoint(titleFontString, "LEFT", frame.titleFrame, "LEFT", leftInset, 0)
+        titleFontString:SetPoint("LEFT", frame.titleFrame, "LEFT", leftInset, 0)
     else
         frame.titleFrame.level:SetText("")
 
         if row.isMainQuest then
-            titleFontString:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * Q.Theme.Font.M)
+            titleFontString:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * Q.Theme.FontSize.M)
             leftInset = 2 * Q.Theme.Padding.S
-            Q:SetPixelPerfectPoint(titleFontString, "LEFT", frame.titleFrame, "LEFT", leftInset, 0)
+            titleFontString:SetPoint("LEFT", frame.titleFrame, "LEFT", leftInset, 0)
         else
-            titleFontString:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * Q.Theme.Font.M)
+            titleFontString:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * Q.Theme.FontSize.M)
             leftInset = (3 + (row.lineageDepth or 0)) * Q.Theme.Padding.S
-            Q:SetPixelPerfectPoint(titleFontString, "LEFT", frame.titleFrame, "LEFT", leftInset, 0)
+            titleFontString:SetPoint("LEFT", frame.titleFrame, "LEFT", leftInset, 0)
         end
     end
 
@@ -480,14 +489,14 @@ local function UpdateRowText(frame)
     frame.titleFrame.trackedIcon:SetShown(not row.isInstance and not row.isSharedSummary and Q.API:IsQuestInQuestLog(row.id) and Q.API:IsQuestWatched(row.id))
 
     -- Keep the text and any icons after it clear of the right-aligned row buttons.
-    local rightInset = frame.collapseButton:GetWidth() + frame.waypointButton:GetWidth() + Q:PixelPerfect(Q.Theme.Padding.L + 4)
+    local rightInset = frame.collapseButton:GetWidth() + frame.waypointButton:GetWidth() + (Q.Theme.Padding.L + 4)
     local suffixWidth = frame.titleFrame.level:GetStringWidth()
     for _, icon in ipairs({ frame.titleFrame.classIcon, frame.titleFrame.professionIcon, frame.titleFrame.trackedIcon }) do
         if icon:IsShown() then
-            suffixWidth = suffixWidth + icon:GetWidth() + Q:PixelPerfect(2)
+            suffixWidth = suffixWidth + icon:GetWidth() + 2
         end
     end
-    local availableWidth = frame.titleFrame:GetWidth() - Q:PixelPerfect(leftInset) - rightInset - suffixWidth
+    local availableWidth = frame.titleFrame:GetWidth() - leftInset - rightInset - suffixWidth
 
     titleFontString:SetText(title)
     local displayedTitle = title
@@ -511,10 +520,10 @@ local function CreateOrUpdateNoQuestsFoundFrame(playerInfo)
             QuestLog.noQuestsFound = CreateFrame("Frame", "DungeonBuddy_NoQuestsFound", QuestLog.scrollChild)
             QuestLog.noQuestsFound:SetAllPoints()
             QuestLog.noQuestsFoundText = QuestLog.noQuestsFound:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-            QuestLog.noQuestsFoundText:SetFont("Fonts\\FRIZQT__.TTF", Q:PixelPerfect(Q.Theme.Font.M))
+            QuestLog.noQuestsFoundText:            SetFont("Fonts\\FRIZQT__.TTF", Q.Theme.FontSize.M)
             QuestLog.noQuestsFoundText:SetTextColor(unpack(Q.Theme.Text.Primary))
             QuestLog.noQuestsFoundText:SetPoint("CENTER")
-            Q:SetPixelPerfectPoint(QuestLog.noQuestsFoundText, "CENTER", QuestLog.scrollChild, "CENTER", -7.5, -30)
+            QuestLog.noQuestsFoundText:SetPoint("CENTER", QuestLog.scrollChild, "CENTER", -7.5, -30)
             QuestLog.noQuestsFoundText:SetText("No quests available.")
         end
 
@@ -571,8 +580,8 @@ local function CreateRowFrame(index, row)
     Q:SetPixelPerfectHeight(frame.titleFrame, DB_ROW_HEIGHT)
     Q:SetPixelPerfectPoint(frame.titleFrame, "TOPLEFT", frame, "TOPLEFT", 0, 0)
 
-    frame.titleFrame.title = Q:CreateText(nil, frame.titleFrame, row.name, row.isInstance and Q.Theme.Font.XL or Q.Theme.Font.M)
-    Q:SetPixelPerfectPoint(frame.titleFrame.title, "LEFT", frame.titleFrame, "LEFT", Q.Theme.Padding.S, 0)
+    frame.titleFrame.title = Q:CreateText(nil, frame.titleFrame, row.name, row.isInstance and Q.Theme.FontSize.XL or Q.Theme.FontSize.M)
+    frame.titleFrame.title:SetPoint("LEFT", frame.titleFrame, "LEFT", Q.Theme.Padding.S, 0)
     frame.titleFrame.title:SetJustifyH("LEFT")
 
     frame.titleFrame.trackedIcon = frame.titleFrame:CreateTexture(nil, "ARTWORK")
@@ -580,8 +589,8 @@ local function CreateRowFrame(index, row)
     Q:SetPixelPerfectSize(frame.titleFrame.trackedIcon, DB_ROW_HEIGHT - 2, DB_ROW_HEIGHT - 2)
     frame.titleFrame.trackedIcon:Hide()
 
-    frame.titleFrame.level = Q:CreateText(nil, frame.titleFrame, "", Q.Theme.Font.L)
-    Q:SetPixelPerfectPoint(frame.titleFrame.level, "LEFT", frame.titleFrame.title, "RIGHT", 2, 0)
+    frame.titleFrame.level = Q:CreateText(nil, frame.titleFrame, "", Q.Theme.FontSize.L)
+    frame.titleFrame.level:SetPoint("LEFT", frame.titleFrame.title, "RIGHT", 2, 0)
     frame.titleFrame.level:SetJustifyH("LEFT")
 
     frame.titleFrame.classIcon = frame.titleFrame:CreateTexture(nil, "ARTWORK")
@@ -631,7 +640,7 @@ local function CreateRowFrame(index, row)
             tooltip:Hide()
         end
     }
-    frame.collapseButton = Q:CreateButton(nil, frame, "+", DB_ROW_HEIGHT, DB_ROW_HEIGHT, Q.Theme.Font.M, Q.Theme.Text.Secondary, collapseHandlers)
+    frame.collapseButton = Q:CreateButton(nil, frame, "+", DB_ROW_HEIGHT, DB_ROW_HEIGHT, Q.Theme.FontSize.M, Q.Theme.Text.Secondary, collapseHandlers)
     frame.collapseButton:SetPoint("RIGHT", frame.titleFrame, "RIGHT", -Q.Theme.Padding.L, 0)
     
     local waypointHandlers = {
@@ -668,17 +677,17 @@ local function CreateRowFrame(index, row)
             tooltip:Hide()
         end
     }
-    frame.waypointButton = Q:CreateButton(nil, frame, "", DB_ROW_HEIGHT, DB_ROW_HEIGHT, Q.Theme.Font.M, Q.Theme.Background.Accent, waypointHandlers)
+    frame.waypointButton = Q:CreateButton(nil, frame, "", DB_ROW_HEIGHT, DB_ROW_HEIGHT, Q.Theme.FontSize.M, Q.Theme.Background.Accent, waypointHandlers)
     frame.waypointButton.icon = frame.waypointButton:CreateTexture(nil, "ARTWORK")
     frame.waypointButton.icon:SetTexture("Interface\\AddOns\\DungeonBuddy\\Media\\Waypoint.png")
-    frame.waypointButton.icon:SetSize(DB_ROW_HEIGHT * 0.6, DB_ROW_HEIGHT * 0.6)
+    Q:SetPixelPerfectSize(frame.waypointButton.icon, DB_ROW_HEIGHT * 0.7, DB_ROW_HEIGHT * 0.7)
     frame.waypointButton.icon:SetPoint("CENTER")
-    frame.waypointButton:SetPoint("RIGHT", frame.collapseButton, "LEFT", -Q:PixelPerfect(2), 0)
+    frame.waypointButton:SetPoint("RIGHT", frame.collapseButton, "LEFT", -2, 0)
 
     frame.titleHover = CreateFrame("Frame", nil, frame)
     frame.titleHover:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
     -- End the hoverable area before the action buttons so they remain clickable.
-    frame.titleHover:SetPoint("BOTTOMRIGHT", frame.waypointButton, "BOTTOMLEFT", -Q:PixelPerfect(2), 0)
+    frame.titleHover:SetPoint("BOTTOMRIGHT", frame.waypointButton, "BOTTOMLEFT", -2, 0)
     frame.titleHover:EnableMouse(true)
     frame.titleHover:SetScript("OnMouseUp", function(_, button)
         local clickedRow = frame.row
@@ -966,8 +975,8 @@ function QuestLog:RefreshAndPopulate()
             "BOTTOMRIGHT",
             frame.waypointButton,
             "BOTTOMLEFT",
-            -Q:PixelPerfect(2),
-            row.isInstance and -Q:PixelPerfect(INSTANCE_ROW_EXTRA_HEIGHT / 2) or 0
+            -2,
+            row.isInstance and -(INSTANCE_ROW_EXTRA_HEIGHT / 2) or 0
         )
         
         UpdateClassIcon(frame)
@@ -1049,12 +1058,6 @@ function QuestLog:OnEnable()
     self:RegisterEvent("QUEST_TURNED_IN", "OnQuestStateChanged")
     self:RegisterEvent("QUEST_ACCEPTED", "OnQuestStateChanged")
     self:RegisterEvent("PLAYER_LEVEL_UP", "OnQuestStateChanged")
-
-    if not self.frame then
-        self:Create()
-    elseif self.frame then
-        self.frame:Show()
-    end
 end
 
 -- QUEST_LOG_UPDATE fires in bursts, so refreshes are coalesced and skipped while the log is hidden
