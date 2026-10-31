@@ -4,8 +4,8 @@ Q.Settings = Settings
 Settings.settings = {}
 local AceGUI = LibStub("AceGUI-3.0")
 
-local PANEL_WIDTH = 1000
-local CONTENT_WIDTH = PANEL_WIDTH - (2 * Q.Theme.Padding.M)
+local PANEL_WIDTH = 900
+local CONTENT_WIDTH = PANEL_WIDTH --- (2 * Q.Theme.Padding.M)
 local Sections = {
     General = { name = "General", title = "General" },
     Notifications = { name = "Notifications", title = "Notifications" },
@@ -113,7 +113,7 @@ local function GetDescriptionLayout(settings, rowWidth)
     local textWidth = rowWidth - (Q.Theme.Padding.L * 5) - CHECKBOX_SIZE
     local unit = Q:PixelPerfect(1)
 
-    local measure = Q:CreateText(nil, UIParent, "", Q.Theme.Font.S, "Primary")
+    local measure = Q:CreateText(nil, UIParent, "", Q.Theme.FontSize.S, "Primary")
     measure:SetWordWrap(true)
     measure:SetWidth(textWidth * unit)
 
@@ -133,7 +133,7 @@ end
 
 function Settings:CreateSection(sectionName, sectionTitle, anchorFrame)
     local paddingM, paddingS = Q.Theme.Padding.M, Q.Theme.Padding.S
-    local fontL = Q.Theme.Font.L
+    local fontL = Q.Theme.FontSize.L
 
     local sectionSettings = GetSectionSettings(sectionName)
     local textWidth, rowHeights = GetDescriptionLayout(sectionSettings, CONTENT_WIDTH - (2 * paddingM))
@@ -147,7 +147,7 @@ function Settings:CreateSection(sectionName, sectionTitle, anchorFrame)
     Q:SetPixelPerfectPoint(sectionFrame, "TOPLEFT", anchorFrame, anchorPoint, 0, 0)
 
     local sectionTitle = Q:CreateText(sectionName.."SettingsTitle", sectionFrame, sectionTitle, fontL, "Accent", 1)
-    Q:SetPixelPerfectPoint(sectionTitle, "TOPLEFT", sectionFrame, "TOPLEFT", paddingM, -paddingM)
+    sectionTitle:SetPoint("TOPLEFT", sectionFrame, "TOPLEFT", paddingM, -paddingM)
 
     local y = 0
     for index, setting in ipairs(sectionSettings) do
@@ -158,17 +158,11 @@ function Settings:CreateSection(sectionName, sectionTitle, anchorFrame)
         Q:SetPixelPerfectPoint(row, "TOPLEFT", sectionFrame, "TOPLEFT", paddingM, -(paddingM + fontL + y))
         y = y + rowHeight
 
-        row.gradient = row:CreateTexture(nil, "BACKGROUND", nil, 1)
-        row.gradient:SetAllPoints(row)
-        row.gradient:SetColorTexture(1, 1, 1, 1)
-        local bottomR, bottomG, bottomB = unpack(Q.Theme.Background.Tertiary)
-        row.gradient:SetGradient("VERTICAL", CreateColor(bottomR, bottomG, bottomB, 0.25), CreateColor(0, 0, 0, 0))
-
-        local label = Q:CreateText(nil, row, setting.title, Q.Theme.Font.M, "Accent")
-        Q:SetPixelPerfectPoint(label, "TOPLEFT", row, "TOPLEFT", paddingS, -13)
-        local description = Q:CreateText(nil, row, setting.description, Q.Theme.Font.S, "Primary")
-        Q:SetPixelPerfectPoint(description, "TOPLEFT", label, "BOTTOMLEFT", 0, -4)
-        Q:SetPixelPerfectWidth(description, textWidth)
+        local label = Q:CreateText(nil, row, setting.title, Q.Theme.FontSize.M, "Accent")
+        label:SetPoint("TOPLEFT", row, "TOPLEFT", paddingS, -13)
+        local description = Q:CreateText(nil, row, setting.description, Q.Theme.FontSize.S, "Primary")
+        description:SetPoint("TOPLEFT", label, "BOTTOMLEFT", 0, -4)
+        description:SetWidth(textWidth)
         description:SetJustifyH("LEFT")
         description:SetWordWrap(true)
 
@@ -193,9 +187,9 @@ function Settings:Create()
     end
 
     local paddingS, paddingM = Q.Theme.Padding.S, Q.Theme.Padding.M
-    local frame = Q:CreateBackdropFrame("DungeonBuddy_SettingsFrame", UIParent, PANEL_WIDTH, 700, "DIALOG", "Primary", "Default", 0.9, 0.25)
+    local frame = Q:CreateBackdropFrame("DungeonBuddy_SettingsFrame", UIParent, PANEL_WIDTH, 700, "DIALOG", "Primary", "Default", 0.9, 0.5)
     self.frame = frame
-    Q:SetPixelPerfectPoint(frame, "CENTER", UIParent, "CENTER", 0, 0)
+    Q:SetPixelPerfectCenterPoint(frame, 0, 0)
     
     frame:SetMovable(true)
     frame:EnableMouse(true)
@@ -205,17 +199,19 @@ function Settings:Create()
     end)
     frame:SetScript("OnDragStop", function(self)
         self:StopMovingOrSizing()
+        self:SetUserPlaced(false)
         Q:ClampFrameToScreen(self)
     end)
+    frame:SetUserPlaced(false)
 
     Q:CreateCloseButton(frame)
 
-    local title = Q:CreateText("SettingsTitle", frame, "Dungeon Buddy Settings", Q.Theme.Font.XL, "Accent", 1)
-    Q:SetPixelPerfectPoint(title, "TOPLEFT", frame, "TOPLEFT", paddingM, -paddingM)
+    local title = Q:CreateText("SettingsTitle", frame, "DUNGEON|cffEFE8D3BUDDY", Q.Theme.FontSize.XL, "Accent", 1)
+    title:SetPoint("TOPLEFT", frame, "TOPLEFT", paddingM, -paddingM)
 
     local contentContainer = CreateFrame("ScrollFrame", "DungeonBuddy_SettingsScrollFrame", frame, "UIPanelScrollFrameTemplate")
     self.contentContainer = contentContainer
-    Q:SetPixelPerfectPoint(contentContainer, "TOPLEFT", frame, "TOPLEFT", paddingM, -(paddingM + Q.Theme.Font.XL + Q.Theme.Padding.S))
+    Q:SetPixelPerfectPoint(contentContainer, "TOPLEFT", frame, "TOPLEFT", 0, -(paddingM + Q.Theme.FontSize.XL + Q.Theme.Padding.S))
     Q:SetPixelPerfectPoint(contentContainer, "BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 2)
     contentContainer:EnableMouseWheel(true)
 
@@ -223,7 +219,6 @@ function Settings:Create()
     Q:SetPixelPerfectSize(scrollChild, CONTENT_WIDTH, 1)
     contentContainer:SetScrollChild(scrollChild)
     contentContainer:SetScript("OnSizeChanged", function(self, width)
-        -- OnSizeChanged already provides the width in UI-scaled units; don't scale it again.
         scrollChild:SetWidth(width)
     end)
     self.scrollChild = scrollChild
@@ -262,8 +257,8 @@ function Settings:Create()
         end
         if thumb then
             thumb:SetTexture(nil)
-            thumb:SetColorTexture(unpack(Q.Theme.Border.Default))
-            Q:SetPixelPerfectWidth(thumb, 4)
+            thumb:SetColorTexture(unpack(Q.Theme.Border.Accent))
+            Q:SetPixelPerfectWidth(thumb, 3)
         end
     end
 
@@ -309,10 +304,10 @@ function Settings:Create()
     local questColorContainer = Q:CreateBackdropFrame("QuestColorContainer", questLogSettingsFrame, CONTENT_WIDTH - (2 * paddingM), 128, "MEDIUM", "Secondary", "Default", 0.6, 0.6)
     Q:SetPixelPerfectPoint(questColorContainer, "TOPLEFT", anchorFrame, "BOTTOMLEFT", 0, -paddingM)
 
-    local label = Q:CreateText(nil, questColorContainer, "Quest Colors", Q.Theme.Font.M, "Accent")
-    Q:SetPixelPerfectPoint(label, "TOPLEFT", questColorContainer, "TOPLEFT", paddingS, -13)
-    local description = Q:CreateText(nil, questColorContainer, "Customize the colors for different quest states.", Q.Theme.Font.S, "Primary")
-    Q:SetPixelPerfectPoint(description, "TOPLEFT", label, "BOTTOMLEFT", 0, -4)
+    local label = Q:CreateText(nil, questColorContainer, "Quest Colors", Q.Theme.FontSize.M, "Accent")
+    label:SetPoint("TOPLEFT", questColorContainer, "TOPLEFT", paddingS, -13)
+    local description = Q:CreateText(nil, questColorContainer, "Customize the colors for different quest states.", Q.Theme.FontSize.S, "Primary")
+    description:SetPoint("TOPLEFT", label, "BOTTOMLEFT", 0, -4)
 
     local colorSettings = {
         { path = "QuestColorAvailable", label = "Available", x = 270, y = 48 },
@@ -356,7 +351,7 @@ function Settings:Create()
             end
         end
     }
-    local resetColorsButton = Q:CreateButton(nil, questColorContainer, "Reset Colors", 120, 40, Q.Theme.Font.M, Q.Theme.Status.Error, resetColorHandlers)
+    local resetColorsButton = Q:CreateButton(nil, questColorContainer, "Reset Colors", 120, 40, Q.Theme.FontSize.M, Q.Theme.Status.Error, resetColorHandlers)
     Q:SetPixelPerfectPoint(resetColorsButton, "BOTTOMRIGHT", questColorContainer, "BOTTOMRIGHT", -paddingS, paddingS)
 
     questLogSettingsFrame:SetHeight(resetColorsButton:GetHeight() + questLogSettingsFrame:GetHeight() + Q:PixelPerfect(paddingM) + questColorContainer:GetHeight())
