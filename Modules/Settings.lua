@@ -83,6 +83,18 @@ local function GetSectionSettings(sectionName)
             end,
         },
         {
+            section = Sections.QuestLog.name,
+            type = "checkbox",
+            path = "CollapseEachChainStep",
+            title = "Enable collapsing each step in a chain",
+            description = "Allow every quest in a chain to be collapsed, not just the final quest.",
+            onChange = function()
+                if Q.QuestLog and Q.QuestLog.frame then
+                    Q.QuestLog:RefreshAndPopulate()
+                end
+            end,
+        },
+        {
             section = Sections.General.name,
             type = "checkbox",
             path = "ShowSuggestedQuestLevel",
@@ -146,7 +158,7 @@ function Settings:CreateSection(sectionName, sectionTitle, anchorFrame)
     local anchorPoint = anchorFrame == self.scrollChild and "TOPLEFT" or "BOTTOMLEFT"
     Q:SetPixelPerfectPoint(sectionFrame, "TOPLEFT", anchorFrame, anchorPoint, 0, 0)
 
-    local sectionTitle = Q:CreateText(sectionName.."SettingsTitle", sectionFrame, sectionTitle, fontL, "Accent", 1)
+    local sectionTitle = Q:CreateText(sectionName.."SettingsTitle", sectionFrame, sectionTitle, fontL, "Brand", 1)
     sectionTitle:SetPoint("TOPLEFT", sectionFrame, "TOPLEFT", paddingM, -paddingM)
 
     local y = 0
@@ -158,7 +170,7 @@ function Settings:CreateSection(sectionName, sectionTitle, anchorFrame)
         Q:SetPixelPerfectPoint(row, "TOPLEFT", sectionFrame, "TOPLEFT", paddingM, -(paddingM + fontL + y))
         y = y + rowHeight
 
-        local label = Q:CreateText(nil, row, setting.title, Q.Theme.FontSize.M, "Accent")
+        local label = Q:CreateText(nil, row, setting.title, Q.Theme.FontSize.M, "Brand")
         label:SetPoint("TOPLEFT", row, "TOPLEFT", paddingS, -13)
         local description = Q:CreateText(nil, row, setting.description, Q.Theme.FontSize.S, "Primary")
         description:SetPoint("TOPLEFT", label, "BOTTOMLEFT", 0, -4)
@@ -206,7 +218,7 @@ function Settings:Create()
 
     Q:CreateCloseButton(frame)
 
-    local title = Q:CreateText("SettingsTitle", frame, "DUNGEON|cffEFE8D3BUDDY", Q.Theme.FontSize.XL, "Accent", 1)
+    local title = Q:CreateText("SettingsTitle", frame, "DUNGEON|cffEFE8D3BUDDY", Q.Theme.FontSize.XL, "Brand", 1)
     title:SetPoint("TOPLEFT", frame, "TOPLEFT", paddingM, -paddingM)
 
     local contentContainer = CreateFrame("ScrollFrame", "DungeonBuddy_SettingsScrollFrame", frame, "UIPanelScrollFrameTemplate")
@@ -304,7 +316,7 @@ function Settings:Create()
     local questColorContainer = Q:CreateBackdropFrame("QuestColorContainer", questLogSettingsFrame, CONTENT_WIDTH - (2 * paddingM), 128, "MEDIUM", "Secondary", "Default", 0.6, 0.6)
     Q:SetPixelPerfectPoint(questColorContainer, "TOPLEFT", anchorFrame, "BOTTOMLEFT", 0, -paddingM)
 
-    local label = Q:CreateText(nil, questColorContainer, "Quest Colors", Q.Theme.FontSize.M, "Accent")
+    local label = Q:CreateText(nil, questColorContainer, "Quest Colors", Q.Theme.FontSize.M, "Brand")
     label:SetPoint("TOPLEFT", questColorContainer, "TOPLEFT", paddingS, -13)
     local description = Q:CreateText(nil, questColorContainer, "Customize the colors for different quest states.", Q.Theme.FontSize.S, "Primary")
     description:SetPoint("TOPLEFT", label, "BOTTOMLEFT", 0, -4)
@@ -322,12 +334,14 @@ function Settings:Create()
         local picker = AceGUI:Create("ColorPicker")
         picker:SetLabel(setting.label)
         picker:SetColor(color.r, color.g, color.b, 1)
+        picker.text:SetTextColor(color.r, color.g, color.b)
         Q:SetPixelPerfectWidth(picker, 260)
         picker.frame:SetParent(questColorContainer)
         picker.frame:ClearAllPoints()
         Q:SetPixelPerfectPoint(picker.frame, "TOPLEFT", questColorContainer, "TOPLEFT", setting.x, -setting.y)
         picker.frame:Show()
         picker:SetCallback("OnValueChanged", function(_, _, r, g, b)
+            picker.text:SetTextColor(r, g, b)
             Q:SetSetting(setting.path, { r = r, g = g, b = b })
             if Q.QuestLog and Q.QuestLog.frame then
                 Q.QuestLog:RefreshAndPopulate()

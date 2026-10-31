@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.4] - 2026-11-01
+
+### Added
+
+- Instance rows in the tracker now show a tooltip with location, level range and quest counts (total, completed, in your quest log and available now)
+
+### Changed
+
+- Only instances and the final quest of a chain can be collapsed by default; collapsing every step in a chain is now an optional setting
+
 ## [1.6.3] - 2026-11-01
 
 ### Added

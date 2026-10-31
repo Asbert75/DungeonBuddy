@@ -56,7 +56,7 @@ function QuestLog:Create()
     Q:SetPixelPerfectPoint(border, "BOTTOMLEFT", self.header, "BOTTOMLEFT", 0, 0)
     Q:SetPixelPerfectPoint(border, "BOTTOMRIGHT", self.header, "BOTTOMRIGHT", 0, 0)
 
-    self.header.text = Q:CreateText("QuestLogHeaderText", self.header, "DUNGEON|cffEFE8D3BUDDY", Q.Theme.FontSize.L, "Accent", 1)
+    self.header.text = Q:CreateText("QuestLogHeaderText", self.header, "DUNGEON|cffEFE8D3BUDDY", Q.Theme.FontSize.L, "Brand", 1)
     self.header.text:SetJustifyH("LEFT")
     self.header.text:SetPoint("LEFT", self.header, "LEFT", Q.Theme.Padding.S, 0)
 
@@ -78,7 +78,7 @@ function QuestLog:Create()
                 for _, row in ipairs(Q.QuestLog.rows) do
                     if row.isInstance then
                         instances[row.id] = true
-                    elseif not row.isSharedSummary and #(row.prerequisites or {}) > 0 then
+                    elseif Q.QuestLog.CanCollapse(row) then
                         quests[row.collapseKey] = true
                     end
                 end
@@ -107,7 +107,7 @@ function QuestLog:Create()
     }
 
     local initialText = (next(Q:GetSetting("CollapsedQuests")) or next(Q:GetSetting("CollapsedInstances"))) and "+" or "-"
-    local collapseAndExpandButton = Q:CreateButton("DungeonBuddy_CollapseAndExpandButton", self.frame, initialText, 24, 24, Q.Theme.FontSize.M, Q.Theme.Text.Secondary, actionHandlers)
+    local collapseAndExpandButton = Q:CreateButton("DungeonBuddy_CollapseAndExpandButton", self.frame, initialText, 24, 24, Q.Theme.FontSize.XL, Q.Theme.Text.Secondary, actionHandlers)
     collapseAndExpandButton:SetPoint("RIGHT", closeButton, "LEFT", -2, 0)
     
     --------------------------------------------------
@@ -176,9 +176,22 @@ function QuestLog:Create()
     return self.frame
 end
 
+-- Instances and main quests (the final quest of a chain) can always be collapsed; chain steps only with the setting enabled.
+function QuestLog.CanCollapse(row)
+    if row.isInstance then
+        return true
+    end
+    if row.isSharedSummary or #(row.prerequisites or {}) == 0 then
+        return false
+    end
+    return row.isMainQuest or Q:GetSetting("CollapseEachChainStep") and true or false
+end
+
 local function IsRowCollapsed(row)
     if row.isInstance then
         return Q:GetSetting("CollapsedInstances")[row.id] or false
+    elseif not row.isMainQuest and not Q:GetSetting("CollapseEachChainStep") then
+        return false
     else
         local collapsedQuests = Q:GetSetting("CollapsedQuests")
         if collapsedQuests[row.collapseKey] ~= nil then
@@ -417,7 +430,7 @@ end
 local function UpdateCollapseButton(frame)
     local row = frame.row
 
-    if row.isInstance or (not row.isSharedSummary and #(row.prerequisites or {}) > 0) then
+    if QuestLog.CanCollapse(row) then
         frame.collapseButton:Show()
     else
         frame.collapseButton:Hide()
@@ -533,6 +546,60 @@ local function CreateOrUpdateNoQuestsFoundFrame(playerInfo)
     end
 end
 
+local function ShowInstanceTooltip(frame)
+    local instance = frame.row
+    local total, completed, inLog, available, unavailable = 0, 0, 0, 0, 0
+
+    for _, quest in ipairs(Q.API:GetQuestsByInstanceId(instance.id)) do
+        if Q.API:PlayerHasProfession(quest.profession) then
+            total = total + 1
+            if Q.API:IsQuestCompleted(quest.id) then
+                completed = completed + 1
+            elseif Q.API:IsQuestInQuestLog(quest.id) then
+                inLog = inLog + 1
+            elseif Q.API:IsQuestAvailable(quest.id) then
+                available = available + 1
+            else
+                unavailable = unavailable + 1
+            end
+        end
+    end
+
+    local primary = Q.Theme.Text.Primary
+    local tooltip = Q:GetTooltip()
+    tooltip:SetOwner(frame.titleFrame, "ANCHOR_LEFT", -5, 5)
+    if instance.minLevel and instance.maxLevel then
+        local levelColor = Q.API:GetDifficultyColor(Q.API:GetPlayerInfo().level, instance.minLevel)
+        tooltip:AddDoubleLine(instance.name, string.format("Level %d-%d", instance.minLevel, instance.maxLevel), primary[1], primary[2], primary[3], levelColor.r, levelColor.g, levelColor.b)
+    else
+        tooltip:SetText(instance.name, primary[1], primary[2], primary[3])
+    end
+
+    local location = instance.zone
+    if instance.continent then
+        location = location and (location .. ", " .. instance.continent) or instance.continent
+    end
+    if location then
+        tooltip:AddLine(location, Q.Theme.Status.Info[1], Q.Theme.Status.Info[2], Q.Theme.Status.Info[3])
+    end
+
+    local function AddCountLine(label, count, color)
+        local r, g, b = color.r or color[1], color.g or color[2], color.b or color[3]
+        local primaryR, primaryG, primaryB = unpack(Q.Theme.Text.Primary)
+        if count > 0 then 
+            tooltip:AddLine("|cff"..string.format("%02x%02x%02x", primaryR*255, primaryG*255, primaryB*255)..count.."|r "..label, r, g, b)
+        end
+    end
+
+    tooltip:AddLine(" ")
+    AddCountLine("Total Quests", total, Q.Theme.Text.Accent)
+    AddCountLine("Available", available, Q:GetSetting("QuestColorAvailable"))
+    AddCountLine("Prerequisite Not Met", unavailable, Q:GetSetting("QuestColorUnavailable"))
+    AddCountLine("In Quest Log", inLog, Q:GetSetting("QuestColorInProgress"))
+    AddCountLine("Completed", completed, Q:GetSetting("QuestColorCompleted"))
+    tooltip:Show()
+end
+
 local function CreateRowFrame(index, row)
     local frame = CreateFrame("Frame", "DungeonBuddy_QuestLogRow"..index, QuestLog.scrollChild)
     QuestLog._frames[index] = frame
@@ -640,7 +707,7 @@ local function CreateRowFrame(index, row)
             tooltip:Hide()
         end
     }
-    frame.collapseButton = Q:CreateButton(nil, frame, "+", DB_ROW_HEIGHT, DB_ROW_HEIGHT, Q.Theme.FontSize.M, Q.Theme.Text.Secondary, collapseHandlers)
+    frame.collapseButton = Q:CreateButton(nil, frame, "+", DB_ROW_HEIGHT, DB_ROW_HEIGHT, Q.Theme.FontSize.L, Q.Theme.Text.Secondary, collapseHandlers)
     frame.collapseButton:SetPoint("RIGHT", frame.titleFrame, "RIGHT", -Q.Theme.Padding.L, 0)
     
     local waypointHandlers = {
@@ -726,7 +793,14 @@ local function CreateRowFrame(index, row)
     frame.hoverHighlight:SetAlpha(0.03)
     frame.hoverHighlight:Hide()
     frame.titleHover:SetScript("OnEnter", function()
-        if frame.row.isInstance or frame.row.isSharedSummary then
+        if frame.row.isSharedSummary then
+            frame.hoverHighlight:Show()
+            return
+        end
+
+        if frame.row.isInstance then
+            frame.hoverHighlight:Show()
+            ShowInstanceTooltip(frame)
             return
         end
 
