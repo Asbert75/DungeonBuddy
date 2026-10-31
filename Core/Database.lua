@@ -33,6 +33,7 @@ local SharedDefaults = {
     HideCompletedQuests = true,
     AutoWaypoint = false,
     ShowSuggestedQuestLevel = false,
+    CollapseEachChainStep = false,
 
     -- Tracking Data
     CollapsedInstances = {},
