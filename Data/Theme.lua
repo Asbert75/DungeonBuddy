@@ -6,7 +6,7 @@ local function HexToColor(hex)
 end
 
 Q.Themes = {}
-Q.ThemeOrder = { "Horde", "Alliance", "Silver", "Sun", "Moon", "Midnight" }
+Q.ThemeOrder = { "Horde", "Alliance", "Plain" }
 
 Q.Themes.Horde = {
     Brand = HexToColor("#cf615d"),
@@ -44,43 +44,7 @@ Q.Themes.Alliance = {
     },
 }
 
-Q.Themes.Sun = {
-    Brand = HexToColor("#FFCF91"),
-    Background = {
-        Primary   = HexToColor("#12120F"),
-        Secondary = HexToColor("#1C1B1A"),
-        Tertiary  = HexToColor("#282624"),
-    },
-    Border = {
-        Default = HexToColor("#423F3B"),
-        Accent  = HexToColor("#e0a458"),
-    },
-    Text = {
-        Primary   = HexToColor("#ECE6DB"),
-        Secondary = HexToColor("#AAA59F"),
-        Accent    = HexToColor("#DDAB41"),
-    },
-}
-
-Q.Themes.Moon = {
-    Brand = HexToColor("#5B9BD5"),
-    Background = {
-        Primary   = HexToColor("#0b0f17"),
-        Secondary = HexToColor("#121822"),
-        Tertiary  = HexToColor("#1b2331"),
-    },
-    Border = {
-        Default = HexToColor("#2f3b52"),
-        Accent  = HexToColor("#4a90d9"),
-    },
-    Text = {
-        Primary   = HexToColor("#e1e8f2"),
-        Secondary = HexToColor("#94a3b8"),
-        Accent    = HexToColor("#DDAB41"),
-    },
-}
-
-Q.Themes.Silver = {
+Q.Themes.Plain = {
     Brand = HexToColor("#B9B9B9"),
     Background = {
         Primary   = HexToColor("#131313"),
@@ -94,24 +58,6 @@ Q.Themes.Silver = {
     Text = {
         Primary   = HexToColor("#E8EBE3"),
         Secondary = HexToColor("#A6A9A2"),
-        Accent    = HexToColor("#DDAB41"),
-    },
-}
-
-Q.Themes.Midnight = {
-    Brand = HexToColor("#b07cf0"),
-    Background = {
-        Primary   = HexToColor("#120d18"),
-        Secondary = HexToColor("#1a1520"),
-        Tertiary  = HexToColor("#272030"),
-    },
-    Border = {
-        Default = HexToColor("#473a5c"),
-        Accent  = HexToColor("#9a6ad6"),
-    },
-    Text = {
-        Primary   = HexToColor("#ece4f5"),
-        Secondary = HexToColor("#a99bbd"),
         Accent    = HexToColor("#DDAB41"),
     },
 }
@@ -176,8 +122,8 @@ local function CopyColor(target, key, color)
 end
 
 function Q:ApplyThemePalette(name)
-    local palette = Q.Themes[name] or Q.Themes.Sun
-    local default = Q.Themes.Sun
+    local palette = Q.Themes[name] or Q.Themes.Plain
+    local default = Q.Themes.Plain
     local brand = palette.Brand or default.Brand
 
     CopyColor(Q.Theme, "Brand", brand)
@@ -192,4 +138,4 @@ function Q:ApplyThemePalette(name)
     CopyColor(Q.Theme.Text, "Brand", brand)
 end
 
-Q:ApplyThemePalette("Sun")
+Q:ApplyThemePalette("Plain")

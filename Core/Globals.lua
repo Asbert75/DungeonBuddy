@@ -43,12 +43,9 @@ end
 -- Characters without a saved theme get the theme matching their faction.
 function Q:LoadTheme()
     local theme = Q:GetSetting("Theme")
-    if theme == "DungeonBuddy" then
-        theme = "Sunrise"
-    end
     if not Q.Themes[theme] then
         local faction = UnitFactionGroup("player")
-        theme = Q.Themes[faction] and faction or "Sunrise"
+        theme = Q.Themes[faction] and faction or "Plain"
     end
 
     Q:SetSetting("Theme", theme)
@@ -70,7 +67,7 @@ end
 
 function Q:SetTheme(name)
     if not Q.Themes[name] then
-        name = "Sunrise"
+        name = "Plain"
     end
 
     Q:SetSetting("Theme", name)

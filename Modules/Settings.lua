@@ -496,7 +496,7 @@ function Settings:Create()
         local current = Q:GetSetting("Theme")
         for name, button in pairs(themeButtons) do
             local palette = Q.Themes[name]
-            button:SetColor(palette.Brand or Q.Themes.Sun.Brand)
+            button:SetColor(palette.Brand or Q.Themes.Plain.Brand)
             button:SetAlpha(name == current and 1 or 0.55)
         end
     end
