@@ -56,7 +56,8 @@ function Q.API:BuildLookupTables()
 
     -- Filter out quests that do not match the player's faction and class, we do this when building lookups so that we can completely ignore faction/class in all other functions
     FilterArray(Q.Quests, function(quest)
-        return quest and (quest.faction == self:GetPlayerFaction() or not quest.faction) and (quest.class == self:GetPlayerClass() or not quest.class)
+        return quest and (quest.faction == self:GetPlayerFaction() or not quest.faction) and
+        (quest.class == self:GetPlayerClass() or not quest.class)
     end)
 
     for _, quest in ipairs(Q.Quests) do
@@ -232,7 +233,8 @@ function Q.API:GetInstances()
         table.insert(instances, instance)
     end
 
-    table.sort(instances, function(a, b) return a.minLevel < b.minLevel or (a.minLevel == b.minLevel and a.maxLevel < b.maxLevel) end)
+    table.sort(instances,
+        function(a, b) return a.minLevel < b.minLevel or (a.minLevel == b.minLevel and a.maxLevel < b.maxLevel) end)
     return instances
 end
 
@@ -243,9 +245,9 @@ function Q.API:IsInstanceQuestChainStart(questId)
     end
 
     local isChainStart = true
-    
+
     for _, prerequisite in ipairs(quest.prerequisites or {}) do
-        if  prerequisite.type == Q.PrerequisiteType.CHAIN or
+        if prerequisite.type == Q.PrerequisiteType.CHAIN or
             prerequisite.type == Q.PrerequisiteType.REQUIRED or
             prerequisite.type == Q.PrerequisiteType.ANY
         then
@@ -294,7 +296,7 @@ function Q.API:GetRelevantQuestsForZone()
 
     for _, quest in ipairs(self:GetQuests()) do
         for _, source in ipairs(quest.sources or { quest.source }) do
-            if  self:IsQuestAvailable(quest.id) and
+            if self:IsQuestAvailable(quest.id) and
                 not self:IsQuestInQuestLog(quest.id) and
                 source.faction == playerInfo.faction and
                 source.zone == zone and
@@ -342,7 +344,7 @@ end
 
 function Q.API:InstanceHasAvailableQuests(instanceId, playerInfo)
     for _, quest in ipairs(self:GetQuestsByInstanceId(instanceId)) do
-        if  self:IsQuestAvailableToLevel(quest.id, playerInfo) and
+        if self:IsQuestAvailableToLevel(quest.id, playerInfo) and
             self:PlayerHasProfession(quest.profession) and
             (Q:GetSetting("HideCompletedQuests") == false or not self:IsQuestCompleted(quest.id))
         then
@@ -367,7 +369,7 @@ function Q.API:IsPrerequisiteSatisfied(questId)
         -- Quest definitions filtered by faction or class are not requirements for this character, so do not query their completion state.
         return not self:GetQuestById(requiredQuestId) or self:IsQuestCompleted(requiredQuestId)
     end
-    
+
     local hasKnownAnyPrerequisite = false
     local hasCompletedAnyPrerequisite = false
 
@@ -474,12 +476,12 @@ end
 
 function Q.API:SetWaypoint(entity, isInstance)
     if isInstance then
-        AddWaypoint(entity.location, entity.name.." (Entrance)")
+        AddWaypoint(entity.location, entity.name .. " (Entrance)")
     else
         local playerInfo = Q.API:GetPlayerInfo()
         if entity.source then
             local title = self:GetWaypointText(entity, entity.source)
-            AddWaypoint(entity.source.location, title)  
+            AddWaypoint(entity.source.location, title)
         else
             for _, source in ipairs(entity.sources or {}) do
                 if source.faction and source.faction ~= playerInfo.faction then

@@ -6,7 +6,7 @@ Q.Quests = {}
 Q.InstanceById = {}
 Q.QuestById = {}
 Q.QuestsByInstanceId = {}
-Q.InstanceByQuestId =  {}
+Q.InstanceByQuestId = {}
 
 Q.Debug = {
     Enabled = false,
@@ -18,13 +18,14 @@ Q.Debug = {
 
 function Addon:OnInitialize()
     Q.DB = LibStub("AceDB-3.0"):New("DungeonBuddyCharDB", Q.GetDefaultDB())
+    Q:LoadTheme()
 
     Addon:RegisterChatCommand("db", "HandleCommand")
     Addon:RegisterChatCommand("dungeonbuddy", "HandleCommand")
     Addon:RegisterChatCommand("dbdebug", "HandleDebugCommand")
 
     Q:CreateMinimapButton()
-    
+
     Q.API:BuildLookupTables()
     Q:PrettyPrint("Addon loaded, use /db help for commands")
 end
@@ -93,6 +94,7 @@ function Q:DumpTable(table)
         end
     end
 end
+
 --#endregion
 
 local function PrintHelpCommands()
@@ -105,7 +107,7 @@ end
 
 function Addon:HandleCommand(input)
     local command, args = input:match("^(%S*)%s*(.-)$")
-    
+
     if command == "help" then
         PrintHelpCommands()
     elseif command == "minimap" then

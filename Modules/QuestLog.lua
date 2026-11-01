@@ -4,7 +4,15 @@ Q.QuestLog = QuestLog
 
 local DB_ROW_HEIGHT = Q.Theme.FontSize.XL + 6
 local INSTANCE_ROW_EXTRA_HEIGHT = 20
-local CONTAINER_WIDTH = 500
+local CONTAINER_WIDTH = 450
+
+function QuestLog:ResetPosition()
+    Q:SetSetting("QuestLogFrame.X", 750)
+    Q:SetSetting("QuestLogFrame.Y", 0)
+    if self.frame then
+        Q:SetPixelPerfectCenterPoint(self.frame, 750, 0)
+    end
+end
 
 function QuestLog:Create()
     if self.frame then
@@ -14,7 +22,8 @@ function QuestLog:Create()
     --------------------------------------------------
     -- Create QuestLog Frame
     --------------------------------------------------
-    self.frame = Q:CreateBackdropFrame('DungeonBuddy_QuestLogFrame', UIParent, CONTAINER_WIDTH, 600, "HIGH", "Primary", "Default", 0.9, 0.5)
+    self.frame = Q:CreateBackdropFrame('DungeonBuddy_QuestLogFrame', UIParent, CONTAINER_WIDTH, 550, "HIGH", "Primary",
+        "Default", 0.9, 0.5)
 
     self.frame:SetMovable(true)
     self.frame:EnableMouse(true)
@@ -33,10 +42,10 @@ function QuestLog:Create()
         Q:SetSetting("QuestLogFrame.X", Q:PixelPerfect(x - centerX))
         Q:SetSetting("QuestLogFrame.Y", Q:PixelPerfect(y - centerY))
 
-        Q:SetPixelPerfectCenterPoint(self, Q:GetSetting("QuestLogFrame.X") or 500, Q:GetSetting("QuestLogFrame.Y") or 0)
+        Q:SetPixelPerfectCenterPoint(self, Q:GetSetting("QuestLogFrame.X") or 750, Q:GetSetting("QuestLogFrame.Y") or 0)
     end)
 
-    Q:SetPixelPerfectCenterPoint(self.frame, Q:GetSetting("QuestLogFrame.X") or 500, Q:GetSetting("QuestLogFrame.Y") or 0)
+    Q:SetPixelPerfectCenterPoint(self.frame, Q:GetSetting("QuestLogFrame.X") or 750, Q:GetSetting("QuestLogFrame.Y") or 0)
     self.frame:SetUserPlaced(false)
 
     local closeButton = Q:CreateCloseButton(self.frame, "DungeonBuddy_QuestLogCloseButton")
@@ -50,13 +59,14 @@ function QuestLog:Create()
     Q:SetPixelPerfectPoint(self.header, "RIGHT", self.frame, "RIGHT", 0, 0)
 
     local border = self.header:CreateTexture(nil, "OVERLAY")
-    local borderR, borderG, borderB = unpack(Q.Theme.Border.Default)
-    border:SetColorTexture(borderR, borderG, borderB, 0.25)
+    Q:SetThemedColorTexture(border, "Border", "Default", 0.25)
     border:SetHeight(Q:PixelPerfect(1))
     Q:SetPixelPerfectPoint(border, "BOTTOMLEFT", self.header, "BOTTOMLEFT", 0, 0)
     Q:SetPixelPerfectPoint(border, "BOTTOMRIGHT", self.header, "BOTTOMRIGHT", 0, 0)
 
-    self.header.text = Q:CreateText("QuestLogHeaderText", self.header, "DUNGEON|cffEFE8D3BUDDY", Q.Theme.FontSize.L, "Brand", 1)
+    self.header.text = Q:CreateText("QuestLogHeaderText", self.header, "", Q.Theme.FontSize.L, "Brand", 1)
+    Q:RegisterThemed(self.header.text, Q.ApplyBrandTitle)
+    Q.ApplyBrandTitle(self.header.text)
     self.header.text:SetJustifyH("LEFT")
     self.header.text:SetPoint("LEFT", self.header, "LEFT", Q.Theme.Padding.S, 0)
 
@@ -82,7 +92,7 @@ function QuestLog:Create()
                         quests[row.collapseKey] = true
                     end
                 end
-                
+
                 Q:SetSetting("CollapsedQuests", quests)
                 Q:SetSetting("CollapsedInstances", instances)
                 Q.QuestLog:RefreshAndPopulate()
@@ -106,14 +116,17 @@ function QuestLog:Create()
         end
     }
 
-    local initialText = (next(Q:GetSetting("CollapsedQuests")) or next(Q:GetSetting("CollapsedInstances"))) and "+" or "-"
-    local collapseAndExpandButton = Q:CreateButton("DungeonBuddy_CollapseAndExpandButton", self.frame, initialText, 24, 24, Q.Theme.FontSize.XL, Q.Theme.Text.Secondary, actionHandlers)
+    local initialText = (next(Q:GetSetting("CollapsedQuests")) or next(Q:GetSetting("CollapsedInstances"))) and "+" or
+        "-"
+    local collapseAndExpandButton = Q:CreateButton("DungeonBuddy_CollapseAndExpandButton", self.frame, initialText, 24,
+        24, Q.Theme.FontSize.XL, Q.Theme.Text.Secondary, actionHandlers)
     collapseAndExpandButton:SetPoint("RIGHT", closeButton, "LEFT", -2, 0)
-    
+
     --------------------------------------------------
     -- QuestLog Content Container
     --------------------------------------------------
-    self.contentContainer = CreateFrame("ScrollFrame", "DungeonBuddy_QuestLogContentContainer", self.frame, "UIPanelScrollFrameTemplate")
+    self.contentContainer = CreateFrame("ScrollFrame", "DungeonBuddy_QuestLogContentContainer", self.frame,
+        "UIPanelScrollFrameTemplate")
     Q:SetPixelPerfectPoint(self.contentContainer, "TOPLEFT", self.header, "BOTTOMLEFT", 0, 0)
     Q:SetPixelPerfectPoint(self.contentContainer, "BOTTOMRIGHT", self.frame, "BOTTOMRIGHT", 0, 0)
     self.contentContainer:EnableMouseWheel(true)
@@ -148,7 +161,7 @@ function QuestLog:Create()
 
         local track = scrollBar:CreateTexture(nil, "BACKGROUND")
         track:SetAllPoints()
-        track:SetColorTexture(unpack(Q.Theme.Background.Tertiary))
+        Q:SetThemedColorTexture(track, "Background", "Tertiary")
 
         local thumb = scrollBar:GetThumbTexture()
         for _, region in ipairs({ scrollBar:GetRegions() }) do
@@ -159,7 +172,7 @@ function QuestLog:Create()
         end
         if thumb then
             thumb:SetTexture(nil)
-            thumb:SetColorTexture(unpack(Q.Theme.Border.Accent))
+            Q:SetThemedColorTexture(thumb, "Border", "Accent")
             Q:SetPixelPerfectWidth(thumb, 3)
         end
     end
@@ -221,7 +234,7 @@ end
 local function CountLineage(quest, seen)
     for _, prerequisite in ipairs(quest.prerequisites or {}) do
         local prerequisiteQuest = Q.API:GetQuestById(prerequisite.id)
-        if  prerequisiteQuest and
+        if prerequisiteQuest and
             prerequisite.type ~= Q.PrerequisiteType.BREADCRUMB and
             not seen[prerequisite.id]
         then
@@ -275,7 +288,8 @@ local function AppendRelatedRows(quest, depth, visited, parentCollapseKey)
         row.isPrerequisite = dependencyType ~= "chain"
         row.prerequisiteType = dependencyType
         row.lineageDepth = depth + 1
-        row.collapseKey = string.format("%s/quest:%s", parentCollapseKey or ("quest:" .. tostring(quest.id)), tostring(questId))
+        row.collapseKey = string.format("%s/quest:%s", parentCollapseKey or ("quest:" .. tostring(quest.id)),
+            tostring(questId))
 
         local isHidden = Q:GetSetting("HideCompletedQuests") and Q.API:IsQuestCompleted(questId)
         if not isHidden then
@@ -304,20 +318,20 @@ local function AppendRelatedRows(quest, depth, visited, parentCollapseKey)
 
     -- Breadcrumb quests stop being available once the quest they point to is completed.
     for _, prerequisite in ipairs(quest.prerequisites or {}) do
-        local isHiddenBreadcrumb = Q.API:IsQuestCompleted(quest.id) and prerequisite.type == Q.PrerequisiteType.BREADCRUMB
+        local isHiddenBreadcrumb = Q.API:IsQuestCompleted(quest.id) and
+            prerequisite.type == Q.PrerequisiteType.BREADCRUMB
         if not isHiddenBreadcrumb and Q.API:GetQuestById(prerequisite.id) then
             AddDependency(prerequisite.id, prerequisite.type)
         end
     end
 end
 
-local function SetQuestStatusColor(fontString, settingPath, fallbackKey)
+local function SetQuestStatusColor(fontString, settingPath)
     local color = Q:GetSetting(settingPath)
-    if color and color.r and color.g and color.b then
-        fontString:SetTextColor(color.r, color.g, color.b)
-    else
-        Q:SetTextColor(fontString, fallbackKey)
+    if not (color and color.r and color.g and color.b) then
+        color = Q.Theme[settingPath]
     end
+    fontString:SetTextColor(color.r, color.g, color.b)
 end
 
 local function SetBorderTextureColor(frame, settingPath)
@@ -387,7 +401,9 @@ local function UpdateRowAppearance(frame, playerInfo)
     if frame.row.isSharedSummary then
         Q:SetTextColor(frame.titleFrame.title, "Disabled")
         frame.leftBorder:SetColorTexture(unpack(Q.Theme.Border.Accent))
-        frame.sideGradient:SetGradient("HORIZONTAL", CreateColor(Q.Theme.Border.Accent[1], Q.Theme.Border.Accent[2], Q.Theme.Border.Accent[3], 0.03), CreateColor(0, 0, 0, 0))
+        frame.sideGradient:SetGradient("HORIZONTAL",
+            CreateColor(Q.Theme.Border.Accent[1], Q.Theme.Border.Accent[2], Q.Theme.Border.Accent[3], 0.03),
+            CreateColor(0, 0, 0, 0))
     elseif frame.row.isInstance then
         local levelColor = Q.API:GetDifficultyColor(playerInfo.level, frame.row.minLevel)
         frame.titleFrame.level:SetTextColor(levelColor.r, levelColor.g, levelColor.b, 1)
@@ -399,14 +415,15 @@ local function UpdateRowAppearance(frame, playerInfo)
         Q:SetPixelPerfectHeight(frame.titleFrame, DB_ROW_HEIGHT + INSTANCE_ROW_EXTRA_HEIGHT)
 
 
-        frame.gradient:SetGradient("VERTICAL", CreateColor(levelColor.r, levelColor.g, levelColor.b, 0.15), CreateColor(0, 0, 0, 0))
+        frame.gradient:SetGradient("VERTICAL", CreateColor(levelColor.r, levelColor.g, levelColor.b, 0.15),
+            CreateColor(0, 0, 0, 0))
         frame.bottomBorder:SetColorTexture(levelColor.r, levelColor.g, levelColor.b, 1)
     elseif Q.API:IsQuestCompleted(frame.row.id) then
         SetQuestStatusColor(frame.titleFrame.title, "QuestColorCompleted", "Disabled")
         SetBorderTextureColor(frame.leftBorder, "QuestColorCompleted")
         SetGradientColor(frame.sideGradient, "QuestColorCompleted")
     elseif Q.API:IsQuestInQuestLog(frame.row.id) then
-        SetQuestStatusColor(frame.titleFrame.title, "QuestColorInProgress", "Success")
+        SetQuestStatusColor(frame.titleFrame.title, "QuestColorInProgress")
         SetBorderTextureColor(frame.leftBorder, "QuestColorInProgress")
         SetGradientColor(frame.sideGradient, "QuestColorInProgress")
     elseif Q.API:IsQuestAvailable(frame.row.id) then
@@ -421,7 +438,7 @@ local function UpdateRowAppearance(frame, playerInfo)
             SetGradientColor(frame.sideGradient, "QuestColorAvailable")
         end
     else
-        SetQuestStatusColor(frame.titleFrame.title, "QuestColorUnavailable", "Emphasized")
+        SetQuestStatusColor(frame.titleFrame.title, "QuestColorUnavailable")
         SetBorderTextureColor(frame.leftBorder, "QuestColorUnavailable")
         SetGradientColor(frame.sideGradient, "QuestColorUnavailable")
     end
@@ -492,14 +509,16 @@ local function UpdateRowText(frame)
         end
     end
 
-    local title = not row.isInstance and not row.isSharedSummary and Q:GetSetting("ShowSuggestedQuestLevel") and string.format("[%d] %s", row.suggestedLevel or 0, row.name) or row.name
+    local title = not row.isInstance and not row.isSharedSummary and Q:GetSetting("ShowSuggestedQuestLevel") and
+        string.format("[%d] %s", row.suggestedLevel or 0, row.name) or row.name
     if row.prerequisiteType and row.prerequisiteType == "any" then
         title = "*" .. title
     elseif row.prerequisiteType and row.prerequisiteType == "breadcrumb" then
         title = "B: " .. title
     end
 
-    frame.titleFrame.trackedIcon:SetShown(not row.isInstance and not row.isSharedSummary and Q.API:IsQuestInQuestLog(row.id) and Q.API:IsQuestWatched(row.id))
+    frame.titleFrame.trackedIcon:SetShown(not row.isInstance and not row.isSharedSummary and
+        Q.API:IsQuestInQuestLog(row.id) and Q.API:IsQuestWatched(row.id))
 
     -- Keep the text and any icons after it clear of the right-aligned row buttons.
     local rightInset = frame.collapseButton:GetWidth() + frame.waypointButton:GetWidth() + (Q.Theme.Padding.L + 4)
@@ -524,7 +543,6 @@ local function UpdateRowText(frame)
     end
     titleFontString.fullText = title
     titleFontString.isTruncated = displayedTitle ~= title
-
 end
 
 local function CreateOrUpdateNoQuestsFoundFrame(playerInfo)
@@ -533,8 +551,8 @@ local function CreateOrUpdateNoQuestsFoundFrame(playerInfo)
             QuestLog.noQuestsFound = CreateFrame("Frame", "DungeonBuddy_NoQuestsFound", QuestLog.scrollChild)
             QuestLog.noQuestsFound:SetAllPoints()
             QuestLog.noQuestsFoundText = QuestLog.noQuestsFound:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-            QuestLog.noQuestsFoundText:            SetFont("Fonts\\FRIZQT__.TTF", Q.Theme.FontSize.M)
-            QuestLog.noQuestsFoundText:SetTextColor(unpack(Q.Theme.Text.Primary))
+            QuestLog.noQuestsFoundText:SetFont("Fonts\\FRIZQT__.TTF", Q.Theme.FontSize.M)
+            Q:SetTextColor(QuestLog.noQuestsFoundText, "Primary")
             QuestLog.noQuestsFoundText:SetPoint("CENTER")
             QuestLog.noQuestsFoundText:SetPoint("CENTER", QuestLog.scrollChild, "CENTER", -7.5, -30)
             QuestLog.noQuestsFoundText:SetText("No quests available.")
@@ -570,7 +588,8 @@ local function ShowInstanceTooltip(frame)
     tooltip:SetOwner(frame.titleFrame, "ANCHOR_LEFT", -5, 5)
     if instance.minLevel and instance.maxLevel then
         local levelColor = Q.API:GetDifficultyColor(Q.API:GetPlayerInfo().level, instance.minLevel)
-        tooltip:AddDoubleLine(instance.name, string.format("Level %d-%d", instance.minLevel, instance.maxLevel), primary[1], primary[2], primary[3], levelColor.r, levelColor.g, levelColor.b)
+        tooltip:AddDoubleLine(instance.name, string.format("Level %d-%d", instance.minLevel, instance.maxLevel),
+            primary[1], primary[2], primary[3], levelColor.r, levelColor.g, levelColor.b)
     else
         tooltip:SetText(instance.name, primary[1], primary[2], primary[3])
     end
@@ -586,8 +605,10 @@ local function ShowInstanceTooltip(frame)
     local function AddCountLine(label, count, color)
         local r, g, b = color.r or color[1], color.g or color[2], color.b or color[3]
         local primaryR, primaryG, primaryB = unpack(Q.Theme.Text.Primary)
-        if count > 0 then 
-            tooltip:AddLine("|cff"..string.format("%02x%02x%02x", primaryR*255, primaryG*255, primaryB*255)..count.."|r "..label, r, g, b)
+        if count > 0 then
+            tooltip:AddLine(
+                "|cff" .. string.format("%02x%02x%02x", primaryR * 255, primaryG * 255, primaryB * 255) ..
+                count .. "|r " .. label, r, g, b)
         end
     end
 
@@ -601,7 +622,7 @@ local function ShowInstanceTooltip(frame)
 end
 
 local function CreateRowFrame(index, row)
-    local frame = CreateFrame("Frame", "DungeonBuddy_QuestLogRow"..index, QuestLog.scrollChild)
+    local frame = CreateFrame("Frame", "DungeonBuddy_QuestLogRow" .. index, QuestLog.scrollChild)
     QuestLog._frames[index] = frame
     frame:SetWidth(QuestLog.scrollChild:GetWidth() - 2)
     Q:SetPixelPerfectHeight(frame, DB_ROW_HEIGHT)
@@ -609,7 +630,7 @@ local function CreateRowFrame(index, row)
 
     frame.background = frame:CreateTexture(nil, "BACKGROUND")
     frame.background:SetAllPoints(frame)
-    frame.background:SetColorTexture(unpack(Q.Theme.Background.Tertiary))
+    Q:SetThemedColorTexture(frame.background, "Background", "Tertiary")
     frame.background:SetAlpha(0.2)
 
     frame.gradient = frame:CreateTexture(nil, "BACKGROUND", nil, 1)
@@ -647,7 +668,8 @@ local function CreateRowFrame(index, row)
     Q:SetPixelPerfectHeight(frame.titleFrame, DB_ROW_HEIGHT)
     Q:SetPixelPerfectPoint(frame.titleFrame, "TOPLEFT", frame, "TOPLEFT", 0, 0)
 
-    frame.titleFrame.title = Q:CreateText(nil, frame.titleFrame, row.name, row.isInstance and Q.Theme.FontSize.XL or Q.Theme.FontSize.M)
+    frame.titleFrame.title = Q:CreateText(nil, frame.titleFrame, row.name,
+        row.isInstance and Q.Theme.FontSize.XL or Q.Theme.FontSize.M)
     frame.titleFrame.title:SetPoint("LEFT", frame.titleFrame, "LEFT", Q.Theme.Padding.S, 0)
     frame.titleFrame.title:SetJustifyH("LEFT")
 
@@ -682,7 +704,8 @@ local function CreateRowFrame(index, row)
             end
 
             local settingPath = clickedRow.isInstance and "CollapsedInstances" or "CollapsedQuests"
-            local collapsedRows = clickedRow.isInstance and Q:GetSetting("CollapsedInstances") or Q:GetSetting("CollapsedQuests")
+            local collapsedRows = clickedRow.isInstance and Q:GetSetting("CollapsedInstances") or
+                Q:GetSetting("CollapsedQuests")
             local collapseKey = clickedRow.isInstance and clickedRow.id or clickedRow.collapseKey
             if collapsedRows[collapseKey] then
                 collapsedRows[collapseKey] = nil
@@ -707,15 +730,16 @@ local function CreateRowFrame(index, row)
             tooltip:Hide()
         end
     }
-    frame.collapseButton = Q:CreateButton(nil, frame, "+", DB_ROW_HEIGHT, DB_ROW_HEIGHT, Q.Theme.FontSize.L, Q.Theme.Text.Secondary, collapseHandlers)
+    frame.collapseButton = Q:CreateButton(nil, frame, "+", DB_ROW_HEIGHT, DB_ROW_HEIGHT, Q.Theme.FontSize.L,
+        Q.Theme.Text.Secondary, collapseHandlers)
     frame.collapseButton:SetPoint("RIGHT", frame.titleFrame, "RIGHT", -Q.Theme.Padding.L, 0)
-    
+
     local waypointHandlers = {
         OnClick = function(self)
             if self.isDisabled then
                 return
             end
-            
+
             if not frame.row then
                 return
             end
@@ -736,7 +760,10 @@ local function CreateRowFrame(index, row)
 
             tooltip:SetOwner(self, "ANCHOR_TOPLEFT", 5, 5)
             tooltip:SetText(frame.row.isInstance and "Find Entrance" or "Find Source", unpack(Q.Theme.Text.Accent))
-            tooltip:AddLine(string.format("Add a waypoint to %s.", frame.row.isInstance and "the instance entrance" or (hasMultipleSources and "all of this quests sources" or "this quest's source")), r, g, b, true)
+            tooltip:AddLine(
+                string.format("Add a waypoint to %s.",
+                    frame.row.isInstance and "the instance entrance" or
+                    (hasMultipleSources and "all of this quests sources" or "this quest's source")), r, g, b, true)
             tooltip:Show()
         end,
         OnMouseLeave = function()
@@ -744,7 +771,8 @@ local function CreateRowFrame(index, row)
             tooltip:Hide()
         end
     }
-    frame.waypointButton = Q:CreateButton(nil, frame, "", DB_ROW_HEIGHT, DB_ROW_HEIGHT, Q.Theme.FontSize.M, Q.Theme.Background.Accent, waypointHandlers)
+    frame.waypointButton = Q:CreateButton(nil, frame, "", DB_ROW_HEIGHT, DB_ROW_HEIGHT, Q.Theme.FontSize.M,
+        Q.Theme.WaypointColor, waypointHandlers)
     frame.waypointButton.icon = frame.waypointButton:CreateTexture(nil, "ARTWORK")
     frame.waypointButton.icon:SetTexture("Interface\\AddOns\\DungeonBuddy\\Media\\Waypoint.png")
     Q:SetPixelPerfectSize(frame.waypointButton.icon, DB_ROW_HEIGHT * 0.7, DB_ROW_HEIGHT * 0.7)
@@ -789,7 +817,7 @@ local function CreateRowFrame(index, row)
 
     frame.hoverHighlight = frame:CreateTexture(nil, "BACKGROUND", nil, 2)
     frame.hoverHighlight:SetAllPoints(frame)
-    frame.hoverHighlight:SetColorTexture(unpack(Q.Theme.Text.Primary))
+    Q:SetThemedColorTexture(frame.hoverHighlight, "Text", "Primary")
     frame.hoverHighlight:SetAlpha(0.03)
     frame.hoverHighlight:Hide()
     frame.titleHover:SetScript("OnEnter", function()
@@ -819,9 +847,10 @@ local function CreateRowFrame(index, row)
         local tooltipStatus
         local tooltipStatusColor
         local isQuestInLog = Q.API:IsQuestInQuestLog(hoveredRow.id)
-        local meetsPrerequisites = Q.API:IsQuestAvailableToLevel(hoveredRow.id) and Q.API:IsPrerequisiteSatisfied(hoveredRow.id)
+        local meetsPrerequisites = Q.API:IsQuestAvailableToLevel(hoveredRow.id) and
+            Q.API:IsPrerequisiteSatisfied(hoveredRow.id)
         local isQuestAvailable = Q.API:IsQuestAvailable(hoveredRow.id)
-        
+
         if isQuestInLog then
             tooltipStatus = "Track Quest"
             tooltipStatusColor = colorInProgress
@@ -845,12 +874,13 @@ local function CreateRowFrame(index, row)
 
         -- Player has the quest in their quest log
         if isQuestInLog then
-            tooltip:AddLine("Shift-click to toggle tracking this quest", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
-        -- Player does not meet the quest prerequisites (Too low level, prequests not completed, wrong class etc)
+            tooltip:AddLine("Shift-click to toggle tracking this quest", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary
+                [2], Q.Theme.Text.Primary[3], true)
+            -- Player does not meet the quest prerequisites (Too low level, prequests not completed, wrong class etc)
         elseif not meetsPrerequisites then
-            
             if not Q.API:IsQuestAvailableToLevel(hoveredRow.id) then
-                tooltip:AddLine("Requires level " .. hoveredRow.requiredLevel, Q.Theme.Text.Disabled[1], Q.Theme.Text.Disabled[2], Q.Theme.Text.Disabled[3])
+                tooltip:AddLine("Requires level " .. hoveredRow.requiredLevel, Q.Theme.Text.Disabled[1],
+                    Q.Theme.Text.Disabled[2], Q.Theme.Text.Disabled[3])
             end
 
             if not Q.API:IsPrerequisiteSatisfied(hoveredRow.id) then
@@ -861,23 +891,19 @@ local function CreateRowFrame(index, row)
 
                 -- Because changing color of text without using multiple font strings requires hex codes, we need to convert colors
                 local function GetQuestColorCode(questId)
-                    local settingPath, fallbackKey
+                    local settingPath
                     if Q.API:IsQuestCompleted(questId) then
-                        settingPath, fallbackKey = "QuestColorCompleted", "Disabled"
+                        settingPath = "QuestColorCompleted"
                     elseif Q.API:IsQuestInQuestLog(questId) then
-                        settingPath, fallbackKey = "QuestColorInProgress", "Success"
+                        settingPath = "QuestColorInProgress"
                     elseif Q.API:IsQuestAvailable(questId) then
-                        settingPath, fallbackKey = "QuestColorAvailable", "Accent"
+                        settingPath = "QuestColorAvailable"
                     else
-                        settingPath, fallbackKey = "QuestColorUnavailable", "Emphasized"
+                        settingPath = "QuestColorUnavailable"
                     end
 
-                    local color = Q:GetSetting(settingPath)
-                    local fallback = Q.Theme.Text[fallbackKey]
-                    local r = color and color.r or fallback[1]
-                    local g = color and color.g or fallback[2]
-                    local b = color and color.b or fallback[3]
-                    return Q:ColorToHex({ r = r, g = g, b = b })
+                    local color = Q:GetSetting(settingPath) or Q.Theme[settingPath]
+                    return Q:ColorToHex({ r = color.r, g = color.g, b = color.b })
                 end
 
                 for _, prerequisite in ipairs(quest and quest.prerequisites or {}) do
@@ -898,28 +924,34 @@ local function CreateRowFrame(index, row)
                 end
 
                 if #missingRequired > 1 then
-                    tooltip:AddLine("You must complete the following quests first:", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
+                    tooltip:AddLine("You must complete the following quests first:", Q.Theme.Text.Primary[1],
+                        Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
                     for _, prerequisiteQuest in ipairs(missingRequired) do
                         local coloredName = GetQuestColorCode(prerequisiteQuest.id) .. prerequisiteQuest.name .. "|r"
-                        tooltip:AddLine(coloredName, Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
+                        tooltip:AddLine(coloredName, Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2],
+                            Q.Theme.Text.Primary[3], true)
                     end
                 elseif #missingRequired == 1 then
                     local prerequisiteQuest = missingRequired[1]
                     local coloredName = GetQuestColorCode(prerequisiteQuest.id) .. prerequisiteQuest.name .. "|r"
-                    tooltip:AddLine("You must complete the quest " .. coloredName .. " first.", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
+                    tooltip:AddLine("You must complete the quest " .. coloredName .. " first.", Q.Theme.Text.Primary[1],
+                        Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
                 end
                 if not hasCompletedChoice and #incompleteChoices > 0 then
-                    tooltip:AddLine("You must complete one of the following quests first:", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
+                    tooltip:AddLine("You must complete one of the following quests first:", Q.Theme.Text.Primary[1],
+                        Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
                     for _, prerequisiteQuest in ipairs(incompleteChoices) do
                         local coloredName = GetQuestColorCode(prerequisiteQuest.id) .. prerequisiteQuest.name .. "|r"
-                        tooltip:AddLine(coloredName, Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
+                        tooltip:AddLine(coloredName, Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2],
+                            Q.Theme.Text.Primary[3], true)
                     end
                 end
                 if #missingRequired == 0 and (hasCompletedChoice or #incompleteChoices == 0) then
-                    tooltip:AddLine("You must complete the prerequisite quests before this quest becomes available.", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
+                    tooltip:AddLine("You must complete the prerequisite quests before this quest becomes available.",
+                        Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
                 end
             end
-        -- Player meets all prerequisites and the quest is available
+            -- Player meets all prerequisites and the quest is available
         elseif isQuestAvailable then
             local quest = Q.API:GetQuestById(hoveredRow.id)
             local playerFaction = Q.API:GetPlayerFaction()
@@ -943,17 +975,22 @@ local function CreateRowFrame(index, row)
             if #sources == 1 then
                 local source = sources[1]
                 local location = source.zone and (" in " .. source.zone) or ""
-                tooltip:AddLine("Started by " .. successColorCode .. source.name .. "|r" .. location .. ".", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
+                tooltip:AddLine("Started by " .. successColorCode .. source.name .. "|r" .. location .. ".",
+                    Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
                 if source.text then
-                    tooltip:AddLine(source.text, Q.Theme.Status.Info[1], Q.Theme.Status.Info[2], Q.Theme.Status.Info[3], true)
+                    tooltip:AddLine(source.text, Q.Theme.Status.Info[1], Q.Theme.Status.Info[2], Q.Theme.Status.Info[3],
+                        true)
                 end
             elseif #sources > 1 then
-                tooltip:AddLine("Started by:", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
+                tooltip:AddLine("Started by:", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3],
+                    true)
                 for _, source in ipairs(sources) do
                     local location = source.zone and (" in " .. source.zone) or ""
-                    tooltip:AddLine(successColorCode .. source.name .. "|r" .. location, Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
+                    tooltip:AddLine(successColorCode .. source.name .. "|r" .. location, Q.Theme.Text.Primary[1],
+                        Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
                     if source.text then
-                        tooltip:AddLine(source.text, Q.Theme.Status.Info[1], Q.Theme.Status.Info[2], Q.Theme.Status.Info[3], true)
+                        tooltip:AddLine(source.text, Q.Theme.Status.Info[1], Q.Theme.Status.Info[2],
+                            Q.Theme.Status.Info[3], true)
                     end
                 end
             end
@@ -962,12 +999,15 @@ local function CreateRowFrame(index, row)
         -- If the quest being hovered is a breadcrumb quest or an optional choice, add the appropriate tooltip message to the already added texts.
         if hoveredRow.prerequisiteType == Q.PrerequisiteType.ANY then
             tooltip:AddLine(" ")
-            tooltip:AddLine("Optional Choice", Q.Theme.Status.Info[1], Q.Theme.Status.Info[2], Q.Theme.Status.Info[3], true)
-            tooltip:AddLine("You only need to complete one of the quests marked with * to unlock the next quest.", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
+            tooltip:AddLine("Optional Choice", Q.Theme.Status.Info[1], Q.Theme.Status.Info[2], Q.Theme.Status.Info[3],
+                true)
+            tooltip:AddLine("Complete any 1 of the quests marked with * to unlock the next quest.",
+                Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
         elseif hoveredRow.prerequisiteType == Q.PrerequisiteType.BREADCRUMB then
             tooltip:AddLine(" ")
             tooltip:AddLine("Breadcrumb", Q.Theme.Status.Info[1], Q.Theme.Status.Info[2], Q.Theme.Status.Info[3], true)
-            tooltip:AddLine("Not required to unlock the next quest. Breadcrumb quests are only meant to guide players to a quest giver.", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
+            tooltip:AddLine("Not required to unlock the next quest.", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2],
+                Q.Theme.Text.Primary[3], true)
         end
 
         tooltip:Show()
@@ -1010,12 +1050,13 @@ function QuestLog:RefreshAndPopulate()
             instance.isInstance = true
 
             table.insert(self.rows, instance)
-            
+
             if not isCollapsed then
                 for _, quest in ipairs(quests) do
                     local questRow = CopyRow(quest)
                     questRow.isMainQuest = true
-                    questRow.collapseKey = string.format("instance:%s/quest:%s", tostring(instance.id), tostring(quest.id))
+                    questRow.collapseKey = string.format("instance:%s/quest:%s", tostring(instance.id),
+                        tostring(quest.id))
                     local questIsCollapsed = IsRowCollapsed(questRow)
                     if not Q:GetSetting("HideCompletedQuests") or not Q.API:IsQuestCompleted(quest.id) then
                         table.insert(self.rows, questRow)
@@ -1031,7 +1072,8 @@ function QuestLog:RefreshAndPopulate()
 
     local prevRowHeight = DB_ROW_HEIGHT
     for index, row in ipairs(self.rows) do
-        local frame = self._frames[index] -- Frames cannot be destroyed so we reuse frames by id and create a new if we have a longer list
+        local frame = self._frames
+            [index] -- Frames cannot be destroyed so we reuse frames by id and create a new if we have a longer list
 
         if not frame then
             frame = CreateRowFrame(index, row)
@@ -1052,13 +1094,13 @@ function QuestLog:RefreshAndPopulate()
             -2,
             row.isInstance and -(INSTANCE_ROW_EXTRA_HEIGHT / 2) or 0
         )
-        
+
         UpdateClassIcon(frame)
         UpdateRowText(frame)
         UpdateRowAppearance(frame, playerInfo)
         UpdateCollapseButton(frame)
         UpdateWaypointButton(frame)
-        
+
         frame.sideGradient:SetShown(not row.isInstance and true or false)
         frame.gradient:SetShown(row.isInstance and true or false)
         frame.bottomBorder:SetShown(row.isInstance and true or false)
@@ -1093,7 +1135,6 @@ end
 function QuestLog:Toggle()
     if not self.frame then
         self:Create()
-        return
     end
 
     if self.frame and self.frame:IsShown() then

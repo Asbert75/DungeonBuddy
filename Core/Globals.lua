@@ -6,7 +6,7 @@ local function SetThemeTint(frame, color, alpha)
 end
 
 function Q:PrettyPrint(message)
-    DEFAULT_CHAT_FRAME:AddMessage("|cfff0c25a"..ADDON_NAME..":|r " .. tostring(message))
+    DEFAULT_CHAT_FRAME:AddMessage("|cfff0c25a" .. ADDON_NAME .. ":|r " .. tostring(message))
 end
 
 function Q:ColorToHex(color)
@@ -16,7 +16,13 @@ function Q:ColorToHex(color)
     r = math.max(0, math.min(1, r))
     g = math.max(0, math.min(1, g))
     b = math.max(0, math.min(1, b))
-    return string.format("|cff%02x%02x%02x", math.floor(r * 255 + 0.5), math.floor(g * 255 + 0.5), math.floor(b * 255 + 0.5))
+    return string.format("|cff%02x%02x%02x", math.floor(r * 255 + 0.5), math.floor(g * 255 + 0.5),
+        math.floor(b * 255 + 0.5))
+end
+
+function Q:HexToColor(hex)
+    local r, g, b = hex:match("#?(%x%x)(%x%x)(%x%x)")
+    return { tonumber(r, 16) / 255, tonumber(g, 16) / 255, tonumber(b, 16) / 255, 1 }
 end
 
 function Q:PixelPerfect(value)
@@ -25,6 +31,48 @@ function Q:PixelPerfect(value)
     local uiScale = UIParent:GetEffectiveScale()
     local pixelSize = 768 / screenHeight / uiScale
     return pixelSize * math.floor((value / pixelSize) + 0.5333)
+end
+
+local themedObjects = setmetatable({}, { __mode = "k" })
+
+-- Registers an object whose colors depend on the theme; apply(object) is called whenever the theme changes.
+function Q:RegisterThemed(object, apply)
+    themedObjects[object] = apply
+end
+
+-- Characters without a saved theme get the theme matching their faction.
+function Q:LoadTheme()
+    local theme = Q:GetSetting("Theme")
+    if not Q.Themes[theme] then
+        local faction = UnitFactionGroup("player")
+        theme = Q.Themes[faction] and faction or "Plain"
+    end
+
+    Q:SetSetting("Theme", theme)
+    Q:ApplyThemePalette(theme)
+end
+
+local function RefreshThemedObjects()
+    for object, apply in pairs(themedObjects) do
+        apply(object)
+    end
+
+    if Q.QuestLog and Q.QuestLog.frame then
+        Q.QuestLog:RefreshAndPopulate()
+    end
+    if Q.Notification then
+        Q.Notification:RefreshTheme()
+    end
+end
+
+function Q:SetTheme(name)
+    if not Q.Themes[name] then
+        name = "Plain"
+    end
+
+    Q:SetSetting("Theme", name)
+    Q:ApplyThemePalette(name)
+    RefreshThemedObjects()
 end
 
 function Q:SetBackdrop(frame, backgroundKey, borderKey, backgroundAlpha, borderAlpha)
@@ -37,16 +85,41 @@ function Q:SetBackdrop(frame, backgroundKey, borderKey, backgroundAlpha, borderA
         insets = { left = pixelPerfect, right = pixelPerfect, top = pixelPerfect, bottom = pixelPerfect },
     })
 
-    local bgR, bgG, bgB, bgA = unpack(Q.Theme.Background[backgroundKey or "Primary"])
-    frame:SetBackdropColor(bgR, bgG, bgB, backgroundAlpha or bgA)
+    local function ApplyColors()
+        local bgR, bgG, bgB, bgA = unpack(Q.Theme.Background[backgroundKey or "Primary"])
+        frame:SetBackdropColor(bgR, bgG, bgB, backgroundAlpha or bgA)
 
-    local borderR, borderG, borderB, borderA = unpack(Q.Theme.Border[borderKey or "Default"])
-    frame:SetBackdropBorderColor(borderR, borderG, borderB, borderAlpha or borderA)
+        local borderR, borderG, borderB, borderA = unpack(Q.Theme.Border[borderKey or "Default"])
+        frame:SetBackdropBorderColor(borderR, borderG, borderB, borderAlpha or borderA)
+    end
+
+    ApplyColors()
+    Q:RegisterThemed(frame, ApplyColors)
 end
 
 function Q:SetTextColor(frame, textKey, textAlpha)
-    local textR, textG, textB, textA = unpack(Q.Theme.Text[textKey or "Primary"])
-    frame:SetTextColor(textR, textG, textB, textAlpha or textA)
+    local function ApplyColor()
+        local textR, textG, textB, textA = unpack(Q.Theme.Text[textKey or "Primary"])
+        frame:SetTextColor(textR, textG, textB, textAlpha or textA)
+    end
+
+    ApplyColor()
+    Q:RegisterThemed(frame, ApplyColor)
+end
+
+function Q:SetThemedColorTexture(texture, group, key, alpha)
+    local function ApplyColor()
+        local color = Q.Theme[group][key]
+        texture:SetColorTexture(color[1], color[2], color[3], alpha or color[4] or 1)
+    end
+
+    ApplyColor()
+    Q:RegisterThemed(texture, ApplyColor)
+end
+
+function Q.ApplyBrandTitle(fontString)
+    fontString:SetText("DUNGEON" .. Q:ColorToHex(Q.Theme.Text.Primary) .. "BUDDY")
+    fontString:SetTextColor(unpack(Q.Theme.Text.Brand))
 end
 
 function Q:SetPixelPerfectSize(frame, width, height)
@@ -74,6 +147,18 @@ function Q:SetPixelPerfectCenterPoint(frame, x, y)
 end
 
 --#region UI Creation Functions
+-- Creates a font string without registering it for theme changes, for text whose color is managed by its owner.
+local function BuildText(frameName, parent, text, fontSize, colorKey, textAlpha)
+    local fontString = parent:CreateFontString(frameName, "OVERLAY", "GameFontNormal")
+    fontString:SetText(text)
+
+    local textR, textG, textB, textA = unpack(Q.Theme.Text[colorKey or "Primary"])
+    fontString:SetTextColor(textR, textG, textB, textAlpha or textA)
+    fontString:SetFont("Fonts\\FRIZQT__.TTF", Q:PixelPerfect(fontSize))
+
+    return fontString
+end
+
 function Q:CreateCloseButton(parent, name)
     local button = CreateFrame("Button", name, parent, "BackdropTemplate")
     Q:SetPixelPerfectSize(button, 24, 24)
@@ -85,14 +170,16 @@ function Q:CreateCloseButton(parent, name)
         insets = { left = 0, right = 0, top = 0, bottom = 0 },
     })
 
-    local text = Q:CreateText(nil, button, "x", Q.Theme.FontSize.L, "Accent")
+    local text = BuildText(nil, button, "x", Q.Theme.FontSize.L, "Accent")
     button.cross = text
     Q:SetPixelPerfectPoint(text, "CENTER", button, "CENTER", 1, 1)
 
     local function ApplyStyle(isHovered, isPressed)
         local r, g, b = unpack(Q.Theme.Status.Error)
-        button:SetBackdropColor(r, g, b, isHovered and Q.Theme.Alpha.ButtonBackgroundHover or Q.Theme.Alpha.ButtonBackground)
-        button:SetBackdropBorderColor(r, g, b, isHovered and Q.Theme.Alpha.ButtonBorderHover or Q.Theme.Alpha.ButtonBorder)
+        button:SetBackdropColor(r, g, b,
+            isHovered and Q.Theme.Alpha.ButtonBackgroundHover or Q.Theme.Alpha.ButtonBackground)
+        button:SetBackdropBorderColor(r, g, b,
+            isHovered and Q.Theme.Alpha.ButtonBorderHover or Q.Theme.Alpha.ButtonBorder)
 
         if isPressed then
             button.cross:SetTextColor(unpack(Q.Theme.Text.Secondary))
@@ -104,6 +191,9 @@ function Q:CreateCloseButton(parent, name)
     end
 
     ApplyStyle(false, false)
+    Q:RegisterThemed(button, function()
+        ApplyStyle(button:IsMouseOver(), false)
+    end)
     button:SetScript("OnEnter", function()
         ApplyStyle(true, false)
     end)
@@ -125,12 +215,12 @@ function Q:CreateCloseButton(parent, name)
 end
 
 function Q:CreateText(frameName, parent, text, fontSize, colorKey, textAlpha)
-    local fontString = parent:CreateFontString(frameName, "OVERLAY", "GameFontNormal")
-    fontString:SetText(text)
+    local fontString = BuildText(frameName, parent, text, fontSize, colorKey, textAlpha)
 
-    local textR, textG, textB, textA = unpack(Q.Theme.Text[colorKey or "Primary"])
-    fontString:SetTextColor(textR, textG, textB, textAlpha or textA)
-    fontString:SetFont("Fonts\\FRIZQT__.TTF", Q:PixelPerfect(fontSize))
+    Q:RegisterThemed(fontString, function()
+        local textR, textG, textB, textA = unpack(Q.Theme.Text[colorKey or "Primary"])
+        fontString:SetTextColor(textR, textG, textB, textAlpha or textA)
+    end)
 
     return fontString
 end
@@ -139,7 +229,7 @@ function Q:CreateTexture(frameName, parent, width, height, path)
     path = path or {}
     local texture = parent:CreateTexture(frameName, "ARTWORK")
     Q:SetPixelPerfectSize(texture, width, height)
-    
+
     if path.atlas then
         texture:SetAtlas(path.atlas)
     end
@@ -154,10 +244,10 @@ function Q:CreateIconBorder(parent, icon)
     local border = {}
     local thickness = Q:PixelPerfect(1)
     local edges = {
-        { "TOPLEFT", "TOPRIGHT", true },
+        { "TOPLEFT",    "TOPRIGHT",    true },
         { "BOTTOMLEFT", "BOTTOMRIGHT", true },
-        { "TOPLEFT", "BOTTOMLEFT", false },
-        { "TOPRIGHT", "BOTTOMRIGHT", false },
+        { "TOPLEFT",    "BOTTOMLEFT",  false },
+        { "TOPRIGHT",   "BOTTOMRIGHT", false },
     }
 
     for index, points in ipairs(edges) do
@@ -188,8 +278,9 @@ function Q:SetIconBorderShown(border, shown)
         edge:SetShown(shown)
     end
 end
-  
-function Q:CreateBackdropFrame(frameName, parent, width, height, strata, backgroundKey, borderKey, backgroundAlpha, borderAlpha)
+
+function Q:CreateBackdropFrame(frameName, parent, width, height, strata, backgroundKey, borderKey, backgroundAlpha,
+                               borderAlpha)
     local frame = CreateFrame("Frame", frameName, parent, "BackdropTemplate")
     Q:SetPixelPerfectSize(frame, width, height)
     frame:SetFrameStrata(strata or "MEDIUM")
@@ -218,15 +309,17 @@ function Q:CreateButton(frameName, parent, text, width, height, fontSize, color,
         insets = { left = 0, right = 0, top = 0, bottom = 0 },
     })
 
-    local label = Q:CreateText(nil, button, text, fontSize, "Accent")
+    local label = BuildText(nil, button, text, fontSize, "Accent")
     button.label = label
     label:SetJustifyH("CENTER")
     Q:SetPixelPerfectPoint(label, "CENTER", button, "CENTER", 0, 0)
 
     local function ApplyStyle(isHovered, isPressed)
         local r, g, b = unpack(color)
-        button:SetBackdropColor(r, g, b, isHovered and Q.Theme.Alpha.ButtonBackgroundHover or Q.Theme.Alpha.ButtonBackground)
-        button:SetBackdropBorderColor(r, g, b, isHovered and Q.Theme.Alpha.ButtonBorderHover or Q.Theme.Alpha.ButtonBorder)
+        button:SetBackdropColor(r, g, b,
+            isHovered and Q.Theme.Alpha.ButtonBackgroundHover or Q.Theme.Alpha.ButtonBackground)
+        button:SetBackdropBorderColor(r, g, b,
+            isHovered and Q.Theme.Alpha.ButtonBorderHover or Q.Theme.Alpha.ButtonBorder)
 
         if isPressed then
             label:SetTextColor(unpack(Q.Theme.Text.Secondary))
@@ -238,6 +331,9 @@ function Q:CreateButton(frameName, parent, text, width, height, fontSize, color,
     end
 
     ApplyStyle(false, false)
+    Q:RegisterThemed(button, function()
+        ApplyStyle(button:IsMouseOver(), false)
+    end)
 
     function button:SetColor(newColor)
         color = newColor
@@ -325,11 +421,13 @@ function Q:CreateCheckbox(frameName, parent, width, height, strata, backgroundKe
 
     return checkbox
 end
+
 --#endregion
 
 function Q:GetTooltip()
     if not self.Tooltip then
-        local tooltip = CreateFrame("GameTooltip", "DungeonBuddyTooltip", UIParent, "GameTooltipTemplate, BackdropTemplate")
+        local tooltip = CreateFrame("GameTooltip", "DungeonBuddyTooltip", UIParent,
+            "GameTooltipTemplate, BackdropTemplate")
         Q:SetBackdrop(tooltip, "Primary", "Default", 0.9, 0.25)
         if tooltip.NineSlice then tooltip.NineSlice:SetAlpha(0) end
         self.Tooltip = tooltip
@@ -368,6 +466,7 @@ function Q:AddFadeOutAnimation(frame, duration, callback)
     end)
     return fadeOut
 end
+
 --#endregion
 
 function Q:ClampFrameToScreen(frame)
