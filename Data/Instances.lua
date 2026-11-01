@@ -359,7 +359,7 @@ Q.Instances = {
         name = "Molten Core",
         continent = "Eastern Kingdoms",
         zone = "Blackrock Mountain",
-        location = { mapId = 1428, x = 0.284, y = 0.285},
+        location = { mapId = 1428, x = 0.284, y = 0.285 },
         minLevel = 60,
         suggestedLevel = 60,
         maxLevel = 60

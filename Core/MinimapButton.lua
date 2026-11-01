@@ -23,7 +23,8 @@ function Q:CreateMinimapButton()
 
         OnTooltipShow = function(tooltip)
             tooltip:AddLine("Dungeon Buddy")
-            tooltip:AddLine("Left-click: Toggle Quest Log", primaryFontColor[1], primaryFontColor[2], primaryFontColor[3])
+            tooltip:AddLine("Left-click: Toggle Quest Log", primaryFontColor[1], primaryFontColor[2], primaryFontColor
+            [3])
             tooltip:AddLine("Right-click: Open Settings", primaryFontColor[1], primaryFontColor[2], primaryFontColor[3])
         end,
     })

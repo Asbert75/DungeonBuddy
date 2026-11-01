@@ -60,18 +60,27 @@ function Notification:LevelUpEventHandler()
     self:DisplayNextInQueue()
 end
 
+function Notification:ResetPosition()
+    Q:SetSetting("NotificationFrame.x", 0)
+    Q:SetSetting("NotificationFrame.y", 350)
+    if self.frame then
+        Q:SetPixelPerfectCenterPoint(self.frame, 0, 350)
+    end
+end
+
 function Notification:Create()
     if self.frame then
         return self.frame
     end
 
     local fontS, fontM, fontL, fontXL = Q.Theme.FontSize.S, Q.Theme.FontSize.M, Q.Theme.FontSize.L, Q.Theme.FontSize.XL
-    local paddingS, paddingM = Q.Theme.Padding.S, Q.Theme.Padding.M
+    local paddingS, paddingM, paddingXL = Q.Theme.Padding.S, Q.Theme.Padding.M, Q.Theme.Padding.XL
 
     --------------------------------------------------
     -- Create Notification Frame
     --------------------------------------------------
-    self.frame = Q:CreateBackdropFrame('DungeonBuddy_NotificationFrame', UIParent, 450, 280, "HIGH", "Primary", "Accent", 0.9, 0.9)
+    self.frame = Q:CreateBackdropFrame('DungeonBuddy_NotificationFrame', UIParent, 450, 280, "HIGH", "Primary", "Brand",
+        0.9, 0.9)
 
     self.frame:SetMovable(true)
     self.frame:EnableMouse(true)
@@ -90,10 +99,12 @@ function Notification:Create()
         Q:SetSetting("NotificationFrame.x", Q:PixelPerfect(x - centerX))
         Q:SetSetting("NotificationFrame.y", Q:PixelPerfect(y - centerY))
 
-        Q:SetPixelPerfectCenterPoint(self, Q:GetSetting("NotificationFrame.x") or 0, Q:GetSetting("NotificationFrame.y") or 250)
+        Q:SetPixelPerfectCenterPoint(self, Q:GetSetting("NotificationFrame.x") or 0,
+            Q:GetSetting("NotificationFrame.y") or 350)
     end)
 
-    Q:SetPixelPerfectCenterPoint(self.frame, Q:GetSetting("NotificationFrame.x") or 0, Q:GetSetting("NotificationFrame.y") or 250)
+    Q:SetPixelPerfectCenterPoint(self.frame, Q:GetSetting("NotificationFrame.x") or 0,
+        Q:GetSetting("NotificationFrame.y") or 350)
     self.frame:SetUserPlaced(false)
 
     self.frame:SetAlpha(0)
@@ -113,7 +124,8 @@ function Notification:Create()
     --------------------------------------------------
     -- Notification Window Title
     --------------------------------------------------
-    self.notificationIcon = Q:CreateTexture("NotificationIcon", self.frame, 40, 40, { atlas = "UI-QuestPoiLegendary-QuestBang" })
+    self.notificationIcon = Q:CreateTexture("NotificationIcon", self.frame, 40, 40,
+        { atlas = "UI-QuestPoiLegendary-QuestBang" })
     Q:SetPixelPerfectPoint(self.notificationIcon, "TOPLEFT", self.frame, "TOPLEFT", paddingM, -paddingS)
 
     self.notificationTitle = Q:CreateText("notificationTitle", self.frame, "A NEW QUEST IS AVAILABLE", fontL, "Accent")
@@ -155,7 +167,7 @@ function Notification:Create()
     self.sourceIcon = Q:CreateTexture("SourceIcon", self.frame, 20, 20)
     self.sourceIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
     Q:SetPixelPerfectPoint(self.sourceIcon, "TOPLEFT", self.questSourceLabel, "BOTTOMLEFT", 0, -paddingS)
-    
+
     self.questSourceName = Q:CreateText("QuestSourceName", self.frame, "Name", fontM, "Primary")
     self.questSourceName:SetPoint("LEFT", self.sourceIcon, "RIGHT", paddingS, 0)
     self.questSourceName:SetTextColor(unpack(Q.Theme.Status.Success))
@@ -163,9 +175,10 @@ function Notification:Create()
     self.questSourceZoneName = Q:CreateText("QuestSourceZoneName", self.frame, "- Orgrimmar", fontM, "Primary")
     self.questSourceZoneName:SetPoint("LEFT", self.questSourceName, "RIGHT", 0, 0)
 
-    self.questSourceText = Q:CreateText("QuestSourceText", self.frame, "Additional information about the quest source.", fontM, "Secondary")
+    self.questSourceText = Q:CreateText("QuestSourceText", self.frame, "Additional information about the quest source.",
+        fontM, "Secondary")
     self.questSourceText:SetPoint("TOPLEFT", self.questSourceName, "BOTTOMLEFT", 0, -paddingS)
-    self.questSourceText:SetWidth(self.frame:GetWidth() - paddingM * 2)
+    self.questSourceText:SetWidth(self.frame:GetWidth() - paddingXL * 2)
     self.questSourceText:SetJustifyH("LEFT")
     self.questSourceText:SetWordWrap(true)
 
@@ -198,7 +211,8 @@ function Notification:Create()
             self.waypointButton:SetColor(Q.Theme.Status.Success)
         end
     }
-    self.waypointButton = Q:CreateButton(nil, self.frame, "Find Source", 140, 40, fontM, Q.Theme.Text.Accent, waypointHandlers)
+    self.waypointButton = Q:CreateButton(nil, self.frame, "Find Source", 140, 40, fontM, Q.Theme.WaypointColor,
+        waypointHandlers)
     self.waypointButton:SetFrameLevel(self.frame:GetFrameLevel() + 1)
     Q:SetPixelPerfectPoint(self.waypointButton, "BOTTOMLEFT", self.frame, "BOTTOMLEFT", paddingM, paddingM)
 
@@ -210,7 +224,8 @@ function Notification:Create()
             self:Dismiss()
         end
     }
-    self.dismissButton = Q:CreateButton(nil, self.frame, "Dismiss", 120, 40, fontM, Q.Theme.Text.Secondary, dismissHandlers)
+    self.dismissButton = Q:CreateButton(nil, self.frame, "Dismiss", 120, 40, fontM, Q.Theme.Text.Secondary,
+        dismissHandlers)
     self.dismissButton:SetFrameLevel(self.frame:GetFrameLevel() + 1)
     Q:SetPixelPerfectPoint(self.dismissButton, "BOTTOMRIGHT", self.frame, "BOTTOMRIGHT", -paddingM, paddingM)
 
@@ -222,7 +237,8 @@ function Notification:Create()
             Notification:DisplayPreviousInQueue()
         end
     }
-    self.previousQuestButton = Q:CreateButton(nil, self.frame, "< Previous", 120, 40, fontM, Q.Theme.Text.Secondary, previousHandlers)
+    self.previousQuestButton = Q:CreateButton(nil, self.frame, "< Previous", 120, 40, fontM, Q.Theme.Text.Secondary,
+        previousHandlers)
     self.previousQuestButton:SetFrameLevel(self.frame:GetFrameLevel() + 1)
     Q:SetPixelPerfectPoint(self.previousQuestButton, "RIGHT", self.dismissButton, "LEFT", -paddingS, 0)
 end
@@ -284,11 +300,15 @@ local function UpdateSourceData(playerFaction)
     if quest.sources and #quest.sources > 1 then
         hasMultipleSources = true
 
-        for index, source in ipairs(quest.sources) do
-            if source.faction == playerFaction then
-                zoneText = (index ~= 1 and zoneText .. '/' or zoneText) .. source.zone
+        -- Sources without a faction are shared by both factions
+        local zones, seen = {}, {}
+        for _, source in ipairs(quest.sources) do
+            if (not source.faction or source.faction == playerFaction) and source.zone and not seen[source.zone] then
+                seen[source.zone] = true
+                table.insert(zones, source.zone)
             end
         end
+        zoneText = zoneText .. table.concat(zones, "/")
     end
 
     Notification.questSourceName:SetText(hasMultipleSources and "Multiple Sources" or quest.source.name)
@@ -350,7 +370,7 @@ end
 local function UpdateActionButtons()
     Notification.trackWaypointSet = false
     Notification.waypointButton.label:SetText("Set Waypoint")
-    Notification.waypointButton:SetColor(Q.Theme.Text.Accent)
+    Notification.waypointButton:SetColor(Q.Theme.WaypointColor)
 
     if Notification.queueIndex ~= #Notification.queue then
         Notification.dismissButton.label:SetText("Next >")
@@ -387,9 +407,10 @@ function Notification:DisplayQuest(quest, isPrevious)
 
     -- Update Instance Name Text
     self.instanceName:SetText(FormatInstanceRelationships(quest))
-    
+
     -- Update Quest Title
-    local questTitle = (Q:GetSetting("ShowSuggestedQuestLevel") and quest.suggestedLevel and string.format("[%d] %s", quest.suggestedLevel, quest.name)) or quest.name
+    local questTitle = (Q:GetSetting("ShowSuggestedQuestLevel") and quest.suggestedLevel and string.format("[%d] %s", quest.suggestedLevel, quest.name)) or
+    quest.name
     self.questName:SetText(questTitle)
     local color = Q.API:GetDifficultyColor(playerInfo.level, quest.suggestedLevel)
     self.questName:SetTextColor(color.r, color.g, color.b)
@@ -397,7 +418,7 @@ function Notification:DisplayQuest(quest, isPrevious)
     UpdateClassIcon(quest.class, quest.profession)
     UpdateSourceData(playerInfo.faction)
     UpdateActionButtons()
-    
+
     -- Update Queue State / Text
     if #self.queue > 1 then
         self.notificationProgress:SetText(string.format("(%d/%d)", self.queueIndex, #self.queue))
@@ -409,6 +430,18 @@ function Notification:DisplayQuest(quest, isPrevious)
         self.frame:Show()
         self.frame.FadeIn:Play()
     end
+end
+
+-- Re-applies colors that are chosen per quest and therefore not covered by the generic theme registry.
+function Notification:RefreshTheme()
+    if not self.frame or not self.quest then
+        return
+    end
+
+    local playerInfo = Q.API:GetPlayerInfo()
+    local color = Q.API:GetDifficultyColor(playerInfo.level, self.quest.suggestedLevel)
+    self.questName:SetTextColor(color.r, color.g, color.b)
+    UpdateClassIcon(self.quest.class, self.quest.profession)
 end
 
 function Notification:OnDisable()

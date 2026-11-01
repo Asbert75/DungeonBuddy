@@ -34,15 +34,16 @@ local SharedDefaults = {
     AutoWaypoint = false,
     ShowSuggestedQuestLevel = false,
     CollapseEachChainStep = false,
+    Theme = nil, -- Chosen from the character's faction on first load, see Q:LoadTheme
 
     -- Tracking Data
     CollapsedInstances = {},
     CollapsedQuests = {},
 
-    QuestColorUnavailable = { r = 163/255, g = 59/255, b = 57/255 },
-    QuestColorAvailable = { r = 35/255, g = 213/255, b = 0/255 },
-    QuestColorInProgress = { r = 255/255, g = 239/255, b = 0/255 },
-    QuestColorCompleted = { r = 146/255, g = 146/255, b = 146/255 },
+    QuestColorUnavailable = { r = 163 / 255, g = 59 / 255, b = 57 / 255 },
+    QuestColorAvailable = { r = 35 / 255, g = 213 / 255, b = 0 / 255 },
+    QuestColorInProgress = { r = 255 / 255, g = 239 / 255, b = 0 / 255 },
+    QuestColorCompleted = { r = 146 / 255, g = 146 / 255, b = 146 / 255 },
 }
 
 local Defaults = {

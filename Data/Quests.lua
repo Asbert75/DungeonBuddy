@@ -227,7 +227,7 @@ Q.Quests = {
         }
     },
     --#endregion
-    
+
     --#region Ruins of Lordaeron
     {
         id = 92401,
@@ -1817,8 +1817,8 @@ Q.Quests = {
         requiredLevel = 30,
         prerequisites = {
             { id = 93680, type = Q.PrerequisiteType.REQUIRED },
-            { id = 545, type = Q.PrerequisiteType.REQUIRED },
-            { id = 557, type = Q.PrerequisiteType.REQUIRED }
+            { id = 545,   type = Q.PrerequisiteType.REQUIRED },
+            { id = 557,   type = Q.PrerequisiteType.REQUIRED }
         },
         source = {
             type = "npc",
@@ -6467,7 +6467,7 @@ Q.Quests = {
             location = { mapId = 0, x = 0, y = 0 },
         },
         instances = { Q.Instances["The Drowned City"] }
-    }, 
+    },
     --#endregion
     --#region Rogue Quests
     {
@@ -6481,10 +6481,11 @@ Q.Quests = {
             name = "Dead Drop",
             zone = "Silverpine Forest",
             location = { mapId = 1421, x = 0.471, y = 0.711 },
-            text = "You must visit a capital city once hitting level 30 for the letter to arrive before the quest is available from Dead Drop"
+            text =
+            "You must visit a capital city once hitting level 30 for the letter to arrive before the quest is available from Dead Drop"
         },
         instances = { Q.Instances["SM: Library"], Q.Instances["SM: Graveyard"] }
-    }, 
+    },
     {
         id = 78261,
         class = "ROGUE",
@@ -6496,9 +6497,10 @@ Q.Quests = {
             name = "Dead Drop",
             zone = "Silverpine Forest",
             location = { mapId = 1421, x = 0.471, y = 0.711 },
-            text = "You must visit a capital city once hitting level 20 for the letter to arrive before the quest is available from Dead Drop"
+            text =
+            "You must visit a capital city once hitting level 20 for the letter to arrive before the quest is available from Dead Drop"
         },
         instances = { Q.Instances["Shadowfang Keep"] }
-    }, 
+    },
     --#endregion
 }
