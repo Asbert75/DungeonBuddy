@@ -380,7 +380,7 @@ function Settings:Create()
             selected:SetShown(isSelected)
             accent:SetShown(isSelected)
             accent:SetColorTexture(unpack(Q.Theme.Brand))
-            label:SetTextColor(unpack(isSelected and Q.Theme.Text.Brand or Q.Theme.Text.Primary))
+            label:SetTextColor(unpack(Q.Theme.Text.Primary))
         end
 
         button:SetScript("OnEnter", button.UpdateState)

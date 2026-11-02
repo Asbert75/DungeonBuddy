@@ -33,6 +33,7 @@ Data\Quests.lua
 Data\Theme.lua
 
 Modules\Notification.lua
+Modules\QuestLogFilter.lua
 Modules\QuestLog.lua
 Modules\AutoReminder.lua
 Modules\Settings.lua

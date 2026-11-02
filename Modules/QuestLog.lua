@@ -2,8 +2,8 @@ local _, Q = ...
 local QuestLog = Q.Addon:NewModule("QuestLog", "AceEvent-3.0", "AceConsole-3.0")
 Q.QuestLog = QuestLog
 
-local DB_ROW_HEIGHT = Q.Theme.FontSize.XL + 6
-local INSTANCE_ROW_EXTRA_HEIGHT = 20
+local DB_ROW_HEIGHT = Q.Theme.FontSize.XL + 12
+local INSTANCE_ROW_EXTRA_HEIGHT = 14
 local CONTAINER_WIDTH = 450
 local QuestStatusColors = {
     completed = "QuestColorCompleted",
@@ -79,20 +79,29 @@ function QuestLog:Create()
     --------------------------------------------------
     -- Action Buttons
     --------------------------------------------------
-    local actionHandlers = {
+    local function HasCollapsedRows()
+        return next(Q:GetSetting("CollapsedQuests")) or next(Q:GetSetting("CollapsedInstances")) or
+            next(Q:GetSetting("CollapsedGroups"))
+    end
+
+    local collapseHandlers = {
         OnClick = function(self)
-            if next(Q:GetSetting("CollapsedQuests")) or next(Q:GetSetting("CollapsedInstances")) then
+            if HasCollapsedRows() then
                 Q:SetSetting("CollapsedQuests", {})
                 Q:SetSetting("CollapsedInstances", {})
+                Q:SetSetting("CollapsedGroups", {})
                 Q.QuestLog:RefreshAndPopulate()
 
                 self.label:SetText("-")
             else
                 local quests = {}
                 local instances = {}
+                local groups = {}
 
                 for _, row in ipairs(Q.QuestLog.rows) do
-                    if row.isInstance then
+                    if row.isGroup then
+                        groups[row.id] = true
+                    elseif row.isInstance then
                         instances[row.id] = true
                     elseif Q.QuestLog.CanCollapse(row) then
                         quests[row.collapseKey] = true
@@ -101,6 +110,7 @@ function QuestLog:Create()
 
                 Q:SetSetting("CollapsedQuests", quests)
                 Q:SetSetting("CollapsedInstances", instances)
+                Q:SetSetting("CollapsedGroups", groups)
                 Q.QuestLog:RefreshAndPopulate()
 
                 self.label:SetText("+")
@@ -112,7 +122,7 @@ function QuestLog:Create()
             local primaryR, primaryG, primaryB = unpack(Q.Theme.Text.Primary)
 
             tooltip:SetOwner(self, "ANCHOR_RIGHT")
-            tooltip:SetText("Expand/Collapse All", accentR, accentG, accentB)
+            tooltip:SetText("Expand / Collapse All", accentR, accentG, accentB)
             tooltip:AddLine("Click to expand/collapse all rows.", primaryR, primaryG, primaryB, true)
             tooltip:Show()
         end,
@@ -122,11 +132,35 @@ function QuestLog:Create()
         end
     }
 
-    local initialText = (next(Q:GetSetting("CollapsedQuests")) or next(Q:GetSetting("CollapsedInstances"))) and "+" or
-        "-"
+    local initialText = HasCollapsedRows() and "+" or "-"
     local collapseAndExpandButton = Q:CreateButton("DungeonBuddy_CollapseAndExpandButton", self.frame, initialText, 24,
-        24, Q.Theme.FontSize.XL, Q.Theme.Text.Secondary, actionHandlers)
+        24, Q.Theme.FontSize.XL, Q.Theme.Text.Secondary, collapseHandlers)
     collapseAndExpandButton:SetPoint("RIGHT", closeButton, "LEFT", -2, 0)
+
+    self.sortWindow = Q.QuestLogFilter:Create(self.frame, function() self:RefreshAndPopulate() end)
+    local sortHandlers = {
+        OnClick = function()
+            self.sortWindow:SetShown(not self.sortWindow:IsShown())
+        end,
+        OnMouseEnter = function(button)
+            local tooltip = Q:GetTooltip()
+            tooltip:SetOwner(button, "ANCHOR_RIGHT")
+            tooltip:SetText("Filter / Sort", unpack(Q.Theme.Text.Accent))
+            local r, g, b = unpack(Q.Theme.Text.Primary)
+            tooltip:AddLine("Click to edit filter/sort settings.", r, g, b, true)
+            tooltip:Show()
+        end,
+        OnMouseLeave = function()
+            Q:GetTooltip():Hide()
+        end
+    }
+    local sortButton = Q:CreateButton("DungeonBuddy_SortButton", self.frame, nil, 24, 24, Q.Theme.FontSize.S,
+        Q.Theme.Status.Info, sortHandlers)
+    sortButton.icon = sortButton:CreateTexture(nil, "ARTWORK")
+    sortButton.icon:SetTexture("Interface\\CURSOR\\Crosshair\\Interact")
+    Q:SetPixelPerfectSize(sortButton.icon, DB_ROW_HEIGHT * 0.9, DB_ROW_HEIGHT * 0.9)
+    sortButton.icon:SetPoint("CENTER")
+    sortButton:SetPoint("RIGHT", collapseAndExpandButton, "LEFT", -2, 0)
 
     --------------------------------------------------
     -- QuestLog Content Container
@@ -147,7 +181,7 @@ function QuestLog:Create()
     local scrollBar = _G[self.contentContainer:GetName() .. "ScrollBar"]
     if scrollBar then
         scrollBar:ClearAllPoints()
-        scrollBar:SetValueStep(Q:PixelPerfect(DB_ROW_HEIGHT / 4))
+        scrollBar:SetValueStep(Q:PixelPerfect(DB_ROW_HEIGHT))
         scrollBar:SetObeyStepOnDrag(true)
         Q:SetPixelPerfectPoint(scrollBar, "TOPRIGHT", self.contentContainer, "TOPRIGHT", 4, -20)
         Q:SetPixelPerfectPoint(scrollBar, "BOTTOMRIGHT", self.contentContainer, "BOTTOMRIGHT", 4, 20)
@@ -197,7 +231,7 @@ end
 
 -- Instances and main quests (the final quest of a chain) can always be collapsed; chain steps only with the setting enabled.
 function QuestLog.CanCollapse(row)
-    if row.isInstance then
+    if row.isInstance or row.isGroup then
         return true
     end
     if row.isSharedSummary or #(row.prerequisites or {}) == 0 then
@@ -207,7 +241,9 @@ function QuestLog.CanCollapse(row)
 end
 
 local function IsRowCollapsed(row)
-    if row.isInstance then
+    if row.isGroup then
+        return Q:GetSetting("CollapsedGroups")[row.id] or false
+    elseif row.isInstance then
         return Q:GetSetting("CollapsedInstances")[row.id] or false
     elseif not row.isMainQuest and not Q:GetSetting("CollapseEachChainStep") then
         return false
@@ -351,7 +387,7 @@ end
 
 local function UpdateClassIcon(frame)
     local questClass, questProfession
-    if not frame.row.isInstance then
+    if not frame.row.isInstance and not frame.row.isGroup then
         questClass = frame.row.class
         questProfession = frame.row.profession
     end
@@ -382,10 +418,14 @@ local function UpdateRowAppearance(frame, playerInfo)
 
     if frame.row.isSharedSummary then
         Q:SetTextColor(frame.titleFrame.title, "Disabled")
-        frame.leftBorder:SetColorTexture(unpack(Q.Theme.Border.Accent))
+        frame.leftBorder:SetColorTexture(unpack(Q.Theme.Text.Disabled))
         frame.sideGradient:SetGradient("HORIZONTAL",
-            CreateColor(Q.Theme.Border.Accent[1], Q.Theme.Border.Accent[2], Q.Theme.Border.Accent[3], 0.03),
+            CreateColor(Q.Theme.Text.Disabled[1], Q.Theme.Text.Disabled[2], Q.Theme.Text.Disabled[3], 0.03),
             CreateColor(0, 0, 0, 0))
+    elseif frame.row.isGroup then
+        Q:SetTextColor(frame.titleFrame.title, "Accent")
+        frame.leftBorder:SetColorTexture(unpack(Q.Theme.Text.Disabled))
+        frame.bottomBorder:SetColorTexture(unpack(Q.Theme.Text.Disabled))
     elseif frame.row.isInstance then
         local levelColor = Q.API:GetDifficultyColor(playerInfo.level, frame.row.minLevel)
         frame.titleFrame.level:SetTextColor(levelColor.r, levelColor.g, levelColor.b, 1)
@@ -453,7 +493,8 @@ local function UpdateCollapseButton(frame)
 end
 
 local function UpdateWaypointButton(frame)
-    if not frame.row.isSharedSummary and (frame.row.isInstance or Q.API:IsQuestAvailable(frame.row.id)) then
+    local row = frame.row
+    if not row.isGroup and not row.isSharedSummary and (row.isInstance or Q.API:IsQuestAvailable(row.id)) then
         frame.waypointButton:Show()
     else
         frame.waypointButton:Hide()
@@ -477,36 +518,47 @@ local function UpdateRowText(frame)
     local pixelPerfect = Q:PixelPerfect(1)
     local titleFontString = frame.titleFrame.title
     local leftInset
+    local isQuestRow = not row.isInstance and not row.isGroup and not row.isSharedSummary
+    -- Rows below a group header are indented one step
+    local indentOffset = row.isGroup and 0 or (QuestLog.indent or 0) * Q.Theme.Padding.S
 
-    if row.isInstance then
+    if row.isGroup then
+        frame.titleFrame.level:SetText("")
+
+        titleFontString:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * Q.Theme.FontSize.L)
+        leftInset = Q.Theme.Padding.S
+        titleFontString:SetPoint("LEFT", frame.titleFrame, "LEFT", leftInset, 0)
+    elseif row.isInstance then
         frame.titleFrame.level:SetText(string.format(" %s-%s", row.minLevel, row.maxLevel))
 
         titleFontString:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * Q.Theme.FontSize.XL)
-        leftInset = Q.Theme.Padding.S
+        leftInset = Q.Theme.Padding.S + indentOffset
         titleFontString:SetPoint("LEFT", frame.titleFrame, "LEFT", leftInset, 0)
     else
         frame.titleFrame.level:SetText("")
 
         if row.isMainQuest then
             titleFontString:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * Q.Theme.FontSize.M)
-            leftInset = 2 * Q.Theme.Padding.S
+            leftInset = 2 * Q.Theme.Padding.S + indentOffset
             titleFontString:SetPoint("LEFT", frame.titleFrame, "LEFT", leftInset, 0)
         else
             titleFontString:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * Q.Theme.FontSize.M)
-            leftInset = (3 + (row.chainDepth or 0)) * Q.Theme.Padding.S
+            leftInset = (3 + (row.chainDepth or 0)) * Q.Theme.Padding.S + indentOffset
             titleFontString:SetPoint("LEFT", frame.titleFrame, "LEFT", leftInset, 0)
         end
     end
 
-    local title = not row.isInstance and not row.isSharedSummary and Q:GetSetting("ShowSuggestedQuestLevel") and
+    local title = isQuestRow and Q:GetSetting("ShowSuggestedQuestLevel") and
         string.format("[%d] %s", row.suggestedLevel or 0, row.name) or row.name
-    if row.prerequisiteType and row.prerequisiteType == "any" then
+    if row.isGroup then
+        title = string.format("%s", row.name)
+    elseif row.prerequisiteType and row.prerequisiteType == "any" then
         title = "*" .. title
     elseif row.prerequisiteType and row.prerequisiteType == "breadcrumb" then
         title = "B: " .. title
     end
 
-    frame.titleFrame.trackedIcon:SetShown(not row.isInstance and not row.isSharedSummary and
+    frame.titleFrame.trackedIcon:SetShown(isQuestRow and
         Q.API:IsQuestInQuestLog(row.id) and Q.API:IsQuestWatched(row.id))
 
     -- Keep the text and any icons after it clear of the right-aligned row buttons.
@@ -532,8 +584,8 @@ local function UpdateRowText(frame)
     end
 end
 
-local function CreateOrUpdateNoQuestsFoundFrame(playerInfo)
-    if playerInfo.level < 9 then
+local function CreateOrUpdateNoQuestsFoundFrame()
+    if #QuestLog.rows == 0 then
         if not QuestLog.noQuestsFound then
             QuestLog.noQuestsFound = CreateFrame("Frame", "DungeonBuddy_NoQuestsFound", QuestLog.scrollChild)
             QuestLog.noQuestsFound:SetAllPoints()
@@ -642,7 +694,7 @@ local function CreateRowFrame(index, row)
 
     local leftBorder = frame:CreateTexture(nil, "OVERLAY")
     frame.leftBorder = leftBorder
-    leftBorder:SetColorTexture(unpack(Q.Theme.Border.Accent))
+    leftBorder:SetColorTexture(unpack(Q.Theme.Text.Disabled))
     leftBorder:SetWidth(Q:PixelPerfect(3))
     leftBorder:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
     leftBorder:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", 0, 0)
@@ -671,12 +723,12 @@ local function CreateRowFrame(index, row)
 
     frame.titleFrame.classIcon = frame.titleFrame:CreateTexture(nil, "ARTWORK")
     Q:SetPixelPerfectPoint(frame.titleFrame.classIcon, "LEFT", frame.titleFrame.title, "RIGHT", Q.Theme.Padding.S, 0)
-    Q:SetPixelPerfectSize(frame.titleFrame.classIcon, DB_ROW_HEIGHT - 2, DB_ROW_HEIGHT - 2)
+    Q:SetPixelPerfectSize(frame.titleFrame.classIcon, DB_ROW_HEIGHT - 8, DB_ROW_HEIGHT - 8)
     frame.titleFrame.classIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
     frame.titleFrame.classIconBorder = Q:CreateIconBorder(frame.titleFrame, frame.titleFrame.classIcon)
 
     frame.titleFrame.professionIcon = frame.titleFrame:CreateTexture(nil, "ARTWORK")
-    Q:SetPixelPerfectSize(frame.titleFrame.professionIcon, DB_ROW_HEIGHT - 2, DB_ROW_HEIGHT - 2)
+    Q:SetPixelPerfectSize(frame.titleFrame.professionIcon, DB_ROW_HEIGHT - 8, DB_ROW_HEIGHT - 8)
     frame.titleFrame.professionIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
     frame.titleFrame.professionIconBorder = Q:CreateIconBorder(frame.titleFrame, frame.titleFrame.professionIcon)
 
@@ -690,10 +742,14 @@ local function CreateRowFrame(index, row)
                 return
             end
 
-            local settingPath = clickedRow.isInstance and "CollapsedInstances" or "CollapsedQuests"
-            local collapsedRows = clickedRow.isInstance and Q:GetSetting("CollapsedInstances") or
-                Q:GetSetting("CollapsedQuests")
-            local collapseKey = clickedRow.isInstance and clickedRow.id or clickedRow.collapseKey
+            local settingPath, collapseKey = "CollapsedQuests", clickedRow.collapseKey
+            if clickedRow.isGroup then
+                settingPath, collapseKey = "CollapsedGroups", clickedRow.id
+            elseif clickedRow.isInstance then
+                settingPath, collapseKey = "CollapsedInstances", clickedRow.id
+            end
+
+            local collapsedRows = Q:GetSetting(settingPath)
             if collapsedRows[collapseKey] then
                 collapsedRows[collapseKey] = nil
             else
@@ -708,7 +764,7 @@ local function CreateRowFrame(index, row)
             local primaryR, primaryG, primaryB = unpack(Q.Theme.Text.Primary)
 
             tooltip:SetOwner(self, "ANCHOR_TOPLEFT", 5, 5)
-            tooltip:SetText("Expand/Collapse Section", accentR, accentG, accentB)
+            tooltip:SetText("Expand / Collapse Section", accentR, accentG, accentB)
             tooltip:AddLine("Click to expand/collapse this section.", primaryR, primaryG, primaryB, true)
             tooltip:Show()
         end,
@@ -717,7 +773,7 @@ local function CreateRowFrame(index, row)
             tooltip:Hide()
         end
     }
-    frame.collapseButton = Q:CreateButton(nil, frame, "+", DB_ROW_HEIGHT, DB_ROW_HEIGHT, Q.Theme.FontSize.L,
+    frame.collapseButton = Q:CreateButton(nil, frame, "+", DB_ROW_HEIGHT - 8, DB_ROW_HEIGHT - 8, Q.Theme.FontSize.L,
         Q.Theme.Text.Secondary, collapseHandlers)
     frame.collapseButton:SetPoint("RIGHT", frame.titleFrame, "RIGHT", -Q.Theme.Padding.L, 0)
 
@@ -761,11 +817,11 @@ local function CreateRowFrame(index, row)
             tooltip:Hide()
         end
     }
-    frame.waypointButton = Q:CreateButton(nil, frame, "", DB_ROW_HEIGHT, DB_ROW_HEIGHT, Q.Theme.FontSize.M,
+    frame.waypointButton = Q:CreateButton(nil, frame, "", DB_ROW_HEIGHT - 8, DB_ROW_HEIGHT - 8, Q.Theme.FontSize.M,
         Q.Theme.WaypointColor, waypointHandlers)
     frame.waypointButton.icon = frame.waypointButton:CreateTexture(nil, "ARTWORK")
     frame.waypointButton.icon:SetTexture("Interface\\AddOns\\DungeonBuddy\\Media\\Waypoint.png")
-    Q:SetPixelPerfectSize(frame.waypointButton.icon, DB_ROW_HEIGHT * 0.7, DB_ROW_HEIGHT * 0.7)
+    Q:SetPixelPerfectSize(frame.waypointButton.icon, (DB_ROW_HEIGHT - 8) * 0.7, (DB_ROW_HEIGHT - 8) * 0.7)
     frame.waypointButton.icon:SetPoint("CENTER")
     frame.waypointButton:SetPoint("RIGHT", frame.collapseButton, "LEFT", -2, 0)
 
@@ -788,7 +844,7 @@ local function CreateRowFrame(index, row)
             return
         end
 
-        if clickedRow.isInstance then
+        if clickedRow.isInstance or clickedRow.isGroup then
             return
         end
 
@@ -811,7 +867,7 @@ local function CreateRowFrame(index, row)
     frame.hoverHighlight:SetAlpha(0.03)
     frame.hoverHighlight:Hide()
     frame.titleHover:SetScript("OnEnter", function()
-        if frame.row.isSharedSummary then
+        if frame.row.isSharedSummary or frame.row.isGroup then
             frame.hoverHighlight:Show()
             return
         end
@@ -985,21 +1041,43 @@ local function CreateRowFrame(index, row)
     return frame
 end
 
-function QuestLog:RefreshAndPopulate()
-    self.rows = {}
-    self._frames = self._frames or {}
+-- Appends the instance row and, unless collapsed, its main quests and their chains.
+local function AppendInstanceRows(entry)
+    local instance = entry.instance
+    local instanceRow = CopyRow(instance)
+    instanceRow.isInstance = true
+    table.insert(QuestLog.rows, instanceRow)
 
-    local totalOffset = 0
-    local playerInfo = Q.API:GetPlayerInfo()
+    if Q:GetSetting("CollapsedInstances")[instance.id] then
+        return
+    end
 
-    CreateOrUpdateNoQuestsFoundFrame(playerInfo)
+    for _, quest in ipairs(entry.quests) do
+        local questRow = CopyRow(quest)
+        questRow.isMainQuest = true
+        questRow.collapseKey = string.format("instance:%s/quest:%s", tostring(instance.id), tostring(quest.id))
+        local questIsCollapsed = IsRowCollapsed(questRow)
+        local isHidden = Q:GetSetting("HideCompletedQuests") and Q.API:IsQuestCompleted(quest.id)
+        if not isHidden then
+            table.insert(QuestLog.rows, questRow)
+            if not questIsCollapsed then
+                AppendRelatedRows(quest, 0, nil, questRow.collapseKey)
+            end
+        end
+    end
+end
 
-    local instances = Q.API:GetInstances()
+-- Returns the instances (with their quests) that pass the current filters, in sorted order.
+local function GetVisibleInstanceEntries(playerInfo)
+    local instanceSort = Q:GetSetting("QuestLogSort.Instances")
+    local questSort = Q:GetSetting("QuestLogSort.Quests")
+    local hiddenContinents = Q:GetSetting("QuestLogFilter.HiddenContinents") or {}
+    local entries = {}
 
-    -- First build the rows table with all instances, quests, and chain quests, only adding rows that are not hidden
-    for _, instance in pairs(instances) do
-        if Q.API:InstanceHasAvailableQuests(instance.id, playerInfo) and playerInfo.level <= instance.maxLevel then
-            local isCollapsed = Q:GetSetting("CollapsedInstances")[instance.id] or false
+    for _, instance in ipairs(Q.API:GetInstances(instanceSort.Key, instanceSort.Ascending)) do
+        if not hiddenContinents[instance.continent]
+            and Q.API:InstanceHasAvailableQuests(instance.id, playerInfo)
+            and playerInfo.level <= instance.maxLevel then
             local quests
             if Q:GetSetting("ShowAllQuestsForAvailableInstance") then
                 quests = {}
@@ -1011,30 +1089,62 @@ function QuestLog:RefreshAndPopulate()
             else
                 quests = Q.API:GetAvailableQuestsByInstanceId(instance.id, playerInfo)
             end
-            table.sort(quests, function(a, b) return a.name < b.name end)
-            local instanceRow = CopyRow(instance)
-            instanceRow.isInstance = true
 
-            table.insert(self.rows, instanceRow)
+            Q.API:SortQuests(quests, questSort.Key, questSort.Ascending)
+            table.insert(entries, { instance = instance, quests = quests })
+        end
+    end
 
-            if not isCollapsed then
-                for _, quest in ipairs(quests) do
-                    local questRow = CopyRow(quest)
-                    questRow.isMainQuest = true
-                    questRow.collapseKey = string.format("instance:%s/quest:%s", tostring(instance.id),
-                        tostring(quest.id))
-                    local questIsCollapsed = IsRowCollapsed(questRow)
-                    if not Q:GetSetting("HideCompletedQuests") or not Q.API:IsQuestCompleted(quest.id) then
-                        table.insert(self.rows, questRow)
-                    end
+    return entries
+end
 
-                    if not questIsCollapsed and (not Q:GetSetting("HideCompletedQuests") or not Q.API:IsQuestCompleted(quest.id)) then
-                        AppendRelatedRows(quest, 0, nil, questRow.collapseKey)
-                    end
-                end
+-- Groups keep the order in which their first instance appears in the sorted list.
+local function BuildRows(entries)
+    local groupBy = Q:GetSetting("QuestLogGroupBy") or "None"
+    if groupBy ~= "Continent" and groupBy ~= "Zone" then
+        QuestLog.indent = 0
+        for _, entry in ipairs(entries) do
+            AppendInstanceRows(entry)
+        end
+        return
+    end
+
+    local groups, order = {}, {}
+    for _, entry in ipairs(entries) do
+        local name = (groupBy == "Continent" and entry.instance.continent or entry.instance.zone) or "Unknown"
+        if not groups[name] then
+            groups[name] = {}
+            table.insert(order, name)
+        end
+        table.insert(groups[name], entry)
+    end
+
+    QuestLog.indent = 1
+    for _, name in ipairs(order) do
+        local groupRow = {
+            id = string.format("group:%s:%s", groupBy, name),
+            name = name,
+            isGroup = true
+        }
+        table.insert(QuestLog.rows, groupRow)
+
+        if not IsRowCollapsed(groupRow) then
+            for _, entry in ipairs(groups[name]) do
+                AppendInstanceRows(entry)
             end
         end
     end
+end
+
+function QuestLog:RefreshAndPopulate()
+    self.rows = {}
+    self._frames = self._frames or {}
+
+    local totalOffset = 0
+    local playerInfo = Q.API:GetPlayerInfo()
+
+    BuildRows(GetVisibleInstanceEntries(playerInfo))
+    CreateOrUpdateNoQuestsFoundFrame()
 
     local prevRowHeight = DB_ROW_HEIGHT
     for index, row in ipairs(self.rows) do
@@ -1067,16 +1177,12 @@ function QuestLog:RefreshAndPopulate()
         UpdateCollapseButton(frame)
         UpdateWaypointButton(frame)
 
-        frame.sideGradient:SetShown(not row.isInstance and true or false)
+        local isQuestRow = not row.isInstance and not row.isGroup
+        frame.sideGradient:SetShown(isQuestRow)
         frame.gradient:SetShown(row.isInstance and true or false)
         frame.bottomBorder:SetShown(row.isInstance and true or false)
-        if row.isInstance then
-            frame.background:SetAlpha(0)
-            frame.leftBorder:SetAlpha(0)
-        else
-            frame.background:SetAlpha(0.2)
-            frame.leftBorder:SetAlpha(1)
-        end
+        frame.background:SetAlpha(row.isInstance and 0 or (row.isGroup and 0.4 or 0.2))
+        frame.leftBorder:SetAlpha((row.isInstance or row.isGroup) and 0 or 1)
 
         local rowOffset
         if index == 1 then

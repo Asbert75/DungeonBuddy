@@ -190,7 +190,7 @@ function Notification:Create()
     -- Create Waypoint/Directions Button
     --------------------------------------------------
     local waypointHandlers = {
-        ["OnMouseEnter"] = function()
+        OnMouseEnter = function()
             local tooltip = Q:GetTooltip()
             local r, g, b = unpack(Q.Theme.Text.Primary)
 
@@ -200,10 +200,10 @@ function Notification:Create()
 
             tooltip:Show()
         end,
-        ["OnMouseLeave"] = function()
+        OnMouseLeave = function()
             Q:GetTooltip():Hide()
         end,
-        ["OnClick"] = function()
+        OnClick = function()
             if not self.quest then
                 return
             end
@@ -225,7 +225,7 @@ function Notification:Create()
     -- Dismiss / View Next button
     --------------------------------------------------------
     local dismissHandlers = {
-        ["OnClick"] = function()
+        OnClick = function()
             self:Dismiss()
         end
     }
@@ -238,7 +238,7 @@ function Notification:Create()
     -- View Previous Button
     --------------------------------------------------
     local previousHandlers = {
-        ["OnClick"] = function()
+        OnClick = function()
             Notification:DisplayPreviousInQueue()
         end
     }

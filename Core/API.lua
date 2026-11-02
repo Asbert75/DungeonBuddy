@@ -293,22 +293,87 @@ function Q.API:GetQuestById(questId)
     return Q.QuestById[questId]
 end
 
-function Q.API:GetInstances()
+Q.API.InstanceSortKeys = { "Continent", "Zone", "Level", "Name" }
+Q.API.QuestSortKeys = { "Zone", "Level", "Name" }
+
+local function Lower(value)
+    return string.lower(value or "")
+end
+
+local InstanceSortValues = {
+    Continent = function(instance) return Lower(instance.continent) end,
+    Zone = function(instance) return Lower(instance.zone) end,
+    Level = function(instance) return instance.minLevel or 0 end,
+    Name = function(instance) return Lower(instance.name) end,
+}
+local InstanceTieBreakers = {
+    function(instance) return instance.minLevel or 0 end,
+    function(instance) return instance.maxLevel or 0 end,
+    InstanceSortValues.Name,
+}
+
+local QuestSortValues = {
+    Zone = function(quest)
+        local source = Q.API:GetQuestSources(quest)[1]
+        return Lower(source and source.zone)
+    end,
+    Level = function(quest) return quest.requiredLevel or 0 end,
+    Name = function(quest) return Lower(quest.name) end,
+}
+local QuestTieBreakers = {
+    QuestSortValues.Level,
+    QuestSortValues.Name,
+    function(quest) return quest.id or 0 end,
+}
+
+-- Only the chosen key follows the requested direction; ties always fall back to ascending order.
+local function BuildComparer(values, tieBreakers, key, ascending)
+    local primary = values[key] or values.Level or values.Name
+    return function(a, b)
+        local valueA, valueB = primary(a), primary(b)
+        if valueA ~= valueB then
+            if ascending then
+                return valueA < valueB
+            end
+            return valueA > valueB
+        end
+
+        for _, getValue in ipairs(tieBreakers) do
+            valueA, valueB = getValue(a), getValue(b)
+            if valueA ~= valueB then
+                return valueA < valueB
+            end
+        end
+        return false
+    end
+end
+
+function Q.API:GetInstances(sortKey, ascending)
     local instances = {}
     for _, instance in pairs(Q.Instances) do
         table.insert(instances, instance)
     end
 
-    table.sort(instances, function(a, b)
-        if a.minLevel ~= b.minLevel then
-            return a.minLevel < b.minLevel
-        end
-        if a.maxLevel ~= b.maxLevel then
-            return a.maxLevel < b.maxLevel
-        end
-        return a.name < b.name
-    end)
+    table.sort(instances, BuildComparer(InstanceSortValues, InstanceTieBreakers, sortKey or "Level", ascending ~= false))
     return instances
+end
+
+function Q.API:GetContinents()
+    local continents, seen = {}, {}
+    for _, instance in pairs(Q.Instances) do
+        if instance.continent and not seen[instance.continent] then
+            seen[instance.continent] = true
+            table.insert(continents, instance.continent)
+        end
+    end
+
+    table.sort(continents)
+    return continents
+end
+
+function Q.API:SortQuests(quests, sortKey, ascending)
+    table.sort(quests, BuildComparer(QuestSortValues, QuestTieBreakers, sortKey or "Name", ascending ~= false))
+    return quests
 end
 
 function Q.API:IsQuestChainStart(questId)

@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added color themes that you can switch between from the Settings-window.
 - Instance rows in the tracker now show a tooltip with location, level range and quest counts (total, completed, in your quest log and available now, hidden if count is 0)
+- Added a Filter/Sort window to the quest tracker that allows for changing sort, filters and grouping.
 
 ### Changed
 

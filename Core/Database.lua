@@ -36,7 +36,20 @@ local SharedDefaults = {
     CollapseEachChainStep = false,
     Theme = nil, -- Chosen from the character's faction on first load, see Q:LoadTheme
 
+    QuestLogSort = {
+        Instances = { Key = "Level", Ascending = true },
+        Quests = { Key = "Name", Ascending = true },
+    },
+
+    -- "None", "Continent" or "Zone" (the instance's location, not the quest sources)
+    QuestLogGroupBy = "None",
+    -- Anything listed here is hidden from the quest log
+    QuestLogFilter = {
+        HiddenContinents = {},
+    },
+
     -- Tracking Data
+    CollapsedGroups = {},
     CollapsedInstances = {},
     CollapsedQuests = {},
 
@@ -91,4 +104,16 @@ function Q:SetSetting(path, value)
         node = node[key]
     end
     node[lastKey] = value
+end
+
+-- Returns a copy of the default value for a profile setting, safe to store and mutate.
+function Q:GetDefaultSetting(path)
+    local node = Defaults.profile
+    for _, key in ipairs(SplitPath(path)) do
+        if type(node) ~= "table" then
+            return nil
+        end
+        node = node[key]
+    end
+    return CopyTable(node)
 end
