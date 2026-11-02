@@ -6,7 +6,7 @@ local function SetThemeTint(frame, color, alpha)
 end
 
 function Q:PrettyPrint(message)
-    DEFAULT_CHAT_FRAME:AddMessage("|cfff0c25a" .. ADDON_NAME .. ":|r " .. tostring(message))
+    DEFAULT_CHAT_FRAME:AddMessage(self:ColorToHex(Q.Theme.Brand) .. ADDON_NAME .. ":|r " .. tostring(message))
 end
 
 function Q:ColorToHex(color)

@@ -200,7 +200,7 @@ function QuestLogFilter:Create(questLogFrame, onChanged)
             end,
         })
     end
-    AddButtonList("Group Instances", groupEntries)
+    AddButtonList("Instance Grouping", groupEntries)
 
     local continentEntries = {}
     for _, continent in ipairs(Q.API:GetContinents()) do

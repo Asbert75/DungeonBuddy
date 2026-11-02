@@ -35,8 +35,7 @@ Q.Themes.Alliance = {
     },
     Border = {
         Default = HexToColor("#2e3b4b"),
-        -- Accent  = HexToColor("#4a90d9"),
-        Accent = HexToColor("#D9C14A")
+        Accent  = HexToColor("#4a90d9"),
     },
     Text = {
         Primary   = HexToColor("#e6ebf0"),

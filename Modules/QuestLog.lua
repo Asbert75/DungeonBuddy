@@ -155,10 +155,10 @@ function QuestLog:Create()
         end
     }
     local sortButton = Q:CreateButton("DungeonBuddy_SortButton", self.frame, nil, 24, 24, Q.Theme.FontSize.S,
-        Q.Theme.Status.Info, sortHandlers)
+        Q.Theme.WaypointColor, sortHandlers)
     sortButton.icon = sortButton:CreateTexture(nil, "ARTWORK")
     sortButton.icon:SetTexture("Interface\\CURSOR\\Crosshair\\Interact")
-    Q:SetPixelPerfectSize(sortButton.icon, DB_ROW_HEIGHT * 0.9, DB_ROW_HEIGHT * 0.9)
+    Q:SetPixelPerfectSize(sortButton.icon, DB_ROW_HEIGHT * 0.8, DB_ROW_HEIGHT * 0.8)
     sortButton.icon:SetPoint("CENTER")
     sortButton:SetPoint("RIGHT", collapseAndExpandButton, "LEFT", -2, 0)
 
@@ -995,7 +995,8 @@ local function CreateRowFrame(index, row)
 
             if #sources == 1 then
                 local source = sources[1]
-                local location = source.zone and (" in " .. source.zone) or ""
+                local locationName = Q.API:GetSourceLocationName(source)
+                local location = locationName and (" in " .. locationName) or ""
                 tooltip:AddLine("Started by " .. successColorCode .. source.name .. "|r" .. location .. ".",
                     Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
                 if source.text then
@@ -1006,7 +1007,8 @@ local function CreateRowFrame(index, row)
                 tooltip:AddLine("Started by:", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3],
                     true)
                 for _, source in ipairs(sources) do
-                    local location = source.zone and (" in " .. source.zone) or ""
+                    local locationName = Q.API:GetSourceLocationName(source)
+                    local location = locationName and (" in " .. locationName) or ""
                     tooltip:AddLine(successColorCode .. source.name .. "|r" .. location, Q.Theme.Text.Primary[1],
                         Q.Theme.Text.Primary[2], Q.Theme.Text.Primary[3], true)
                     if source.text then

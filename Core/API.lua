@@ -73,7 +73,7 @@ function Q.API:BuildLookupTables()
         end
     end
 
-    local function addQuestInstance(questId, instance)
+    local function AddQuestInstance(questId, instance)
         local instances = Q.InstanceByQuestId[questId]
         if not instances then
             instances = {}
@@ -94,7 +94,7 @@ function Q.API:BuildLookupTables()
             return
         end
         visited[quest.id] = true
-        addQuestInstance(quest.id, instance)
+        AddQuestInstance(quest.id, instance)
 
         for _, prerequisite in ipairs(quest.prerequisites or {}) do
             AddInstanceToChain(self:GetQuestById(prerequisite.id), instance, visited)
@@ -212,6 +212,28 @@ function Q.API:GetWaypointText(quest, source)
     return title
 end
 
+-- Sources inside an instance only name the instance; zone and location are taken from its entrance.
+local resolvedSources = setmetatable({}, { __mode = "k" })
+
+local function ResolveSource(source)
+    local instance = source.instance
+    if not instance then
+        return source
+    end
+
+    local resolved = resolvedSources[source]
+    if not resolved then
+        resolved = {}
+        for key, value in pairs(source) do
+            resolved[key] = value
+        end
+        resolved.zone = instance.zone
+        resolved.location = instance.location
+        resolvedSources[source] = resolved
+    end
+    return resolved
+end
+
 function Q.API:GetQuestSources(quest, faction)
     if not quest then
         return {}
@@ -223,11 +245,18 @@ function Q.API:GetQuestSources(quest, faction)
 
     for _, source in ipairs(questSources) do
         if source and (not source.faction or source.faction == faction) then
-            table.insert(sources, source)
+            table.insert(sources, ResolveSource(source))
         end
     end
 
     return sources
+end
+
+function Q.API:GetSourceLocationName(source)
+    if source.instance then
+        return source.instance.name
+    end
+    return source.zone
 end
 
 local function AddWaypoint(location, title)
@@ -417,7 +446,7 @@ function Q.API:GetRelevantQuestsForZone()
             playerInfo.level <= (quest.suggestedLevel or quest.requiredLevel or 0) + 3 -- Allow a buffer of 3 levels above the suggested level before it doesn't count as "relevant" anymore
         then
             for _, source in ipairs(self:GetQuestSources(quest, playerInfo.faction)) do
-                if source.zone == zone then
+                if source.zone == zone or (source.instance and source.instance.name == zone) then
                     table.insert(quests, quest)
                     break
                 end
