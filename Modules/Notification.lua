@@ -41,20 +41,24 @@ local function FormatInstanceRelationships(quest)
     return table.concat(labels, " | ")
 end
 
-function Notification:LevelUpEventHandler()
-    local playerLevel = Q.API:GetPlayerLevel() + 1
+function Notification:LevelUpEventHandler(_, newLevel)
     local quests = Q.API:GetQuests()
     self.queue = {}
     self.queueIndex = 1
 
     for _, quest in ipairs(quests) do
-        if ((Q:GetSetting("ShowNotificationForAllQuests") and quest.instances and #quest.instances > 0) or Q.API:IsInstanceQuestLineageStart(quest.id)) and quest.requiredLevel == playerLevel and Q.API:IsQuestAvailable(quest.id) then
+        if ((Q:GetSetting("ShowNotificationForAllQuests") and quest.instances and #quest.instances > 0) or Q.API:IsInstanceQuestChainStart(quest.id)) and quest.requiredLevel == newLevel and Q.API:IsQuestAvailable(quest.id) then
             table.insert(self.queue, quest)
 
             if Q:GetSetting("AutoWaypoint") then
                 Q.API:SetWaypoint(quest)
             end
         end
+    end
+
+    if #self.queue == 0 then
+        self:Dismiss(true)
+        return
     end
 
     self:DisplayNextInQueue()
@@ -204,9 +208,10 @@ function Notification:Create()
                 return
             end
 
-            Q.API:SetWaypoint(self.quest)
+            if not Q.API:SetWaypoint(self.quest) then
+                return
+            end
 
-            self.trackWaypointSet = true
             self.waypointButton.label:SetText("Waypoint Set")
             self.waypointButton:SetColor(Q.Theme.Status.Success)
         end
@@ -294,81 +299,39 @@ end
 
 local function UpdateSourceData(playerFaction)
     local quest = Notification.quest
+    local sources = Q.API:GetQuestSources(quest, playerFaction)
+    local hasMultipleSources = #sources > 1
+    local source = not hasMultipleSources and sources[1] or nil
+    local zoneText = ""
 
-    local hasMultipleSources = false
-    local zoneText = " - "
-    if quest.sources and #quest.sources > 1 then
-        hasMultipleSources = true
-
-        -- Sources without a faction are shared by both factions
+    if hasMultipleSources then
         local zones, seen = {}, {}
-        for _, source in ipairs(quest.sources) do
-            if (not source.faction or source.faction == playerFaction) and source.zone and not seen[source.zone] then
-                seen[source.zone] = true
-                table.insert(zones, source.zone)
+        for _, questSource in ipairs(sources) do
+            if questSource.zone and not seen[questSource.zone] then
+                seen[questSource.zone] = true
+                table.insert(zones, questSource.zone)
             end
         end
-        zoneText = zoneText .. table.concat(zones, "/")
+        if #zones > 0 then
+            zoneText = " - " .. table.concat(zones, "/")
+        end
     end
 
-    Notification.questSourceName:SetText(hasMultipleSources and "Multiple Sources" or quest.source.name)
-    Notification.questSourceZoneName:SetText(hasMultipleSources and zoneText or " - " .. quest.source.zone)
-    Notification.questSourceText:SetText(hasMultipleSources and "" or quest.source.text)
+    Notification.questSourceName:SetText(hasMultipleSources and "Multiple Sources" or
+        (source and source.name or "Unknown Source"))
+    Notification.questSourceZoneName:SetText(hasMultipleSources and zoneText or
+        (source and source.zone and " - " .. source.zone or ""))
+    Notification.questSourceText:SetText(not hasMultipleSources and source and source.text or "")
 
-    if hasMultipleSources or quest.source.type == "npc" then
-        if playerFaction == "Alliance" then
-            Notification.sourceIcon:SetTexture("Interface\\Icons\\achievement_character_human_male")
-        else
-            Notification.sourceIcon:SetTexture("Interface\\Icons\\achievement_character_orc_male")
-        end
-    elseif quest.source.type == "item" then
-        local itemIcon
-        if quest.source.itemId then
-            if C_Item and C_Item.GetItemIconByID then
-                itemIcon = C_Item.GetItemIconByID(quest.source.itemId)
-            end
-        end
-
-        Notification.sourceIcon:SetTexture(itemIcon or "Interface\\Icons\\INV_Scroll_03")
-    elseif quest.source.type == "object" then
-        Notification.sourceIcon:SetTexture("Interface\\Icons\\inv_scroll_10")
-    end
+    Notification.sourceIcon:SetTexture(Q.API:GetSourceIcon(source, playerFaction, hasMultipleSources))
 end
 
 local function UpdateClassIcon(questClass, questProfession)
-    local classIconTexture = Q.API:GetClassIconTexture(questClass)
-    local professionIconTexture = Q.API:GetProfessionIconTexture(questProfession)
-
-    if classIconTexture then
-        Notification.questClassIcon:SetTexture(classIconTexture)
-        local classColor = RAID_CLASS_COLORS and RAID_CLASS_COLORS[questClass]
-        if classColor then
-            Q:SetIconBorderColor(Notification.questClassIconBorder, { classColor.r, classColor.g, classColor.b })
-        end
-        Q:SetIconBorderShown(Notification.questClassIconBorder, true)
-        Notification.questClassIcon:Show()
-    else
-        Q:SetIconBorderShown(Notification.questClassIconBorder, false)
-        Notification.questClassIcon:Hide()
-    end
-
-    if professionIconTexture then
-        local icon = Notification.questProfessionIcon
-        icon:SetTexture(professionIconTexture)
-        icon:ClearAllPoints()
-        local previous = classIconTexture and Notification.questClassIcon or Notification.questName
-        Q:SetPixelPerfectPoint(icon, "LEFT", previous, "RIGHT", 2, 0)
-        Q:SetIconBorderColor(Notification.questProfessionIconBorder, Q.Theme.Text.Primary)
-        Q:SetIconBorderShown(Notification.questProfessionIconBorder, true)
-        icon:Show()
-    else
-        Q:SetIconBorderShown(Notification.questProfessionIconBorder, false)
-        Notification.questProfessionIcon:Hide()
-    end
+    Q:UpdateQuestIcons(Notification.questClassIcon, Notification.questClassIconBorder, Notification.questProfessionIcon,
+        Notification.questProfessionIconBorder, questClass, questProfession, Notification.questName)
 end
 
 local function UpdateActionButtons()
-    Notification.trackWaypointSet = false
     Notification.waypointButton.label:SetText("Set Waypoint")
     Notification.waypointButton:SetColor(Q.Theme.WaypointColor)
 
@@ -385,7 +348,6 @@ local function UpdateActionButtons()
     end
 
     if Q:GetSetting("AutoWaypoint") then
-        Notification.trackWaypointSet = true
         Notification.waypointButton.label:SetText("Waypoint Set")
         Notification.waypointButton:SetColor(Q.Theme.Status.Success)
     end

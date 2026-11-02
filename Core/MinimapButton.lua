@@ -40,14 +40,17 @@ function Q:CreateMinimapButton()
     end
 end
 
-function Q.MinimapButton:Toggle()
-    if Q:GetSetting("MinimapButton.Hide") then
-        Q:SetSetting("MinimapButton.Hide", false)
-        LibDBIcon:Show("DungeonBuddy")
-        Q:PrettyPrint("Minimap button enabled.")
-    else
-        Q:SetSetting("MinimapButton.Hide", true)
+function Q.MinimapButton:SetHidden(hidden)
+    Q:SetSetting("MinimapButton.Hide", hidden)
+    if hidden then
         LibDBIcon:Hide("DungeonBuddy")
-        Q:PrettyPrint("Minimap button disabled.")
+    else
+        LibDBIcon:Show("DungeonBuddy")
     end
+
+    Q:PrettyPrint(hidden and "Minimap button disabled." or "Minimap button enabled.")
+end
+
+function Q.MinimapButton:Toggle()
+    self:SetHidden(not Q:GetSetting("MinimapButton.Hide"))
 end

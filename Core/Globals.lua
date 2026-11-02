@@ -20,11 +20,6 @@ function Q:ColorToHex(color)
         math.floor(b * 255 + 0.5))
 end
 
-function Q:HexToColor(hex)
-    local r, g, b = hex:match("#?(%x%x)(%x%x)(%x%x)")
-    return { tonumber(r, 16) / 255, tonumber(g, 16) / 255, tonumber(b, 16) / 255, 1 }
-end
-
 function Q:PixelPerfect(value)
     if not value then return 0 end
     local _, screenHeight = GetPhysicalScreenSize()
@@ -277,6 +272,40 @@ function Q:SetIconBorderShown(border, shown)
     for _, edge in ipairs(border) do
         edge:SetShown(shown)
     end
+end
+
+function Q:UpdateQuestIcons(classIcon, classIconBorder, professionIcon, professionIconBorder, questClass,
+                            questProfession, professionFallback)
+    local classIconTexture = Q.API:GetClassIconTexture(questClass)
+    local professionIconTexture = Q.API:GetProfessionIconTexture(questProfession)
+
+    if classIconTexture then
+        classIcon:SetTexture(classIconTexture)
+        local classColor = RAID_CLASS_COLORS and RAID_CLASS_COLORS[questClass]
+        if classColor then
+            self:SetIconBorderColor(classIconBorder, { classColor.r, classColor.g, classColor.b })
+        end
+        self:SetIconBorderShown(classIconBorder, true)
+        classIcon:Show()
+    else
+        self:SetIconBorderShown(classIconBorder, false)
+        classIcon:Hide()
+    end
+
+    if professionIconTexture then
+        professionIcon:SetTexture(professionIconTexture)
+        self:SetIconBorderColor(professionIconBorder, self.Theme.Text.Primary)
+        self:SetIconBorderShown(professionIconBorder, true)
+        professionIcon:ClearAllPoints()
+        self:SetPixelPerfectPoint(professionIcon, "LEFT", classIconTexture and classIcon or professionFallback, "RIGHT",
+            2, 0)
+        professionIcon:Show()
+    else
+        self:SetIconBorderShown(professionIconBorder, false)
+        professionIcon:Hide()
+    end
+
+    return classIconTexture ~= nil, professionIconTexture ~= nil
 end
 
 function Q:CreateBackdropFrame(frameName, parent, width, height, strata, backgroundKey, borderKey, backgroundAlpha,
