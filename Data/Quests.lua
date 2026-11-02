@@ -3399,7 +3399,7 @@ Q.Quests = {
         instances = { Q.Instances["Temple of Atal'Hakkar"] },
     },
     {
-        id = 3446,
+        id = 3373,
         faction = nil,
         name = "The Essence of Eranikus",
         suggestedLevel = 52,
@@ -4392,7 +4392,7 @@ Q.Quests = {
 
     --#region Dire Maul: North
     {
-        id = 5527,
+        id = 5525,
         faction = nil,
         name = "Free Knot!",
         suggestedLevel = 60,
@@ -4608,7 +4608,7 @@ Q.Quests = {
         instances = { Q.Instances["Lower Blackrock Spire"] }
     },
     {
-        id = 4702,
+        id = 4903,
         faction = "Horde",
         name = "Warlord's Command",
         suggestedLevel = 60,
@@ -5510,7 +5510,7 @@ Q.Quests = {
         },
     },
     {
-        id = 7462,
+        id = 7642,
         faction = "Alliance",
         class = "PALADIN",
         name = "Collection of Goods",
@@ -5527,7 +5527,7 @@ Q.Quests = {
         },
     },
     {
-        id = 7463,
+        id = 7643,
         faction = "Alliance",
         class = "PALADIN",
         name = "Ancient Equine Spirit",
@@ -6281,7 +6281,7 @@ Q.Quests = {
             location = { mapId = 1444, x = 0.59, y = 0.45 },
             text = "Found inside DM: West"
         },
-        instances = { Q.Instances["DM: West"] },
+        instances = { Q.Instances["Dire Maul: West"] },
     },
     --#endregion
 

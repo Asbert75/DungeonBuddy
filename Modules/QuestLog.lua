@@ -5,10 +5,16 @@ Q.QuestLog = QuestLog
 local DB_ROW_HEIGHT = Q.Theme.FontSize.XL + 6
 local INSTANCE_ROW_EXTRA_HEIGHT = 20
 local CONTAINER_WIDTH = 450
+local QuestStatusColors = {
+    completed = "QuestColorCompleted",
+    inProgress = "QuestColorInProgress",
+    available = "QuestColorAvailable",
+    unavailable = "QuestColorUnavailable",
+}
 
 function QuestLog:ResetPosition()
-    Q:SetSetting("QuestLogFrame.X", 750)
-    Q:SetSetting("QuestLogFrame.Y", 0)
+    Q:SetSetting("QuestLogFrame.x", 750)
+    Q:SetSetting("QuestLogFrame.y", 0)
     if self.frame then
         Q:SetPixelPerfectCenterPoint(self.frame, 750, 0)
     end
@@ -39,13 +45,13 @@ function QuestLog:Create()
 
         local x, y = self:GetCenter()
         local centerX, centerY = UIParent:GetCenter()
-        Q:SetSetting("QuestLogFrame.X", Q:PixelPerfect(x - centerX))
-        Q:SetSetting("QuestLogFrame.Y", Q:PixelPerfect(y - centerY))
+        Q:SetSetting("QuestLogFrame.x", Q:PixelPerfect(x - centerX))
+        Q:SetSetting("QuestLogFrame.y", Q:PixelPerfect(y - centerY))
 
-        Q:SetPixelPerfectCenterPoint(self, Q:GetSetting("QuestLogFrame.X") or 750, Q:GetSetting("QuestLogFrame.Y") or 0)
+        Q:SetPixelPerfectCenterPoint(self, Q:GetSetting("QuestLogFrame.x") or 750, Q:GetSetting("QuestLogFrame.y") or 0)
     end)
 
-    Q:SetPixelPerfectCenterPoint(self.frame, Q:GetSetting("QuestLogFrame.X") or 750, Q:GetSetting("QuestLogFrame.Y") or 0)
+    Q:SetPixelPerfectCenterPoint(self.frame, Q:GetSetting("QuestLogFrame.x") or 750, Q:GetSetting("QuestLogFrame.y") or 0)
     self.frame:SetUserPlaced(false)
 
     local closeButton = Q:CreateCloseButton(self.frame, "DungeonBuddy_QuestLogCloseButton")
@@ -231,7 +237,7 @@ local function CopyRow(row)
 end
 
 -- Counts the unique quests that lead up to the given quest, ignoring optional breadcrumbs.
-local function CountLineage(quest, seen)
+local function CountChain(quest, seen)
     for _, prerequisite in ipairs(quest.prerequisites or {}) do
         local prerequisiteQuest = Q.API:GetQuestById(prerequisite.id)
         if prerequisiteQuest and
@@ -239,15 +245,15 @@ local function CountLineage(quest, seen)
             not seen[prerequisite.id]
         then
             seen[prerequisite.id] = true
-            CountLineage(prerequisiteQuest, seen)
+            CountChain(prerequisiteQuest, seen)
         end
     end
     return seen
 end
 
-local function CountRemainingLineage(quest)
+local function CountRemainingChain(quest)
     local count = 0
-    for questId in pairs(CountLineage(quest, {})) do
+    for questId in pairs(CountChain(quest, {})) do
         if not Q:GetSetting("HideCompletedQuests") or not Q.API:IsQuestCompleted(questId) then
             count = count + 1
         end
@@ -255,7 +261,7 @@ local function CountRemainingLineage(quest)
     return count
 end
 
-local function HasLineage(quest)
+local function HasChain(quest)
     for _, prerequisite in ipairs(quest.prerequisites or {}) do
         if prerequisite.type ~= Q.PrerequisiteType.BREADCRUMB and Q.API:GetQuestById(prerequisite.id) then
             return true
@@ -274,43 +280,37 @@ local function AppendRelatedRows(quest, depth, visited, parentCollapseKey)
     depth = depth or 0
     visited = visited or { [quest.id] = true }
 
-    local function AddDependency(questId, dependencyType)
-        local dependency = Q.API:GetQuestById(questId)
-        if dependency and not Q.API:PlayerHasProfession(dependency.profession) then
+    local function AddDependency(dependency, dependencyType)
+        if not Q.API:PlayerHasProfession(dependency.profession) then
             return
         end
 
-        local row = dependency and CopyRow(dependency) or {
-            id = questId,
-            name = "Missing QuestId [" .. tostring(questId) .. "]",
-        }
-        row.isChainQuest = dependencyType == "chain"
-        row.isPrerequisite = dependencyType ~= "chain"
+        local row = CopyRow(dependency)
         row.prerequisiteType = dependencyType
-        row.lineageDepth = depth + 1
+        row.chainDepth = depth + 1
         row.collapseKey = string.format("%s/quest:%s", parentCollapseKey or ("quest:" .. tostring(quest.id)),
-            tostring(questId))
+            tostring(dependency.id))
 
-        local isHidden = Q:GetSetting("HideCompletedQuests") and Q.API:IsQuestCompleted(questId)
+        local isHidden = Q:GetSetting("HideCompletedQuests") and Q.API:IsQuestCompleted(dependency.id)
         if not isHidden then
             table.insert(QuestLog.rows, row)
         end
 
-        if IsRowCollapsed(row) or not dependency then
+        if IsRowCollapsed(row) then
             return
         end
 
-        if not visited[questId] then
-            visited[questId] = true
+        if not visited[dependency.id] then
+            visited[dependency.id] = true
             AppendRelatedRows(dependency, depth + 1, visited, row.collapseKey)
-        elseif HasLineage(dependency) and not isHidden then
-            local count = CountRemainingLineage(dependency)
+        elseif HasChain(dependency) and not isHidden then
+            local count = CountRemainingChain(dependency)
             if count > 0 then
                 table.insert(QuestLog.rows, {
-                    id = "shared:" .. questId .. ":" .. #QuestLog.rows,
+                    id = "shared:" .. dependency.id .. ":" .. #QuestLog.rows,
                     name = string.format("Shared chain (%d %s, listed above)", count, count == 1 and "quest" or "quests"),
                     isSharedSummary = true,
-                    lineageDepth = depth + 2,
+                    chainDepth = depth + 2,
                 })
             end
         end
@@ -320,8 +320,9 @@ local function AppendRelatedRows(quest, depth, visited, parentCollapseKey)
     for _, prerequisite in ipairs(quest.prerequisites or {}) do
         local isHiddenBreadcrumb = Q.API:IsQuestCompleted(quest.id) and
             prerequisite.type == Q.PrerequisiteType.BREADCRUMB
-        if not isHiddenBreadcrumb and Q.API:GetQuestById(prerequisite.id) then
-            AddDependency(prerequisite.id, prerequisite.type)
+        local dependency = Q.API:GetQuestById(prerequisite.id)
+        if not isHiddenBreadcrumb and dependency then
+            AddDependency(dependency, prerequisite.type)
         end
     end
 end
@@ -349,46 +350,27 @@ local function SetGradientColor(frame, settingPath)
 end
 
 local function UpdateClassIcon(frame)
-    local classIcon = frame.titleFrame.classIcon
-    local professionIcon = frame.titleFrame.professionIcon
-    local classIconTexture = not frame.row.isInstance and Q.API:GetClassIconTexture(frame.row.class)
-    local professionIconTexture = not frame.row.isInstance and Q.API:GetProfessionIconTexture(frame.row.profession)
-
-    if classIconTexture then
-        classIcon:SetTexture(classIconTexture)
-        local classColor = RAID_CLASS_COLORS and RAID_CLASS_COLORS[frame.row.class]
-        if classColor then
-            Q:SetIconBorderColor(frame.titleFrame.classIconBorder, { classColor.r, classColor.g, classColor.b })
-        end
-        Q:SetIconBorderShown(frame.titleFrame.classIconBorder, true)
-        classIcon:Show()
-    else
-        Q:SetIconBorderShown(frame.titleFrame.classIconBorder, false)
-        classIcon:Hide()
+    local questClass, questProfession
+    if not frame.row.isInstance then
+        questClass = frame.row.class
+        questProfession = frame.row.profession
     end
-
-    if professionIconTexture then
-        professionIcon:SetTexture(professionIconTexture)
-        Q:SetIconBorderColor(frame.titleFrame.professionIconBorder, Q.Theme.Text.Primary)
-        Q:SetIconBorderShown(frame.titleFrame.professionIconBorder, true)
-        professionIcon:ClearAllPoints()
-        if classIconTexture then
-            Q:SetPixelPerfectPoint(professionIcon, "LEFT", classIcon, "RIGHT", 2, 0)
-        else
-            Q:SetPixelPerfectPoint(professionIcon, "LEFT", frame.titleFrame.title, "RIGHT", 2, 0)
-        end
-        professionIcon:Show()
-    else
-        Q:SetIconBorderShown(frame.titleFrame.professionIconBorder, false)
-        professionIcon:Hide()
-    end
+    local hasClassIcon, hasProfessionIcon = Q:UpdateQuestIcons(
+        frame.titleFrame.classIcon,
+        frame.titleFrame.classIconBorder,
+        frame.titleFrame.professionIcon,
+        frame.titleFrame.professionIconBorder,
+        questClass,
+        questProfession,
+        frame.titleFrame.title
+    )
 
     local trackedIcon = frame.titleFrame.trackedIcon
     trackedIcon:ClearAllPoints()
-    if professionIcon:IsShown() then
-        Q:SetPixelPerfectPoint(trackedIcon, "LEFT", professionIcon, "RIGHT", 2, 0)
-    elseif classIcon:IsShown() then
-        Q:SetPixelPerfectPoint(trackedIcon, "LEFT", classIcon, "RIGHT", 2, 0)
+    if hasProfessionIcon then
+        Q:SetPixelPerfectPoint(trackedIcon, "LEFT", frame.titleFrame.professionIcon, "RIGHT", 2, 0)
+    elseif hasClassIcon then
+        Q:SetPixelPerfectPoint(trackedIcon, "LEFT", frame.titleFrame.classIcon, "RIGHT", 2, 0)
     else
         Q:SetPixelPerfectPoint(trackedIcon, "LEFT", frame.titleFrame.title, "RIGHT", 2, 0)
     end
@@ -418,29 +400,36 @@ local function UpdateRowAppearance(frame, playerInfo)
         frame.gradient:SetGradient("VERTICAL", CreateColor(levelColor.r, levelColor.g, levelColor.b, 0.15),
             CreateColor(0, 0, 0, 0))
         frame.bottomBorder:SetColorTexture(levelColor.r, levelColor.g, levelColor.b, 1)
-    elseif Q.API:IsQuestCompleted(frame.row.id) then
-        SetQuestStatusColor(frame.titleFrame.title, "QuestColorCompleted", "Disabled")
-        SetBorderTextureColor(frame.leftBorder, "QuestColorCompleted")
-        SetGradientColor(frame.sideGradient, "QuestColorCompleted")
-    elseif Q.API:IsQuestInQuestLog(frame.row.id) then
-        SetQuestStatusColor(frame.titleFrame.title, "QuestColorInProgress")
-        SetBorderTextureColor(frame.leftBorder, "QuestColorInProgress")
-        SetGradientColor(frame.sideGradient, "QuestColorInProgress")
-    elseif Q.API:IsQuestAvailable(frame.row.id) then
-        if frame.row.prerequisiteType == Q.PrerequisiteType.BREADCRUMB or frame.row.prerequisiteType == Q.PrerequisiteType.ANY then
+    else
+        local questStatus = Q.API:GetQuestStatus(frame.row.id)
+        if questStatus == "completed" then
+            local colorPath = QuestStatusColors.completed
+            SetQuestStatusColor(frame.titleFrame.title, colorPath)
+            SetBorderTextureColor(frame.leftBorder, colorPath)
+            SetGradientColor(frame.sideGradient, colorPath)
+        elseif questStatus == "inProgress" then
+            local colorPath = QuestStatusColors.inProgress
+            SetQuestStatusColor(frame.titleFrame.title, colorPath)
+            SetBorderTextureColor(frame.leftBorder, colorPath)
+            SetGradientColor(frame.sideGradient, colorPath)
+        elseif questStatus == "available" and
+            (frame.row.prerequisiteType == Q.PrerequisiteType.BREADCRUMB or frame.row.prerequisiteType == Q.PrerequisiteType.ANY)
+        then
             local infoR, infoG, infoB = unpack(Q.Theme.Status.Info)
             frame.titleFrame.title:SetTextColor(infoR, infoG, infoB, 1)
             frame.leftBorder:SetColorTexture(infoR, infoG, infoB)
             frame.sideGradient:SetGradient("HORIZONTAL", CreateColor(infoR, infoG, infoB, 0.03), CreateColor(0, 0, 0, 0))
+        elseif questStatus == "available" then
+            local colorPath = QuestStatusColors.available
+            SetQuestStatusColor(frame.titleFrame.title, colorPath)
+            SetBorderTextureColor(frame.leftBorder, colorPath)
+            SetGradientColor(frame.sideGradient, colorPath)
         else
-            SetQuestStatusColor(frame.titleFrame.title, "QuestColorAvailable", "Accent")
-            SetBorderTextureColor(frame.leftBorder, "QuestColorAvailable")
-            SetGradientColor(frame.sideGradient, "QuestColorAvailable")
+            local colorPath = QuestStatusColors.unavailable
+            SetQuestStatusColor(frame.titleFrame.title, colorPath)
+            SetBorderTextureColor(frame.leftBorder, colorPath)
+            SetGradientColor(frame.sideGradient, colorPath)
         end
-    else
-        SetQuestStatusColor(frame.titleFrame.title, "QuestColorUnavailable")
-        SetBorderTextureColor(frame.leftBorder, "QuestColorUnavailable")
-        SetGradientColor(frame.sideGradient, "QuestColorUnavailable")
     end
 end
 
@@ -504,7 +493,7 @@ local function UpdateRowText(frame)
             titleFontString:SetPoint("LEFT", frame.titleFrame, "LEFT", leftInset, 0)
         else
             titleFontString:SetFont("Fonts\\FRIZQT__.TTF", pixelPerfect * Q.Theme.FontSize.M)
-            leftInset = (3 + (row.lineageDepth or 0)) * Q.Theme.Padding.S
+            leftInset = (3 + (row.chainDepth or 0)) * Q.Theme.Padding.S
             titleFontString:SetPoint("LEFT", frame.titleFrame, "LEFT", leftInset, 0)
         end
     end
@@ -541,8 +530,6 @@ local function UpdateRowText(frame)
             titleFontString:SetText(displayedTitle)
         until truncatedTitle == "" or titleFontString:GetStringWidth() <= availableWidth
     end
-    titleFontString.fullText = title
-    titleFontString.isTruncated = displayedTitle ~= title
 end
 
 local function CreateOrUpdateNoQuestsFoundFrame(playerInfo)
@@ -744,9 +731,12 @@ local function CreateRowFrame(index, row)
                 return
             end
 
+            if not Q.API:SetWaypoint(frame.row, frame.row.isInstance) then
+                return
+            end
+
             self.isDisabled = true
             self:SetAlpha(0.5)
-            Q.API:SetWaypoint(frame.row, frame.row.isInstance)
 
             C_Timer.After(2, function()
                 self.isDisabled = false
@@ -756,7 +746,7 @@ local function CreateRowFrame(index, row)
         OnMouseEnter = function(self)
             local tooltip = Q:GetTooltip()
             local r, g, b = unpack(Q.Theme.Text.Primary)
-            local hasMultipleSources = frame.row.sources and #frame.row.sources > 1
+            local hasMultipleSources = #Q.API:GetQuestSources(frame.row) > 1
 
             tooltip:SetOwner(self, "ANCHOR_TOPLEFT", 5, 5)
             tooltip:SetText(frame.row.isInstance and "Find Entrance" or "Find Source", unpack(Q.Theme.Text.Accent))
@@ -841,28 +831,27 @@ local function CreateRowFrame(index, row)
         local tooltip = Q:GetTooltip()
         tooltip:SetOwner(frame.titleFrame, "ANCHOR_LEFT", -5, 5)
 
-        local colorInProgress = Q:GetSetting("QuestColorInProgress")
-        local colorUnavailable = Q:GetSetting("QuestColorUnavailable")
-        local colorAvailable = Q:GetSetting("QuestColorAvailable")
-        local tooltipStatus
-        local tooltipStatusColor
-        local isQuestInLog = Q.API:IsQuestInQuestLog(hoveredRow.id)
+        local questStatus = Q.API:GetQuestStatus(hoveredRow.id)
+        local isQuestInLog = questStatus == "inProgress"
         local meetsPrerequisites = Q.API:IsQuestAvailableToLevel(hoveredRow.id) and
             Q.API:IsPrerequisiteSatisfied(hoveredRow.id)
-        local isQuestAvailable = Q.API:IsQuestAvailable(hoveredRow.id)
+        local isQuestAvailable = questStatus == "available"
+        local tooltipStatus
+        local tooltipStatusColor = Q:GetSetting(QuestStatusColors[questStatus])
+        if not (tooltipStatusColor and tooltipStatusColor.r and tooltipStatusColor.g and tooltipStatusColor.b) then
+            tooltipStatusColor = Q.Theme[QuestStatusColors[questStatus]]
+        end
 
-        if isQuestInLog then
+        if questStatus == "completed" then
+            tooltipStatus = "Completed"
+        elseif isQuestInLog then
             tooltipStatus = "Track Quest"
-            tooltipStatusColor = colorInProgress
         elseif not meetsPrerequisites then
             tooltipStatus = "Prerequisite Not Met"
-            tooltipStatusColor = colorUnavailable
         elseif isQuestAvailable then
             tooltipStatus = "Available"
-            tooltipStatusColor = colorAvailable
         else
             tooltipStatus = "Unavailable"
-            tooltipStatusColor = colorUnavailable
         end
 
         tooltip:SetText(hoveredRow.name, Q.Theme.Text.Accent[1], Q.Theme.Text.Accent[2], Q.Theme.Text.Accent[3])
@@ -877,7 +866,7 @@ local function CreateRowFrame(index, row)
             tooltip:AddLine("Shift-click to toggle tracking this quest", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary
                 [2], Q.Theme.Text.Primary[3], true)
             -- Player does not meet the quest prerequisites (Too low level, prequests not completed, wrong class etc)
-        elseif not meetsPrerequisites then
+        elseif questStatus ~= "completed" and not meetsPrerequisites then
             if not Q.API:IsQuestAvailableToLevel(hoveredRow.id) then
                 tooltip:AddLine("Requires level " .. hoveredRow.requiredLevel, Q.Theme.Text.Disabled[1],
                     Q.Theme.Text.Disabled[2], Q.Theme.Text.Disabled[3])
@@ -891,17 +880,7 @@ local function CreateRowFrame(index, row)
 
                 -- Because changing color of text without using multiple font strings requires hex codes, we need to convert colors
                 local function GetQuestColorCode(questId)
-                    local settingPath
-                    if Q.API:IsQuestCompleted(questId) then
-                        settingPath = "QuestColorCompleted"
-                    elseif Q.API:IsQuestInQuestLog(questId) then
-                        settingPath = "QuestColorInProgress"
-                    elseif Q.API:IsQuestAvailable(questId) then
-                        settingPath = "QuestColorAvailable"
-                    else
-                        settingPath = "QuestColorUnavailable"
-                    end
-
+                    local settingPath = QuestStatusColors[Q.API:GetQuestStatus(questId)]
                     local color = Q:GetSetting(settingPath) or Q.Theme[settingPath]
                     return Q:ColorToHex({ r = color.r, g = color.g, b = color.b })
                 end
@@ -954,23 +933,9 @@ local function CreateRowFrame(index, row)
             -- Player meets all prerequisites and the quest is available
         elseif isQuestAvailable then
             local quest = Q.API:GetQuestById(hoveredRow.id)
-            local playerFaction = Q.API:GetPlayerFaction()
-            local sources = {}
+            local sources = Q.API:GetQuestSources(quest)
             local successColor = Q.Theme.Status.Success
             local successColorCode = Q:ColorToHex(successColor)
-            if quest then
-                if quest.source then
-                    if not quest.source.faction or quest.source.faction == playerFaction then
-                        table.insert(sources, quest.source)
-                    end
-                else
-                    for _, source in ipairs(quest.sources or {}) do
-                        if not source.faction or source.faction == playerFaction then
-                            table.insert(sources, source)
-                        end
-                    end
-                end
-            end
 
             if #sources == 1 then
                 local source = sources[1]
@@ -1047,9 +1012,10 @@ function QuestLog:RefreshAndPopulate()
                 quests = Q.API:GetAvailableQuestsByInstanceId(instance.id, playerInfo)
             end
             table.sort(quests, function(a, b) return a.name < b.name end)
-            instance.isInstance = true
+            local instanceRow = CopyRow(instance)
+            instanceRow.isInstance = true
 
-            table.insert(self.rows, instance)
+            table.insert(self.rows, instanceRow)
 
             if not isCollapsed then
                 for _, quest in ipairs(quests) do
@@ -1161,6 +1127,7 @@ function QuestLog:OnDisable()
     self:UnregisterEvent("QUEST_TURNED_IN")
     self:UnregisterEvent("QUEST_ACCEPTED")
     self:UnregisterEvent("PLAYER_LEVEL_UP")
+    self:UnregisterEvent("SKILL_LINES_CHANGED")
 
     if self.frame then
         self.frame:Hide()
@@ -1173,6 +1140,7 @@ function QuestLog:OnEnable()
     self:RegisterEvent("QUEST_TURNED_IN", "OnQuestStateChanged")
     self:RegisterEvent("QUEST_ACCEPTED", "OnQuestStateChanged")
     self:RegisterEvent("PLAYER_LEVEL_UP", "OnQuestStateChanged")
+    self:RegisterEvent("SKILL_LINES_CHANGED", "OnQuestStateChanged")
 end
 
 -- QUEST_LOG_UPDATE fires in bursts, so refreshes are coalesced and skipped while the log is hidden

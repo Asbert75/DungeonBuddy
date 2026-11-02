@@ -26,7 +26,7 @@ local function GetSectionSettings(sectionName)
             title = "Hide minimap button",
             description = "Hide the minimap button. Can also be toggled using /db minimap.",
             onChange = function(value)
-                Q.MinimapButton:Toggle()
+                Q.MinimapButton:SetHidden(value)
             end,
         },
         {
@@ -182,6 +182,8 @@ function Settings:CreateSection(sectionName, sectionTitle, parent)
 
     local y = 0
     for index, setting in ipairs(sectionSettings) do
+        local settingPath = setting.path
+        local onChange = setting.onChange
         y = y + paddingM
         local rowHeight = rowHeights[index]
 
@@ -219,11 +221,11 @@ function Settings:CreateSection(sectionName, sectionTitle, parent)
         end
 
         local checkbox = Q:CreateCheckbox(nil, row, 29, 29, "DIALOG", "Tertiary", "Default", function(self, checked)
-            Q:SetSetting(setting.path, checked and true or false)
+            Q:SetSetting(settingPath, checked and true or false)
             UpdateTint(checked)
             UpdateGradient(checked)
-            if setting.onChange then
-                setting.onChange(checked and true or false)
+            if onChange then
+                onChange(checked and true or false)
             end
         end)
         Q:SetPixelPerfectPoint(checkbox, "TOPRIGHT", row, "TOPRIGHT", -paddingS,
@@ -234,7 +236,7 @@ function Settings:CreateSection(sectionName, sectionTitle, parent)
             UpdateTint(checked and true or false)
             UpdateGradient(checked and true or false)
         end)
-        self.settings[setting.path] = checkbox
+        self.settings[settingPath] = checkbox
 
         local hover = row:CreateTexture(nil, "BORDER", nil, 1)
         hover:SetAllPoints(row)
@@ -340,6 +342,7 @@ function Settings:Create()
     end
 
     for index, section in ipairs(SectionOrder) do
+        local sectionName = section.name
         local button = CreateFrame("Button", nil, sidebar)
         button:SetFrameStrata("DIALOG")
         Q:SetPixelPerfectHeight(button, NAV_BUTTON_HEIGHT)
@@ -369,7 +372,7 @@ function Settings:Create()
         end
 
         function button:UpdateState()
-            local isSelected = Settings.selectedPage == section.name
+            local isSelected = Settings.selectedPage == sectionName
             Gradient(base, Q.Theme.Background.Tertiary, 0.8, 0.1)
             Gradient(hover, Q.Theme.Text.Primary, 0.1, 0)
             Gradient(selected, Q.Theme.Brand, 0.35, 0.05)
@@ -382,10 +385,10 @@ function Settings:Create()
 
         button:SetScript("OnEnter", button.UpdateState)
         button:SetScript("OnLeave", button.UpdateState)
-        button:SetScript("OnClick", function() SelectPage(section.name) end)
+        button:SetScript("OnClick", function() SelectPage(sectionName) end)
         Q:RegisterThemed(button, button.UpdateState)
 
-        self.navButtons[section.name] = button
+        self.navButtons[sectionName] = button
     end
 
     local function CreatePage(name)
@@ -400,13 +403,13 @@ function Settings:Create()
     --------------------------------------------------
     -- General Settings
     --------------------------------------------------
-    local generalSettingsFrame = self:CreateSection(Sections.General.name, Sections.General.title,
+    self:CreateSection(Sections.General.name, Sections.General.title,
         CreatePage(Sections.General.name))
 
     --------------------------------------------------
     -- Notification Settings
     --------------------------------------------------
-    local notificationSettingsFrame = self:CreateSection(Sections.Notifications.name, Sections.Notifications.title,
+    self:CreateSection(Sections.Notifications.name, Sections.Notifications.title,
         CreatePage(Sections.Notifications.name))
 
     --------------------------------------------------
@@ -416,8 +419,9 @@ function Settings:Create()
         CreatePage(Sections.QuestLog.name))
 
     -- Setting: Quest Colors
-    local settingCount = #GetSectionSettings(Sections.QuestLog.name)
-    local anchorFrame = _G["Setting_" .. GetSectionSettings(Sections.QuestLog.name)[settingCount].path] or nil
+    local questLogSettings = GetSectionSettings(Sections.QuestLog.name)
+    local lastQuestLogSetting = questLogSettings[#questLogSettings]
+    local anchorFrame = _G["Setting_" .. lastQuestLogSetting.path]
 
     local questColorContainer = Q:CreateBackdropFrame("QuestColorContainer", questLogSettingsFrame, CONTENT_WIDTH - (2 * paddingM), 128, "DIALOG", "Secondary", "Default", 0.6, 0.2)
     Q:SetPixelPerfectPoint(questColorContainer, "TOPLEFT", anchorFrame, "BOTTOMLEFT", 0, -paddingM)
@@ -436,25 +440,28 @@ function Settings:Create()
 
     self.colorPickers = {}
     for _, setting in ipairs(colorSettings) do
-        local color = Q:GetSetting(setting.path)
+        local colorPath = setting.path
+        local colorLabel = setting.label
+        local colorX, colorY = setting.x, setting.y
+        local color = Q:GetSetting(colorPath)
         local picker = AceGUI:Create("ColorPicker")
-        picker:SetLabel(setting.label)
+        picker:SetLabel(colorLabel)
         picker:SetColor(color.r, color.g, color.b, 1)
         picker.text:SetTextColor(color.r, color.g, color.b)
         Q:SetPixelPerfectWidth(picker, 260)
         picker.frame:SetParent(questColorContainer)
         picker.frame:SetFrameStrata("DIALOG")
         picker.frame:ClearAllPoints()
-        Q:SetPixelPerfectPoint(picker.frame, "TOPLEFT", questColorContainer, "TOPLEFT", setting.x, -setting.y)
+        Q:SetPixelPerfectPoint(picker.frame, "TOPLEFT", questColorContainer, "TOPLEFT", colorX, -colorY)
         picker.frame:Show()
         picker:SetCallback("OnValueChanged", function(_, _, r, g, b)
             picker.text:SetTextColor(r, g, b)
-            Q:SetSetting(setting.path, { r = r, g = g, b = b })
+            Q:SetSetting(colorPath, { r = r, g = g, b = b })
             if Q.QuestLog and Q.QuestLog.frame then
                 Q.QuestLog:RefreshAndPopulate()
             end
         end)
-        self.colorPickers[setting.path] = picker
+        self.colorPickers[colorPath] = picker
     end
 
      local resetColorHandlers = {
@@ -503,18 +510,19 @@ function Settings:Create()
 
     local THEME_BUTTON_WIDTH, THEME_BUTTON_HEIGHT, THEME_COLUMNS = 200, 32, 3
     for index, name in ipairs(Q.ThemeOrder) do
+        local themeName = name
         local column = (index - 1) % THEME_COLUMNS
         local row = math.floor((index - 1) / THEME_COLUMNS)
-        local button = Q:CreateButton(nil, themeContainer, name, THEME_BUTTON_WIDTH, THEME_BUTTON_HEIGHT,
-            Q.Theme.FontSize.M, Q.Themes[name].Brand, {
+        local button = Q:CreateButton(nil, themeContainer, themeName, THEME_BUTTON_WIDTH, THEME_BUTTON_HEIGHT,
+            Q.Theme.FontSize.M, Q.Themes[themeName].Brand, {
                 OnClick = function()
-                    Q:SetTheme(name)
+                    Q:SetTheme(themeName)
                     UpdateThemeButtons()
                 end,
             })
         Q:SetPixelPerfectPoint(button, "TOPLEFT", themeContainer, "TOPLEFT",
             paddingS + column * (THEME_BUTTON_WIDTH + paddingS), -(52 + row * (THEME_BUTTON_HEIGHT + paddingS)))
-        themeButtons[name] = button
+        themeButtons[themeName] = button
     end
     UpdateThemeButtons()
     Q:RegisterThemed(Settings, UpdateThemeButtons)

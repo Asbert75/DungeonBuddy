@@ -7,8 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.6.4] - 2026-11-01
-
 ### Added
 
 - Added color themes that you can switch between from the Settings-window.
@@ -17,6 +15,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Only instances and the final quest of a chain can be collapsed by default; collapsing every step in a chain is now an optional setting
+- Instances with identical level ranges are now ordered by name
+
+### Fixed
+
+- Fixed an issue where the function that checked for zone related quests would only check for quests that had a faction requirement
+- The level up notification now properly uses the level returned by the event instead of a potential GetPlayerLevel() function call that could potentially return the wrong level
+- The quest tracker now refreshes when the player's profession skill lines change
+- Corrected the quest ids for The Essence of Eranikus, Free Knot!, Ancient Equine Spirit, Collection of Goods and Warlord's Command
+- Corrected the instance key for quest Arcane Refreshment (It was DM: West instead of Dire Maul: West)
+- Fixed faction selection when setting waypoints for quests with multiple sources
 
 ## [1.6.3] - 2026-11-01
 

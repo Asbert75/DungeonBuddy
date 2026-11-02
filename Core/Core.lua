@@ -3,7 +3,6 @@ local Addon = LibStub("AceAddon-3.0"):NewAddon(ADDON_NAME, "AceConsole-3.0", "Ac
 
 Q.Instances = {}
 Q.Quests = {}
-Q.InstanceById = {}
 Q.QuestById = {}
 Q.QuestsByInstanceId = {}
 Q.InstanceByQuestId = {}
@@ -45,7 +44,8 @@ function Addon:HandleDebugCommand(input)
     if arg1 == "quest" then
         TestNotificationQuest()
     elseif arg1 == "levelup" then
-        Q.Notification:LevelUpEventHandler()
+        local newLevel = Q.API:GetPlayerLevel()
+        Q.Notification:LevelUpEventHandler("PLAYER_LEVEL_UP", newLevel)
     elseif arg1 == "status" then
         if Q.Debug.Enabled then
             Q:PrettyPrint("Debug mode is currently enabled")
@@ -77,7 +77,7 @@ function Addon:HandleDebugCommand(input)
         Q.Debug.Enabled = not Q.Debug.Enabled
         Q:PrettyPrint("Debug mode " .. (Q.Debug.Enabled and "enabled" or "disabled"))
     end
-    if arg1 ~= "status" and arg1 ~= "quest" then
+    if arg1 ~= "status" and arg1 ~= "quest" and arg1 ~= "levelup" then
         Q.API:BuildLookupTables()
         Q.QuestLog:Reload()
     end

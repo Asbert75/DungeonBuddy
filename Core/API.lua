@@ -17,20 +17,20 @@ local ProfessionIcons = {
     Fishing = "Trade_Fishing",
 }
 
-local function FilterArray(table, predicate)
+local function FilterArray(array, predicate)
     local writeIndex = 1
 
-    for readIndex = 1, #table do
-        local value = table[readIndex]
+    for readIndex = 1, #array do
+        local value = array[readIndex]
 
         if predicate(value) then
-            table[writeIndex] = value
+            array[writeIndex] = value
             writeIndex = writeIndex + 1
         end
     end
 
-    for i = #table, writeIndex, -1 do
-        table[i] = nil
+    for i = #array, writeIndex, -1 do
+        array[i] = nil
     end
 end
 
@@ -51,13 +51,14 @@ function Q.API:BuildLookupTables()
 
     wipe(Q.QuestById)
     wipe(Q.QuestsByInstanceId)
-    wipe(Q.InstanceById)
     wipe(Q.InstanceByQuestId)
 
     -- Filter out quests that do not match the player's faction and class, we do this when building lookups so that we can completely ignore faction/class in all other functions
+    local playerFaction = self:GetPlayerFaction()
+    local playerClass = self:GetPlayerClass()
     FilterArray(Q.Quests, function(quest)
-        return quest and (quest.faction == self:GetPlayerFaction() or not quest.faction) and
-        (quest.class == self:GetPlayerClass() or not quest.class)
+        return quest and (quest.faction == playerFaction or not quest.faction) and
+        (quest.class == playerClass or not quest.class)
     end)
 
     for _, quest in ipairs(Q.Quests) do
@@ -70,10 +71,6 @@ function Q.API:BuildLookupTables()
             end
             table.insert(quests, quest)
         end
-    end
-
-    for _, instance in pairs(Q.Instances) do
-        Q.InstanceById[instance.id] = instance
     end
 
     local function addQuestInstance(questId, instance)
@@ -92,7 +89,7 @@ function Q.API:BuildLookupTables()
     end
 
     -- Instance relevance follows every unlock path back to its starting quests.
-    local function AddInstanceToLineage(quest, instance, visited)
+    local function AddInstanceToChain(quest, instance, visited)
         if not quest or visited[quest.id] then
             return
         end
@@ -100,13 +97,13 @@ function Q.API:BuildLookupTables()
         addQuestInstance(quest.id, instance)
 
         for _, prerequisite in ipairs(quest.prerequisites or {}) do
-            AddInstanceToLineage(self:GetQuestById(prerequisite.id), instance, visited)
+            AddInstanceToChain(self:GetQuestById(prerequisite.id), instance, visited)
         end
     end
 
     for _, quest in ipairs(Q.Quests) do
         for _, instance in ipairs(quest.instances or {}) do
-            AddInstanceToLineage(quest, instance, {})
+            AddInstanceToChain(quest, instance, {})
         end
     end
 end
@@ -215,6 +212,79 @@ function Q.API:GetWaypointText(quest, source)
     return title
 end
 
+function Q.API:GetQuestSources(quest, faction)
+    if not quest then
+        return {}
+    end
+
+    faction = faction or self:GetPlayerFaction()
+    local questSources = quest.source and { quest.source } or quest.sources or {}
+    local sources = {}
+
+    for _, source in ipairs(questSources) do
+        if source and (not source.faction or source.faction == faction) then
+            table.insert(sources, source)
+        end
+    end
+
+    return sources
+end
+
+local function AddWaypoint(location, title)
+    if not (location and location.mapId and location.x and location.y) then
+        Q:PrettyPrint("No waypoint location is available.")
+        return false
+    end
+
+    local tomtom = rawget(_G, "TomTom")
+    if not tomtom or not tomtom.AddWaypoint then
+        if C_Map.CanSetUserWaypointOnMap and not C_Map.CanSetUserWaypointOnMap(location.mapId) then
+            Q:PrettyPrint("A waypoint cannot be set on that map.")
+            return false
+        end
+
+        local point = CreateVector2D(location.x, location.y)
+        local waypoint = UiMapPoint.CreateFromVector2D(location.mapId, point)
+        C_Map.SetUserWaypoint(waypoint)
+        C_SuperTrack.SetSuperTrackedUserWaypoint(true)
+        return true
+    end
+
+    tomtom:AddWaypoint(tonumber(location.mapId), tonumber(location.x), tonumber(location.y), {
+        title = title,
+        from = "Dungeon Buddy",
+        persistent = true,
+    })
+    return true
+end
+
+function Q.API:SetWaypoint(entity, isInstance)
+    if isInstance then
+        return AddWaypoint(entity.location, entity.name .. " (Entrance)")
+    end
+
+    local added = false
+    for _, source in ipairs(self:GetQuestSources(entity)) do
+        added = AddWaypoint(source.location, self:GetWaypointText(entity, source)) or added
+    end
+    return added
+end
+
+function Q.API:GetSourceIcon(source, faction, hasMultipleSources)
+    if hasMultipleSources or (source and source.type == "npc") then
+        faction = faction or self:GetPlayerFaction()
+        return faction == "Alliance" and "Interface\\Icons\\achievement_character_human_male" or
+            "Interface\\Icons\\achievement_character_orc_male"
+    elseif source and source.type == "item" then
+        local itemIcon = source.itemId and C_Item and C_Item.GetItemIconByID and C_Item.GetItemIconByID(source.itemId)
+        return itemIcon or "Interface\\Icons\\INV_Scroll_03"
+    elseif source and source.type == "object" then
+        return "Interface\\Icons\\inv_scroll_10"
+    end
+
+    return "Interface\\Icons\\INV_Scroll_03"
+end
+
 function Q.API:GetQuests()
     return Q.Quests
 end
@@ -223,43 +293,25 @@ function Q.API:GetQuestById(questId)
     return Q.QuestById[questId]
 end
 
-function Q.API:GetInstanceById(instanceId)
-    return Q.InstanceById[instanceId]
-end
-
 function Q.API:GetInstances()
     local instances = {}
     for _, instance in pairs(Q.Instances) do
         table.insert(instances, instance)
     end
 
-    table.sort(instances,
-        function(a, b) return a.minLevel < b.minLevel or (a.minLevel == b.minLevel and a.maxLevel < b.maxLevel) end)
+    table.sort(instances, function(a, b)
+        if a.minLevel ~= b.minLevel then
+            return a.minLevel < b.minLevel
+        end
+        if a.maxLevel ~= b.maxLevel then
+            return a.maxLevel < b.maxLevel
+        end
+        return a.name < b.name
+    end)
     return instances
 end
 
-function Q.API:IsInstanceQuestChainStart(questId)
-    local quest = self:GetQuestById(questId)
-    if not quest then
-        return false
-    end
-
-    local isChainStart = true
-
-    for _, prerequisite in ipairs(quest.prerequisites or {}) do
-        if prerequisite.type == Q.PrerequisiteType.CHAIN or
-            prerequisite.type == Q.PrerequisiteType.REQUIRED or
-            prerequisite.type == Q.PrerequisiteType.ANY
-        then
-            isChainStart = false
-            break
-        end
-    end
-
-    return isChainStart
-end
-
-function Q.API:IsQuestLineageStart(questId)
+function Q.API:IsQuestChainStart(questId)
     local quest = self:GetQuestById(questId)
     if not quest then
         return false
@@ -277,8 +329,8 @@ function Q.API:IsQuestLineageStart(questId)
     return true
 end
 
-function Q.API:IsInstanceQuestLineageStart(questId)
-    if not self:IsQuestLineageStart(questId) then
+function Q.API:IsInstanceQuestChainStart(questId)
+    if not self:IsQuestChainStart(questId) then
         return false
     end
     return #self:GetInstancesForQuest(questId) > 0
@@ -295,15 +347,15 @@ function Q.API:GetRelevantQuestsForZone()
     local playerInfo = Q.API:GetPlayerInfo()
 
     for _, quest in ipairs(self:GetQuests()) do
-        for _, source in ipairs(quest.sources or { quest.source }) do
-            if self:IsQuestAvailable(quest.id) and
-                not self:IsQuestInQuestLog(quest.id) and
-                source.faction == playerInfo.faction and
-                source.zone == zone and
-                playerInfo.level <= (quest.suggestedLevel or quest.requiredLevel or 0) + 3 -- Allow a buffer of 3 levels above the suggested level before it doesn't count as "relevant" anymore
-            then
-                table.insert(quests, quest)
-                break
+        if self:IsQuestAvailable(quest.id) and
+            not self:IsQuestInQuestLog(quest.id) and
+            playerInfo.level <= (quest.suggestedLevel or quest.requiredLevel or 0) + 3 -- Allow a buffer of 3 levels above the suggested level before it doesn't count as "relevant" anymore
+        then
+            for _, source in ipairs(self:GetQuestSources(quest, playerInfo.faction)) do
+                if source.zone == zone then
+                    table.insert(quests, quest)
+                    break
+                end
             end
         end
     end
@@ -318,23 +370,9 @@ function Q.API:GetInstancesForQuest(questId)
     return Q.InstanceByQuestId[questId] or {}
 end
 
-function Q.API:IsQuestRelatedToInstance(questId, instanceId)
-    if not questId or not instanceId then
-        return false
-    end
-
-    local quests = Q.QuestsByInstanceId[instanceId] or {}
-    for _, quest in ipairs(quests) do
-        if quest.id == questId then
-            return true
-        end
-    end
-    return false
-end
-
 function Q.API:GetAvailableQuestsByInstanceId(instanceId, playerInfo)
     local quests = {}
-    for _, quest in ipairs(self:GetQuestsByInstanceId(instanceId) or {}) do
+    for _, quest in ipairs(self:GetQuestsByInstanceId(instanceId)) do
         if self:IsQuestAvailableToLevel(quest.id, playerInfo) and self:PlayerHasProfession(quest.profession) then
             table.insert(quests, quest)
         end
@@ -434,62 +472,31 @@ function Q.API:IsQuestAvailable(questId)
         and self:IsPrerequisiteSatisfied(questId)
 end
 
+function Q.API:GetQuestStatus(questId)
+    if self:IsQuestCompleted(questId) then
+        return "completed"
+    elseif self:IsQuestInQuestLog(questId) then
+        return "inProgress"
+    elseif self:IsQuestAvailable(questId) then
+        return "available"
+    end
+
+    return "unavailable"
+end
+
 function Q.API:GetRandomQuest()
     local chainStartQuests = {}
     for _, quest in ipairs(self:GetQuests()) do
-        if self:IsQuestLineageStart(quest.id) then
+        if self:IsQuestChainStart(quest.id) then
             table.insert(chainStartQuests, quest)
         end
     end
 
     if #chainStartQuests == 0 then
-        return nil, {}
+        return nil
     end
 
     local quest = chainStartQuests[math.random(#chainStartQuests)]
 
     return quest
-end
-
-local function AddWaypoint(location, title)
-    if not (location and location.mapId and location.x and location.y) then
-        Q:PrettyPrint("No waypoint location is available.")
-        return
-    end
-
-    local tomtom = rawget(_G, "TomTom")
-    if not tomtom or not tomtom.AddWaypoint then
-        local point = CreateVector2D(location.x, location.y)
-        local waypoint = UiMapPoint.CreateFromVector2D(location.mapId, point)
-        C_Map.SetUserWaypoint(waypoint)
-        C_SuperTrack.SetSuperTrackedUserWaypoint(true)
-
-        return
-    end
-
-    tomtom:AddWaypoint(tonumber(location.mapId), tonumber(location.x), tonumber(location.y), {
-        title = title,
-        from = "Dungeon Buddy",
-        persistent = true,
-    })
-end
-
-function Q.API:SetWaypoint(entity, isInstance)
-    if isInstance then
-        AddWaypoint(entity.location, entity.name .. " (Entrance)")
-    else
-        local playerInfo = Q.API:GetPlayerInfo()
-        if entity.source then
-            local title = self:GetWaypointText(entity, entity.source)
-            AddWaypoint(entity.source.location, title)
-        else
-            for _, source in ipairs(entity.sources or {}) do
-                if source.faction and source.faction ~= playerInfo.faction then
-                    break
-                end
-                local title = self:GetWaypointText(entity, source)
-                AddWaypoint(source.location, title)
-            end
-        end
-    end
 end
