@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Added (X/Y) suffixes to quest chains that shared the same name (Hidden Enemies, The Defias Brotherhood, Down the Scarlet Path, Prospect of Faith, Passing Word of a Threat, The Smoldering Ruins of Thaurissan, The Restless Souls, Menethil's Gift, The Test of Righteousness and The Tome of Valor) to help distinguish between them more easily in the UI.
 - Only instances and the final quest of a chain can be collapsed by default; collapsing every step in a chain is now an optional setting
 - Instances with identical level ranges are now ordered by name
 
@@ -25,6 +26,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Corrected the quest ids for The Essence of Eranikus, Free Knot!, Ancient Equine Spirit, Collection of Goods and Warlord's Command
 - Corrected the instance key for quest Arcane Refreshment (It was DM: West instead of Dire Maul: West)
 - Fixed faction selection when setting waypoints for quests with multiple sources
+- Fixed the quest id of the following quests: The Love Potion, The Corruption Abroad, Corruption of Earth and Seed, The Ancient Egg, Tiara of the Deep
+- Fixed the name of the following quests: Message to Maxwell, Lorax's Tale, What Is Going On?, A Visit to Gregan
+- Added missing Zul'Farrak quest Scarab Shells and pre-quest Tran'Rek
+- Added missing Tiara of the Deep pre-quest Tabetha's Task
 
 ## [1.6.3] - 2026-11-01
 

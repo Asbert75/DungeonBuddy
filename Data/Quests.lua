@@ -111,7 +111,7 @@ Q.Quests = {
     {
         id = 5726,
         faction = "Horde",
-        name = "Hidden Enemies",
+        name = "Hidden Enemies (1/3)",
         suggestedLevel = 12,
         requiredLevel = 9,
         source = {
@@ -124,7 +124,7 @@ Q.Quests = {
     {
         id = 5727,
         faction = "Horde",
-        name = "Hidden Enemies",
+        name = "Hidden Enemies (2/3)",
         suggestedLevel = 12,
         requiredLevel = 9,
         prerequisites = {
@@ -140,7 +140,7 @@ Q.Quests = {
     {
         id = 5728,
         faction = "Horde",
-        name = "Hidden Enemies",
+        name = "Hidden Enemies (3/3)",
         suggestedLevel = 16,
         requiredLevel = 9,
         prerequisites = {
@@ -386,7 +386,7 @@ Q.Quests = {
     {
         id = 65,
         faction = "Alliance",
-        name = "The Defias Brotherhood",
+        name = "The Defias Brotherhood (1/7)",
         suggestedLevel = 18,
         requiredLevel = 14,
         source = {
@@ -399,7 +399,7 @@ Q.Quests = {
     {
         id = 155,
         faction = "Alliance",
-        name = "The Defias Brotherhood",
+        name = "The Defias Brotherhood (2/7)",
         suggestedLevel = 18,
         requiredLevel = 14,
         prerequisites = {
@@ -415,7 +415,7 @@ Q.Quests = {
     {
         id = 132,
         faction = "Alliance",
-        name = "The Defias Brotherhood",
+        name = "The Defias Brotherhood (3/7)",
         suggestedLevel = 18,
         requiredLevel = 14,
         prerequisites = {
@@ -431,7 +431,7 @@ Q.Quests = {
     {
         id = 135,
         faction = "Alliance",
-        name = "The Defias Brotherhood",
+        name = "The Defias Brotherhood (4/7)",
         suggestedLevel = 18,
         requiredLevel = 14,
         prerequisites = {
@@ -447,7 +447,7 @@ Q.Quests = {
     {
         id = 141,
         faction = "Alliance",
-        name = "The Defias Brotherhood",
+        name = "The Defias Brotherhood (5/7)",
         suggestedLevel = 18,
         requiredLevel = 14,
         prerequisites = {
@@ -463,7 +463,7 @@ Q.Quests = {
     {
         id = 142,
         faction = "Alliance",
-        name = "The Defias Brotherhood",
+        name = "The Defias Brotherhood (6/7)",
         suggestedLevel = 18,
         requiredLevel = 14,
         prerequisites = {
@@ -554,7 +554,7 @@ Q.Quests = {
     {
         id = 166,
         faction = "Alliance",
-        name = "The Defias Brotherhood",
+        name = "The Defias Brotherhood (7/7)",
         suggestedLevel = 18,
         requiredLevel = 14,
         prerequisites = {
@@ -574,7 +574,7 @@ Q.Quests = {
     {
         id = 886,
         faction = "Horde",
-        name = "The Barren Oases",
+        name = "The Barrens Oases",
         suggestedLevel = 10,
         requiredLevel = 10,
         source = {
@@ -819,7 +819,7 @@ Q.Quests = {
         instances = { Q.Instances["Blackfathom Deeps"] },
     },
     {
-        id = 376,
+        id = 3765,
         faction = "Alliance",
         name = "The Corruption Abroad",
         suggestedLevel = 24,
@@ -1077,7 +1077,7 @@ Q.Quests = {
     {
         id = 6522,
         faction = "Horde",
-        name = "An Unholy Alliance",
+        name = "An Unholy Alliance (1/2)",
         suggestedLevel = 36,
         requiredLevel = 28,
         source = {
@@ -1873,7 +1873,7 @@ Q.Quests = {
     {
         id = 261,
         faction = "Alliance",
-        name = "Down the Scarlet Path",
+        name = "Down the Scarlet Path (1/2)",
         suggestedLevel = 39,
         requiredLevel = 34,
         prerequisites = {
@@ -1889,7 +1889,7 @@ Q.Quests = {
     {
         id = 1052,
         faction = "Alliance",
-        name = "Down the Scarlet Path",
+        name = "Down the Scarlet Path (2/2)",
         suggestedLevel = 40,
         requiredLevel = 34,
         prerequisites = {
@@ -2159,7 +2159,7 @@ Q.Quests = {
     {
         id = 6521,
         faction = "Horde",
-        name = "An Unholy Alliance",
+        name = "An Unholy Alliance (2/2)",
         suggestedLevel = 36,
         requiredLevel = 28,
         prerequisites = {
@@ -2332,7 +2332,7 @@ Q.Quests = {
     {
         id = 720,
         faction = "Alliance",
-        name = "A Sign of Hope",
+        name = "A Sign of Hope (1/2)",
         suggestedLevel = 35,
         requiredLevel = 35,
         source = {
@@ -2345,7 +2345,7 @@ Q.Quests = {
     {
         id = 721,
         faction = "Alliance",
-        name = "A Sign of Hope",
+        name = "A Sign of Hope (2/2)",
         suggestedLevel = 40,
         requiredLevel = 35,
         prerequisites = {
@@ -2378,7 +2378,7 @@ Q.Quests = {
     {
         id = 723,
         faction = "Alliance",
-        name = "Prospect of Faith",
+        name = "Prospect of Faith (1/2)",
         suggestedLevel = 40,
         requiredLevel = 35,
         prerequisites = {
@@ -2395,7 +2395,7 @@ Q.Quests = {
     {
         id = 724,
         faction = "Alliance",
-        name = "Prospect of Faith",
+        name = "Prospect of Faith (2/2)",
         suggestedLevel = 40,
         requiredLevel = 35,
         prerequisites = {
@@ -2411,7 +2411,7 @@ Q.Quests = {
     {
         id = 725,
         faction = "Alliance",
-        name = "Passing Word of a Threat",
+        name = "Passing Word of a Threat (1/2)",
         suggestedLevel = 40,
         requiredLevel = 35,
         prerequisites = {
@@ -2427,7 +2427,7 @@ Q.Quests = {
     {
         id = 726,
         faction = "Alliance",
-        name = "Passing Word of a Threat",
+        name = "Passing Word of a Threat (2/2)",
         suggestedLevel = 40,
         requiredLevel = 35,
         prerequisites = {
@@ -2723,7 +2723,7 @@ Q.Quests = {
     {
         id = 2318,
         faction = "Horde",
-        name = "Translating the Journal",
+        name = "Translating the Journal (1/2)",
         suggestedLevel = 42,
         requiredLevel = 37,
         prerequisites = {
@@ -2740,7 +2740,7 @@ Q.Quests = {
     {
         id = 2338,
         faction = "Horde",
-        name = "Translating the Journal",
+        name = "Translating the Journal (2/2)",
         suggestedLevel = 42,
         requiredLevel = 37,
         prerequisites = {
@@ -2863,11 +2863,78 @@ Q.Quests = {
         instances = { Q.Instances["Zul'Farrak"] },
     },
     {
+        id = 2864,
+        faction = nil,
+        name = "Trank'rek",
+        suggestedLevel = 45,
+        requiredLevel = 40,
+        source = {
+            type = "npc",
+            name = "Krazek",
+            zone = "Stranglethorn Vale",
+            location = { mapId = 1434, x = 0.27, y = 0.772 }
+        }
+    },
+    {
         id = 2865,
+        faction = nil,
+        name = "Scarab Shells",
+        suggestedLevel = 45,
+        requiredLevel = 40,
+        source = {
+            type = "npc",
+            name = "Tran'rek",
+            zone = "Tanaris",
+            location = { mapId = 1446, x = 0.514, y = 0.268 }
+        },
+        instances = { Q.Instances["Zul'Farrak"] },
+    },
+    {
+        id = 2861,
+        faction = nil,
+        name = "Tabetha's Task",
+        suggestedLevel = 46,
+        requiredLevel = 40,
+        sources = {
+            {
+                type = "npc",
+                faction = "Horde",
+                name = "Anastasia Hartwell",
+                zone = "Undercity",
+                location = { mapId = 1458, x = 0.85, y = 0.102 }
+            },
+            {
+                type = "npc",
+                faction = "Alliance",
+                name = "Bink",
+                zone = "Ironforge",
+                location = { mapId = 1455, x = 0.27, y = 0.082 }
+            },
+            {
+                type = "npc",
+                faction = "Alliance",
+                name = "Jennea Cannon",
+                zone = "Stormwind City",
+                location = { mapId = 1453, x = 0.386, y = 0.796 }
+            },
+            {
+                type = "npc",
+                faction = "Horde",
+                name = "Deino",
+                zone = "Orgrimmar",
+                location = { mapId = 1454, x = 0.386, y = 0.852 }
+            },
+        }
+    },
+    {
+        id = 2846,
         faction = nil,
         name = "Tiara of the Deep",
         suggestedLevel = 45,
         requiredLevel = 40,
+        prerequisites = {
+            { id = 2861, type = Q.PrerequisiteType.CHAIN }
+        },
         source = {
             type = "npc",
             name = "Tabetha",
@@ -3070,7 +3137,21 @@ Q.Quests = {
         instances = { Q.Instances["Maraudon"] },
     },
     {
-        id = 7069,
+        id = 7064,
+        faction = "Horde",
+        name = "Corruption of Earth and Seed",
+        suggestedLevel = 51,
+        requiredLevel = 45,
+        source = {
+            type = "npc",
+            name = "Selendra",
+            zone = "Desolace",
+            location = { mapId = 1443, x = 0.268, y = 0.776 }
+        },
+        instances = { Q.Instances["Maraudon"] },
+    },
+    {
+        id = 7065,
         faction = "Alliance",
         name = "Corruption of Earth and Seed",
         suggestedLevel = 51,
@@ -3229,7 +3310,7 @@ Q.Quests = {
     {
         id = 4145,
         faction = "Horde",
-        name = "Larion And Muigin",
+        name = "Larion and Muigin",
         suggestedLevel = 52,
         requiredLevel = 47,
         source = {
@@ -3288,7 +3369,7 @@ Q.Quests = {
     {
         id = 4142,
         faction = "Alliance",
-        name = "A Visist to Gregan",
+        name = "A Visit to Gregan",
         suggestedLevel = 52,
         requiredLevel = 47,
         prerequisites = {
@@ -3421,7 +3502,7 @@ Q.Quests = {
         suggestedLevel = 50,
         requiredLevel = 40,
         prerequisites = {
-            { id = 4786, type = Q.PrerequisiteType.CHAIN }
+            { id = 4787, type = Q.PrerequisiteType.CHAIN }
         },
         source = {
             type = "npc",
@@ -3432,7 +3513,7 @@ Q.Quests = {
         instances = { Q.Instances["Temple of Atal'Hakkar"] },
     },
     {
-        id = 4786,
+        id = 4787,
         faction = nil,
         name = "The Ancient Egg",
         suggestedLevel = 50,
@@ -3560,7 +3641,7 @@ Q.Quests = {
     {
         id = 3982,
         faction = "Horde",
-        name = "What is Going On?",
+        name = "What Is Going On? (1/2)",
         suggestedLevel = 54,
         requiredLevel = 48,
         prerequisites = {
@@ -3577,7 +3658,7 @@ Q.Quests = {
     {
         id = 4001,
         faction = "Horde",
-        name = "What is Going On?",
+        name = "What Is Going On? (2/2)",
         suggestedLevel = 54,
         requiredLevel = 48,
         prerequisites = {
@@ -3627,7 +3708,7 @@ Q.Quests = {
     {
         id = 4061,
         faction = "Horde",
-        name = "The Rise of the Machines",
+        name = "The Rise of the Machines (1/3)",
         suggestedLevel = 54,
         requiredLevel = 52,
         source = {
@@ -3640,7 +3721,7 @@ Q.Quests = {
     {
         id = 4062,
         faction = "Horde",
-        name = "The Rise of the Machines",
+        name = "The Rise of the Machines (2/3)",
         suggestedLevel = 54,
         requiredLevel = 52,
         prerequisites = {
@@ -3656,7 +3737,7 @@ Q.Quests = {
     {
         id = 4063,
         faction = "Horde",
-        name = "The Rise of the Machines",
+        name = "The Rise of the Machines (3/3)",
         suggestedLevel = 58,
         requiredLevel = 52,
         prerequisites = {
@@ -3812,7 +3893,7 @@ Q.Quests = {
     {
         id = 3453,
         faction = nil,
-        name = "The Torch of Retribution",
+        name = "The Torch of Retribution (1/2)",
         suggestedLevel = 50,
         requiredLevel = 40,
         prerequisites = {
@@ -3828,7 +3909,7 @@ Q.Quests = {
     {
         id = 3454,
         faction = nil,
-        name = "The Torch of Retribution",
+        name = "The Torch of Retribution (2/2)",
         suggestedLevel = 50,
         requiredLevel = 40,
         prerequisites = {
@@ -4062,7 +4143,7 @@ Q.Quests = {
     {
         id = 3702,
         faction = "Alliance",
-        name = "The Smoldering Ruins of Thaurissan",
+        name = "The Smoldering Ruins of Thaurissan (1/2)",
         suggestedLevel = 54,
         requiredLevel = 50,
         source = {
@@ -4075,7 +4156,7 @@ Q.Quests = {
     {
         id = 3701,
         faction = "Alliance",
-        name = "The Smoldering Ruins of Thaurissan",
+        name = "The Smoldering Ruins of Thaurissan (2/2)",
         suggestedLevel = 54,
         requiredLevel = 50,
         prerequisites = {
@@ -4234,7 +4315,7 @@ Q.Quests = {
     {
         id = 3801,
         faction = nil,
-        name = "Dark Iron Legacy",
+        name = "Dark Iron Legacy (1/2)",
         suggestedLevel = 52,
         requiredLevel = 48,
         source = {
@@ -4249,7 +4330,7 @@ Q.Quests = {
     {
         id = 3802,
         faction = nil,
-        name = "Dark Iron Legacy",
+        name = "Dark Iron Legacy (2/2)",
         suggestedLevel = 52,
         requiredLevel = 48,
         prerequisites = {
@@ -4266,7 +4347,7 @@ Q.Quests = {
         instances = { Q.Instances["Blackrock Depths"] }
     },
     {
-        id = 5125,
+        id = 5201,
         faction = nil,
         name = "The Love Potion",
         suggestedLevel = 54,
@@ -4487,7 +4568,7 @@ Q.Quests = {
     {
         id = 5002,
         faction = "Alliance",
-        name = "A Message to Maxwell",
+        name = "Message to Maxwell",
         suggestedLevel = 59,
         requiredLevel = 55,
         prerequisites = {
@@ -4858,7 +4939,7 @@ Q.Quests = {
     {
         id = 5846,
         faction = nil,
-        name = "Of Love and Family",
+        name = "Of Love and Family (1/2)",
         suggestedLevel = 57,
         requiredLevel = 52,
         prerequisites = {
@@ -4874,7 +4955,7 @@ Q.Quests = {
     {
         id = 5848,
         faction = nil,
-        name = "Of Love and Family",
+        name = "Of Love and Family (2/2)",
         suggestedLevel = 57,
         requiredLevel = 52,
         prerequisites = {
@@ -4932,7 +5013,7 @@ Q.Quests = {
     {
         id = 5281,
         faction = nil,
-        name = "The Restless Souls",
+        name = "The Restless Souls (1/2)",
         suggestedLevel = 60,
         requiredLevel = 55,
         source = {
@@ -4945,7 +5026,7 @@ Q.Quests = {
     {
         id = 5282,
         faction = nil,
-        name = "The Restless Souls",
+        name = "The Restless Souls (2/2)",
         suggestedLevel = 60,
         requiredLevel = 55,
         prerequisites = {
@@ -5072,7 +5153,7 @@ Q.Quests = {
     {
         id = 5463,
         faction = nil,
-        name = "Menethil's Gift",
+        name = "Menethil's Gift (1/2)",
         suggestedLevel = 60,
         requiredLevel = 57,
         prerequisites = {
@@ -5088,7 +5169,7 @@ Q.Quests = {
     {
         id = 5464,
         faction = nil,
-        name = "Menethil's Gift",
+        name = "Menethil's Gift (2/2)",
         suggestedLevel = 60,
         requiredLevel = 57,
         prerequisites = {
@@ -5330,7 +5411,7 @@ Q.Quests = {
         id = 1654,
         faction = "Alliance",
         class = "PALADIN",
-        name = "The Test of Righteousness",
+        name = "The Test of Righteousness (2/2)",
         suggestedLevel = 20,
         requiredLevel = 20,
         prerequisites = {
@@ -5348,7 +5429,7 @@ Q.Quests = {
         id = 1649,
         faction = "Alliance",
         class = "PALADIN",
-        name = "The Tome of Valor",
+        name = "The Tome of Valor (1/4)",
         suggestedLevel = 20,
         requiredLevel = 20,
         source = {
@@ -5363,7 +5444,7 @@ Q.Quests = {
         id = 1650,
         faction = "Alliance",
         class = "PALADIN",
-        name = "The Tome of Valor",
+        name = "The Tome of Valor (2/4)",
         suggestedLevel = 23,
         requiredLevel = 20,
         prerequisites = {
@@ -5380,7 +5461,7 @@ Q.Quests = {
         id = 1651,
         faction = "Alliance",
         class = "PALADIN",
-        name = "The Tome of Valor",
+        name = "The Tome of Valor (3/4)",
         suggestedLevel = 25,
         requiredLevel = 20,
         prerequisites = {
@@ -5397,7 +5478,7 @@ Q.Quests = {
         id = 1652,
         faction = "Alliance",
         class = "PALADIN",
-        name = "The Tome of Valor",
+        name = "The Tome of Valor (4/4)",
         suggestedLevel = 25,
         requiredLevel = 20,
         prerequisites = {
@@ -5414,7 +5495,7 @@ Q.Quests = {
         id = 1653,
         faction = "Alliance",
         class = "PALADIN",
-        name = "The Test of Righteousness",
+        name = "The Test of Righteousness (1/2)",
         suggestedLevel = 25,
         requiredLevel = 20,
         prerequisites = {
@@ -6368,7 +6449,7 @@ Q.Quests = {
     {
         id = 5126,
         profession = "Blacksmithing",
-        name = "Lorax",
+        name = "Lorax's Tale",
         suggestedLevel = 60,
         requiredLevel = 55,
         source = {
