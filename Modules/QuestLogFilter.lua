@@ -4,8 +4,8 @@ local QuestLogFilter = {}
 Q.QuestLogFilter = QuestLogFilter
 
 local DROPDOWN_WIDTH = 176
-local DROPDOWN_HEIGHT = 28
-local ROW_HEIGHT = 22
+local DROPDOWN_HEIGHT = 32
+local ROW_HEIGHT = 26
 local LABEL_HEIGHT = 20
 local SECTION_GAP = 12
 local RESET_EXTRA_GAP = 24
@@ -139,7 +139,7 @@ function QuestLogFilter:Create(questLogFrame, onChanged)
 
         local directions = {}
         for index, direction in ipairs({ { label = "Asc", value = true }, { label = "Desc", value = false } }) do
-            local button = Q:CreateButton(nil, window, direction.label, halfWidth, ROW_HEIGHT, Q.Theme.FontSize.S,
+            local button = Q:CreateButton(nil, window, direction.label, halfWidth, ROW_HEIGHT - 6, Q.Theme.FontSize.S,
                 Q.Theme.Text.Secondary, {
                     OnClick = function()
                         Q:SetSetting(settingPath .. ".Ascending", direction.value)

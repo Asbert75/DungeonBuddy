@@ -5995,7 +5995,7 @@ Q.Quests = {
         suggestedLevel = 60,
         requiredLevel = 60,
         prerequisites = {
-            { id = 7625, type = Q.PrerequisiteType.REQUIRED },
+            { id = 7630, type = Q.PrerequisiteType.REQUIRED },
             { id = 7625, type = Q.PrerequisiteType.REQUIRED }
         },
         source = {
