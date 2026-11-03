@@ -386,16 +386,7 @@ function Q.API:GetInstances(sortKey, ascending)
 end
 
 function Q.API:GetContinents()
-    local continents, seen = {}, {}
-    for _, instance in pairs(Q.Instances) do
-        if instance.continent and not seen[instance.continent] then
-            seen[instance.continent] = true
-            table.insert(continents, instance.continent)
-        end
-    end
-
-    table.sort(continents)
-    return continents
+    return {'Eastern Kingdoms', 'Kalimdor'}
 end
 
 function Q.API:SortQuests(quests, sortKey, ascending)
