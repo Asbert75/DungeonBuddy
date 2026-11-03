@@ -45,7 +45,7 @@ Q.Themes.Alliance = {
 }
 
 Q.Themes.Plain = {
-    Brand = HexToColor("#B9B9B9"),
+    Brand = HexToColor("#BD9E56"),
     Background = {
         Primary   = HexToColor("#131313"),
         Secondary = HexToColor("#191919"),
@@ -53,7 +53,7 @@ Q.Themes.Plain = {
     },
     Border = {
         Default = HexToColor("#4D4D4D"),
-        Accent  = HexToColor("#BFBFBF"),
+        Accent  = HexToColor("#BCA14B"),
     },
     Text = {
         Primary   = HexToColor("#E8EBE3"),

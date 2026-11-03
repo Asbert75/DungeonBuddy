@@ -380,7 +380,7 @@ function Settings:Create()
             selected:SetShown(isSelected)
             accent:SetShown(isSelected)
             accent:SetColorTexture(unpack(Q.Theme.Brand))
-            label:SetTextColor(unpack(isSelected and Q.Theme.Text.Brand or Q.Theme.Text.Primary))
+            label:SetTextColor(unpack(Q.Theme.Text.Primary))
         end
 
         button:SetScript("OnEnter", button.UpdateState)
@@ -415,72 +415,8 @@ function Settings:Create()
     --------------------------------------------------
     -- Quest Log Settings
     --------------------------------------------------
-    local questLogSettingsFrame = self:CreateSection(Sections.QuestLog.name, Sections.QuestLog.title,
+    self:CreateSection(Sections.QuestLog.name, Sections.QuestLog.title,
         CreatePage(Sections.QuestLog.name))
-
-    -- Setting: Quest Colors
-    local questLogSettings = GetSectionSettings(Sections.QuestLog.name)
-    local lastQuestLogSetting = questLogSettings[#questLogSettings]
-    local anchorFrame = _G["Setting_" .. lastQuestLogSetting.path]
-
-    local questColorContainer = Q:CreateBackdropFrame("QuestColorContainer", questLogSettingsFrame, CONTENT_WIDTH - (2 * paddingM), 128, "DIALOG", "Secondary", "Default", 0.6, 0.2)
-    Q:SetPixelPerfectPoint(questColorContainer, "TOPLEFT", anchorFrame, "BOTTOMLEFT", 0, -paddingM)
-
-    local label = Q:CreateText(nil, questColorContainer, "Colors", Q.Theme.FontSize.M, "Primary")
-    label:SetPoint("TOPLEFT", questColorContainer, "TOPLEFT", paddingS, -13)
-    local description = Q:CreateText(nil, questColorContainer, "Customize the colors for different quest states.", Q.Theme.FontSize.S, "Secondary")
-    description:SetPoint("TOPLEFT", label, "BOTTOMLEFT", 0, -4)
-
-    local colorSettings = {
-        { path = "QuestColorAvailable", label = "Available", x = 270, y = 48 },
-        { path = "QuestColorUnavailable", label = "Unavailable", x = paddingS, y = 48 },
-        { path = "QuestColorInProgress", label = "In Quest Log", x = paddingS, y = 88 },
-        { path = "QuestColorCompleted", label = "Completed", x = 270, y = 88 },
-    }
-
-    self.colorPickers = {}
-    for _, setting in ipairs(colorSettings) do
-        local colorPath = setting.path
-        local colorLabel = setting.label
-        local colorX, colorY = setting.x, setting.y
-        local color = Q:GetSetting(colorPath)
-        local picker = AceGUI:Create("ColorPicker")
-        picker:SetLabel(colorLabel)
-        picker:SetColor(color.r, color.g, color.b, 1)
-        picker.text:SetTextColor(color.r, color.g, color.b)
-        Q:SetPixelPerfectWidth(picker, 260)
-        picker.frame:SetParent(questColorContainer)
-        picker.frame:SetFrameStrata("DIALOG")
-        picker.frame:ClearAllPoints()
-        Q:SetPixelPerfectPoint(picker.frame, "TOPLEFT", questColorContainer, "TOPLEFT", colorX, -colorY)
-        picker.frame:Show()
-        picker:SetCallback("OnValueChanged", function(_, _, r, g, b)
-            picker.text:SetTextColor(r, g, b)
-            Q:SetSetting(colorPath, { r = r, g = g, b = b })
-            if Q.QuestLog and Q.QuestLog.frame then
-                Q.QuestLog:RefreshAndPopulate()
-            end
-        end)
-        self.colorPickers[colorPath] = picker
-    end
-
-     local resetColorHandlers = {
-        ["OnClick"] = function()
-            for _, color in ipairs(colorSettings) do
-                Q:SetSetting(color.path, Q.Theme[color.path])
-            end
-            for path, picker in pairs(self.colorPickers or {}) do
-                local color = Q:GetSetting(path)
-                picker:SetColor(color.r, color.g, color.b, 1)
-            end
-
-            if Q.QuestLog and Q.QuestLog.frame then
-                Q.QuestLog:RefreshAndPopulate()
-            end
-        end
-    }
-    local resetColorsButton = Q:CreateButton(nil, questColorContainer, "Reset Colors", 120, 40, Q.Theme.FontSize.M, Q.Theme.Status.Error, resetColorHandlers)
-    Q:SetPixelPerfectPoint(resetColorsButton, "BOTTOMRIGHT", questColorContainer, "BOTTOMRIGHT", -paddingS, paddingS)
 
     --------------------------------------------------
     -- Theme Selection

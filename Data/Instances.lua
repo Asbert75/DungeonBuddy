@@ -7,7 +7,7 @@ Q.Instances = {
         name = "Hall of Thanes",
         continent = "Eastern Kingdoms",
         zone = "Ironforge",
-        location = { mapId = 1455, x = 0.614, y = 0.892 },
+        location = { mapId = 1455, x = 0.466, y = 0.522 },
         minLevel = 13,
         suggestedLevel = 14,
         maxLevel = 18
@@ -87,7 +87,7 @@ Q.Instances = {
         name = "The Stockade",
         continent = "Eastern Kingdoms",
         zone = "Stormwind City",
-        location = { mapId = 1453, x = 0.524, y = 0.695 },
+        location = { mapId = 1453, x = 0.422, y = 0.590 },
         minLevel = 26,
         suggestedLevel = 26,
         maxLevel = 32
@@ -117,27 +117,27 @@ Q.Instances = {
         name = "Gnomeregan",
         continent = "Eastern Kingdoms",
         zone = "Dun Morogh",
-        location = { mapId = 1426, x = 0.30, y = 0.36 },
+        location = { mapId = 1426, x = 0.245, y = 0.396 },
         minLevel = 31,
         suggestedLevel = 30,
         maxLevel = 37
     },
-    ["SM: Graveyard"] = {
+    ["Scarlet Monastery: Graveyard"] = {
         id = 13,
-        name = "SM: Graveyard",
+        name = "Scarlet Monastery: Graveyard",
         continent = "Eastern Kingdoms",
         zone = "Tirisfal Glades",
-        location = { mapId = 1420, x = 0.84, y = 0.32 },
+        location = { mapId = 1420, x = 0.825, y = 0.336 },
         minLevel = 31,
         suggestedLevel = 30,
         maxLevel = 37
     },
-    ["SM: Library"] = {
+    ["Scarlet Monastery: Library"] = {
         id = 14,
-        name = "SM: Library",
+        name = "Scarlet Monastery: Library",
         continent = "Eastern Kingdoms",
         zone = "Tirisfal Glades",
-        location = { mapId = 1420, x = 0.84, y = 0.32 },
+        location = { mapId = 1420, x = 0.825, y = 0.336 },
         minLevel = 34,
         suggestedLevel = 33,
         maxLevel = 40
@@ -147,17 +147,17 @@ Q.Instances = {
         name = "The Drowned City",
         continent = "Eastern Kingdoms",
         zone = "Stranglethorn Vale",
-        location = { mapId = 1434, x = 0.223, y = 0.395 },
+        location = { mapId = 1434, x = 0.214, y = 0.296 },
         minLevel = 35,
         suggestedLevel = 37,
         maxLevel = 40
     },
-    ["SM: Armory"] = {
+    ["Scarlet Monastery: Armory"] = {
         id = 15,
-        name = "SM: Armory",
+        name = "Scarlet Monastery: Armory",
         continent = "Eastern Kingdoms",
         zone = "Tirisfal Glades",
-        location = { mapId = 1420, x = 0.84, y = 0.32 },
+        location = { mapId = 1420, x = 0.825, y = 0.336 },
         minLevel = 37,
         suggestedLevel = 36,
         maxLevel = 43
@@ -167,17 +167,17 @@ Q.Instances = {
         name = "Razorfen Downs",
         continent = "Kalimdor",
         zone = "The Barrens",
-        location = { mapId = 1413, x = 0.49, y = 0.92 },
+        location = { mapId = 1413, x = 0.489, y = 0.936 },
         minLevel = 38,
         suggestedLevel = 37,
         maxLevel = 44
     },
-    ["SM: Cathedral"] = {
+    ["Scarlet Monastery: Cathedral"] = {
         id = 17,
-        name = "SM: Cathedral",
+        name = "Scarlet Monastery: Cathedral",
         continent = "Eastern Kingdoms",
         zone = "Tirisfal Glades",
-        location = { mapId = 1420, x = 0.84, y = 0.32 },
+        location = { mapId = 1420, x = 0.825, y = 0.336 },
         minLevel = 39,
         suggestedLevel = 38,
         maxLevel = 45
@@ -197,7 +197,7 @@ Q.Instances = {
         name = "Uldaman",
         continent = "Eastern Kingdoms",
         zone = "Badlands",
-        location = { mapId = 15, x = 0.42, y = 0.10 },
+        location = { mapId = 1418, x = 0.42, y = 0.10 },
         minLevel = 44,
         suggestedLevel = 43,
         maxLevel = 50
@@ -246,8 +246,8 @@ Q.Instances = {
         id = 22,
         name = "Blackrock Depths",
         continent = "Eastern Kingdoms",
-        zone = "Blackrock Mountain",
-        location = { mapId = 1428, x = 0.284, y = 0.285 },
+        zone = "Burning Steppes",
+        location = { mapId = 1428, x = 0.292, y = 0.382 },
         minLevel = 52,
         suggestedLevel = 55,
         maxLevel = 60
@@ -296,8 +296,8 @@ Q.Instances = {
         id = 25,
         name = "Lower Blackrock Spire",
         continent = "Eastern Kingdoms",
-        zone = "Blackrock Mountain",
-        location = { mapId = 1428, x = 0.284, y = 0.285 },
+        zone = "Burning Steppes",
+        location = { mapId = 1428, x = 0.292, y = 0.382 },
         minLevel = 57,
         suggestedLevel = 56,
         maxLevel = 60
@@ -326,8 +326,8 @@ Q.Instances = {
         id = 28,
         name = "Upper Blackrock Spire",
         continent = "Eastern Kingdoms",
-        zone = "Blackrock Mountain",
-        location = { mapId = 1428, x = 0.284, y = 0.285 },
+        zone = "Burning Steppes",
+        location = { mapId = 1428, x = 0.292, y = 0.382 },
         minLevel = 59,
         suggestedLevel = 58,
         maxLevel = 60
@@ -337,7 +337,7 @@ Q.Instances = {
         name = "Stratholme",
         continent = "Eastern Kingdoms",
         zone = "Eastern Plaguelands",
-        location = { mapId = 1423, x = 0.26, y = 0.102 },
+        location = { mapId = 1423, x = 0.479, y = 0.237 },
         minLevel = 59,
         suggestedLevel = 58,
         maxLevel = 60
@@ -347,9 +347,9 @@ Q.Instances = {
     ["Onyxia's Lair"] = {
         id = 36,
         name = "Onyxia's Lair",
-        continent = "Eastern Kingdoms",
+        continent = "Kalimdor",
         zone = "Dustwallow Marsh",
-        location = { mapId = 1430, x = 0.45, y = 0.75 },
+        location = { mapId = 1445, x = 0.526, y = 0.766 },
         minLevel = 60,
         suggestedLevel = 60,
         maxLevel = 60
@@ -358,8 +358,8 @@ Q.Instances = {
         id = 37,
         name = "Molten Core",
         continent = "Eastern Kingdoms",
-        zone = "Blackrock Mountain",
-        location = { mapId = 1428, x = 0.284, y = 0.285 },
+        zone = "Burning Steppes",
+        location = { mapId = 1428, x = 0.292, y = 0.382 },
         minLevel = 60,
         suggestedLevel = 60,
         maxLevel = 60
@@ -368,8 +368,8 @@ Q.Instances = {
         id = 38,
         name = "Blackwing Lair",
         continent = "Eastern Kingdoms",
-        zone = "Blackrock Mountain",
-        location = { mapId = 1428, x = 0.284, y = 0.285 },
+        zone = "Burning Steppes",
+        location = { mapId = 1428, x = 0.292, y = 0.382 },
         minLevel = 60,
         suggestedLevel = 60,
         maxLevel = 60
@@ -399,7 +399,7 @@ Q.Instances = {
         name = "Temple of Ahn'Qiraj",
         continent = "Kalimdor",
         zone = "Silithus",
-        location = { mapId = 1451, x = 0.35, y = 0.79 },
+        location = { mapId = 1451, x = 0.284, y = 0.923 },
         minLevel = 60,
         suggestedLevel = 60,
         maxLevel = 60

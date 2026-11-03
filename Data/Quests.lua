@@ -51,8 +51,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Ghostly Attendant",
-            zone = "Hall of Thanes",
-            location = { mapId = 1455, x = 0.614, y = 0.892 }
+            instance = Q.Instances["Hall of Thanes"]
         },
         instances = { Q.Instances["Hall of Thanes"] }
     },
@@ -99,8 +98,7 @@ Q.Quests = {
             type = "item",
             name = "Treaty of Understanding",
             itemId = 281030,
-            zone = "Hall of Thanes",
-            location = { mapId = 1455, x = 0.614, y = 0.892 },
+            instance = Q.Instances["Hall of Thanes"],
             text = "Found inside the vault in the Reliquary of Kings"
         },
         instances = { Q.Instances["Hall of Thanes"] }
@@ -208,8 +206,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Maur Grimtotem",
-            zone = "Ragefire Chasm",
-            location = { mapId = 1454, x = 0.53, y = 0.50 },
+            instance = Q.Instances["Ragefire Chasm"],
         },
         instances = { Q.Instances["Ragefire Chasm"] }
     },
@@ -253,8 +250,7 @@ Q.Quests = {
             type = "item",
             name = "Crest of Lordaeron",
             itemId = 275521,
-            zone = "Ruins of Lordaeron",
-            location = { mapId = 1420, x = 0.61, y = 0.60 },
+            instance = Q.Instances["Ruins of Lordaeron"],
             text = "Search the ruins; the crest can appear in several locations"
         },
         instances = { Q.Instances["Ruins of Lordaeron"] }
@@ -269,8 +265,7 @@ Q.Quests = {
             type = "item",
             name = "Crest of Lordaeron",
             itemId = 268579,
-            zone = "Ruins of Lordaeron",
-            location = { mapId = 1420, x = 0.61, y = 0.60 },
+            instance = Q.Instances["Ruins of Lordaeron"],
             text = "Search the ruins; the crest can appear in several locations"
         },
         instances = { Q.Instances["Ruins of Lordaeron"] }
@@ -327,8 +322,7 @@ Q.Quests = {
             type = "item",
             name = "Abominable Head",
             itemId = 280438,
-            zone = "Ruins of Lordaeron",
-            location = { mapId = 1420, x = 0.61, y = 0.60 },
+            instance = Q.Instances["Ruins of Lordaeron"],
             text = "Dropped by The Baron inside the instance"
         },
         instances = { Q.Instances["Ruins of Lordaeron"] }
@@ -342,8 +336,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Captain Truman",
-            zone = "Ruins of Lordaeron",
-            location = { mapId = 1420, x = 0.61, y = 0.60 },
+            instance = Q.Instances["Ruins of Lordaeron"],
             text = "Found inside the instance at the entrance"
         },
         instances = { Q.Instances["Ruins of Lordaeron"] }
@@ -358,8 +351,7 @@ Q.Quests = {
             type = "item",
             name = "Blood-Stained Letter",
             itemId = 251522,
-            zone = "Ruins of Lordaeron",
-            location = { mapId = 1420, x = 0.61, y = 0.60 },
+            instance = Q.Instances["Ruins of Lordaeron"],
             text = "Found in the instance near Rath'mael"
         },
         instances = { Q.Instances["Ruins of Lordaeron"] }
@@ -374,8 +366,7 @@ Q.Quests = {
             type = "item",
             name = "Bloodied Insignia",
             itemId = 268535,
-            zone = "Ruins of Lordaeron",
-            location = { mapId = 1420, x = 0.61, y = 0.60 },
+            instance = Q.Instances["Ruins of Lordaeron"],
             text = "Dropped by undead mobs in the ruins"
         },
         instances = { Q.Instances["Ruins of Lordaeron"] }
@@ -545,8 +536,7 @@ Q.Quests = {
             type = "item",
             name = "An Unsent Letter",
             itemId = 2874,
-            zone = "The Deadmines",
-            location = { mapId = 1436, x = 0.42, y = 0.71 },
+            instance = Q.Instances["The Deadmines"],
             text = "Drops from the last boss, Edwin VanCleef",
         },
         instances = { Q.Instances["The Deadmines"] },
@@ -778,8 +768,7 @@ Q.Quests = {
             type = "item",
             name = "Glowing Shard",
             itemId = 10441,
-            zone = "Wailing Caverns",
-            location = { mapId = 1413, x = 0.458, y = 0.344 },
+            instance = Q.Instances["Wailing Caverns"],
             text = "Dropped by Mutanus the Devourer at the end of the instance",
         },
         instances = { Q.Instances["Wailing Caverns"] },
@@ -918,8 +907,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Argent Guard Thaelrid",
-            zone = "Blackfathom Deeps",
-            location = { mapId = 1440, x = 0.14, y = 0.15 }
+            instance = Q.Instances["Blackfathom Deeps"]
         },
         instances = { Q.Instances["Blackfathom Deeps"] },
     },
@@ -946,8 +934,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Argent Guard Thaelrid",
-            zone = "Blackfathom Deeps",
-            location = { mapId = 1440, x = 0.14, y = 0.15 }
+            instance = Q.Instances["Blackfathom Deeps"]
         },
         instances = { Q.Instances["Blackfathom Deeps"] },
     },
@@ -961,8 +948,7 @@ Q.Quests = {
             type = "item",
             name = "Strange Water Globe",
             itemId = 16782,
-            zone = "Blackfathom Deeps",
-            location = { mapId = 1440, x = 0.14, y = 0.15 },
+            instance = Q.Instances["Blackfathom Deeps"],
             text = "Dropped by Baron Aquanis inside the instance"
         },
         instances = { Q.Instances["Blackfathom Deeps"] },
@@ -1040,8 +1026,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Heralath Fallowbrook",
-            zone = "Razorfen Kraul",
-            location = { mapId = 1413, x = 0.43, y = 0.90 }
+            instance = Q.Instances["Razorfen Kraul"]
         },
         instances = { Q.Instances["Razorfen Kraul"] },
     },
@@ -1054,8 +1039,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Willix the Importer",
-            zone = "Razorfen Kraul",
-            location = { mapId = 1413, x = 0.43, y = 0.90 },
+            instance = Q.Instances["Razorfen Kraul"],
             text = "Near the final boss, inside the instance"
         },
         instances = { Q.Instances["Razorfen Kraul"] },
@@ -1084,8 +1068,7 @@ Q.Quests = {
             type = "item",
             name = "Small Scroll",
             itemId = 17008,
-            zone = "Razorfen Kraul",
-            location = { mapId = 1413, x = 0.43, y = 0.90 },
+            instance = Q.Instances["Razorfen Kraul"],
             text = "Dropped by Charlga Razorflank inside the instance",
         },
         instances = { Q.Instances["Razorfen Kraul"] },
@@ -1175,7 +1158,7 @@ Q.Quests = {
             type = "item",
             name = "Titan Relic",
             itemId = 270866,
-            zone = "Excavation Site: Wetlands",
+            instance = Q.Instances["Excavation Site: Wetlands"],
             text = "Dropped by the Relic Guardian boss"
         },
         instances = { Q.Instances["Excavation Site: Wetlands"] },
@@ -1263,7 +1246,7 @@ Q.Quests = {
             type = "item",
             name = "Titan Relic",
             itemId = 270865,
-            zone = "Excavation Site: Wetlands",
+            instance = Q.Instances["Excavation Site: Wetlands"],
             text = "Dropped by the boss Relic Guardian in the instance"
         },
         instances = { Q.Instances["Excavation Site: Wetlands"] },
@@ -1402,8 +1385,8 @@ Q.Quests = {
         source = {
             type = "object",
             name = "The Sparklematic 5200",
-            zone = "Gnomeregan",
-            location = { mapId = 1426, x = 0.30, y = 0.36 },
+            instance = Q.Instances["Gnomeregan"],
+            text = "Found inside the instance"
         },
         instances = { Q.Instances["Gnomeregan"] },
     },
@@ -1520,7 +1503,7 @@ Q.Quests = {
             type = "item",
             name = "Grime-Encrusted Ring",
             itemId = 9326,
-            zone = "Gnomeregan",
+            instance = Q.Instances["Gnomeregan"],
             text = "Dropped by Dark Iron Agents inside the instance"
         },
         instances = { Q.Instances["Gnomeregan"] },
@@ -1595,7 +1578,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Scooty",
-            zone = "The Cape of Stranglethorn",
+            zone = "Stranglethorn Vale",
             location = { mapId = 1434, x = 0.27, y = 0.77 }
         },
         instances = { Q.Instances["Gnomeregan"] },
@@ -1609,7 +1592,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Kernobee",
-            zone = "Gnomeregan",
+            instance = Q.Instances["Gnomeregan"],
             text = "Found inside the instance in the room right of the Clean Room"
         },
         instances = { Q.Instances["Gnomeregan"] },
@@ -1640,8 +1623,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Rexxie Copperclutch",
-            zone = "City of Dalaran",
-            location = { mapId = 1421, x = 0.686, y = 0.452 }
+            instance = Q.Instances["City of Dalaran"]
         },
         instances = { Q.Instances["City of Dalaran"] },
     },
@@ -1657,7 +1639,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Image of Archmage Modera",
-            zone = "City of Dalaran",
+            zone = "Silverpine Forest",
             location = { mapId = 1421, x = 0.686, y = 0.452 }
         }
     },
@@ -1670,7 +1652,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Image of Archmage Modera",
-            zone = "City of Dalaran",
+            zone = "Silverpine Forest",
             location = { mapId = 1421, x = 0.686, y = 0.452 }
         },
         instances = { Q.Instances["City of Dalaran"] },
@@ -1701,7 +1683,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Image of Archmage Modera",
-            zone = "City of Dalaran",
+            zone = "Silverpine Forest",
             location = { mapId = 1421, x = 0.686, y = 0.452 }
         },
         instances = { Q.Instances["City of Dalaran"] },
@@ -1914,7 +1896,7 @@ Q.Quests = {
             zone = "Undercity",
             location = { mapId = 1458, x = 0.56, y = 0.92 }
         },
-        instances = { Q.Instances["SM: Library"], Q.Instances["SM: Armory"], Q.Instances["SM: Cathedral"] },
+        instances = { Q.Instances["Scarlet Monastery: Library"], Q.Instances["Scarlet Monastery: Armory"], Q.Instances["Scarlet Monastery: Cathedral"] },
     },
     {
         id = 1113,
@@ -1931,7 +1913,7 @@ Q.Quests = {
             zone = "Undercity",
             location = { mapId = 1458, x = 0.48, y = 0.69 }
         },
-        instances = { Q.Instances["SM: Library"], Q.Instances["SM: Armory"], Q.Instances["SM: Cathedral"] },
+        instances = { Q.Instances["Scarlet Monastery: Library"], Q.Instances["Scarlet Monastery: Armory"], Q.Instances["Scarlet Monastery: Cathedral"] },
     },
     {
         id = 1053,
@@ -1948,7 +1930,7 @@ Q.Quests = {
             zone = "Hillsbrad Foothills",
             location = { mapId = 1424, x = 0.51, y = 0.58 }
         },
-        instances = { Q.Instances["SM: Library"], Q.Instances["SM: Armory"], Q.Instances["SM: Cathedral"] },
+        instances = { Q.Instances["Scarlet Monastery: Library"], Q.Instances["Scarlet Monastery: Armory"], Q.Instances["Scarlet Monastery: Cathedral"] },
     },
     --#endregion
 
@@ -1962,11 +1944,10 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Vorrel Sengutz",
-            zone = "Scarlet Monastery",
-            location = { mapId = 1420, x = 0.84, y = 0.32 },
+            instance = Q.Instances["Scarlet Monastery: Graveyard"],
             text = "Vorrel is found in the first room after the corridor inside the instance"
         },
-        instances = { Q.Instances["SM: Graveyard"] },
+        instances = { Q.Instances["Scarlet Monastery: Graveyard"] },
     },
     --#endregion
 
@@ -1983,7 +1964,7 @@ Q.Quests = {
             zone = "Alterac Mountains",
             location = { mapId = 1416, x = 0.095, y = 0.625 },
         },
-        instances = { Q.Instances["SM: Library"] },
+        instances = { Q.Instances["Scarlet Monastery: Library"] },
     },
     {
         id = 1049,
@@ -1997,7 +1978,7 @@ Q.Quests = {
             zone = "Thunder Bluff",
             location = { mapId = 1456, x = 0.344, y = 0.47 },
         },
-        instances = { Q.Instances["SM: Library"] },
+        instances = { Q.Instances["Scarlet Monastery: Library"] },
     },
     {
         id = 1149,
@@ -2123,7 +2104,7 @@ Q.Quests = {
             zone = "Undercity",
             location = { mapId = 1458, x = 0.57, y = 0.65 }
         },
-        instances = { Q.Instances["SM: Library"] },
+        instances = { Q.Instances["Scarlet Monastery: Library"] },
     },
     {
         id = 1050,
@@ -2137,7 +2118,7 @@ Q.Quests = {
             zone = "Ironforge",
             location = { mapId = 1455, x = 0.75, y = 0.12 }
         },
-        instances = { Q.Instances["SM: Library"] },
+        instances = { Q.Instances["Scarlet Monastery: Library"] },
     },
     --#endregion
 
@@ -2213,8 +2194,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Belnistrasz",
-            zone = "Razorfen Downs",
-            location = { mapId = 1413, x = 0.49, y = 0.92 }
+            instance = Q.Instances["Razorfen Downs"]
         },
         instances = { Q.Instances["Razorfen Downs"] },
     },
@@ -2227,8 +2207,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Belnistrasz",
-            zone = "Razorfen Downs",
-            location = { mapId = 1413, x = 0.49, y = 0.92 },
+            instance = Q.Instances["Razorfen Downs"],
             text = "Found inside the instance"
         }
     },
@@ -2309,8 +2288,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Baelog",
-            zone = "Uldaman",
-            location = { mapId = 1418, x = 0.426, y = 0.122 },
+            instance = Q.Instances["Uldaman"],
             text = "Found inside the instance"
         },
         instances = { Q.Instances["Uldaman"] },
@@ -2370,8 +2348,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Hammertoe Grez",
-            zone = "Uldaman",
-            location = { mapId = 1418, x = 0.426, y = 0.122 },
+            instance = Q.Instances["Uldaman"],
             text = "Found inside the instance"
         }
     },
@@ -2387,8 +2364,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Hammertoe Grez",
-            zone = "Uldaman",
-            location = { mapId = 1418, x = 0.426, y = 0.122 },
+            instance = Q.Instances["Uldaman"],
             text = "Found inside the instance"
         }
     },
@@ -2483,8 +2459,7 @@ Q.Quests = {
             type = "item",
             itemId = 7666,
             name = "Shattered Necklace",
-            zone = "Uldaman",
-            location = { mapId = 1418, x = 0.426, y = 0.122 },
+            instance = Q.Instances["Uldaman"],
             text = "Drops from Stonevault troggs and Shadowforge Ruffian/Diggers around/inside the instance"
         },
         instances = { Q.Instances["Uldaman"] },
@@ -2533,8 +2508,7 @@ Q.Quests = {
         source = {
             type = "object",
             name = "Remains of a Paladin",
-            zone = "Uldaman",
-            location = { mapId = 1418, x = 0.426, y = 0.122, },
+            instance = Q.Instances["Uldaman"],
             text = "Found on the floor to the right when moving from Revelosh to Ironaya"
         }
     },
@@ -2550,8 +2524,7 @@ Q.Quests = {
         source = {
             type = "object",
             name = "Talvash's Scrying Bowl",
-            zone = "Uldaman",
-            location = { mapId = 1418, x = 0.426, y = 0.122, },
+            instance = Q.Instances["Uldaman"],
             text = "Summoned by using Talvah's Phial of Scrying from your bags"
         },
         instances = { Q.Instances["Uldaman"] },
@@ -2621,8 +2594,7 @@ Q.Quests = {
         source = {
             type = "object",
             name = "The Platinum Discs",
-            zone = "Uldaman",
-            location = { mapId = 1418, x = 0.426, y = 0.122 },
+            instance = Q.Instances["Uldaman"],
             text = "Started in the vault after the final boss"
         },
         instances = { Q.Instances["Uldaman"] },
@@ -2670,7 +2642,7 @@ Q.Quests = {
             type = "npc",
             name = "Battered Dwarven Skeleton",
             zone = "Badlands",
-            location = { mapId = 15, x = 0.51, y = 0.625 }
+            location = { mapId = 1418, x = 0.51, y = 0.625 }
         }
     },
     {
@@ -2699,8 +2671,7 @@ Q.Quests = {
             type = "item",
             itemId = 7666,
             name = "Shattered Necklace",
-            zone = "Uldaman",
-            location = { mapId = 1418, x = 0.426, y = 0.122 },
+            instance = Q.Instances["Uldaman"],
             text = "Drops from Stonevault troggs and Shadowforge Ruffian/Diggers around/inside the instance"
         }
     },
@@ -2732,8 +2703,7 @@ Q.Quests = {
         source = {
             type = "object",
             name = "Remains of a Paladin",
-            zone = "Uldaman",
-            location = { mapId = 1418, x = 0.426, y = 0.122, },
+            instance = Q.Instances["Uldaman"],
             text = "Found on the floor to the right when moving from Revelosh to Ironaya"
         }
     },
@@ -2844,7 +2814,7 @@ Q.Quests = {
             type = "npc",
             name = "Trenton Lighthammer",
             zone = "Tanaris",
-            location = { mapId = 440, x = 0.51, y = 0.28 }
+            location = { mapId = 1446, x = 0.51, y = 0.28 }
         },
         instances = { Q.Instances["Zul'Farrak"] },
     },
@@ -2858,14 +2828,14 @@ Q.Quests = {
             type = "npc",
             name = "Chief Engineer Bilgewhizzle",
             zone = "Tanaris",
-            location = { mapId = 440, x = 0.52, y = 0.28 }
+            location = { mapId = 1446, x = 0.52, y = 0.28 }
         },
         instances = { Q.Instances["Zul'Farrak"] },
     },
     {
         id = 2864,
         faction = nil,
-        name = "Trank'rek",
+        name = "Tran'rek",
         suggestedLevel = 45,
         requiredLevel = 40,
         source = {
@@ -2881,6 +2851,9 @@ Q.Quests = {
         name = "Scarab Shells",
         suggestedLevel = 45,
         requiredLevel = 40,
+        prerequisites = {
+            { id = 2864, type = Q.PrerequisiteType.CHAIN }
+        },
         source = {
             type = "npc",
             name = "Tran'rek",
@@ -3030,7 +3003,7 @@ Q.Quests = {
             type = "npc",
             name = "Yeh'kinya",
             zone = "Tanaris",
-            location = { mapId = 440, x = 0.67, y = 0.22 }
+            location = { mapId = 1446, x = 0.67, y = 0.22 }
         },
     },
     {
@@ -3046,7 +3019,7 @@ Q.Quests = {
             type = "npc",
             name = "Yeh'kinya",
             zone = "Tanaris",
-            location = { mapId = 440, x = 0.67, y = 0.22 }
+            location = { mapId = 1446, x = 0.67, y = 0.22 }
         },
         instances = { Q.Instances["Zul'Farrak"] },
     },
@@ -3104,8 +3077,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Cavindra",
-            zone = "Maraudon",
-            location = { mapId = 1443, x = 0.29, y = 0.62 }
+            instance = Q.Instances["Maraudon"]
         }
     },
     {
@@ -3489,8 +3461,7 @@ Q.Quests = {
             type = "item",
             name = "Essence of Eranikus",
             itemId = 10454,
-            zone = "Temple of Atal'Hakkar",
-            location = { mapId = 1435, x = 0.43, y = 0.53 },
+            instance = Q.Instances["Temple of Atal'Hakkar"],
             text = "Dropped by Shade of Eranikus inside the instance"
         },
         instances = { Q.Instances["Temple of Atal'Hakkar"] },
@@ -3508,7 +3479,7 @@ Q.Quests = {
             type = "npc",
             name = "Yeh'kinya",
             zone = "Tanaris",
-            location = { mapId = 440, x = 0.67, y = 0.22 }
+            location = { mapId = 1446, x = 0.67, y = 0.22 }
         },
         instances = { Q.Instances["Temple of Atal'Hakkar"] },
     },
@@ -3525,7 +3496,7 @@ Q.Quests = {
             type = "npc",
             name = "Yeh'kinya",
             zone = "Tanaris",
-            location = { mapId = 440, x = 0.67, y = 0.22 }
+            location = { mapId = 1446, x = 0.67, y = 0.22 }
         },
     },
     {
@@ -3650,8 +3621,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Commander Gor'shak",
-            zone = "Blackrock Depths",
-            location = { mapId = 1428, x = 0.284, y = 0.285 },
+            instance = Q.Instances["Blackrock Depths"],
             text = "Located inside the instance"
         },
     },
@@ -3667,8 +3637,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Commander Gor'shak",
-            zone = "Blackrock Depths",
-            location = { mapId = 1428, x = 0.284, y = 0.285 },
+            instance = Q.Instances["Blackrock Depths"],
             text = "Located inside the instance"
         },
     },
@@ -4134,8 +4103,8 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Lothos Riftwaker",
-            zone = "Blackrock Mountain",
-            location = { mapId = 1428, x = 0.49, y = 0.63 },
+            zone = "Burning Steppes",
+            location = { mapId = 1428, x = 0.292, y = 0.382 },
             text = "Found at the bottom of the chain inside the mountain on the way to the instance"
         },
         instances = { Q.Instances["Blackrock Depths"] }
@@ -4197,8 +4166,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Kharan Mighthammer",
-            zone = "Blackrock Depths",
-            location = { mapId = 1428, x = 0.284, y = 0.285 },
+            instance = Q.Instances["Blackrock Depths"],
             text = "Located inside the instance"
         }
     },
@@ -4214,8 +4182,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Kharan Mighthammer",
-            zone = "Blackrock Depths",
-            location = { mapId = 1428, x = 0.284, y = 0.285 },
+            instance = Q.Instances["Blackrock Depths"],
             text = "Located inside the instance"
         }
     },
@@ -4247,8 +4214,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Princess Moira Bronzebeard",
-            zone = "Blackrock Depths",
-            location = { mapId = 1428, x = 0.284, y = 0.285 },
+            instance = Q.Instances["Blackrock Depths"],
             text =
             "You must defeat Emperor Thaurissan without killing her and she'll become friendly and offer the quest"
         },
@@ -4321,8 +4287,8 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Franclorn Forgewright",
-            zone = "Blackrock Mountain",
-            location = { mapId = 1428, x = 0.48, y = 0.66 },
+            zone = "Burning Steppes",
+            location = { mapId = 1428, x = 0.292, y = 0.382 },
             text =
             "You must be dead to speak to him, he's located in the middle of Blackrock Mountains inside the building"
         }
@@ -4339,8 +4305,8 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Franclorn Forgewright",
-            zone = "Blackrock Mountain",
-            location = { mapId = 1428, x = 0.48, y = 0.66 },
+            zone = "Burning Steppes",
+            location = { mapId = 1428, x = 0.292, y = 0.382 },
             text =
             "You must be dead to speak to him, he's located in the middle of Blackrock Mountains inside the building"
         },
@@ -4355,8 +4321,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Mistress Nagmara",
-            zone = "Blackrock Depths",
-            location = { mapId = 1428, x = 0.284, y = 0.285 },
+            instance = Q.Instances["Blackrock Depths"],
             text = "Found in the bar inside the instance"
         },
         instances = { Q.Instances["Blackrock Depths"] }
@@ -4364,6 +4329,74 @@ Q.Quests = {
     --#endregion
 
     --#region Dire Maul: West
+    {
+        id = 7507,
+        faction = nil,
+        class = "PALADIN",
+        name = "Nostro's Compendium",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        source = {
+            type = "item",
+            itemId = 18401,
+            name = "Nostro's Compendium of Dragon Slaying",
+            instance = Q.Instances["Dire Maul: North"],
+            text = "Looted from the red books in Dire Maul: North, or bought from the auction house"
+        },
+        instances = { Q.Instances["Dire Maul: West"] }
+    },
+    {
+        id = 7507,
+        faction = nil,
+        class = "WARRIOR",
+        name = "Nostro's Compendium",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        source = {
+            type = "item",
+            itemId = 18401,
+            name = "Nostro's Compendium of Dragon Slaying",
+            instance = Q.Instances["Dire Maul: North"],
+            text = "Looted from the red books in Dire Maul: North, or bought from the auction house"
+        },
+        instances = { Q.Instances["Dire Maul: West"] }
+    },
+    {
+        id = 7509,
+        faction = nil,
+        class = "PALADIN",
+        name = "The Forging of Quel'Serrar",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        prerequisites = {
+            { id = 7507, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Lorekeeper Lydros",
+            instance = Q.Instances["Dire Maul: North"],
+            text = "Found inside DM: North"
+        },
+        instances = { Q.Instances["Dire Maul: North"] }
+    },
+    {
+        id = 7509,
+        faction = nil,
+        class = "WARRIOR",
+        name = "The Forging of Quel'Serrar",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        prerequisites = {
+            { id = 7507, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = {
+            type = "npc",
+            name = "Lorekeeper Lydros",
+            instance = Q.Instances["Dire Maul: North"],
+            text = "Found inside DM: North"
+        },
+        instances = { Q.Instances["Dire Maul: North"] }
+    },
     {
         id = 7461,
         faction = nil,
@@ -4373,8 +4406,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Shen'dralar Ancient",
-            zone = "Dire Maul",
-            location = { mapId = 1448, x = 0.59, y = 0.45 },
+            instance = Q.Instances["Dire Maul: West"],
             text = "Found inside DM: West"
         },
         instances = { Q.Instances["Dire Maul: West"] }
@@ -4385,11 +4417,13 @@ Q.Quests = {
         name = "The Treasure of the Shen'dralar",
         suggestedLevel = 58,
         requiredLevel = 56,
+        prerequisites = {
+            { id = 7461, type = Q.PrerequisiteType.CHAIN }
+        },
         source = {
             type = "npc",
             name = "Shen'dralar Ancient",
-            zone = "Dire Maul",
-            location = { mapId = 1448, x = 0.59, y = 0.45 },
+            instance = Q.Instances["Dire Maul: West"],
             text = "Found inside DM: West"
         },
         instances = { Q.Instances["Dire Maul: West"] }
@@ -4422,7 +4456,7 @@ Q.Quests = {
             zone = "Moonglade",
             location = { mapId = 1450, x = 0.516, y = 0.448 }
         },
-        instances = { Q.Instances["Dire Maul: West"] }
+        instances = { Q.Instances["Dire Maul: East"] }
     },
     --#endregion
 
@@ -4481,9 +4515,36 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Knot Thimblejack",
-            zone = "Dire Maul",
-            location = { mapId = 1444, x = 0.59, y = 0.45 },
+            instance = Q.Instances["Dire Maul: North"],
             text = "Located inside the instance"
+        },
+        instances = { Q.Instances["Dire Maul: North"] }
+    },
+    {
+        id = 5518,
+        faction = nil,
+        name = "The Gordok Ogre Suit",
+        suggestedLevel = 60,
+        requiredLevel = 56,
+        source = {
+            type = "npc",
+            name = "Knot Thimblejack",
+            instance = Q.Instances["Dire Maul: North"],
+            text = "Located inside the instance"
+        },
+        instances = { Q.Instances["Dire Maul: North"] }
+    },
+    {
+        id = 7703,
+        faction = nil,
+        name = "Unfinished Gordok Business",
+        suggestedLevel = 60,
+        requiredLevel = 56,
+        source = {
+            type = "npc",
+            name = "Captain Kromcrush",
+            instance = Q.Instances["Dire Maul: North"],
+            text = "Located inside the instance, you must use a Gordok Ogre Suit to acquire and turn in this quest"
         },
         instances = { Q.Instances["Dire Maul: North"] }
     },
@@ -4560,8 +4621,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Bijou",
-            zone = "Lower Blackrock Spire",
-            location = { mapId = 1428, x = 0.284, y = 0.285 },
+            instance = Q.Instances["Lower Blackrock Spire"],
             text = "Found on a ledge inside Lower Blackrock Spire"
         }
     },
@@ -4577,8 +4637,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Bijou",
-            zone = "Lower Blackrock Spire",
-            location = { mapId = 1428, x = 0.284, y = 0.285 },
+            instance = Q.Instances["Lower Blackrock Spire"],
             text = "Found on a ledge inside Lower Blackrock Spire"
         }
     },
@@ -4609,8 +4668,7 @@ Q.Quests = {
             type = "item",
             itemId = 12780,
             name = "General Drakkisath's Command",
-            zone = "Lower Blackrock Spire",
-            location = { mapId = 1428, x = 0.284, y = 0.285 },
+            instance = Q.Instances["Lower Blackrock Spire"],
             text = "Dropped by General Drakkisath inside Lower Blackrock Spire"
         },
         instances = { Q.Instances["Lower Blackrock Spire"] }
@@ -4682,8 +4740,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Bijou",
-            zone = "Lower Blackrock Spire",
-            location = { mapId = 1428, x = 0.284, y = 0.285 },
+            instance = Q.Instances["Lower Blackrock Spire"],
             text = "Found on a ledge inside Lower Blackrock Spire"
         },
         instances = { Q.Instances["Lower Blackrock Spire"] }
@@ -4726,8 +4783,7 @@ Q.Quests = {
             type = "item",
             name = "Unadorned Seal of Ascension",
             itemId = 12219,
-            zone = "Blackrock Spire",
-            location = { mapId = 1428, x = 0.48, y = 0.62 },
+            instance = Q.Instances["Lower Blackrock Spire"],
             text = "A random drop from mobs in Lower Blackrock Spire"
         },
         instances = { Q.Instances["Lower Blackrock Spire"] }
@@ -4745,8 +4801,7 @@ Q.Quests = {
             type = "item",
             itemId = 13920,
             name = "Healthy Dragon Scale",
-            zone = "Scholomance",
-            location = { mapId = 1422, x = 0.69, y = 0.73 },
+            instance = Q.Instances["Scholomance"],
             text = "Dropped by Plagued Hatchlings inside the instance"
         },
         instances = { Q.Instances["Scholomance"] }
@@ -5049,8 +5104,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Aurius",
-            zone = "Stratholme",
-            location = { mapId = 1423, x = 0.267, y = 0.116 },
+            instance = Q.Instances["Stratholme"],
             text = "Found inside Stratholme"
         },
         instances = { Q.Instances["Stratholme"] }
@@ -5082,8 +5136,7 @@ Q.Quests = {
             type = "item",
             name = "Head of Balnazzar",
             itemId = 13250,
-            zone = "Stratholme",
-            location = { mapId = 1423, x = 0.30, y = 0.27 },
+            instance = Q.Instances["Stratholme"],
             text = "Dropped by Balnazzar in Stratholme"
         }
     },
@@ -5306,8 +5359,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Awbee",
-            zone = "Upper Blackrock Spire",
-            location = { mapId = 1428, x = 0.284, y = 0.285 },
+            instance = Q.Instances["Upper Blackrock Spire"],
             text = "Found through the door after the Rend"
         },
         instances = { Q.Instances["Upper Blackrock Spire"] }
@@ -5321,8 +5373,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Pip Quickwit",
-            zone = "Upper Blackrock Spire",
-            location = { mapId = 1428, x = 0.284, y = 0.285 },
+            instance = Q.Instances["Upper Blackrock Spire"],
             text = "Spawns after killing and skinning The Beast (requires 315 skinning)"
         },
         instances = { Q.Instances["Upper Blackrock Spire"] }
@@ -5337,8 +5388,8 @@ Q.Quests = {
             type = "item",
             itemId = 18987,
             name = "Blackhand's Command",
-            zone = "Blackrock Mountain",
-            location = { mapId = 1428, x = 0.284, y = 0.285 },
+            zone = "Burning Steppes",
+            location = { mapId = 1428, x = 0.292, y = 0.382 },
             text = "Kill the Scarshield Quartermaster found outside the UBRS/LBRS entrance"
         },
         instances = { Q.Instances["Upper Blackrock Spire"] }
@@ -5401,7 +5452,7 @@ Q.Quests = {
             type = "npc",
             name = "Apothecary Zinge",
             zone = "Undercity",
-            location = { mapId = 1452, x = 0.50, y = 0.684 }
+            location = { mapId = 1458, x = 0.50, y = 0.684 }
         }
     },
     --#endregion
@@ -5638,8 +5689,7 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Ancient Equine Spirit",
-            zone = "Dire Maul: West",
-            location = { mapId = 1444, x = 0.59, y = 0.45 },
+            instance = Q.Instances["Dire Maul: West"],
             text = "Found inside DM: West"
         }
     },
@@ -5945,7 +5995,7 @@ Q.Quests = {
         suggestedLevel = 60,
         requiredLevel = 60,
         prerequisites = {
-            { id = 7625, type = Q.PrerequisiteType.REQUIRED },
+            { id = 7630, type = Q.PrerequisiteType.REQUIRED },
             { id = 7625, type = Q.PrerequisiteType.REQUIRED }
         },
         source = {
@@ -5955,6 +6005,23 @@ Q.Quests = {
             location = { mapId = 1428, x = 0.124, y = 0.316 }
         },
         instances = { Q.Instances["Scholomance"] }
+    },
+    {
+        id = 7631,
+        class = "WARLOCK",
+        name = "Dreadsteed of Xoroth",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        prerequisites = {
+            { id = 7629, type = Q.PrerequisiteType.REQUIRED }
+        },
+        source = {
+            type = "npc",
+            name = "Mor'zul Bloodbringer",
+            zone = "Burning Steppes",
+            location = { mapId = 1428, x = 0.124, y = 0.316 }
+        },
+        instances = { Q.Instances["Dire Maul: West"] }
     },
     {
         id = 7630,
@@ -6347,7 +6414,7 @@ Q.Quests = {
             zone = "Thousand Needles",
             location = { mapId = 1441, x = 0.784, y = 0.754 }
         },
-        instances = { Q.Instances["SM: Library"] },
+        instances = { Q.Instances["Scarlet Monastery: Library"] },
     },
     {
         id = 7463,
@@ -6358,11 +6425,10 @@ Q.Quests = {
         source = {
             type = "npc",
             name = "Lorekeeper Lydros",
-            zone = "Dire Maul",
-            location = { mapId = 1444, x = 0.59, y = 0.45 },
-            text = "Found inside DM: West"
+            instance = Q.Instances["Dire Maul: North"],
+            text = "Found inside DM: North"
         },
-        instances = { Q.Instances["Dire Maul: West"] },
+        instances = { Q.Instances["Dire Maul: East"] },
     },
     --#endregion
 
@@ -6565,7 +6631,7 @@ Q.Quests = {
             text =
             "You must visit a capital city once hitting level 30 for the letter to arrive before the quest is available from Dead Drop"
         },
-        instances = { Q.Instances["SM: Library"], Q.Instances["SM: Graveyard"] }
+        instances = { Q.Instances["Scarlet Monastery: Library"], Q.Instances["Scarlet Monastery: Graveyard"] }
     },
     {
         id = 78261,

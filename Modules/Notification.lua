@@ -83,7 +83,7 @@ function Notification:Create()
     --------------------------------------------------
     -- Create Notification Frame
     --------------------------------------------------
-    self.frame = Q:CreateBackdropFrame('DungeonBuddy_NotificationFrame', UIParent, 450, 280, "HIGH", "Primary", "Brand",
+    self.frame = Q:CreateBackdropFrame('DungeonBuddy_NotificationFrame', UIParent, 450, 260, "HIGH", "Primary", "Brand",
         0.9, 0.9)
 
     self.frame:SetMovable(true)
@@ -190,7 +190,7 @@ function Notification:Create()
     -- Create Waypoint/Directions Button
     --------------------------------------------------
     local waypointHandlers = {
-        ["OnMouseEnter"] = function()
+        OnMouseEnter = function()
             local tooltip = Q:GetTooltip()
             local r, g, b = unpack(Q.Theme.Text.Primary)
 
@@ -200,10 +200,10 @@ function Notification:Create()
 
             tooltip:Show()
         end,
-        ["OnMouseLeave"] = function()
+        OnMouseLeave = function()
             Q:GetTooltip():Hide()
         end,
-        ["OnClick"] = function()
+        OnClick = function()
             if not self.quest then
                 return
             end
@@ -216,7 +216,7 @@ function Notification:Create()
             self.waypointButton:SetColor(Q.Theme.Status.Success)
         end
     }
-    self.waypointButton = Q:CreateButton(nil, self.frame, "Find Source", 140, 40, fontM, Q.Theme.WaypointColor,
+    self.waypointButton = Q:CreateButton(nil, self.frame, "Find Source", 130, 30, fontM, Q.Theme.WaypointColor,
         waypointHandlers)
     self.waypointButton:SetFrameLevel(self.frame:GetFrameLevel() + 1)
     Q:SetPixelPerfectPoint(self.waypointButton, "BOTTOMLEFT", self.frame, "BOTTOMLEFT", paddingM, paddingM)
@@ -225,11 +225,11 @@ function Notification:Create()
     -- Dismiss / View Next button
     --------------------------------------------------------
     local dismissHandlers = {
-        ["OnClick"] = function()
+        OnClick = function()
             self:Dismiss()
         end
     }
-    self.dismissButton = Q:CreateButton(nil, self.frame, "Dismiss", 120, 40, fontM, Q.Theme.Text.Secondary,
+    self.dismissButton = Q:CreateButton(nil, self.frame, "Dismiss", 110, 30, fontM, Q.Theme.Text.Secondary,
         dismissHandlers)
     self.dismissButton:SetFrameLevel(self.frame:GetFrameLevel() + 1)
     Q:SetPixelPerfectPoint(self.dismissButton, "BOTTOMRIGHT", self.frame, "BOTTOMRIGHT", -paddingM, paddingM)
@@ -238,11 +238,11 @@ function Notification:Create()
     -- View Previous Button
     --------------------------------------------------
     local previousHandlers = {
-        ["OnClick"] = function()
+        OnClick = function()
             Notification:DisplayPreviousInQueue()
         end
     }
-    self.previousQuestButton = Q:CreateButton(nil, self.frame, "< Previous", 120, 40, fontM, Q.Theme.Text.Secondary,
+    self.previousQuestButton = Q:CreateButton(nil, self.frame, "< Previous", 110, 30, fontM, Q.Theme.Text.Secondary,
         previousHandlers)
     self.previousQuestButton:SetFrameLevel(self.frame:GetFrameLevel() + 1)
     Q:SetPixelPerfectPoint(self.previousQuestButton, "RIGHT", self.dismissButton, "LEFT", -paddingS, 0)
@@ -307,9 +307,10 @@ local function UpdateSourceData(playerFaction)
     if hasMultipleSources then
         local zones, seen = {}, {}
         for _, questSource in ipairs(sources) do
-            if questSource.zone and not seen[questSource.zone] then
-                seen[questSource.zone] = true
-                table.insert(zones, questSource.zone)
+            local locationName = Q.API:GetSourceLocationName(questSource)
+            if locationName and not seen[locationName] then
+                seen[locationName] = true
+                table.insert(zones, locationName)
             end
         end
         if #zones > 0 then
@@ -320,7 +321,7 @@ local function UpdateSourceData(playerFaction)
     Notification.questSourceName:SetText(hasMultipleSources and "Multiple Sources" or
         (source and source.name or "Unknown Source"))
     Notification.questSourceZoneName:SetText(hasMultipleSources and zoneText or
-        (source and source.zone and " - " .. source.zone or ""))
+        (source and Q.API:GetSourceLocationName(source) and " - " .. Q.API:GetSourceLocationName(source) or ""))
     Notification.questSourceText:SetText(not hasMultipleSources and source and source.text or "")
 
     Notification.sourceIcon:SetTexture(Q.API:GetSourceIcon(source, playerFaction, hasMultipleSources))

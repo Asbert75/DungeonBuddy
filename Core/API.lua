@@ -73,7 +73,7 @@ function Q.API:BuildLookupTables()
         end
     end
 
-    local function addQuestInstance(questId, instance)
+    local function AddQuestInstance(questId, instance)
         local instances = Q.InstanceByQuestId[questId]
         if not instances then
             instances = {}
@@ -94,7 +94,7 @@ function Q.API:BuildLookupTables()
             return
         end
         visited[quest.id] = true
-        addQuestInstance(quest.id, instance)
+        AddQuestInstance(quest.id, instance)
 
         for _, prerequisite in ipairs(quest.prerequisites or {}) do
             AddInstanceToChain(self:GetQuestById(prerequisite.id), instance, visited)
@@ -212,6 +212,28 @@ function Q.API:GetWaypointText(quest, source)
     return title
 end
 
+-- Sources inside an instance only name the instance; zone and location are taken from its entrance.
+local resolvedSources = setmetatable({}, { __mode = "k" })
+
+local function ResolveSource(source)
+    local instance = source.instance
+    if not instance then
+        return source
+    end
+
+    local resolved = resolvedSources[source]
+    if not resolved then
+        resolved = {}
+        for key, value in pairs(source) do
+            resolved[key] = value
+        end
+        resolved.zone = instance.zone
+        resolved.location = instance.location
+        resolvedSources[source] = resolved
+    end
+    return resolved
+end
+
 function Q.API:GetQuestSources(quest, faction)
     if not quest then
         return {}
@@ -223,11 +245,18 @@ function Q.API:GetQuestSources(quest, faction)
 
     for _, source in ipairs(questSources) do
         if source and (not source.faction or source.faction == faction) then
-            table.insert(sources, source)
+            table.insert(sources, ResolveSource(source))
         end
     end
 
     return sources
+end
+
+function Q.API:GetSourceLocationName(source)
+    if source.instance then
+        return source.instance.name
+    end
+    return source.zone
 end
 
 local function AddWaypoint(location, title)
@@ -293,22 +322,76 @@ function Q.API:GetQuestById(questId)
     return Q.QuestById[questId]
 end
 
-function Q.API:GetInstances()
+Q.API.InstanceSortKeys = { "Continent", "Zone", "Level", "Name" }
+Q.API.QuestSortKeys = { "Req. Level", "Suggested Level", "Name" }
+
+local function Lower(value)
+    return string.lower(value or "")
+end
+
+local InstanceSortValues = {
+    Continent = function(instance) return Lower(instance.continent) end,
+    Zone = function(instance) return Lower(instance.zone) end,
+    Level = function(instance) return instance.minLevel or 0 end,
+    Name = function(instance) return Lower(instance.name) end,
+}
+local InstanceTieBreakers = {
+    function(instance) return instance.minLevel or 0 end,
+    function(instance) return instance.maxLevel or 0 end,
+    InstanceSortValues.Name,
+}
+
+local QuestSortValues = {
+    ["Req. Level"] = function(quest) return quest.requiredLevel or 0 end,
+    ["Suggested Level"] = function(quest) return quest.suggestedLevel or 0 end,
+    Name = function(quest) return Lower(quest.name) end,
+}
+local QuestTieBreakers = {
+    QuestSortValues["Req. Level"],
+    QuestSortValues["Suggested Level"],
+    QuestSortValues.Name,
+    function(quest) return quest.id or 0 end,
+}
+
+-- Only the chosen key follows the requested direction; ties always fall back to ascending order.
+local function BuildComparer(values, tieBreakers, key, ascending)
+    local primary = values[key] or values["Req. Level"] or values.Name
+    return function(a, b)
+        local valueA, valueB = primary(a), primary(b)
+        if valueA ~= valueB then
+            if ascending then
+                return valueA < valueB
+            end
+            return valueA > valueB
+        end
+
+        for _, getValue in ipairs(tieBreakers) do
+            valueA, valueB = getValue(a), getValue(b)
+            if valueA ~= valueB then
+                return valueA < valueB
+            end
+        end
+        return false
+    end
+end
+
+function Q.API:GetInstances(sortKey, ascending)
     local instances = {}
     for _, instance in pairs(Q.Instances) do
         table.insert(instances, instance)
     end
 
-    table.sort(instances, function(a, b)
-        if a.minLevel ~= b.minLevel then
-            return a.minLevel < b.minLevel
-        end
-        if a.maxLevel ~= b.maxLevel then
-            return a.maxLevel < b.maxLevel
-        end
-        return a.name < b.name
-    end)
+    table.sort(instances, BuildComparer(InstanceSortValues, InstanceTieBreakers, sortKey or "Level", ascending ~= false))
     return instances
+end
+
+function Q.API:GetContinents()
+    return {'Eastern Kingdoms', 'Kalimdor'}
+end
+
+function Q.API:SortQuests(quests, sortKey, ascending)
+    table.sort(quests, BuildComparer(QuestSortValues, QuestTieBreakers, sortKey or "Name", ascending ~= false))
+    return quests
 end
 
 function Q.API:IsQuestChainStart(questId)
@@ -352,7 +435,7 @@ function Q.API:GetRelevantQuestsForZone()
             playerInfo.level <= (quest.suggestedLevel or quest.requiredLevel or 0) + 3 -- Allow a buffer of 3 levels above the suggested level before it doesn't count as "relevant" anymore
         then
             for _, source in ipairs(self:GetQuestSources(quest, playerInfo.faction)) do
-                if source.zone == zone then
+                if source.zone == zone or (source.instance and source.instance.name == zone) then
                     table.insert(quests, quest)
                     break
                 end
