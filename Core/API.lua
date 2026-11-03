@@ -323,7 +323,7 @@ function Q.API:GetQuestById(questId)
 end
 
 Q.API.InstanceSortKeys = { "Continent", "Zone", "Level", "Name" }
-Q.API.QuestSortKeys = { "Zone", "Level", "Name" }
+Q.API.QuestSortKeys = { "Req. Level", "Suggested Level", "Name" }
 
 local function Lower(value)
     return string.lower(value or "")
@@ -342,22 +342,20 @@ local InstanceTieBreakers = {
 }
 
 local QuestSortValues = {
-    Zone = function(quest)
-        local source = Q.API:GetQuestSources(quest)[1]
-        return Lower(source and source.zone)
-    end,
-    Level = function(quest) return quest.requiredLevel or 0 end,
+    ["Req. Level"] = function(quest) return quest.requiredLevel or 0 end,
+    ["Suggested Level"] = function(quest) return quest.suggestedLevel or 0 end,
     Name = function(quest) return Lower(quest.name) end,
 }
 local QuestTieBreakers = {
-    QuestSortValues.Level,
+    QuestSortValues["Req. Level"],
+    QuestSortValues["Suggested Level"],
     QuestSortValues.Name,
     function(quest) return quest.id or 0 end,
 }
 
 -- Only the chosen key follows the requested direction; ties always fall back to ascending order.
 local function BuildComparer(values, tieBreakers, key, ascending)
-    local primary = values[key] or values.Level or values.Name
+    local primary = values[key] or values["Req. Level"] or values.Name
     return function(a, b)
         local valueA, valueB = primary(a), primary(b)
         if valueA ~= valueB then
