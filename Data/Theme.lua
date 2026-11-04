@@ -6,7 +6,7 @@ local function HexToColor(hex)
 end
 
 Q.Themes = {}
-Q.ThemeOrder = { "Horde", "Alliance", "Plain" }
+Q.ThemeOrder = { "Horde", "Alliance", "Coral", "Plain" }
 
 Q.Themes.Horde = {
     Brand = HexToColor("#cf615d"),
@@ -41,6 +41,24 @@ Q.Themes.Alliance = {
         Primary   = HexToColor("#e6ebf0"),
         Secondary = HexToColor("#a0aab8"),
         Accent    = HexToColor("#DDAB41"),
+    },
+}
+
+Q.Themes.Coral = {
+    Brand = HexToColor("#cf615d"),
+    Background = {
+        Primary   = HexToColor("#0e0f13"),
+        Secondary = HexToColor("#16181d"),
+        Tertiary  = HexToColor("#21242b"),
+    },
+    Border = {
+        Default = HexToColor("#3a3f4a"),
+        Accent  = HexToColor("#5DCBFC"),
+    },
+    Text = {
+        Primary   = HexToColor("#eaeef2"),
+        Secondary = HexToColor("#9aa4b0"),
+        Accent    = HexToColor("#5DCBFC"),
     },
 }
 

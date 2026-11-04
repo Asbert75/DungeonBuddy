@@ -16,6 +16,7 @@ local ProfessionIcons = {
     ["First Aid"] = "Spell_Holy_SealOfSacrifice",
     Fishing = "Trade_Fishing",
 }
+Q.ProfessionIcons = ProfessionIcons
 
 local function FilterArray(array, predicate)
     local writeIndex = 1
@@ -58,7 +59,7 @@ function Q.API:BuildLookupTables()
     local playerClass = self:GetPlayerClass()
     FilterArray(Q.Quests, function(quest)
         return quest and (quest.faction == playerFaction or not quest.faction) and
-        (quest.class == playerClass or not quest.class)
+            self:IsQuestAvailableToClass(quest, playerClass)
     end)
 
     for _, quest in ipairs(Q.Quests) do
@@ -118,6 +119,25 @@ end
 
 function Q.API:GetPlayerClass()
     return Q.Debug.Enabled and Q.Debug.Class or select(2, UnitClass("player"))
+end
+function Q.API:IsQuestAvailableToClass(quest, class)
+    if quest.classes then
+        for _, questClass in ipairs(quest.classes) do
+            if questClass == class then
+                return true
+            end
+        end
+        return false
+    end
+    return not quest.class or quest.class == class
+end
+
+function Q.API:GetQuestClass(quest)
+    if quest.classes then
+        local playerClass = self:GetPlayerClass()
+        return self:IsQuestAvailableToClass(quest, playerClass) and playerClass or quest.classes[1]
+    end
+    return quest.class
 end
 
 function Q.API:GetPlayerInfo()

@@ -4,6 +4,23 @@ Q.QuestLog = QuestLog
 
 local DB_ROW_HEIGHT = Q.Theme.FontSize.XL + 12
 local INSTANCE_ROW_EXTRA_HEIGHT = 14
+local ROW_GAP = 2
+-- Each wheel notch scrolls this fraction of the scrollable height, but never less than 10px.
+local SCROLL_STEP_PERCENT = 0.05
+
+-- Row sizes snapped to whole screen pixels so rows stack at identical offsets. The row height uses an even pixel
+-- count so vertically centered text lands on the pixel grid instead of half a pixel off.
+local function GetRowMetrics()
+    local pixel = Q:PixelPerfect(1)
+    local rowPixels = math.floor(DB_ROW_HEIGHT / pixel + 0.5)
+    if rowPixels % 2 == 1 then
+        rowPixels = rowPixels + 1
+    end
+    local rowHeight = rowPixels * pixel
+    local instanceExtra = math.floor(INSTANCE_ROW_EXTRA_HEIGHT / pixel + 0.5) * pixel
+    local gap = math.max(1, math.floor(ROW_GAP / pixel + 0.5)) * pixel
+    return rowHeight, rowHeight + instanceExtra, gap
+end
 local CONTAINER_WIDTH = 450
 local QuestStatusColors = {
     completed = "QuestColorCompleted",
@@ -181,7 +198,7 @@ function QuestLog:Create()
     local scrollBar = _G[self.contentContainer:GetName() .. "ScrollBar"]
     if scrollBar then
         scrollBar:ClearAllPoints()
-        scrollBar:SetValueStep(Q:PixelPerfect(DB_ROW_HEIGHT))
+        scrollBar:SetValueStep((GetRowMetrics()))
         scrollBar:SetObeyStepOnDrag(true)
         Q:SetPixelPerfectPoint(scrollBar, "TOPRIGHT", self.contentContainer, "TOPRIGHT", 4, -20)
         Q:SetPixelPerfectPoint(scrollBar, "BOTTOMRIGHT", self.contentContainer, "BOTTOMRIGHT", 4, 20)
@@ -218,9 +235,22 @@ function QuestLog:Create()
     end
 
     self.contentContainer:SetScript("OnMouseWheel", function(self, delta)
-        local step = 10
         local maxScroll = math.max(0, QuestLog.scrollChild:GetHeight() - self:GetHeight())
+        local step = math.max(10, maxScroll * SCROLL_STEP_PERCENT)
         self:SetVerticalScroll(math.max(0, math.min(maxScroll, self:GetVerticalScroll() - delta * step)))
+    end)
+
+    -- A scroll offset between pixels makes text and textures round differently, which shifts text inside rows.
+    local snapping = false
+    self.contentContainer:HookScript("OnVerticalScroll", function(scrollFrame, offset)
+        if snapping then return end
+        local pixel = Q:PixelPerfect(1)
+        local snapped = math.floor(offset / pixel + 0.5) * pixel
+        if math.abs(snapped - offset) > 0.0001 then
+            snapping = true
+            scrollFrame:SetVerticalScroll(snapped)
+            snapping = false
+        end
     end)
 
     QuestLog:RefreshAndPopulate()
@@ -373,8 +403,12 @@ end
 
 local function SetBorderTextureColor(frame, settingPath)
     local color = Q:GetSetting(settingPath)
+    if not (color and color.r and color.g and color.b) then
+        color = Q.Theme[settingPath]
+    end
     if color and color.r and color.g and color.b then
         frame:SetColorTexture(color.r, color.g, color.b)
+        frame.statusColor = color
     end
 end
 
@@ -388,7 +422,7 @@ end
 local function UpdateClassIcon(frame)
     local questClass, questProfession
     if not frame.row.isInstance and not frame.row.isGroup then
-        questClass = frame.row.class
+        questClass = Q.API:GetQuestClass(frame.row)
         questProfession = frame.row.profession
     end
     local hasClassIcon, hasProfessionIcon = Q:UpdateQuestIcons(
@@ -413,10 +447,15 @@ local function UpdateClassIcon(frame)
 end
 
 local function UpdateRowAppearance(frame, playerInfo)
-    Q:SetPixelPerfectHeight(frame, DB_ROW_HEIGHT)
-    Q:SetPixelPerfectHeight(frame.titleFrame, DB_ROW_HEIGHT)
+    local rowHeight, instanceHeight = GetRowMetrics()
+    frame:SetHeight(rowHeight)
+    frame.titleFrame:SetHeight(rowHeight)
+
+    frame.leftBorder.statusColor = nil
 
     if frame.row.isSharedSummary then
+        local disabled = Q.Theme.Text.Disabled
+        frame.leftBorder.statusColor = { r = disabled[1], g = disabled[2], b = disabled[3] }
         Q:SetTextColor(frame.titleFrame.title, "Disabled")
         frame.leftBorder:SetColorTexture(unpack(Q.Theme.Text.Disabled))
         frame.sideGradient:SetGradient("HORIZONTAL",
@@ -433,8 +472,8 @@ local function UpdateRowAppearance(frame, playerInfo)
         Q:SetTextColor(frame.titleFrame.title, "Primary")
         frame.leftBorder:SetColorTexture(unpack(Q.Theme.Text.Primary))
 
-        Q:SetPixelPerfectHeight(frame, DB_ROW_HEIGHT + INSTANCE_ROW_EXTRA_HEIGHT)
-        Q:SetPixelPerfectHeight(frame.titleFrame, DB_ROW_HEIGHT + INSTANCE_ROW_EXTRA_HEIGHT)
+        frame:SetHeight(instanceHeight)
+        frame.titleFrame:SetHeight(instanceHeight)
 
 
         frame.gradient:SetGradient("VERTICAL", CreateColor(levelColor.r, levelColor.g, levelColor.b, 0.15),
@@ -458,6 +497,7 @@ local function UpdateRowAppearance(frame, playerInfo)
             local infoR, infoG, infoB = unpack(Q.Theme.Status.Info)
             frame.titleFrame.title:SetTextColor(infoR, infoG, infoB, 1)
             frame.leftBorder:SetColorTexture(infoR, infoG, infoB)
+            frame.leftBorder.statusColor = { r = infoR, g = infoG, b = infoB }
             frame.sideGradient:SetGradient("HORIZONTAL", CreateColor(infoR, infoG, infoB, 0.03), CreateColor(0, 0, 0, 0))
         elseif questStatus == "available" then
             local colorPath = QuestStatusColors.available
@@ -584,6 +624,88 @@ local function UpdateRowText(frame)
     end
 end
 
+-- Chain guides: a vertical line per chain step (at the parent's text start) with an elbow into each
+-- child row, so it is easy to follow which quests belong to which step of a chain.
+local GUIDE_THICKNESS = 1
+
+local function GetChainDepth(row)
+    if row and not row.isInstance and not row.isGroup and not row.isMainQuest then
+        return row.chainDepth or 0
+    end
+    return 0
+end
+
+local function GetGuideTexture(frame, pool, index)
+    local texture = pool[index]
+    if not texture then
+        texture = frame:CreateTexture(nil, "OVERLAY")
+        pool[index] = texture
+    end
+    return texture
+end
+
+local function UpdateChainGuides(frame, previousRow, nextRow)
+    frame.guideLines = frame.guideLines or {}
+    frame.guideTicks = frame.guideTicks or {}
+
+    local depth = Q:GetSetting("ShowChainGuides") and GetChainDepth(frame.row) or 0
+    local previousDepth, nextDepth = GetChainDepth(previousRow), GetChainDepth(nextRow)
+    local step = Q.Theme.Padding.S
+    local indentOffset = (QuestLog.indent or 0) * step
+    local thickness = Q:PixelPerfect(GUIDE_THICKNESS)
+    local rowHeight, _, rowGap = GetRowMetrics()
+    local middle = -(rowHeight / 2)
+
+    local statusColor = frame.leftBorder.statusColor
+    local statusR, statusG, statusB
+    if statusColor then
+        statusR, statusG, statusB = statusColor.r, statusColor.g, statusColor.b
+    end
+    local ancestorColor = Q.Theme.Text.Disabled
+    local halfHeight = thickness / 2
+
+    for column = 1, math.max(depth, #frame.guideLines) do
+        local line, tick = frame.guideLines[column], frame.guideTicks[column]
+        if column > depth then
+            if line then line:Hide() end
+            if tick then tick:Hide() end
+        else
+            line = GetGuideTexture(frame, frame.guideLines, column)
+            local x = (2 + column) * step + indentOffset + 2
+            local isElbow = column == depth
+            local continuesAbove = previousDepth >= column
+            local continuesBelow = nextDepth >= column
+
+            line:ClearAllPoints()
+            line:SetWidth(thickness)
+            line:SetPoint("TOPLEFT", frame, "TOPLEFT", x, continuesAbove and rowGap or 0)
+            if isElbow and not continuesBelow then
+                line:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", x, middle - halfHeight)
+            else
+                line:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", x, continuesBelow and -rowGap or 0)
+            end
+
+            if isElbow then
+                line:SetColorTexture(statusR or ancestorColor[1], statusG or ancestorColor[2],
+                    statusB or ancestorColor[3], 1)
+
+                tick = GetGuideTexture(frame, frame.guideTicks, column)
+                tick:ClearAllPoints()
+                tick:SetHeight(thickness)
+                tick:SetPoint("TOPLEFT", frame, "TOPLEFT", x, middle + halfHeight)
+                tick:SetPoint("TOPRIGHT", frame, "TOPLEFT", x + step - 3, middle + halfHeight)
+                tick:SetColorTexture(statusR or ancestorColor[1], statusG or ancestorColor[2],
+                    statusB or ancestorColor[3], 1)
+                tick:Show()
+            else
+                line:SetColorTexture(ancestorColor[1], ancestorColor[2], ancestorColor[3], 0.6)
+                if tick then tick:Hide() end
+            end
+            line:Show()
+        end
+    end
+end
+
 local function CreateOrUpdateNoQuestsFoundFrame()
     if #QuestLog.rows == 0 then
         if not QuestLog.noQuestsFound then
@@ -664,8 +786,7 @@ local function CreateRowFrame(index, row)
     local frame = CreateFrame("Frame", "DungeonBuddy_QuestLogRow" .. index, QuestLog.scrollChild)
     QuestLog._frames[index] = frame
     frame:SetWidth(QuestLog.scrollChild:GetWidth() - 2)
-    Q:SetPixelPerfectHeight(frame, DB_ROW_HEIGHT)
-    Q:SetPixelPerfectPoint(frame, "TOPLEFT", QuestLog.scrollChild, "TOPLEFT", 1, 0)
+    frame:SetHeight((GetRowMetrics()))
 
     frame.background = frame:CreateTexture(nil, "BACKGROUND")
     frame.background:SetAllPoints(frame)
@@ -704,7 +825,7 @@ local function CreateRowFrame(index, row)
     --------------------------------------------------
     frame.titleFrame = CreateFrame("Frame", nil, frame)
     frame.titleFrame:SetWidth(QuestLog.scrollChild:GetWidth())
-    Q:SetPixelPerfectHeight(frame.titleFrame, DB_ROW_HEIGHT)
+    frame.titleFrame:SetHeight((GetRowMetrics()))
     Q:SetPixelPerfectPoint(frame.titleFrame, "TOPLEFT", frame, "TOPLEFT", 0, 0)
 
     frame.titleFrame.title = Q:CreateText(nil, frame.titleFrame, row.name,
@@ -1148,7 +1269,8 @@ function QuestLog:RefreshAndPopulate()
     BuildRows(GetVisibleInstanceEntries(playerInfo))
     CreateOrUpdateNoQuestsFoundFrame()
 
-    local prevRowHeight = DB_ROW_HEIGHT
+    local rowHeight, instanceHeight, rowGap = GetRowMetrics()
+    local prevRowHeight = rowHeight
     for index, row in ipairs(self.rows) do
         local frame = self._frames
             [index] -- Frames cannot be destroyed so we reuse frames by id and create a new if we have a longer list
@@ -1176,6 +1298,7 @@ function QuestLog:RefreshAndPopulate()
         UpdateClassIcon(frame)
         UpdateRowText(frame)
         UpdateRowAppearance(frame, playerInfo)
+        UpdateChainGuides(frame, self.rows[index - 1], self.rows[index + 1])
         UpdateCollapseButton(frame)
         UpdateWaypointButton(frame)
 
@@ -1190,11 +1313,12 @@ function QuestLog:RefreshAndPopulate()
         if index == 1 then
             rowOffset = 0
         else
-            rowOffset = prevRowHeight + 2
+            rowOffset = prevRowHeight + rowGap
         end
-        prevRowHeight = row.isInstance and (DB_ROW_HEIGHT + INSTANCE_ROW_EXTRA_HEIGHT) or DB_ROW_HEIGHT
+        prevRowHeight = row.isInstance and instanceHeight or rowHeight
 
-        Q:SetPixelPerfectPoint(frame, "TOPLEFT", self.scrollChild, "TOPLEFT", 1, -(rowOffset + totalOffset))
+        -- Offsets are already whole pixels, so anchor directly instead of rounding them again.
+        frame:SetPoint("TOPLEFT", self.scrollChild, "TOPLEFT", Q:PixelPerfect(1), -(rowOffset + totalOffset))
         totalOffset = totalOffset + rowOffset
     end
 
@@ -1203,7 +1327,7 @@ function QuestLog:RefreshAndPopulate()
         self._frames[index].row = nil
     end
 
-    Q:SetPixelPerfectHeight(self.scrollChild, math.max(1, totalOffset + DB_ROW_HEIGHT + Q:PixelPerfect(50)))
+    Q:SetPixelPerfectHeight(self.scrollChild, math.max(1, totalOffset + rowHeight + Q:PixelPerfect(50)))
 end
 
 function QuestLog:Toggle()

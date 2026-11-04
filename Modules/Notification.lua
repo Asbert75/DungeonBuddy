@@ -378,7 +378,7 @@ function Notification:DisplayQuest(quest, isPrevious)
     local color = Q.API:GetDifficultyColor(playerInfo.level, quest.suggestedLevel)
     self.questName:SetTextColor(color.r, color.g, color.b)
 
-    UpdateClassIcon(quest.class, quest.profession)
+    UpdateClassIcon(Q.API:GetQuestClass(quest), quest.profession)
     UpdateSourceData(playerInfo.faction)
     UpdateActionButtons()
 
@@ -404,7 +404,7 @@ function Notification:RefreshTheme()
     local playerInfo = Q.API:GetPlayerInfo()
     local color = Q.API:GetDifficultyColor(playerInfo.level, self.quest.suggestedLevel)
     self.questName:SetTextColor(color.r, color.g, color.b)
-    UpdateClassIcon(self.quest.class, self.quest.profession)
+    UpdateClassIcon(Q.API:GetQuestClass(self.quest), self.quest.profession)
 end
 
 function Notification:OnDisable()

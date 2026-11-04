@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.1] - 2026-11-04
+
+### Added
+
+- Added a setting to allow toggling clear visual guides to distinguish which quests are part of the same chain in the quest tracker
+
+### Changed
+
+- Changed how quest class requirements are built, so that we can handle multiple classes for a single quest
+- Updated Sources to be its own table to deduplicate sources and avoid location issues
+- All Ruins of Lordaeron quests now require level 15, in line with Blizzards latest update
+- Changed how the scroll wheel functions in the tracker to scroll 5% of the total height per rotation (down to a minimum of what it is now). This should hopefully make scrolling large lists easier while leaving some precision.
+
 ## [2.0.0] - 2026-11-03
 
 ### Added

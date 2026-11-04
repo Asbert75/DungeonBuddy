@@ -29,8 +29,10 @@ Core\MinimapButton.lua
 Core\API.lua
 
 Data\Instances.lua
+Data\Sources.lua
 Data\Quests.lua
 Data\Theme.lua
+Data\Validation.lua
 
 Modules\Notification.lua
 Modules\QuestLogFilter.lua

@@ -103,6 +103,18 @@ local function GetSectionSettings(sectionName)
             end,
         },
         {
+            section = Sections.QuestLog.name,
+            type = "checkbox",
+            path = "ShowChainGuides",
+            title = "Show chain guide lines",
+            description = "Show guide lines that helps you distinguish which quests belong to each step of a chain.",
+            onChange = function()
+                if Q.QuestLog and Q.QuestLog.frame then
+                    Q.QuestLog:RefreshAndPopulate()
+                end
+            end,
+        },
+        {
             section = Sections.General.name,
             type = "checkbox",
             path = "ShowSuggestedQuestLevel",

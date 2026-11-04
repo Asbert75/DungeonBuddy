@@ -55,6 +55,8 @@ function Addon:HandleDebugCommand(input)
         else
             Q:PrettyPrint("Debug mode is currently disabled")
         end
+    elseif arg1 == "validate" then
+        Q:RunValidation(arg2 == "all")
     elseif arg1 == "level" then
         Q.Debug.Level = tonumber(arg2) or Q.Debug.Level
         Q:PrettyPrint("Debug level set to " .. tostring(Q.Debug.Level))
@@ -77,7 +79,7 @@ function Addon:HandleDebugCommand(input)
         Q.Debug.Enabled = not Q.Debug.Enabled
         Q:PrettyPrint("Debug mode " .. (Q.Debug.Enabled and "enabled" or "disabled"))
     end
-    if arg1 ~= "status" and arg1 ~= "quest" and arg1 ~= "levelup" then
+    if arg1 ~= "status" and arg1 ~= "quest" and arg1 ~= "levelup" and arg1 ~= "validate" then
         Q.API:BuildLookupTables()
         Q.QuestLog:Reload()
     end

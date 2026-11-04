@@ -20,12 +20,7 @@ Q.Quests = {
         name = "Important Heirlooms",
         suggestedLevel = 15,
         requiredLevel = 10,
-        source = {
-            type = "npc",
-            name = "Thom Filch",
-            zone = "Ironforge",
-            location = { mapId = 1455, x = 0.326, y = 0.446 }
-        },
+        source = Q.Sources[225], -- Thom Filch
         instances = { Q.Instances["Hall of Thanes"] }
     },
     {
@@ -34,12 +29,7 @@ Q.Quests = {
         name = "The Restless Dead",
         suggestedLevel = 15,
         requiredLevel = 10,
-        source = {
-            type = "npc",
-            name = "Afadra Dunwall",
-            zone = "Ironforge",
-            location = { mapId = 1455, x = 0.340, y = 0.488 }
-        },
+        source = Q.Sources[3], -- Afadra Dunwall
         instances = { Q.Instances["Hall of Thanes"] }
     },
     {
@@ -48,11 +38,7 @@ Q.Quests = {
         name = "An Ancient Grudge",
         suggestedLevel = 15,
         requiredLevel = 10,
-        source = {
-            type = "npc",
-            name = "Ghostly Attendant",
-            instance = Q.Instances["Hall of Thanes"]
-        },
+        source = Q.Sources[91], -- Ghostly Attendant
         instances = { Q.Instances["Hall of Thanes"] }
     },
     {
@@ -64,12 +50,7 @@ Q.Quests = {
         prerequisites = {
             { id = 96391, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Earthseer Farsen",
-            zone = "Dun Morogh",
-            location = { mapId = 1426, x = 0.648, y = 0.584 }
-        },
+        source = Q.Sources[74], -- Earthseer Farsen
         instances = { Q.Instances["Hall of Thanes"] }
     },
     {
@@ -78,14 +59,7 @@ Q.Quests = {
         name = "Underground Map",
         suggestedLevel = 15,
         requiredLevel = 9,
-        source = {
-            type = "item",
-            name = "Dark Iron Map",
-            itemId = 274268,
-            zone = "Dun Morogh",
-            location = { mapId = 1426, x = 0.65, y = 0.58 },
-            text = "Dropped by Captain Beld and Dark Iron spies"
-        },
+        source = Q.Sources[59], -- Dark Iron Map
         instances = { Q.Instances["Hall of Thanes"] }
     },
     {
@@ -94,13 +68,7 @@ Q.Quests = {
         name = "The Treaty of Understanding",
         suggestedLevel = 16,
         requiredLevel = 9,
-        source = {
-            type = "item",
-            name = "Treaty of Understanding",
-            itemId = 281030,
-            instance = Q.Instances["Hall of Thanes"],
-            text = "Found inside the vault in the Reliquary of Kings"
-        },
+        source = Q.Sources[236], -- Treaty of Understanding
         instances = { Q.Instances["Hall of Thanes"] }
     },
     --#endregion
@@ -112,12 +80,7 @@ Q.Quests = {
         name = "Hidden Enemies (1/3)",
         suggestedLevel = 12,
         requiredLevel = 9,
-        source = {
-            type = "npc",
-            name = "Thrall",
-            zone = "Orgrimmar",
-            location = { mapId = 1454, x = 0.31, y = 0.37 },
-        },
+        source = Q.Sources[226], -- Thrall
     },
     {
         id = 5727,
@@ -128,12 +91,7 @@ Q.Quests = {
         prerequisites = {
             { id = 5726, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Thrall",
-            zone = "Orgrimmar",
-            location = { mapId = 1454, x = 0.31, y = 0.37 },
-        },
+        source = Q.Sources[226], -- Thrall
     },
     {
         id = 5728,
@@ -144,12 +102,7 @@ Q.Quests = {
         prerequisites = {
             { id = 5727, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Thrall",
-            zone = "Orgrimmar",
-            location = { mapId = 1454, x = 0.31, y = 0.37 },
-        },
+        source = Q.Sources[226], -- Thrall
         instances = { Q.Instances["Ragefire Chasm"] }
     },
     {
@@ -158,12 +111,7 @@ Q.Quests = {
         name = "Slaying the Beast",
         suggestedLevel = 16,
         requiredLevel = 9,
-        source = {
-            type = "npc",
-            name = "Neeru Fireblade",
-            zone = "Orgrimmar",
-            location = { mapId = 1454, x = 0.49, y = 0.50 },
-        },
+        source = Q.Sources[173], -- Neeru Fireblade
         instances = { Q.Instances["Ragefire Chasm"] }
     },
     {
@@ -172,12 +120,7 @@ Q.Quests = {
         name = "The Power to Destroy...",
         suggestedLevel = 16,
         requiredLevel = 9,
-        source = {
-            type = "npc",
-            name = "Varimathras",
-            zone = "Undercity",
-            location = { mapId = 1458, x = 0.56, y = 0.92 },
-        },
+        source = Q.Sources[242], -- Varimathras
         instances = { Q.Instances["Ragefire Chasm"] }
     },
     {
@@ -186,12 +129,7 @@ Q.Quests = {
         name = "Testing an Enemy's Strength",
         suggestedLevel = 15,
         requiredLevel = 9,
-        source = {
-            type = "npc",
-            name = "Rahauro",
-            zone = "Thunder Bluff",
-            location = { mapId = 1456, x = 0.70, y = 0.30 },
-        },
+        source = Q.Sources[189], -- Rahauro
         instances = { Q.Instances["Ragefire Chasm"] }
     },
     {
@@ -203,11 +141,7 @@ Q.Quests = {
             { id = 5722, type = Q.PrerequisiteType.CHAIN }
         },
         requiredLevel = 9,
-        source = {
-            type = "npc",
-            name = "Maur Grimtotem",
-            instance = Q.Instances["Ragefire Chasm"],
-        },
+        source = Q.Sources[157], -- Maur Grimtotem
         instances = { Q.Instances["Ragefire Chasm"] }
     },
     {
@@ -216,12 +150,7 @@ Q.Quests = {
         name = "Searching for the Lost Satchel",
         suggestedLevel = 16,
         requiredLevel = 9,
-        source = {
-            type = "npc",
-            name = "Rahauro",
-            zone = "Thunder Bluff",
-            location = { mapId = 1456, x = 0.70, y = 0.30 },
-        }
+        source = Q.Sources[189], -- Rahauro
     },
     --#endregion
 
@@ -232,12 +161,7 @@ Q.Quests = {
         name = "A Frightened Request",
         suggestedLevel = 22,
         requiredLevel = 15,
-        source = {
-            type = "npc",
-            name = "Tabitha Heartweaver",
-            zone = "Silverpine Forest",
-            location = { mapId = 1421, x = 0.446, y = 0.429 }
-        },
+        source = Q.Sources[215], -- Tabitha Heartweaver
         instances = { Q.Instances["Ruins of Lordaeron"] }
     },
     {
@@ -245,14 +169,8 @@ Q.Quests = {
         faction = "Horde",
         name = "Crest of Lordaeron",
         suggestedLevel = 22,
-        requiredLevel = 16,
-        source = {
-            type = "item",
-            name = "Crest of Lordaeron",
-            itemId = 275521,
-            instance = Q.Instances["Ruins of Lordaeron"],
-            text = "Search the ruins; the crest can appear in several locations"
-        },
+        requiredLevel = 15,
+        source = Q.Sources[51], -- Crest of Lordaeron
         instances = { Q.Instances["Ruins of Lordaeron"] }
     },
     {
@@ -260,14 +178,8 @@ Q.Quests = {
         faction = "Alliance",
         name = "Crest of Lordaeron",
         suggestedLevel = 22,
-        requiredLevel = 16,
-        source = {
-            type = "item",
-            name = "Crest of Lordaeron",
-            itemId = 268579,
-            instance = Q.Instances["Ruins of Lordaeron"],
-            text = "Search the ruins; the crest can appear in several locations"
-        },
+        requiredLevel = 15,
+        source = Q.Sources[52], -- Crest of Lordaeron
         instances = { Q.Instances["Ruins of Lordaeron"] }
     },
     {
@@ -276,12 +188,7 @@ Q.Quests = {
         name = "Light's Justice",
         suggestedLevel = 22,
         requiredLevel = 15,
-        source = {
-            type = "npc",
-            name = "Morbin Lightbane",
-            zone = "Undercity",
-            location = { mapId = 1458, x = 0.578, y = 0.897 }
-        },
+        source = Q.Sources[166], -- Morbin Lightbane
         instances = { Q.Instances["Ruins of Lordaeron"] }
     },
     {
@@ -289,13 +196,8 @@ Q.Quests = {
         faction = "Horde",
         name = "The New Plague",
         suggestedLevel = 22,
-        requiredLevel = 16,
-        source = {
-            type = "npc",
-            name = "Theodore Griffs",
-            zone = "Undercity",
-            location = { mapId = 1458, x = 0.467, y = 0.719 }
-        },
+        requiredLevel = 15,
+        source = Q.Sources[224], -- Theodore Griffs
         instances = { Q.Instances["Ruins of Lordaeron"] }
     },
     {
@@ -304,12 +206,7 @@ Q.Quests = {
         name = "The Wrath of Rath'mael",
         suggestedLevel = 22,
         requiredLevel = 15,
-        source = {
-            type = "npc",
-            name = "Deathguard Kristof",
-            zone = "Tirisfal Glades",
-            location = { mapId = 1420, x = 0.652, y = 0.602 }
-        },
+        source = Q.Sources[64], -- Deathguard Kristof
         instances = { Q.Instances["Ruins of Lordaeron"] }
     },
     {
@@ -317,14 +214,8 @@ Q.Quests = {
         faction = "Horde",
         name = "Unending Torment",
         suggestedLevel = 21,
-        requiredLevel = 16,
-        source = {
-            type = "item",
-            name = "Abominable Head",
-            itemId = 280438,
-            instance = Q.Instances["Ruins of Lordaeron"],
-            text = "Dropped by The Baron inside the instance"
-        },
+        requiredLevel = 15,
+        source = Q.Sources[1], -- Abominable Head
         instances = { Q.Instances["Ruins of Lordaeron"] }
     },
     {
@@ -332,13 +223,8 @@ Q.Quests = {
         faction = "Alliance",
         name = "Abominable Creatures",
         suggestedLevel = 21,
-        requiredLevel = 16,
-        source = {
-            type = "npc",
-            name = "Captain Truman",
-            instance = Q.Instances["Ruins of Lordaeron"],
-            text = "Found inside the instance at the entrance"
-        },
+        requiredLevel = 15,
+        source = Q.Sources[40], -- Captain Truman
         instances = { Q.Instances["Ruins of Lordaeron"] }
     },
     {
@@ -347,13 +233,7 @@ Q.Quests = {
         name = "Remember That I Love You",
         suggestedLevel = 22,
         requiredLevel = 15,
-        source = {
-            type = "item",
-            name = "Blood-Stained Letter",
-            itemId = 251522,
-            instance = Q.Instances["Ruins of Lordaeron"],
-            text = "Found in the instance near Rath'mael"
-        },
+        source = Q.Sources[31], -- Blood-Stained Letter
         instances = { Q.Instances["Ruins of Lordaeron"] }
     },
     {
@@ -361,14 +241,8 @@ Q.Quests = {
         faction = "Alliance",
         name = "Bloodied Insignia",
         suggestedLevel = 22,
-        requiredLevel = 16,
-        source = {
-            type = "item",
-            name = "Bloodied Insignia",
-            itemId = 268535,
-            instance = Q.Instances["Ruins of Lordaeron"],
-            text = "Dropped by undead mobs in the ruins"
-        },
+        requiredLevel = 15,
+        source = Q.Sources[32], -- Bloodied Insignia
         instances = { Q.Instances["Ruins of Lordaeron"] }
     },
     --#endregion
@@ -380,12 +254,7 @@ Q.Quests = {
         name = "The Defias Brotherhood (1/7)",
         suggestedLevel = 18,
         requiredLevel = 14,
-        source = {
-            type = "npc",
-            name = "Gryan Stoutmantle",
-            zone = "Westfall",
-            location = { mapId = 1436, x = 0.56, y = 0.47 }
-        },
+        source = Q.Sources[99], -- Gryan Stoutmantle
     },
     {
         id = 155,
@@ -396,12 +265,7 @@ Q.Quests = {
         prerequisites = {
             { id = 65, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Gryan Stoutmantle",
-            zone = "Westfall",
-            location = { mapId = 1436, x = 0.56, y = 0.47 }
-        },
+        source = Q.Sources[99], -- Gryan Stoutmantle
     },
     {
         id = 132,
@@ -412,12 +276,7 @@ Q.Quests = {
         prerequisites = {
             { id = 155, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Wiley the Black",
-            zone = "Redridge Mountains",
-            location = { mapId = 1433, x = 0.89, y = 0.70 }
-        },
+        source = Q.Sources[252], -- Wiley the Black
     },
     {
         id = 135,
@@ -428,12 +287,7 @@ Q.Quests = {
         prerequisites = {
             { id = 132, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Gryan Stoutmantle",
-            zone = "Westfall",
-            location = { mapId = 1436, x = 0.56, y = 0.47 }
-        },
+        source = Q.Sources[99], -- Gryan Stoutmantle
     },
     {
         id = 141,
@@ -444,12 +298,7 @@ Q.Quests = {
         prerequisites = {
             { id = 135, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Master Mathias Shaw",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.75, y = 0.60 }
-        },
+        source = Q.Sources[155], -- Master Mathias Shaw
     },
     {
         id = 142,
@@ -460,12 +309,7 @@ Q.Quests = {
         prerequisites = {
             { id = 141, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Gryan Stoutmantle",
-            zone = "Westfall",
-            location = { mapId = 1436, x = 0.56, y = 0.47 }
-        },
+        source = Q.Sources[99], -- Gryan Stoutmantle
     },
     {
         id = 168,
@@ -473,12 +317,7 @@ Q.Quests = {
         name = "Collecting Memories",
         suggestedLevel = 18,
         requiredLevel = 14,
-        source = {
-            type = "npc",
-            name = "Wilder Thistlenettle",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.65, y = 0.21 }
-        },
+        source = Q.Sources[251], -- Wilder Thistlenettle
         instances = { Q.Instances["The Deadmines"] },
     },
     {
@@ -487,12 +326,7 @@ Q.Quests = {
         name = "Oh Brother...",
         suggestedLevel = 20,
         requiredLevel = 15,
-        source = {
-            type = "npc",
-            name = "Wilder Thistlenettle",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.65, y = 0.21 }
-        },
+        source = Q.Sources[251], -- Wilder Thistlenettle
         instances = { Q.Instances["The Deadmines"] },
     },
     {
@@ -501,12 +335,7 @@ Q.Quests = {
         name = "Underground Assault",
         suggestedLevel = 20,
         requiredLevel = 15,
-        source = {
-            type = "npc",
-            name = "Shoni the Shilent",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.55, y = 0.13 }
-        },
+        source = Q.Sources[207], -- Shoni the Shilent
         instances = { Q.Instances["The Deadmines"] },
     },
     {
@@ -518,12 +347,7 @@ Q.Quests = {
         prerequisites = {
             { id = 142, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Scout Riell",
-            zone = "Westfall",
-            location = { mapId = 1436, x = 0.56, y = 0.47 }
-        },
+        source = Q.Sources[202], -- Scout Riell
         instances = { Q.Instances["The Deadmines"] },
     },
     {
@@ -532,13 +356,7 @@ Q.Quests = {
         name = "The Unsent Letter",
         suggestedLevel = 16,
         requiredLevel = 16,
-        source = {
-            type = "item",
-            name = "An Unsent Letter",
-            itemId = 2874,
-            instance = Q.Instances["The Deadmines"],
-            text = "Drops from the last boss, Edwin VanCleef",
-        },
+        source = Q.Sources[5], -- An Unsent Letter
         instances = { Q.Instances["The Deadmines"] },
     },
     {
@@ -550,12 +368,7 @@ Q.Quests = {
         prerequisites = {
             { id = 142, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Gryan Stoutmantle",
-            zone = "Westfall",
-            location = { mapId = 1436, x = 0.56, y = 0.47 },
-        },
+        source = Q.Sources[99], -- Gryan Stoutmantle
         instances = { Q.Instances["The Deadmines"] },
     },
     --#endregion
@@ -567,12 +380,7 @@ Q.Quests = {
         name = "The Barrens Oases",
         suggestedLevel = 10,
         requiredLevel = 10,
-        source = {
-            type = "npc",
-            name = "Arch Druid Hamuul Runetotem",
-            zone = "Thunder Bluff",
-            location = { mapId = 1456, x = 0.786, y = 0.286 },
-        },
+        source = Q.Sources[12], -- Arch Druid Hamuul Runetotem
     },
     {
         id = 870,
@@ -583,12 +391,7 @@ Q.Quests = {
         prerequisites = {
             { id = 886, type = Q.PrerequisiteType.BREADCRUMB }
         },
-        source = {
-            type = "npc",
-            name = "Tonga Runetotem",
-            zone = "The Barrens",
-            location = { mapId = 1413, x = 0.52, y = 0.31 },
-        },
+        source = Q.Sources[234], -- Tonga Runetotem
     },
     {
         id = 877,
@@ -599,12 +402,7 @@ Q.Quests = {
         prerequisites = {
             { id = 870, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Tonga Runetotem",
-            zone = "The Barrens",
-            location = { mapId = 1413, x = 0.52, y = 0.31 },
-        },
+        source = Q.Sources[234], -- Tonga Runetotem
     },
     {
         id = 880,
@@ -615,12 +413,7 @@ Q.Quests = {
         prerequisites = {
             { id = 877, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Tonga Runetotem",
-            zone = "The Barrens",
-            location = { mapId = 1413, x = 0.52, y = 0.31 },
-        },
+        source = Q.Sources[234], -- Tonga Runetotem
     },
     {
         id = 1489,
@@ -631,12 +424,7 @@ Q.Quests = {
         prerequisites = {
             { id = 880, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Tonga Runetotem",
-            zone = "The Barrens",
-            location = { mapId = 1413, x = 0.52, y = 0.31 },
-        },
+        source = Q.Sources[234], -- Tonga Runetotem
     },
     {
         id = 1490,
@@ -647,12 +435,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1489, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Hamuul Runetotem",
-            zone = "Thunder Bluff",
-            location = { mapId = 1456, x = 0.45, y = 0.23 },
-        },
+        source = Q.Sources[103], -- Hamuul Runetotem
     },
     {
         id = 1486,
@@ -660,12 +443,7 @@ Q.Quests = {
         name = "Deviate Hides",
         suggestedLevel = 17,
         requiredLevel = 13,
-        source = {
-            type = "npc",
-            name = "Nalpak",
-            zone = "The Barrens",
-            location = { mapId = 1413, x = 0.46, y = 0.35 }
-        },
+        source = Q.Sources[170], -- Nalpak
         instances = { Q.Instances["Wailing Caverns"] },
     },
     {
@@ -674,12 +452,7 @@ Q.Quests = {
         name = "Deviate Eradication",
         suggestedLevel = 21,
         requiredLevel = 15,
-        source = {
-            type = "npc",
-            name = "Ebru",
-            zone = "The Barrens",
-            location = { mapId = 1413, x = 0.46, y = 0.35 }
-        },
+        source = Q.Sources[75], -- Ebru
         instances = { Q.Instances["Wailing Caverns"] },
     },
     {
@@ -688,12 +461,7 @@ Q.Quests = {
         name = "Trouble at the Docks",
         suggestedLevel = 18,
         requiredLevel = 14,
-        source = {
-            type = "npc",
-            name = "Crane Operator Bigglefuzz",
-            zone = "The Barrens",
-            location = { mapId = 1413, x = 0.63, y = 0.37 }
-        },
+        source = Q.Sources[50], -- Crane Operator Bigglefuzz
         instances = { Q.Instances["Wailing Caverns"] },
     },
     {
@@ -705,12 +473,7 @@ Q.Quests = {
         prerequisites = {
             { id = 865, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Mebok Mizzyrix",
-            zone = "The Barrens",
-            location = { mapId = 1413, x = 0.62, y = 0.37 }
-        },
+        source = Q.Sources[161], -- Mebok Mizzyrix
         instances = { Q.Instances["Wailing Caverns"] },
     },
     {
@@ -720,12 +483,7 @@ Q.Quests = {
         suggestedLevel = 18,
         requiredLevel = 13,
 
-        source = {
-            type = "npc",
-            name = "Mebok Mizzyrix",
-            zone = "The Barrens",
-            location = { mapId = 1413, x = 0.62, y = 0.37 },
-        },
+        source = Q.Sources[161], -- Mebok Mizzyrix
     },
     {
         id = 962,
@@ -733,12 +491,7 @@ Q.Quests = {
         name = "Serpentbloom",
         suggestedLevel = 21,
         requiredLevel = 14,
-        source = {
-            type = "npc",
-            name = "Apothecary Zamah",
-            zone = "Thunder Bluff",
-            location = { mapId = 1456, x = 0.34, y = 0.21 }
-        },
+        source = Q.Sources[10], -- Apothecary Zamah
         instances = { Q.Instances["Wailing Caverns"] },
     },
     {
@@ -750,12 +503,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1490, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Nara Wildmane",
-            zone = "Thunder Bluff",
-            location = { mapId = 1456, x = 0.45, y = 0.23 }
-        },
+        source = Q.Sources[171], -- Nara Wildmane
         instances = { Q.Instances["Wailing Caverns"] },
     },
     {
@@ -764,13 +512,7 @@ Q.Quests = {
         name = "The Glowing Shard",
         suggestedLevel = 25,
         requiredLevel = 15,
-        source = {
-            type = "item",
-            name = "Glowing Shard",
-            itemId = 10441,
-            instance = Q.Instances["Wailing Caverns"],
-            text = "Dropped by Mutanus the Devourer at the end of the instance",
-        },
+        source = Q.Sources[92], -- Glowing Shard
         instances = { Q.Instances["Wailing Caverns"] },
     },
     --#endregion
@@ -782,12 +524,7 @@ Q.Quests = {
         name = "Knowledge in the Deeps",
         suggestedLevel = 23,
         requiredLevel = 10,
-        source = {
-            type = "npc",
-            name = "Gerrig Bonegrip",
-            zone = "Ironforge",
-            location = { mapId = 1455, x = 0.50, y = 0.08 }
-        },
+        source = Q.Sources[88], -- Gerrig Bonegrip
         instances = { Q.Instances["Blackfathom Deeps"] },
     },
     {
@@ -797,14 +534,9 @@ Q.Quests = {
         suggestedLevel = 24,
         requiredLevel = 18,
         prerequisites = {
-            { id = 376, type = Q.PrerequisiteType.CHAIN }
+            { id = 3765, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Gershala Nightwhisper",
-            zone = "Darkshore",
-            location = { mapId = 1439, x = 0.37, y = 0.44 }
-        },
+        source = Q.Sources[89], -- Gershala Nightwhisper
         instances = { Q.Instances["Blackfathom Deeps"] },
     },
     {
@@ -813,12 +545,7 @@ Q.Quests = {
         name = "The Corruption Abroad",
         suggestedLevel = 24,
         requiredLevel = 18,
-        source = {
-            type = "npc",
-            name = "Argos Nightwhisper",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.21, y = 0.56 }
-        },
+        source = Q.Sources[17], -- Argos Nightwhisper
         instances = { Q.Instances["Blackfathom Deeps"] },
     },
     {
@@ -827,12 +554,7 @@ Q.Quests = {
         name = "Twilight Falls",
         suggestedLevel = 25,
         requiredLevel = 20,
-        source = {
-            type = "npc",
-            name = "Argent Guard Manados",
-            zone = "Darnassus",
-            location = { mapId = 1457, x = 0.55, y = 0.23 }
-        },
+        source = Q.Sources[15], -- Argent Guard Manados
         instances = { Q.Instances["Blackfathom Deeps"] },
     },
     {
@@ -841,14 +563,7 @@ Q.Quests = {
         name = "Allegiance to the Old Gods (1/2)",
         suggestedLevel = 22,
         requiredLevel = 17,
-        source = {
-            type = "item",
-            name = "Damp Note",
-            itemId = 16790,
-            zone = "Ashenvale",
-            location = { mapId = 1440, x = 0.13, y = 0.12 },
-            text = "Dropped by Blackfathom Tide Priestesses outside the instance"
-        },
+        source = Q.Sources[56], -- Damp Note
     },
     {
         id = 6565,
@@ -859,12 +574,7 @@ Q.Quests = {
         prerequisites = {
             { id = 6564, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Je'neu Sancrea",
-            zone = "Ashenvale",
-            location = { mapId = 1440, x = 0.12, y = 0.34 }
-        },
+        source = Q.Sources[119], -- Je'neu Sancrea
         instances = { Q.Instances["Blackfathom Deeps"] },
     },
     {
@@ -873,12 +583,7 @@ Q.Quests = {
         name = "Amongst the Ruins",
         suggestedLevel = 24,
         requiredLevel = 21,
-        source = {
-            type = "npc",
-            name = "Je'neu Sancrea",
-            zone = "Ashenvale",
-            location = { mapId = 1440, x = 0.12, y = 0.34 }
-        },
+        source = Q.Sources[119], -- Je'neu Sancrea
         instances = { Q.Instances["Blackfathom Deeps"] },
     },
     {
@@ -887,12 +592,7 @@ Q.Quests = {
         name = "The Essence of Aku'Mai",
         suggestedLevel = 22,
         requiredLevel = 17,
-        source = {
-            type = "npc",
-            name = "Je'neu Sancrea",
-            zone = "Ashenvale",
-            location = { mapId = 1440, x = 0.12, y = 0.34 }
-        },
+        source = Q.Sources[119], -- Je'neu Sancrea
         instances = { Q.Instances["Blackfathom Deeps"] },
     },
     {
@@ -904,11 +604,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1198, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Argent Guard Thaelrid",
-            instance = Q.Instances["Blackfathom Deeps"]
-        },
+        source = Q.Sources[16], -- Argent Guard Thaelrid
         instances = { Q.Instances["Blackfathom Deeps"] },
     },
     {
@@ -917,12 +613,7 @@ Q.Quests = {
         name = "In Search of Thaelrid",
         suggestedLevel = 24,
         requiredLevel = 18,
-        source = {
-            type = "npc",
-            name = "Dawnwatcher Shaedlass",
-            zone = "Darnassus",
-            location = { mapId = 1457, x = 0.55, y = 0.24 }
-        },
+        source = Q.Sources[60], -- Dawnwatcher Shaedlass
         instances = { Q.Instances["Blackfathom Deeps"] },
     },
     {
@@ -931,11 +622,7 @@ Q.Quests = {
         name = "Blackfathom Villainy",
         suggestedLevel = 27,
         requiredLevel = 18,
-        source = {
-            type = "npc",
-            name = "Argent Guard Thaelrid",
-            instance = Q.Instances["Blackfathom Deeps"]
-        },
+        source = Q.Sources[16], -- Argent Guard Thaelrid
         instances = { Q.Instances["Blackfathom Deeps"] },
     },
     {
@@ -944,13 +631,7 @@ Q.Quests = {
         name = "Baron Aquanis",
         suggestedLevel = 27,
         requiredLevel = 21,
-        source = {
-            type = "item",
-            name = "Strange Water Globe",
-            itemId = 16782,
-            instance = Q.Instances["Blackfathom Deeps"],
-            text = "Dropped by Baron Aquanis inside the instance"
-        },
+        source = Q.Sources[213], -- Strange Water Globe
         instances = { Q.Instances["Blackfathom Deeps"] },
     },
     --#endregion
@@ -962,14 +643,7 @@ Q.Quests = {
         name = "Lonebrow's Journal",
         suggestedLevel = 27,
         requiredLevel = 25,
-        source = {
-            type = "item",
-            name = "Lonebrow's Journal",
-            itemId = 5791,
-            zone = "Thousand Needles",
-            location = { mapId = 1441, x = 0.30, y = 0.24 },
-            text = "Found on the floor by the corpse",
-        },
+        source = Q.Sources[138], -- Lonebrow's Journal
     },
     {
         id = 1101,
@@ -980,12 +654,7 @@ Q.Quests = {
             { id = 1100, type = Q.PrerequisiteType.CHAIN }
         },
         requiredLevel = 29,
-        source = {
-            type = "npc",
-            name = "Falfindel Waywarder",
-            zone = "Feralas",
-            location = { mapId = 1444, x = 0.89, y = 0.46 },
-        },
+        source = Q.Sources[80], -- Falfindel Waywarder
         instances = { Q.Instances["Razorfen Kraul"] },
     },
     {
@@ -994,12 +663,7 @@ Q.Quests = {
         name = "A Vengeful Fate",
         suggestedLevel = 34,
         requiredLevel = 29,
-        source = {
-            type = "npc",
-            name = "Auld Stonespire",
-            zone = "Thunder Bluff",
-            location = { mapId = 1456, x = 0.37, y = 0.29 }
-        },
+        source = Q.Sources[20], -- Auld Stonespire
         instances = { Q.Instances["Razorfen Kraul"] },
     },
     {
@@ -1008,13 +672,7 @@ Q.Quests = {
         name = "Blueleaf Tubers",
         suggestedLevel = 26,
         requiredLevel = 20,
-        source = {
-            type = "npc",
-            name = "Mebok Mizzyrix",
-            zone = "Ratchet",
-            location = { mapId = 1413, x = 0.62, y = 0.38 },
-            text = "Don't forget to pick up the items next to him"
-        },
+        source = Q.Sources[161], -- Mebok Mizzyrix
         instances = { Q.Instances["Razorfen Kraul"] },
     },
     {
@@ -1023,11 +681,7 @@ Q.Quests = {
         name = "Mortality Wanes",
         suggestedLevel = 30,
         requiredLevel = 25,
-        source = {
-            type = "npc",
-            name = "Heralath Fallowbrook",
-            instance = Q.Instances["Razorfen Kraul"]
-        },
+        source = Q.Sources[107], -- Heralath Fallowbrook
         instances = { Q.Instances["Razorfen Kraul"] },
     },
     {
@@ -1036,12 +690,7 @@ Q.Quests = {
         name = "Willix the Importer",
         suggestedLevel = 30,
         requiredLevel = 22,
-        source = {
-            type = "npc",
-            name = "Willix the Importer",
-            instance = Q.Instances["Razorfen Kraul"],
-            text = "Near the final boss, inside the instance"
-        },
+        source = Q.Sources[253], -- Willix the Importer
         instances = { Q.Instances["Razorfen Kraul"] },
     },
     {
@@ -1050,12 +699,7 @@ Q.Quests = {
         name = "Going, Going, Guano!",
         suggestedLevel = 33,
         requiredLevel = 30,
-        source = {
-            type = "npc",
-            name = "Master Apothecary Faranell",
-            zone = "Undercity",
-            location = { mapId = 1458, x = 0.49, y = 0.69 },
-        },
+        source = Q.Sources[153], -- Master Apothecary Faranell
         instances = { Q.Instances["Razorfen Kraul"] },
     },
     {
@@ -1064,13 +708,7 @@ Q.Quests = {
         name = "An Unholy Alliance (1/2)",
         suggestedLevel = 36,
         requiredLevel = 28,
-        source = {
-            type = "item",
-            name = "Small Scroll",
-            itemId = 17008,
-            instance = Q.Instances["Razorfen Kraul"],
-            text = "Dropped by Charlga Razorflank inside the instance",
-        },
+        source = Q.Sources[209], -- Small Scroll
         instances = { Q.Instances["Razorfen Kraul"] },
     },
     --#endregion
@@ -1082,12 +720,7 @@ Q.Quests = {
         name = "The Book of Ur",
         suggestedLevel = 20,
         requiredLevel = 16,
-        source = {
-            type = "npc",
-            name = "Keeper Bel'dugur",
-            zone = "Undercity",
-            location = { mapId = 1458, x = 0.53, y = 0.54 }
-        },
+        source = Q.Sources[121], -- Keeper Bel'dugur
         instances = { Q.Instances["Shadowfang Keep"] },
     },
     {
@@ -1096,12 +729,7 @@ Q.Quests = {
         name = "Deathstalkers in Shadowfang",
         suggestedLevel = 25,
         requiredLevel = 18,
-        source = {
-            type = "npc",
-            name = "High Executor Hadrec",
-            zone = "Silverpine Forest",
-            location = { mapId = 1421, x = 0.43, y = 0.41 }
-        },
+        source = Q.Sources[109], -- High Executor Hadrec
         instances = { Q.Instances["Shadowfang Keep"] },
     },
     {
@@ -1110,12 +738,7 @@ Q.Quests = {
         name = "Arugal Must Die",
         suggestedLevel = 24,
         requiredLevel = 18,
-        source = {
-            type = "npc",
-            name = "Dalar Dawnweaver",
-            zone = "Silverpine Forest",
-            location = { mapId = 1421, x = 0.44, y = 0.39 }
-        },
+        source = Q.Sources[55], -- Dalar Dawnweaver
         instances = { Q.Instances["Shadowfang Keep"] },
     },
     --#endregion
@@ -1127,12 +750,7 @@ Q.Quests = {
         name = "Dragonmaw Rumors",
         suggestedLevel = 31,
         requiredLevel = 24,
-        source = {
-            type = "npc",
-            name = "Zaruk",
-            zone = "Arathi Highlands",
-            location = { mapId = 1417, x = 0.744, y = 0.356 }
-        },
+        source = Q.Sources[262], -- Zaruk
     },
     {
         id = 95697,
@@ -1140,12 +758,7 @@ Q.Quests = {
         name = "Changing Tastes",
         suggestedLevel = 31,
         requiredLevel = 24,
-        source = {
-            type = "npc",
-            name = "Borstan",
-            zone = "Orgrimmar",
-            location = { mapId = 1454, x = 0.576, y = 0.534 }
-        },
+        source = Q.Sources[33], -- Borstan
         instances = { Q.Instances["Excavation Site: Wetlands"] },
     },
     {
@@ -1154,13 +767,7 @@ Q.Quests = {
         name = "Elder Knowledge",
         suggestedLevel = 31,
         requiredLevel = 24,
-        source = {
-            type = "item",
-            name = "Titan Relic",
-            itemId = 270866,
-            instance = Q.Instances["Excavation Site: Wetlands"],
-            text = "Dropped by the Relic Guardian boss"
-        },
+        source = Q.Sources[231], -- Titan Relic
         instances = { Q.Instances["Excavation Site: Wetlands"] },
     },
     {
@@ -1172,12 +779,7 @@ Q.Quests = {
             { id = 95663, type = Q.PrerequisiteType.CHAIN }
         },
         requiredLevel = 24,
-        source = {
-            type = "npc",
-            name = "Deathstalker Agent",
-            zone = "Wetlands",
-            location = { mapId = 1437, x = 0.514, y = 0.592 }
-        },
+        source = Q.Sources[65], -- Deathstalker Agent
         instances = { Q.Instances["Excavation Site: Wetlands"] },
     },
     {
@@ -1186,12 +788,7 @@ Q.Quests = {
         name = "Highland Hides",
         suggestedLevel = 28,
         requiredLevel = 24,
-        source = {
-            type = "npc",
-            name = "James Halloran",
-            zone = "Wetlands",
-            location = { mapId = 1437, x = 0.08, y = 0.55 }
-        },
+        source = Q.Sources[117], -- James Halloran
         instances = { Q.Instances["Excavation Site: Wetlands"] },
     },
     {
@@ -1200,12 +797,7 @@ Q.Quests = {
         name = "Songblade Search",
         suggestedLevel = 31,
         requiredLevel = 24,
-        source = {
-            type = "npc",
-            name = "Dorin Songblade",
-            zone = "Redridge Mountains",
-            location = { mapId = 1433, x = 0.308, y = 0.466 }
-        },
+        source = Q.Sources[68], -- Dorin Songblade
         instances = { Q.Instances["Excavation Site: Wetlands"] },
     },
     {
@@ -1214,12 +806,7 @@ Q.Quests = {
         name = "Horrors in the Highland",
         suggestedLevel = 24,
         requiredLevel = 24,
-        source = {
-            type = "npc",
-            name = "Rethiel the Greenwarden",
-            zone = "Wetlands",
-            location = { mapId = 1437, x = 0.562, y = 0.406 }
-        },
+        source = Q.Sources[192], -- Rethiel the Greenwarden
         instances = { Q.Instances["Excavation Site: Wetlands"] },
     },
     {
@@ -1228,12 +815,7 @@ Q.Quests = {
         name = "Lost in the Thicket Things",
         suggestedLevel = 31,
         requiredLevel = 24,
-        source = {
-            type = "npc",
-            name = "Caitlin Grassman",
-            zone = "Wetlands",
-            location = { mapId = 1437, x = 0.118, y = 0.586 }
-        },
+        source = Q.Sources[38], -- Caitlin Grassman
         instances = { Q.Instances["Excavation Site: Wetlands"] },
     },
     {
@@ -1242,13 +824,7 @@ Q.Quests = {
         name = "Lost Relic Carry",
         suggestedLevel = 31,
         requiredLevel = 24,
-        source = {
-            type = "item",
-            name = "Titan Relic",
-            itemId = 270865,
-            instance = Q.Instances["Excavation Site: Wetlands"],
-            text = "Dropped by the boss Relic Guardian in the instance"
-        },
+        source = Q.Sources[232], -- Titan Relic
         instances = { Q.Instances["Excavation Site: Wetlands"] },
     },
     --#endregion
@@ -1260,12 +836,7 @@ Q.Quests = {
         name = "The Dark Iron War",
         suggestedLevel = 30,
         requiredLevel = 25,
-        source = {
-            type = "npc",
-            name = "Motley Garmason",
-            zone = "Wetlands",
-            location = { mapId = 1437, x = 0.49, y = 0.18 }
-        }
+        source = Q.Sources[167], -- Motley Garmason
     },
     {
         id = 389,
@@ -1276,12 +847,7 @@ Q.Quests = {
         prerequisites = {
             { id = 373, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Baros Alexston",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.49, y = 0.30 }
-        },
+        source = Q.Sources[25], -- Baros Alexston
     },
     {
         id = 386,
@@ -1289,12 +855,7 @@ Q.Quests = {
         name = "What Comes Around...",
         suggestedLevel = 25,
         requiredLevel = 22,
-        source = {
-            type = "npc",
-            name = "Guard Berton",
-            zone = "Redridge Mountains",
-            location = { mapId = 1433, x = 0.26, y = 0.46 }
-        },
+        source = Q.Sources[101], -- Guard Berton
         instances = { Q.Instances["The Stockade"] },
     },
     {
@@ -1303,12 +864,7 @@ Q.Quests = {
         name = "Crime and Punishment",
         suggestedLevel = 26,
         requiredLevel = 22,
-        source = {
-            type = "npc",
-            name = "Councilman Millstipe",
-            zone = "Duskwood",
-            location = { mapId = 1431, x = 0.71, y = 0.47 }
-        },
+        source = Q.Sources[48], -- Councilman Millstipe
         instances = { Q.Instances["The Stockade"] },
     },
     {
@@ -1317,12 +873,7 @@ Q.Quests = {
         name = "Quell The Uprising",
         suggestedLevel = 26,
         requiredLevel = 22,
-        source = {
-            type = "npc",
-            name = "Warden Thelwater",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.518, y = 0.693 }
-        },
+        source = Q.Sources[248], -- Warden Thelwater
         instances = { Q.Instances["The Stockade"] },
     },
     {
@@ -1331,12 +882,7 @@ Q.Quests = {
         name = "The Color of Blood",
         suggestedLevel = 26,
         requiredLevel = 22,
-        source = {
-            type = "npc",
-            name = "Nikova Raskol",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.73, y = 0.50 }
-        },
+        source = Q.Sources[174], -- Nikova Raskol
         instances = { Q.Instances["The Stockade"] },
     },
     {
@@ -1348,12 +894,7 @@ Q.Quests = {
         prerequisites = {
             { id = 303, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Motley Garmason",
-            zone = "Wetlands",
-            location = { mapId = 1437, x = 0.49, y = 0.18 }
-        },
+        source = Q.Sources[167], -- Motley Garmason
         instances = { Q.Instances["The Stockade"] },
     },
     {
@@ -1365,12 +906,7 @@ Q.Quests = {
         prerequisites = {
             { id = 389, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Warden Thelwater",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.518, y = 0.693 }
-        },
+        source = Q.Sources[248], -- Warden Thelwater
         instances = { Q.Instances["The Stockade"] },
     },
     --#endregion
@@ -1382,12 +918,7 @@ Q.Quests = {
         name = "The Sparklematic 5200!",
         suggestedLevel = 30,
         requiredLevel = 25,
-        source = {
-            type = "object",
-            name = "The Sparklematic 5200",
-            instance = Q.Instances["Gnomeregan"],
-            text = "Found inside the instance"
-        },
+        source = Q.Sources[222], -- The Sparklematic 5200
         instances = { Q.Instances["Gnomeregan"] },
     },
     {
@@ -1396,12 +927,7 @@ Q.Quests = {
         name = "The Day After",
         suggestedLevel = 27,
         requiredLevel = 20,
-        source = {
-            type = "npc",
-            name = "Gnoarn",
-            zone = "Ironforge",
-            location = { mapId = 1455, x = 0.69, y = 0.50 }
-        },
+        source = Q.Sources[93], -- Gnoarn
         instances = { Q.Instances["Gnomeregan"] },
     },
     {
@@ -1410,12 +936,7 @@ Q.Quests = {
         name = "Castpipe's Task",
         suggestedLevel = 30,
         requiredLevel = 25,
-        source = {
-            type = "npc",
-            name = "Gaxim Rustfizzle",
-            zone = "Stonetalon Mountains",
-            location = { mapId = 1442, x = 0.596, y = 0.670 }
-        },
+        source = Q.Sources[86], -- Gaxim Rustfizzle
     },
     {
         id = 2841,
@@ -1423,12 +944,7 @@ Q.Quests = {
         name = "Rig Wars",
         suggestedLevel = 35,
         requiredLevel = 25,
-        source = {
-            type = "npc",
-            name = "Nogg",
-            zone = "Orgrimmar",
-            location = { mapId = 1454, x = 0.76, y = 0.25 }
-        },
+        source = Q.Sources[175], -- Nogg
         instances = { Q.Instances["Gnomeregan"] },
     },
     {
@@ -1437,13 +953,7 @@ Q.Quests = {
         name = "Chief Engineer Scooty",
         suggestedLevel = 35,
         requiredLevel = 20,
-        source = {
-            type = "npc",
-            name = "Sovik",
-            zone = "Orgrimmar",
-            location = { mapId = 1454, x = 0.76, y = 0.25 },
-            text = "You must pick up the quest 'Rig Wars' right beside Sovik first"
-        },
+        source = Q.Sources[211], -- Sovik
     },
     {
         id = 2924,
@@ -1451,12 +961,7 @@ Q.Quests = {
         name = "Essential Artificials",
         suggestedLevel = 30,
         requiredLevel = 20,
-        source = {
-            type = "npc",
-            name = "Klockmort Spannerspan",
-            zone = "Ironforge",
-            location = { mapId = 1455, x = 0.682, y = 0.462 }
-        },
+        source = Q.Sources[128], -- Klockmort Spannerspan
         instances = { Q.Instances["Gnomeregan"] },
     },
     {
@@ -1468,12 +973,7 @@ Q.Quests = {
         prerequisites = {
             { id = 2931, type = Q.PrerequisiteType.BREADCRUMB }
         },
-        source = {
-            type = "npc",
-            name = "Master Mechanic Castpipe",
-            zone = "Ironforge",
-            location = { mapId = 1455, x = 0.700, y = 0.474 }
-        },
+        source = Q.Sources[156], -- Master Mechanic Castpipe
         instances = { Q.Instances["Gnomeregan"] },
     },
     {
@@ -1485,12 +985,7 @@ Q.Quests = {
         prerequisites = {
             { id = 2926, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Ozzie Togglevolt",
-            zone = "Dun Morogh",
-            location = { mapId = 1426, x = 0.45, y = 0.49 }
-        },
+        source = Q.Sources[178], -- Ozzie Togglevolt
         instances = { Q.Instances["Gnomeregan"] },
     },
     {
@@ -1499,13 +994,7 @@ Q.Quests = {
         name = "Grime-Encrusted Ring",
         suggestedLevel = 34,
         requiredLevel = 28,
-        source = {
-            type = "item",
-            name = "Grime-Encrusted Ring",
-            itemId = 9326,
-            instance = Q.Instances["Gnomeregan"],
-            text = "Dropped by Dark Iron Agents inside the instance"
-        },
+        source = Q.Sources[98], -- Grime-Encrusted Ring
         instances = { Q.Instances["Gnomeregan"] },
     },
     {
@@ -1517,12 +1006,7 @@ Q.Quests = {
         prerequisites = {
             { id = 2927, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Ozzie Togglevolt",
-            zone = "Dun Morogh",
-            location = { mapId = 1426, x = 0.458, y = 0.492 }
-        }
+        source = Q.Sources[178], -- Ozzie Togglevolt
     },
     {
         id = 2922,
@@ -1530,12 +1014,7 @@ Q.Quests = {
         name = "Save Techbot's Brain!",
         suggestedLevel = 26,
         requiredLevel = 20,
-        source = {
-            type = "npc",
-            name = "Tinkmaster Overspark",
-            zone = "Ironforge",
-            location = { mapId = 1455, x = 0.69, y = 0.50 }
-        },
+        source = Q.Sources[229], -- Tinkmaster Overspark
         instances = { Q.Instances["Gnomeregan"] },
     },
     {
@@ -1544,12 +1023,7 @@ Q.Quests = {
         name = "The Grand Betrayal",
         suggestedLevel = 35,
         requiredLevel = 25,
-        source = {
-            type = "npc",
-            name = "High Tinker Mekkatorque",
-            zone = "Ironforge",
-            location = { mapId = 1455, x = 0.68, y = 0.49 }
-        },
+        source = Q.Sources[112], -- High Tinker Mekkatorque
         instances = { Q.Instances["Gnomeregan"] },
     },
     {
@@ -1558,12 +1032,7 @@ Q.Quests = {
         name = "Gyrodrillmatic Excavationators",
         suggestedLevel = 30,
         requiredLevel = 20,
-        source = {
-            type = "npc",
-            name = "Shoni the Shilent",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.55, y = 0.12 }
-        },
+        source = Q.Sources[207], -- Shoni the Shilent
         instances = { Q.Instances["Gnomeregan"] },
     },
     {
@@ -1575,12 +1044,7 @@ Q.Quests = {
         prerequisites = {
             { id = 2842, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Scooty",
-            zone = "Stranglethorn Vale",
-            location = { mapId = 1434, x = 0.27, y = 0.77 }
-        },
+        source = Q.Sources[201], -- Scooty
         instances = { Q.Instances["Gnomeregan"] },
     },
     {
@@ -1589,12 +1053,7 @@ Q.Quests = {
         name = "A Fine Mess",
         suggestedLevel = 30,
         requiredLevel = 20,
-        source = {
-            type = "npc",
-            name = "Kernobee",
-            instance = Q.Instances["Gnomeregan"],
-            text = "Found inside the instance in the room right of the Clean Room"
-        },
+        source = Q.Sources[124], -- Kernobee
         instances = { Q.Instances["Gnomeregan"] },
     },
     --#endregion
@@ -1606,12 +1065,7 @@ Q.Quests = {
         name = "The Grave Knight",
         suggestedLevel = 33,
         requiredLevel = 24,
-        source = {
-            type = "npc",
-            name = "Melisara",
-            zone = "Hillsbrad Foothills",
-            location = { mapId = 1424, x = 0.626, y = 0.206 }
-        },
+        source = Q.Sources[162], -- Melisara
         instances = { Q.Instances["City of Dalaran"] },
     },
     {
@@ -1620,11 +1074,7 @@ Q.Quests = {
         name = "Opportunistic Education",
         suggestedLevel = 33,
         requiredLevel = 30,
-        source = {
-            type = "npc",
-            name = "Rexxie Copperclutch",
-            instance = Q.Instances["City of Dalaran"]
-        },
+        source = Q.Sources[193], -- Rexxie Copperclutch
         instances = { Q.Instances["City of Dalaran"] },
     },
     {
@@ -1636,12 +1086,7 @@ Q.Quests = {
         prerequisites = {
             { id = 92434, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Image of Archmage Modera",
-            zone = "Silverpine Forest",
-            location = { mapId = 1421, x = 0.686, y = 0.452 }
-        }
+        source = Q.Sources[115], -- Image of Archmage Modera
     },
     {
         id = 92457,
@@ -1649,12 +1094,7 @@ Q.Quests = {
         name = "Starving Arcane",
         suggestedLevel = 33,
         requiredLevel = 30,
-        source = {
-            type = "npc",
-            name = "Image of Archmage Modera",
-            zone = "Silverpine Forest",
-            location = { mapId = 1421, x = 0.686, y = 0.452 }
-        },
+        source = Q.Sources[115], -- Image of Archmage Modera
         instances = { Q.Instances["City of Dalaran"] },
     },
     {
@@ -1663,12 +1103,7 @@ Q.Quests = {
         name = "Power Overwhelming",
         suggestedLevel = 33,
         requiredLevel = 30,
-        source = {
-            type = "npc",
-            name = "High Sorcerer Andromath",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.376, y = 0.816 }
-        },
+        source = Q.Sources[111], -- High Sorcerer Andromath
         instances = { Q.Instances["City of Dalaran"] },
     },
     {
@@ -1680,12 +1115,7 @@ Q.Quests = {
         prerequisites = {
             { id = 92432, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Image of Archmage Modera",
-            zone = "Silverpine Forest",
-            location = { mapId = 1421, x = 0.686, y = 0.452 }
-        },
+        source = Q.Sources[115], -- Image of Archmage Modera
         instances = { Q.Instances["City of Dalaran"] },
     },
     {
@@ -1694,12 +1124,7 @@ Q.Quests = {
         name = "Source of Power",
         suggestedLevel = 33,
         requiredLevel = 24,
-        source = {
-            type = "npc",
-            name = "Doctor Martin Felben",
-            zone = "Undercity",
-            location = { mapId = 1458, x = 0.466, y = 0.746 }
-        },
+        source = Q.Sources[67], -- Doctor Martin Felben
         instances = { Q.Instances["City of Dalaran"] },
     },
     {
@@ -1711,12 +1136,7 @@ Q.Quests = {
         prerequisites = {
             { id = 96984, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Magus Wordeen Voidglare",
-            zone = "Hillsbrad Foothills",
-            location = { mapId = 1424, x = 0.616, y = 0.208 }
-        },
+        source = Q.Sources[149], -- Magus Wordeen Voidglare
         instances = { Q.Instances["City of Dalaran"] },
     },
 
@@ -1726,12 +1146,7 @@ Q.Quests = {
         name = "Key to the City",
         suggestedLevel = 33,
         requiredLevel = 30,
-        source = {
-            type = "npc",
-            name = "Magus Wordeen Voidglare",
-            zone = "Hillsbrad Foothills",
-            location = { mapId = 1424, x = 0.616, y = 0.208 }
-        }
+        source = Q.Sources[149], -- Magus Wordeen Voidglare
     },
     {
         id = 556,
@@ -1739,12 +1154,7 @@ Q.Quests = {
         name = "Stone Tokens",
         suggestedLevel = 33,
         requiredLevel = 30,
-        source = {
-            type = "npc",
-            name = "Keeper Bel'varil",
-            zone = "Hillsbrad Foothills",
-            location = { mapId = 1424, x = 0.614, y = 0.208 }
-        }
+        source = Q.Sources[122], -- Keeper Bel'varil
     },
     {
         id = 544,
@@ -1752,12 +1162,7 @@ Q.Quests = {
         name = "Prison Break In",
         suggestedLevel = 33,
         requiredLevel = 30,
-        source = {
-            type = "npc",
-            name = "Magus Wordeen Voidglare",
-            zone = "Hillsbrad Foothills",
-            location = { mapId = 1424, x = 0.616, y = 0.208 }
-        }
+        source = Q.Sources[149], -- Magus Wordeen Voidglare
     },
     {
         id = 545,
@@ -1768,12 +1173,7 @@ Q.Quests = {
         prerequisites = {
             { id = 544, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Magus Wordeen Voidglare",
-            zone = "Hillsbrad Foothills",
-            location = { mapId = 1424, x = 0.616, y = 0.208 }
-        }
+        source = Q.Sources[149], -- Magus Wordeen Voidglare
     },
     {
         id = 557,
@@ -1784,12 +1184,7 @@ Q.Quests = {
         prerequisites = {
             { id = 556, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Keeper Bel'varil",
-            zone = "Hillsbrad Foothills",
-            location = { mapId = 1424, x = 0.614, y = 0.208 }
-        }
+        source = Q.Sources[122], -- Keeper Bel'varil
     },
     {
         id = 92434,
@@ -1802,12 +1197,7 @@ Q.Quests = {
             { id = 545,   type = Q.PrerequisiteType.REQUIRED },
             { id = 557,   type = Q.PrerequisiteType.REQUIRED }
         },
-        source = {
-            type = "npc",
-            name = "Magus Wordeen Voidglare",
-            zone = "Hillsbrad Foothills",
-            location = { mapId = 1424, x = 0.616, y = 0.208 }
-        }
+        source = Q.Sources[149], -- Magus Wordeen Voidglare
     },
     {
         id = 92456,
@@ -1815,12 +1205,7 @@ Q.Quests = {
         name = "A Green Sample",
         suggestedLevel = 33,
         requiredLevel = 30,
-        source = {
-            type = "npc",
-            name = "Shylamiir",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.313, y = 0.629 }
-        },
+        source = Q.Sources[208], -- Shylamiir
         instances = { Q.Instances["City of Dalaran"] },
     },
     {
@@ -1829,12 +1214,7 @@ Q.Quests = {
         name = "An Alarming Request",
         suggestedLevel = 33,
         requiredLevel = 30,
-        source = {
-            type = "npc",
-            name = "Emissary Jacques",
-            zone = "Hillsbrad Foothills",
-            location = { mapId = 1424, x = 0.483, y = 0.601 }
-        }
+        source = Q.Sources[77], -- Emissary Jacques
     },
     --#endregion
 
@@ -1845,12 +1225,7 @@ Q.Quests = {
         name = "Brother Anton",
         suggestedLevel = 39,
         requiredLevel = 34,
-        source = {
-            type = "npc",
-            name = "Brother Crowley",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.432, y = 0.242 }
-        },
+        source = Q.Sources[37], -- Brother Crowley
     },
     {
         id = 261,
@@ -1861,12 +1236,7 @@ Q.Quests = {
         prerequisites = {
             { id = 6141, type = Q.PrerequisiteType.BREADCRUMB }
         },
-        source = {
-            type = "npc",
-            name = "Brother Anton",
-            zone = "Desolace",
-            location = { mapId = 1443, x = 0.664, y = 0.078 }
-        },
+        source = Q.Sources[36], -- Brother Anton
     },
     {
         id = 1052,
@@ -1877,12 +1247,7 @@ Q.Quests = {
         prerequisites = {
             { id = 261, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Brother Anton",
-            zone = "Desolace",
-            location = { mapId = 1443, x = 0.664, y = 0.078 }
-        },
+        source = Q.Sources[36], -- Brother Anton
     },
     {
         id = 1048,
@@ -1890,12 +1255,7 @@ Q.Quests = {
         name = "Into The Scarlet Monastery",
         suggestedLevel = 42,
         requiredLevel = 33,
-        source = {
-            type = "npc",
-            name = "Varimathras",
-            zone = "Undercity",
-            location = { mapId = 1458, x = 0.56, y = 0.92 }
-        },
+        source = Q.Sources[242], -- Varimathras
         instances = { Q.Instances["Scarlet Monastery: Library"], Q.Instances["Scarlet Monastery: Armory"], Q.Instances["Scarlet Monastery: Cathedral"] },
     },
     {
@@ -1907,12 +1267,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1109, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Master Apothecary Faranell",
-            zone = "Undercity",
-            location = { mapId = 1458, x = 0.48, y = 0.69 }
-        },
+        source = Q.Sources[153], -- Master Apothecary Faranell
         instances = { Q.Instances["Scarlet Monastery: Library"], Q.Instances["Scarlet Monastery: Armory"], Q.Instances["Scarlet Monastery: Cathedral"] },
     },
     {
@@ -1924,12 +1279,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1052, type = Q.PrerequisiteType.REQUIRED }
         },
-        source = {
-            type = "npc",
-            name = "Raleigh the Devout",
-            zone = "Hillsbrad Foothills",
-            location = { mapId = 1424, x = 0.51, y = 0.58 }
-        },
+        source = Q.Sources[190], -- Raleigh the Devout
         instances = { Q.Instances["Scarlet Monastery: Library"], Q.Instances["Scarlet Monastery: Armory"], Q.Instances["Scarlet Monastery: Cathedral"] },
     },
     --#endregion
@@ -1941,12 +1291,7 @@ Q.Quests = {
         name = "Vorrel's Revenge",
         suggestedLevel = 30,
         requiredLevel = 25,
-        source = {
-            type = "npc",
-            name = "Vorrel Sengutz",
-            instance = Q.Instances["Scarlet Monastery: Graveyard"],
-            text = "Vorrel is found in the first room after the corridor inside the instance"
-        },
+        source = Q.Sources[246], -- Vorrel Sengutz
         instances = { Q.Instances["Scarlet Monastery: Graveyard"] },
     },
     --#endregion
@@ -1958,12 +1303,7 @@ Q.Quests = {
         name = "Past Due",
         suggestedLevel = 38,
         requiredLevel = 30,
-        source = {
-            type = "npc",
-            name = "Magus Olvek",
-            zone = "Alterac Mountains",
-            location = { mapId = 1416, x = 0.095, y = 0.625 },
-        },
+        source = Q.Sources[147], -- Magus Olvek
         instances = { Q.Instances["Scarlet Monastery: Library"] },
     },
     {
@@ -1972,12 +1312,7 @@ Q.Quests = {
         name = "Compendium of the Fallen",
         suggestedLevel = 38,
         requiredLevel = 28,
-        source = {
-            type = "npc",
-            name = "Sage Truthseeker",
-            zone = "Thunder Bluff",
-            location = { mapId = 1456, x = 0.344, y = 0.47 },
-        },
+        source = Q.Sources[199], -- Sage Truthseeker
         instances = { Q.Instances["Scarlet Monastery: Library"] },
     },
     {
@@ -1986,12 +1321,7 @@ Q.Quests = {
         name = "Test of Faith",
         suggestedLevel = 26,
         requiredLevel = 25,
-        source = {
-            type = "npc",
-            name = "Dorn Plainstalker",
-            zone = "Thousand Needles",
-            location = { mapId = 1441, x = 0.53, y = 0.41 }
-        },
+        source = Q.Sources[69], -- Dorn Plainstalker
     },
     {
         id = 1150,
@@ -2002,12 +1332,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1149, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Dorn Plainstalker",
-            zone = "Thousand Needles",
-            location = { mapId = 1441, x = 0.53, y = 0.41 }
-        },
+        source = Q.Sources[69], -- Dorn Plainstalker
     },
     {
         id = 1151,
@@ -2018,12 +1343,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1150, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Dorn Plainstalker",
-            zone = "Thousand Needles",
-            location = { mapId = 1441, x = 0.53, y = 0.41 }
-        },
+        source = Q.Sources[69], -- Dorn Plainstalker
     },
     {
         id = 1152,
@@ -2034,12 +1354,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1151, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Dorn Plainstalker",
-            zone = "Thousand Needles",
-            location = { mapId = 1441, x = 0.53, y = 0.41 }
-        },
+        source = Q.Sources[69], -- Dorn Plainstalker
     },
     {
         id = 1154,
@@ -2050,12 +1365,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1152, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Braug Dimspirit",
-            zone = "Stonetalon Mountains",
-            location = { mapId = 1442, x = 0.79, y = 0.46 }
-        },
+        source = Q.Sources[34], -- Braug Dimspirit
     },
     {
         id = 6627,
@@ -2066,12 +1376,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1154, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Braug Dimspirit",
-            zone = "Stonetalon Mountains",
-            location = { mapId = 1442, x = 0.79, y = 0.46 }
-        },
+        source = Q.Sources[34], -- Braug Dimspirit
     },
     {
         id = 1159,
@@ -2082,12 +1387,7 @@ Q.Quests = {
         prerequisites = {
             { id = 6627, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Braug Dimspirit",
-            zone = "Stonetalon Mountains",
-            location = { mapId = 1442, x = 0.79, y = 0.46 }
-        },
+        source = Q.Sources[34], -- Braug Dimspirit
     },
     {
         id = 1160,
@@ -2098,12 +1398,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1159, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Parqual Fintallas",
-            zone = "Undercity",
-            location = { mapId = 1458, x = 0.57, y = 0.65 }
-        },
+        source = Q.Sources[179], -- Parqual Fintallas
         instances = { Q.Instances["Scarlet Monastery: Library"] },
     },
     {
@@ -2112,12 +1407,7 @@ Q.Quests = {
         name = "Mythology of the Titans",
         suggestedLevel = 38,
         requiredLevel = 28,
-        source = {
-            type = "npc",
-            name = "Librarian Mae Paledust",
-            zone = "Ironforge",
-            location = { mapId = 1455, x = 0.75, y = 0.12 }
-        },
+        source = Q.Sources[136], -- Librarian Mae Paledust
         instances = { Q.Instances["Scarlet Monastery: Library"] },
     },
     --#endregion
@@ -2129,12 +1419,7 @@ Q.Quests = {
         name = "Bring the End",
         suggestedLevel = 42,
         requiredLevel = 37,
-        source = {
-            type = "npc",
-            name = "Andrew Brownell",
-            zone = "Undercity",
-            location = { mapId = 1458, x = 0.74, y = 0.33 }
-        },
+        source = Q.Sources[7], -- Andrew Brownell
         instances = { Q.Instances["Razorfen Downs"] },
     },
     {
@@ -2146,12 +1431,7 @@ Q.Quests = {
         prerequisites = {
             { id = 6522, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Varimathras",
-            zone = "Undercity",
-            location = { mapId = 1458, x = 0.56, y = 0.92 }
-        },
+        source = Q.Sources[242], -- Varimathras
         instances = { Q.Instances["Razorfen Downs"] },
     },
     {
@@ -2160,12 +1440,7 @@ Q.Quests = {
         name = "Bring the Light",
         suggestedLevel = 42,
         requiredLevel = 39,
-        source = {
-            type = "npc",
-            name = "Archbishop Benedictus",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.39, y = 0.27 }
-        },
+        source = Q.Sources[13], -- Archbishop Benedictus
         instances = { Q.Instances["Razorfen Downs"] },
     },
     {
@@ -2174,12 +1449,7 @@ Q.Quests = {
         name = "A Host of Evil",
         suggestedLevel = 35,
         requiredLevel = 28,
-        source = {
-            type = "npc",
-            name = "Myriam Moonsinger",
-            zone = "The Barrens",
-            location = { mapId = 1413, x = 0.49, y = 0.95 }
-        },
+        source = Q.Sources[169], -- Myriam Moonsinger
         instances = { Q.Instances["Razorfen Downs"] },
     },
     {
@@ -2191,11 +1461,7 @@ Q.Quests = {
         prerequisites = {
             { id = 3523, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Belnistrasz",
-            instance = Q.Instances["Razorfen Downs"]
-        },
+        source = Q.Sources[27], -- Belnistrasz
         instances = { Q.Instances["Razorfen Downs"] },
     },
     {
@@ -2204,12 +1470,7 @@ Q.Quests = {
         name = "Scourge of the Downs",
         suggestedLevel = 37,
         requiredLevel = 32,
-        source = {
-            type = "npc",
-            name = "Belnistrasz",
-            instance = Q.Instances["Razorfen Downs"],
-            text = "Found inside the instance"
-        }
+        source = Q.Sources[27], -- Belnistrasz
     },
     --#endregion
 
@@ -2220,12 +1481,7 @@ Q.Quests = {
         name = "Reclaimed Treasures",
         suggestedLevel = 38,
         requiredLevel = 33,
-        source = {
-            type = "npc",
-            name = "Patrick Garrett",
-            zone = "Undercity",
-            location = { mapId = 1458, x = 0.626, y = 0.486 }
-        },
+        source = Q.Sources[180], -- Patrick Garrett
         instances = { Q.Instances["Uldaman"] },
     },
     {
@@ -2234,12 +1490,7 @@ Q.Quests = {
         name = "Reclaimed Treasures",
         suggestedLevel = 38,
         requiredLevel = 33,
-        source = {
-            type = "npc",
-            name = "Krom Stoutarm",
-            zone = "Ironforge",
-            location = { mapId = 1455, x = 0.746, y = 0.10 }
-        },
+        source = Q.Sources[131], -- Krom Stoutarm
         instances = { Q.Instances["Uldaman"] },
     },
     {
@@ -2251,12 +1502,7 @@ Q.Quests = {
         prerequisites = {
             { id = 2500, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Ghak Healtouch",
-            zone = "Loch Modan",
-            location = { mapId = 1432, x = 0.37, y = 0.492 }
-        },
+        source = Q.Sources[90], -- Ghak Healtouch
         instances = { Q.Instances["Uldaman"] },
     },
     {
@@ -2268,12 +1514,7 @@ Q.Quests = {
         prerequisites = {
             { id = 2338, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Jarkal Mossmeld",
-            zone = "Badlands",
-            location = { mapId = 1418, x = 0.024, y = 0.460 }
-        },
+        source = Q.Sources[118], -- Jarkal Mossmeld
         instances = { Q.Instances["Uldaman"] },
     },
     {
@@ -2285,12 +1526,7 @@ Q.Quests = {
         prerequisites = {
             { id = 2398, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Baelog",
-            instance = Q.Instances["Uldaman"],
-            text = "Found inside the instance"
-        },
+        source = Q.Sources[24], -- Baelog
         instances = { Q.Instances["Uldaman"] },
     },
     {
@@ -2299,12 +1535,7 @@ Q.Quests = {
         name = "Power Stones",
         suggestedLevel = 36,
         requiredLevel = 30,
-        source = {
-            type = "npc",
-            name = "Rigglefuzz",
-            zone = "Badlands",
-            location = { mapId = 1418, x = 0.424, y = 0.528 }
-        },
+        source = Q.Sources[195], -- Rigglefuzz
         instances = { Q.Instances["Uldaman"] },
     },
     {
@@ -2313,12 +1544,7 @@ Q.Quests = {
         name = "A Sign of Hope (1/2)",
         suggestedLevel = 35,
         requiredLevel = 35,
-        source = {
-            type = "item",
-            name = "Crumpled Map",
-            zone = "Badlands",
-            location = { mapId = 1418, x = 0.53, y = 0.341 }
-        }
+        source = Q.Sources[53], -- Crumpled Map
     },
     {
         id = 721,
@@ -2329,12 +1555,7 @@ Q.Quests = {
         prerequisites = {
             { id = 720, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Prospector Ryedol",
-            zone = "Badlands",
-            location = { mapId = 1418, x = 0.534, y = 0.432 }
-        }
+        source = Q.Sources[185], -- Prospector Ryedol
     },
     {
         id = 722,
@@ -2345,12 +1566,7 @@ Q.Quests = {
         prerequisites = {
             { id = 721, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Hammertoe Grez",
-            instance = Q.Instances["Uldaman"],
-            text = "Found inside the instance"
-        }
+        source = Q.Sources[102], -- Hammertoe Grez
     },
     {
         id = 723,
@@ -2361,12 +1577,7 @@ Q.Quests = {
         prerequisites = {
             { id = 722, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Hammertoe Grez",
-            instance = Q.Instances["Uldaman"],
-            text = "Found inside the instance"
-        }
+        source = Q.Sources[102], -- Hammertoe Grez
     },
     {
         id = 724,
@@ -2377,12 +1588,7 @@ Q.Quests = {
         prerequisites = {
             { id = 723, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Prospector Ryedol",
-            zone = "Badlands",
-            location = { mapId = 1418, x = 0.534, y = 0.432 }
-        }
+        source = Q.Sources[185], -- Prospector Ryedol
     },
     {
         id = 725,
@@ -2393,12 +1599,7 @@ Q.Quests = {
         prerequisites = {
             { id = 724, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Historian Karnik",
-            zone = "Ironforge",
-            location = { mapId = 1455, x = 0.764, y = 0.12 }
-        }
+        source = Q.Sources[113], -- Historian Karnik
     },
     {
         id = 726,
@@ -2409,12 +1610,7 @@ Q.Quests = {
         prerequisites = {
             { id = 725, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Advisor Belgrum",
-            zone = "Ironforge",
-            location = { mapId = 1455, x = 0.764, y = 0.12 }
-        }
+        source = Q.Sources[2], -- Advisor Belgrum
     },
     {
         id = 762,
@@ -2425,12 +1621,7 @@ Q.Quests = {
         prerequisites = {
             { id = 726, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Historian Karnik",
-            zone = "Ironforge",
-            location = { mapId = 1455, x = 0.764, y = 0.12 }
-        }
+        source = Q.Sources[113], -- Historian Karnik
     },
     {
         id = 1139,
@@ -2441,12 +1632,7 @@ Q.Quests = {
         prerequisites = {
             { id = 762, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Advisor Belgrum",
-            zone = "Ironforge",
-            location = { mapId = 1455, x = 0.764, y = 0.12 }
-        },
+        source = Q.Sources[2], -- Advisor Belgrum
         instances = { Q.Instances["Uldaman"] },
     },
     {
@@ -2455,13 +1641,7 @@ Q.Quests = {
         name = "The Shattered Necklace",
         suggestedLevel = 41,
         requiredLevel = 37,
-        source = {
-            type = "item",
-            itemId = 7666,
-            name = "Shattered Necklace",
-            instance = Q.Instances["Uldaman"],
-            text = "Drops from Stonevault troggs and Shadowforge Ruffian/Diggers around/inside the instance"
-        },
+        source = Q.Sources[205], -- Shattered Necklace
         instances = { Q.Instances["Uldaman"] },
     },
     {
@@ -2473,12 +1653,7 @@ Q.Quests = {
         prerequisites = {
             { id = 2198, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Talvash del Kissel",
-            zone = "Ironforge",
-            location = { mapId = 1455, x = 0.360, y = 0.04 }
-        }
+        source = Q.Sources[218], -- Talvash del Kissel
     },
     {
         id = 2200,
@@ -2489,12 +1664,7 @@ Q.Quests = {
         prerequisites = {
             { id = 2199, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Talvash del Kissel",
-            zone = "Ironforge",
-            location = { mapId = 1455, x = 0.360, y = 0.04 }
-        }
+        source = Q.Sources[218], -- Talvash del Kissel
     },
     {
         id = 2201,
@@ -2505,12 +1675,7 @@ Q.Quests = {
         prerequisites = {
             { id = 2200, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "object",
-            name = "Remains of a Paladin",
-            instance = Q.Instances["Uldaman"],
-            text = "Found on the floor to the right when moving from Revelosh to Ironaya"
-        }
+        source = Q.Sources[191], -- Remains of a Paladin
     },
     {
         id = 2204,
@@ -2521,12 +1686,7 @@ Q.Quests = {
         prerequisites = {
             { id = 2201, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "object",
-            name = "Talvash's Scrying Bowl",
-            instance = Q.Instances["Uldaman"],
-            text = "Summoned by using Talvah's Phial of Scrying from your bags"
-        },
+        source = Q.Sources[219], -- Talvash's Scrying Bowl
         instances = { Q.Instances["Uldaman"] },
     },
     {
@@ -2535,12 +1695,7 @@ Q.Quests = {
         name = "The Lost Dwarves",
         suggestedLevel = 40,
         requiredLevel = 35,
-        source = {
-            type = "npc",
-            name = "Prospector Stormpike",
-            zone = "Ironforge",
-            location = { mapId = 1455, x = 0.75, y = 0.12 }
-        },
+        source = Q.Sources[186], -- Prospector Stormpike
     },
     {
         id = 2500,
@@ -2548,12 +1703,7 @@ Q.Quests = {
         name = "Badlands Reagent Run",
         suggestedLevel = 39,
         requiredLevel = 36,
-        source = {
-            type = "npc",
-            name = "Ghak Healtouch",
-            zone = "Loch Modan",
-            location = { mapId = 1432, x = 0.37, y = 0.492 }
-        },
+        source = Q.Sources[90], -- Ghak Healtouch
     },
     {
         id = 2202,
@@ -2564,12 +1714,7 @@ Q.Quests = {
         prerequisites = {
             { id = 2258, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Jarkal Mossmeld",
-            zone = "Badlands",
-            location = { mapId = 1418, x = 0.024, y = 0.460 }
-        },
+        source = Q.Sources[118], -- Jarkal Mossmeld
         instances = { Q.Instances["Uldaman"] },
     },
     {
@@ -2578,12 +1723,7 @@ Q.Quests = {
         name = "Badlands Reagent Run",
         suggestedLevel = 39,
         requiredLevel = 36,
-        source = {
-            type = "npc",
-            name = "Jarkal Mossmeld",
-            zone = "Badlands",
-            location = { mapId = 1418, x = 0.024, y = 0.460 }
-        },
+        source = Q.Sources[118], -- Jarkal Mossmeld
     },
     {
         id = 2278,
@@ -2591,12 +1731,7 @@ Q.Quests = {
         name = "The Platinum Discs",
         suggestedLevel = 42,
         requiredLevel = 40,
-        source = {
-            type = "object",
-            name = "The Platinum Discs",
-            instance = Q.Instances["Uldaman"],
-            text = "Started in the vault after the final boss"
-        },
+        source = Q.Sources[221], -- The Platinum Discs
         instances = { Q.Instances["Uldaman"] },
     },
     {
@@ -2605,12 +1740,7 @@ Q.Quests = {
         name = "Ironband Wants You!",
         suggestedLevel = 37,
         requiredLevel = 30,
-        source = {
-            type = "npc",
-            name = "Prospector Ironband",
-            zone = "Loch Modan",
-            location = { mapId = 1432, x = 0.658, y = 0.656 }
-        },
+        source = Q.Sources[183], -- Prospector Ironband
     },
     {
         id = 704,
@@ -2621,12 +1751,7 @@ Q.Quests = {
         prerequisites = {
             { id = 739, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Prospector Ironband",
-            zone = "Loch Modan",
-            location = { mapId = 1432, x = 0.658, y = 0.656 }
-        },
+        source = Q.Sources[183], -- Prospector Ironband
         instances = { Q.Instances["Uldaman"] },
     },
     {
@@ -2638,12 +1763,7 @@ Q.Quests = {
         prerequisites = {
             { id = 738, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Battered Dwarven Skeleton",
-            zone = "Badlands",
-            location = { mapId = 1418, x = 0.51, y = 0.625 }
-        }
+        source = Q.Sources[26], -- Battered Dwarven Skeleton
     },
     {
         id = 738,
@@ -2654,12 +1774,7 @@ Q.Quests = {
         prerequisites = {
             { id = 707, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Prospector Stormpike",
-            zone = "Ironforge",
-            location = { mapId = 1455, x = 0.738, y = 0.13 }
-        }
+        source = Q.Sources[186], -- Prospector Stormpike
     },
     {
         id = 2283,
@@ -2667,13 +1782,7 @@ Q.Quests = {
         name = "Necklace Recovery",
         suggestedLevel = 41,
         requiredLevel = 37,
-        source = {
-            type = "item",
-            itemId = 7666,
-            name = "Shattered Necklace",
-            instance = Q.Instances["Uldaman"],
-            text = "Drops from Stonevault troggs and Shadowforge Ruffian/Diggers around/inside the instance"
-        }
+        source = Q.Sources[205], -- Shattered Necklace
     },
     {
         id = 2284,
@@ -2684,12 +1793,7 @@ Q.Quests = {
         prerequisites = {
             { id = 2283, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Dran Droffers",
-            zone = "Orgrimmar",
-            location = { mapId = 1454, x = 0.594, y = 0.368 }
-        }
+        source = Q.Sources[70], -- Dran Droffers
     },
     {
         id = 2318,
@@ -2700,12 +1804,7 @@ Q.Quests = {
         prerequisites = {
             { id = 2284, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "object",
-            name = "Remains of a Paladin",
-            instance = Q.Instances["Uldaman"],
-            text = "Found on the floor to the right when moving from Revelosh to Ironaya"
-        }
+        source = Q.Sources[191], -- Remains of a Paladin
     },
     {
         id = 2338,
@@ -2716,12 +1815,7 @@ Q.Quests = {
         prerequisites = {
             { id = 2318, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Jarkal Mossmeld",
-            zone = "Badlands",
-            location = { mapId = 1418, x = 0.024, y = 0.460 }
-        }
+        source = Q.Sources[118], -- Jarkal Mossmeld
     },
     {
         id = 709,
@@ -2729,12 +1823,7 @@ Q.Quests = {
         name = "Solution to Doom",
         suggestedLevel = 40,
         requiredLevel = 30,
-        source = {
-            type = "npc",
-            name = "Theldurin the Lost",
-            zone = "Badlands",
-            location = { mapId = 1418, x = 0.514, y = 0.768 }
-        },
+        source = Q.Sources[223], -- Theldurin the Lost
         instances = { Q.Instances["Uldaman"] },
     },
     --#endregion
@@ -2746,14 +1835,7 @@ Q.Quests = {
         name = "Venom Bottles",
         suggestedLevel = 45,
         requiredLevel = 40,
-        source = {
-            type = "item",
-            name = "Venom Bottle",
-            itemId = 9321,
-            zone = "The Hinterlands",
-            location = { mapId = 1425, x = 0.236, y = 0.587 },
-            text = "Can spawn in multiple locations throughout the zone"
-        }
+        source = Q.Sources[245], -- Venom Bottle
     },
     {
         id = 2934,
@@ -2764,12 +1846,7 @@ Q.Quests = {
         prerequisites = {
             { id = 2933, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Apotechary Lydon",
-            zone = "Hillsbrad Foothills",
-            location = { mapId = 1424, x = 0.614, y = 0.192 }
-        }
+        source = Q.Sources[9], -- Apotechary Lydon
     },
     {
         id = 2935,
@@ -2780,12 +1857,7 @@ Q.Quests = {
         prerequisites = {
             { id = 2934, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Apotechary Lydon",
-            zone = "Hillsbrad Foothills",
-            location = { mapId = 1424, x = 0.614, y = 0.192 }
-        }
+        source = Q.Sources[9], -- Apotechary Lydon
     },
     {
         id = 2936,
@@ -2796,12 +1868,7 @@ Q.Quests = {
         prerequisites = {
             { id = 2935, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Master Gadrin",
-            zone = "Durotar",
-            location = { mapId = 1411, x = 0.56, y = 0.74 }
-        },
+        source = Q.Sources[154], -- Master Gadrin
         instances = { Q.Instances["Zul'Farrak"] },
     },
     {
@@ -2810,12 +1877,7 @@ Q.Quests = {
         name = "Troll Temper",
         suggestedLevel = 45,
         requiredLevel = 40,
-        source = {
-            type = "npc",
-            name = "Trenton Lighthammer",
-            zone = "Tanaris",
-            location = { mapId = 1446, x = 0.51, y = 0.28 }
-        },
+        source = Q.Sources[237], -- Trenton Lighthammer
         instances = { Q.Instances["Zul'Farrak"] },
     },
     {
@@ -2824,12 +1886,7 @@ Q.Quests = {
         name = "Divino-matic Rod",
         suggestedLevel = 45,
         requiredLevel = 40,
-        source = {
-            type = "npc",
-            name = "Chief Engineer Bilgewhizzle",
-            zone = "Tanaris",
-            location = { mapId = 1446, x = 0.52, y = 0.28 }
-        },
+        source = Q.Sources[46], -- Chief Engineer Bilgewhizzle
         instances = { Q.Instances["Zul'Farrak"] },
     },
     {
@@ -2838,12 +1895,7 @@ Q.Quests = {
         name = "Tran'rek",
         suggestedLevel = 45,
         requiredLevel = 40,
-        source = {
-            type = "npc",
-            name = "Krazek",
-            zone = "Stranglethorn Vale",
-            location = { mapId = 1434, x = 0.27, y = 0.772 }
-        }
+        source = Q.Sources[130], -- Krazek
     },
     {
         id = 2865,
@@ -2854,12 +1906,7 @@ Q.Quests = {
         prerequisites = {
             { id = 2864, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Tran'rek",
-            zone = "Tanaris",
-            location = { mapId = 1446, x = 0.514, y = 0.268 }
-        },
+        source = Q.Sources[235], -- Tran'rek
         instances = { Q.Instances["Zul'Farrak"] },
     },
     {
@@ -2869,34 +1916,10 @@ Q.Quests = {
         suggestedLevel = 46,
         requiredLevel = 40,
         sources = {
-            {
-                type = "npc",
-                faction = "Horde",
-                name = "Anastasia Hartwell",
-                zone = "Undercity",
-                location = { mapId = 1458, x = 0.85, y = 0.102 }
-            },
-            {
-                type = "npc",
-                faction = "Alliance",
-                name = "Bink",
-                zone = "Ironforge",
-                location = { mapId = 1455, x = 0.27, y = 0.082 }
-            },
-            {
-                type = "npc",
-                faction = "Alliance",
-                name = "Jennea Cannon",
-                zone = "Stormwind City",
-                location = { mapId = 1453, x = 0.386, y = 0.796 }
-            },
-            {
-                type = "npc",
-                faction = "Horde",
-                name = "Deino",
-                zone = "Orgrimmar",
-                location = { mapId = 1454, x = 0.386, y = 0.852 }
-            },
+            Q.Sources[263], -- Anastasia Hartwell
+            Q.Sources[264], -- Bink
+            Q.Sources[265], -- Jennea Cannon
+            Q.Sources[266] -- Deino
         }
     },
     {
@@ -2908,12 +1931,7 @@ Q.Quests = {
         prerequisites = {
             { id = 2861, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Tabetha",
-            zone = "Dustwallow Marsh",
-            location = { mapId = 1445, x = 0.46, y = 0.57 }
-        },
+        source = Q.Sources[214], -- Tabetha
         instances = { Q.Instances["Zul'Farrak"] },
     },
     {
@@ -2922,12 +1940,7 @@ Q.Quests = {
         name = "Gahz'rilla",
         suggestedLevel = 50,
         requiredLevel = 40,
-        source = {
-            type = "npc",
-            name = "Wizzle Brassbolts",
-            zone = "Thousand Needles",
-            location = { mapId = 1441, x = 0.78, y = 0.77 }
-        },
+        source = Q.Sources[256], -- Wizzle Brassbolts
         instances = { Q.Instances["Zul'Farrak"] },
     },
 
@@ -2937,12 +1950,7 @@ Q.Quests = {
         name = "Witherbark Cages",
         suggestedLevel = 45,
         requiredLevel = 40,
-        source = {
-            type = "npc",
-            name = "Gryphon Master Talonaxe",
-            zone = "The Hinterlands",
-            location = { mapId = 1425, x = 0.098, y = 0.444 }
-        }
+        source = Q.Sources[100], -- Gryphon Master Talonaxe
     },
     {
         id = 2989,
@@ -2953,12 +1961,7 @@ Q.Quests = {
         prerequisites = {
             { id = 2988, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Gryphon Master Talonaxe",
-            zone = "The Hinterlands",
-            location = { mapId = 1425, x = 0.098, y = 0.444 }
-        }
+        source = Q.Sources[100], -- Gryphon Master Talonaxe
     },
     {
         id = 2990,
@@ -2969,12 +1972,7 @@ Q.Quests = {
         prerequisites = {
             { id = 2989, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Gryphon Master Talonaxe",
-            zone = "The Hinterlands",
-            location = { mapId = 1425, x = 0.098, y = 0.444 }
-        }
+        source = Q.Sources[100], -- Gryphon Master Talonaxe
     },
     {
         id = 2991,
@@ -2985,12 +1983,7 @@ Q.Quests = {
         prerequisites = {
             { id = 2990, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Thadius Grimshade",
-            zone = "Blasted Lands",
-            location = { mapId = 1419, x = 0.87, y = 0.194 }
-        },
+        source = Q.Sources[220], -- Thadius Grimshade
         instances = { Q.Instances["Zul'Farrak"] },
     },
     {
@@ -2999,12 +1992,7 @@ Q.Quests = {
         name = "Screecher Spirits",
         suggestedLevel = 42,
         requiredLevel = 40,
-        source = {
-            type = "npc",
-            name = "Yeh'kinya",
-            zone = "Tanaris",
-            location = { mapId = 1446, x = 0.67, y = 0.22 }
-        },
+        source = Q.Sources[257], -- Yeh'kinya
     },
     {
         id = 3527,
@@ -3015,12 +2003,7 @@ Q.Quests = {
         prerequisites = {
             { id = 3520, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Yeh'kinya",
-            zone = "Tanaris",
-            location = { mapId = 1446, x = 0.67, y = 0.22 }
-        },
+        source = Q.Sources[257], -- Yeh'kinya
         instances = { Q.Instances["Zul'Farrak"] },
     },
     --#endregion
@@ -3032,12 +2015,7 @@ Q.Quests = {
         name = "Shadowshard Fragments",
         suggestedLevel = 41,
         requiredLevel = 39,
-        source = {
-            type = "npc",
-            name = "Archmage Tervosh",
-            zone = "Dustwallow Marsh",
-            location = { mapId = 1445, x = 0.66, y = 0.49 }
-        },
+        source = Q.Sources[14], -- Archmage Tervosh
         instances = { Q.Instances["Maraudon"] },
     },
     {
@@ -3046,12 +2024,7 @@ Q.Quests = {
         name = "Shadowshard Fragments",
         suggestedLevel = 41,
         requiredLevel = 39,
-        source = {
-            type = "npc",
-            name = "Uthel'nay",
-            zone = "Orgrimmar",
-            location = { mapId = 1454, x = 0.39, y = 0.86 }
-        },
+        source = Q.Sources[241], -- Uthel'nay
         instances = { Q.Instances["Maraudon"] },
     },
     {
@@ -3060,12 +2033,7 @@ Q.Quests = {
         name = "Twisted Evils",
         suggestedLevel = 45,
         requiredLevel = 41,
-        source = {
-            type = "npc",
-            name = "Willow",
-            zone = "Desolace",
-            location = { mapId = 1443, x = 0.62, y = 0.39 }
-        },
+        source = Q.Sources[254], -- Willow
         instances = { Q.Instances["Maraudon"] },
     },
     {
@@ -3074,11 +2042,7 @@ Q.Quests = {
         name = "Legends of Maraudon",
         suggestedLevel = 49,
         requiredLevel = 41,
-        source = {
-            type = "npc",
-            name = "Cavindra",
-            instance = Q.Instances["Maraudon"]
-        }
+        source = Q.Sources[42], -- Cavindra
     },
     {
         id = 7029,
@@ -3086,12 +2050,7 @@ Q.Quests = {
         name = "Vyletongue Corruption",
         suggestedLevel = 47,
         requiredLevel = 41,
-        source = {
-            type = "npc",
-            name = "Vark Battlescar",
-            zone = "Desolace",
-            location = { mapId = 1443, x = 0.232, y = 0.702 }
-        },
+        source = Q.Sources[243], -- Vark Battlescar
         instances = { Q.Instances["Maraudon"] },
     },
     {
@@ -3100,12 +2059,7 @@ Q.Quests = {
         name = "Vyletongue Corruption",
         suggestedLevel = 47,
         requiredLevel = 41,
-        source = {
-            type = "npc",
-            name = "Talendria",
-            zone = "Desolace",
-            location = { mapId = 1443, x = 0.684, y = 0.088 }
-        },
+        source = Q.Sources[216], -- Talendria
         instances = { Q.Instances["Maraudon"] },
     },
     {
@@ -3114,12 +2068,7 @@ Q.Quests = {
         name = "Corruption of Earth and Seed",
         suggestedLevel = 51,
         requiredLevel = 45,
-        source = {
-            type = "npc",
-            name = "Selendra",
-            zone = "Desolace",
-            location = { mapId = 1443, x = 0.268, y = 0.776 }
-        },
+        source = Q.Sources[203], -- Selendra
         instances = { Q.Instances["Maraudon"] },
     },
     {
@@ -3128,12 +2077,7 @@ Q.Quests = {
         name = "Corruption of Earth and Seed",
         suggestedLevel = 51,
         requiredLevel = 45,
-        source = {
-            type = "npc",
-            name = "Keeper Marandis",
-            zone = "Desolace",
-            location = { mapId = 1443, x = 0.63, y = 0.10 }
-        },
+        source = Q.Sources[123], -- Keeper Marandis
         instances = { Q.Instances["Maraudon"] },
     },
     {
@@ -3145,13 +2089,7 @@ Q.Quests = {
         prerequisites = {
             { id = 7044, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Celebras the Redeemed",
-            zone = "Desolace",
-            location = { mapId = 1443, x = 0.38, y = 0.58 },
-            text = "Inside the instance, spawns after killing Celebras the Cursed"
-        },
+        source = Q.Sources[43], -- Celebras the Redeemed
         instances = { Q.Instances["Maraudon"] },
     },
     {
@@ -3160,13 +2098,7 @@ Q.Quests = {
         name = "Seed of Life",
         suggestedLevel = 51,
         requiredLevel = 39,
-        source = {
-            type = "npc",
-            name = "Zaetar's Spirit",
-            zone = "Desolace",
-            location = { mapId = 1443, x = 0.38, y = 0.58 },
-            text = "Inside the instance, spawns after killing Princess Theradras"
-        },
+        source = Q.Sources[261], -- Zaetar's Spirit
         instances = { Q.Instances["Maraudon"] },
     },
     {
@@ -3175,13 +2107,7 @@ Q.Quests = {
         name = "The Pariah's Instructions",
         suggestedLevel = 48,
         requiredLevel = 39,
-        source = {
-            type = "npc",
-            name = "Centaur Pariah",
-            zone = "Desolace",
-            location = { mapId = 1443, x = 0.462, y = 0.866 },
-            text = "Patrols the area"
-        },
+        source = Q.Sources[44], -- Centaur Pariah
         instances = { Q.Instances["Maraudon"] },
     },
     --#endregion
@@ -3193,12 +2119,7 @@ Q.Quests = {
         name = "Pool of Tears",
         suggestedLevel = 43,
         requiredLevel = 38,
-        source = {
-            type = "npc",
-            name = "Fel'zerul",
-            zone = "Swamp of Sorrows",
-            location = { mapId = 1435, x = 0.47, y = 0.54 }
-        }
+        source = Q.Sources[82], -- Fel'zerul
     },
     {
         id = 1429,
@@ -3209,12 +2130,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1424, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Fel'zerul",
-            zone = "Swamp of Sorrows",
-            location = { mapId = 1435, x = 0.47, y = 0.54 }
-        }
+        source = Q.Sources[82], -- Fel'zerul
     },
     {
         id = 1444,
@@ -3225,12 +2141,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1429, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Atal'ai Exile",
-            zone = "The Hinterlands",
-            location = { mapId = 1425, x = 0.336, y = 0.752 }
-        }
+        source = Q.Sources[19], -- Atal'ai Exile
     },
     {
         id = 1445,
@@ -3241,12 +2152,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1444, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Fel'zerul",
-            zone = "Swamp of Sorrows",
-            location = { mapId = 1435, x = 0.47, y = 0.54 }
-        },
+        source = Q.Sources[82], -- Fel'zerul
         instances = { Q.Instances["Temple of Atal'Hakkar"] },
     },
     {
@@ -3258,12 +2164,7 @@ Q.Quests = {
         prerequisites = {
             { id = 4142, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Gregan Brewspewer",
-            zone = "Feralas",
-            location = { mapId = 1444, x = 0.45, y = 0.256 }
-        },
+        source = Q.Sources[96], -- Gregan Brewspewer
         instances = { Q.Instances["Temple of Atal'Hakkar"] },
     },
     {
@@ -3272,12 +2173,7 @@ Q.Quests = {
         name = "In Search of The Temple",
         suggestedLevel = 43,
         requiredLevel = 38,
-        source = {
-            type = "npc",
-            name = "Brohann Caskbelly",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.64, y = 0.21 }
-        }
+        source = Q.Sources[35], -- Brohann Caskbelly
     },
     {
         id = 4145,
@@ -3285,12 +2181,7 @@ Q.Quests = {
         name = "Larion and Muigin",
         suggestedLevel = 52,
         requiredLevel = 47,
-        source = {
-            type = "npc",
-            name = "Larion",
-            zone = "Un'Goro Crater",
-            location = { mapId = 1449, x = 0.43, y = 0.096 }
-        }
+        source = Q.Sources[132], -- Larion
     },
     {
         id = 4147,
@@ -3301,12 +2192,7 @@ Q.Quests = {
         prerequisites = {
             { id = 4145, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Larion",
-            zone = "Un'Goro Crater",
-            location = { mapId = 1449, x = 0.43, y = 0.096 }
-        }
+        source = Q.Sources[132], -- Larion
     },
     {
         id = 4146,
@@ -3317,12 +2203,7 @@ Q.Quests = {
         prerequisites = {
             { id = 4147, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Liv Rizzlefix",
-            zone = "Feralas",
-            location = { mapId = 1444, x = 0.624, y = 0.386 }
-        },
+        source = Q.Sources[137], -- Liv Rizzlefix
         instances = { Q.Instances["Temple of Atal'Hakkar"] },
     },
     {
@@ -3331,12 +2212,7 @@ Q.Quests = {
         name = "Muigin and Larion",
         suggestedLevel = 52,
         requiredLevel = 47,
-        source = {
-            type = "npc",
-            name = "Muigin",
-            zone = "Un'Goro Crater",
-            location = { mapId = 1449, x = 0.43, y = 0.096 }
-        }
+        source = Q.Sources[168], -- Muigin
     },
     {
         id = 4142,
@@ -3347,12 +2223,7 @@ Q.Quests = {
         prerequisites = {
             { id = 4141, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Muigin",
-            zone = "Un'Goro Crater",
-            location = { mapId = 1449, x = 0.43, y = 0.096 }
-        }
+        source = Q.Sources[168], -- Muigin
     },
     {
         id = 1449,
@@ -3363,12 +2234,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1448, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Brohann Caskbelly",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.64, y = 0.21 }
-        }
+        source = Q.Sources[35], -- Brohann Caskbelly
     },
     {
         id = 1450,
@@ -3379,12 +2245,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1449, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Falstad Wildhammer",
-            zone = "The Hinterlands",
-            location = { mapId = 1425, x = 0.118, y = 0.468 }
-        }
+        source = Q.Sources[81], -- Falstad Wildhammer
     },
     {
         id = 1451,
@@ -3395,12 +2256,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1450, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Gryphon Master Talonaxe",
-            zone = "The Hinterlands",
-            location = { mapId = 1425, x = 0.098, y = 0.444 }
-        }
+        source = Q.Sources[100], -- Gryphon Master Talonaxe
     },
     {
         id = 1452,
@@ -3411,12 +2267,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1451, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Rhapsody Shindigger",
-            zone = "The Hinterlands",
-            location = { mapId = 1425, x = 0.268, y = 0.486 }
-        }
+        source = Q.Sources[194], -- Rhapsody Shindigger
     },
     {
         id = 1469,
@@ -3427,12 +2278,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1452, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Rhapsody Shindigger",
-            zone = "The Hinterlands",
-            location = { mapId = 1425, x = 0.268, y = 0.486 }
-        }
+        source = Q.Sources[194], -- Rhapsody Shindigger
     },
     {
         id = 1475,
@@ -3443,12 +2289,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1469, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Brohann Caskbelly",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.64, y = 0.21 }
-        },
+        source = Q.Sources[35], -- Brohann Caskbelly
         instances = { Q.Instances["Temple of Atal'Hakkar"] },
     },
     {
@@ -3457,13 +2298,7 @@ Q.Quests = {
         name = "The Essence of Eranikus",
         suggestedLevel = 52,
         requiredLevel = 48,
-        source = {
-            type = "item",
-            name = "Essence of Eranikus",
-            itemId = 10454,
-            instance = Q.Instances["Temple of Atal'Hakkar"],
-            text = "Dropped by Shade of Eranikus inside the instance"
-        },
+        source = Q.Sources[78], -- Essence of Eranikus
         instances = { Q.Instances["Temple of Atal'Hakkar"] },
     },
     {
@@ -3475,12 +2310,7 @@ Q.Quests = {
         prerequisites = {
             { id = 4787, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Yeh'kinya",
-            zone = "Tanaris",
-            location = { mapId = 1446, x = 0.67, y = 0.22 }
-        },
+        source = Q.Sources[257], -- Yeh'kinya
         instances = { Q.Instances["Temple of Atal'Hakkar"] },
     },
     {
@@ -3492,12 +2322,7 @@ Q.Quests = {
         prerequisites = {
             { id = 3527, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Yeh'kinya",
-            zone = "Tanaris",
-            location = { mapId = 1446, x = 0.67, y = 0.22 }
-        },
+        source = Q.Sources[257], -- Yeh'kinya
     },
     {
         id = 1446,
@@ -3505,12 +2330,7 @@ Q.Quests = {
         name = "Jammal'an the Prophet",
         suggestedLevel = 53,
         requiredLevel = 38,
-        source = {
-            type = "npc",
-            name = "Atal'ai Exile",
-            zone = "The Hinterlands",
-            location = { mapId = 1425, x = 0.336, y = 0.752 }
-        },
+        source = Q.Sources[19], -- Atal'ai Exile
         instances = { Q.Instances["Temple of Atal'Hakkar"] },
     },
     {
@@ -3519,12 +2339,7 @@ Q.Quests = {
         name = "The Sunken Temple",
         suggestedLevel = 51,
         requiredLevel = 46,
-        source = {
-            type = "npc",
-            name = "Witch Doctor Uzer'i",
-            zone = "Feralas",
-            location = { mapId = 1444, x = 0.744, y = 0.434 }
-        }
+        source = Q.Sources[255], -- Witch Doctor Uzer'i
     },
     {
         id = 3445,
@@ -3532,12 +2347,7 @@ Q.Quests = {
         name = "The Sunken Temple",
         suggestedLevel = 51,
         requiredLevel = 46,
-        source = {
-            type = "npc",
-            name = "Angelas Moonbreeze",
-            zone = "Feralas",
-            location = { mapId = 1444, x = 0.318, y = 0.456 }
-        }
+        source = Q.Sources[8], -- Angelas Moonbreeze
     },
     {
         id = 3444,
@@ -3549,12 +2359,7 @@ Q.Quests = {
             { id = 3380, type = Q.PrerequisiteType.REQUIRED },
             { id = 3445, type = Q.PrerequisiteType.REQUIRED },
         },
-        source = {
-            type = "npc",
-            name = "Marvon Rivetseeker",
-            zone = "Tanaris",
-            location = { mapId = 1446, x = 0.526, y = 0.458 }
-        }
+        source = Q.Sources[152], -- Marvon Rivetseeker
     },
     {
         id = 3446,
@@ -3565,12 +2370,7 @@ Q.Quests = {
         prerequisites = {
             { id = 3444, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Marvon Rivetseeker",
-            zone = "Tanaris",
-            location = { mapId = 1446, x = 0.526, y = 0.458 }
-        },
+        source = Q.Sources[152], -- Marvon Rivetseeker
         instances = { Q.Instances["Temple of Atal'Hakkar"] },
     },
     {
@@ -3582,12 +2382,7 @@ Q.Quests = {
         prerequisites = {
             { id = 3444, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Marvon Rivetseeker",
-            zone = "Tanaris",
-            location = { mapId = 1446, x = 0.526, y = 0.458 }
-        },
+        source = Q.Sources[152], -- Marvon Rivetseeker
         instances = { Q.Instances["Temple of Atal'Hakkar"] },
     },
     --#endregion
@@ -3602,12 +2397,7 @@ Q.Quests = {
         prerequisites = {
             { id = 3906, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Galamav the Marksman",
-            zone = "Badlands",
-            location = { mapId = 1418, x = 0.058, y = 0.476 }
-        },
+        source = Q.Sources[85], -- Galamav the Marksman
     },
     {
         id = 3982,
@@ -3618,12 +2408,7 @@ Q.Quests = {
         prerequisites = {
             { id = 3981, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Commander Gor'shak",
-            instance = Q.Instances["Blackrock Depths"],
-            text = "Located inside the instance"
-        },
+        source = Q.Sources[47], -- Commander Gor'shak
     },
     {
         id = 4001,
@@ -3634,12 +2419,7 @@ Q.Quests = {
         prerequisites = {
             { id = 3982, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Commander Gor'shak",
-            instance = Q.Instances["Blackrock Depths"],
-            text = "Located inside the instance"
-        },
+        source = Q.Sources[47], -- Commander Gor'shak
     },
     {
         id = 4002,
@@ -3650,12 +2430,7 @@ Q.Quests = {
         prerequisites = {
             { id = 4001, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Thrall",
-            zone = "Orgrimmar",
-            location = { mapId = 1454, x = 0.32, y = 0.378 }
-        },
+        source = Q.Sources[226], -- Thrall
     },
     {
         id = 4003,
@@ -3666,12 +2441,7 @@ Q.Quests = {
         prerequisites = {
             { id = 4002, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Thrall",
-            zone = "Orgrimmar",
-            location = { mapId = 1454, x = 0.32, y = 0.378 }
-        },
+        source = Q.Sources[226], -- Thrall
         instances = { Q.Instances["Blackrock Depths"] }
     },
     {
@@ -3680,12 +2450,7 @@ Q.Quests = {
         name = "The Rise of the Machines (1/3)",
         suggestedLevel = 54,
         requiredLevel = 52,
-        source = {
-            type = "npc",
-            name = "Hierophant Theodora Mulvadania",
-            zone = "Badlands",
-            location = { mapId = 1418, x = 0.03, y = 0.478 }
-        }
+        source = Q.Sources[108], -- Hierophant Theodora Mulvadania
     },
     {
         id = 4062,
@@ -3696,12 +2461,7 @@ Q.Quests = {
         prerequisites = {
             { id = 4061, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Hierophant Theodora Mulvadania",
-            zone = "Badlands",
-            location = { mapId = 1418, x = 0.03, y = 0.478 }
-        }
+        source = Q.Sources[108], -- Hierophant Theodora Mulvadania
     },
     {
         id = 4063,
@@ -3712,12 +2472,7 @@ Q.Quests = {
         prerequisites = {
             { id = 4062, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Lotwil Veriatus",
-            zone = "Badlands",
-            location = { mapId = 1418, x = 0.258, y = 0.45 }
-        },
+        source = Q.Sources[144], -- Lotwil Veriatus
         instances = { Q.Instances["Blackrock Depths"] }
     },
     {
@@ -3729,12 +2484,7 @@ Q.Quests = {
         prerequisites = {
             { id = 4082, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Lexlort",
-            zone = "Badlands",
-            location = { mapId = 1418, x = 0.058, y = 0.476 }
-        }
+        source = Q.Sources[135], -- Lexlort
     },
     {
         id = 4121,
@@ -3745,12 +2495,7 @@ Q.Quests = {
         prerequisites = {
             { id = 4122, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Grark Lorkrub",
-            zone = "Burning Steppes",
-            location = { mapId = 1428, x = 0.412, y = 0.35 }
-        }
+        source = Q.Sources[95], -- Grark Lorkrub
     },
     {
         id = 4132,
@@ -3761,12 +2506,7 @@ Q.Quests = {
         prerequisites = {
             { id = 4121, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Warlord Goretooth",
-            zone = "Badlands",
-            location = { mapId = 1418, x = 0.058, y = 0.474 }
-        },
+        source = Q.Sources[249], -- Warlord Goretooth
         instances = { Q.Instances["Blackrock Depths"] }
     },
     {
@@ -3775,12 +2515,7 @@ Q.Quests = {
         name = "KILL ON SIGHT: Dark Iron Dwarves",
         suggestedLevel = 52,
         requiredLevel = 48,
-        source = {
-            type = "object",
-            name = "WANTED",
-            zone = "Badlands",
-            location = { mapId = 1418, x = 0.039, y = 0.474 }
-        },
+        source = Q.Sources[247], -- WANTED
     },
     {
         id = 4082,
@@ -3791,12 +2526,7 @@ Q.Quests = {
         prerequisites = {
             { id = 4081, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "object",
-            name = "WANTED",
-            zone = "Badlands",
-            location = { mapId = 1418, x = 0.04, y = 0.468 }
-        }
+        source = Q.Sources[247], -- WANTED
     },
     {
         id = 3441,
@@ -3804,12 +2534,7 @@ Q.Quests = {
         name = "Divine Retribution",
         suggestedLevel = 48,
         requiredLevel = 40,
-        source = {
-            type = "npc",
-            name = "Velarok Windblade",
-            zone = "Searing Gorge",
-            location = { mapId = 1427, x = 0.39, y = 0.389 }
-        }
+        source = Q.Sources[244], -- Velarok Windblade
     },
     {
         id = 3442,
@@ -3820,12 +2545,7 @@ Q.Quests = {
         prerequisites = {
             { id = 3441, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Velarok Windblade",
-            zone = "Searing Gorge",
-            location = { mapId = 1427, x = 0.39, y = 0.389 }
-        }
+        source = Q.Sources[244], -- Velarok Windblade
     },
     {
         id = 3443,
@@ -3836,12 +2556,7 @@ Q.Quests = {
         prerequisites = {
             { id = 3442, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Velarok Windblade",
-            zone = "Searing Gorge",
-            location = { mapId = 1427, x = 0.39, y = 0.389 }
-        }
+        source = Q.Sources[244], -- Velarok Windblade
     },
     {
         id = 3452,
@@ -3852,12 +2567,7 @@ Q.Quests = {
         prerequisites = {
             { id = 3443, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Velarok Windblade",
-            zone = "Searing Gorge",
-            location = { mapId = 1427, x = 0.39, y = 0.389 }
-        }
+        source = Q.Sources[244], -- Velarok Windblade
     },
     {
         id = 3453,
@@ -3868,12 +2578,7 @@ Q.Quests = {
         prerequisites = {
             { id = 3452, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Velarok Windblade",
-            zone = "Searing Gorge",
-            location = { mapId = 1427, x = 0.39, y = 0.389 }
-        }
+        source = Q.Sources[244], -- Velarok Windblade
     },
     {
         id = 3454,
@@ -3884,12 +2589,7 @@ Q.Quests = {
         prerequisites = {
             { id = 3453, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Velarok Windblade",
-            zone = "Searing Gorge",
-            location = { mapId = 1427, x = 0.39, y = 0.389 }
-        }
+        source = Q.Sources[244], -- Velarok Windblade
     },
     {
         id = 3462,
@@ -3900,12 +2600,7 @@ Q.Quests = {
         prerequisites = {
             { id = 3454, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Velarok Windblade",
-            zone = "Searing Gorge",
-            location = { mapId = 1427, x = 0.39, y = 0.389 }
-        }
+        source = Q.Sources[244], -- Velarok Windblade
     },
     {
         id = 3463,
@@ -3916,12 +2611,7 @@ Q.Quests = {
         prerequisites = {
             { id = 3462, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Squire Maltrake",
-            zone = "Searing Gorge",
-            location = { mapId = 1427, x = 0.39, y = 0.389 }
-        }
+        source = Q.Sources[212], -- Squire Maltrake
     },
     {
         id = 3481,
@@ -3932,12 +2622,7 @@ Q.Quests = {
         prerequisites = {
             { id = 3463, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "object",
-            name = "Hoard of the Black Dragonflight",
-            zone = "Searing Gorge",
-            location = { mapId = 1427, x = 0.39, y = 0.389 }
-        }
+        source = Q.Sources[114], -- Hoard of the Black Dragonflight
     },
     {
         id = 4022,
@@ -3948,12 +2633,7 @@ Q.Quests = {
         prerequisites = {
             { id = 3481, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Cyrus Therepentous",
-            zone = "Burning Steppes",
-            location = { mapId = 1428, x = 0.95, y = 0.314 }
-        }
+        source = Q.Sources[54], -- Cyrus Therepentous
     },
     {
         id = 4023,
@@ -3964,12 +2644,7 @@ Q.Quests = {
         prerequisites = {
             { id = 3481, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Cyrus Therepentous",
-            zone = "Burning Steppes",
-            location = { mapId = 1428, x = 0.95, y = 0.314 }
-        }
+        source = Q.Sources[54], -- Cyrus Therepentous
     },
     {
         id = 4024,
@@ -3981,12 +2656,7 @@ Q.Quests = {
             { id = 4023, type = Q.PrerequisiteType.ANY },
             { id = 4022, type = Q.PrerequisiteType.ANY },
         },
-        source = {
-            type = "npc",
-            name = "Cyrus Therepentous",
-            zone = "Burning Steppes",
-            location = { mapId = 1428, x = 0.95, y = 0.314 }
-        },
+        source = Q.Sources[54], -- Cyrus Therepentous
         instances = { Q.Instances["Blackrock Depths"] }
     },
     {
@@ -3995,12 +2665,7 @@ Q.Quests = {
         name = "Overmaster Pyron",
         suggestedLevel = 56,
         requiredLevel = 48,
-        source = {
-            type = "npc",
-            name = "Jalinda Sprig",
-            zone = "Burning Steppes",
-            location = { mapId = 1428, x = 0.854, y = 0.70 }
-        }
+        source = Q.Sources[116], -- Jalinda Sprig
     },
     {
         id = 4263,
@@ -4011,12 +2676,7 @@ Q.Quests = {
         prerequisites = {
             { id = 4262, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Jalinda Sprig",
-            zone = "Burning Steppes",
-            location = { mapId = 1428, x = 0.854, y = 0.70 }
-        },
+        source = Q.Sources[116], -- Jalinda Sprig
         instances = { Q.Instances["Blackrock Depths"] }
     },
     {
@@ -4025,12 +2685,7 @@ Q.Quests = {
         name = "Disharmony of Flame",
         suggestedLevel = 52,
         requiredLevel = 48,
-        source = {
-            type = "npc",
-            name = "Thunderheart",
-            zone = "Badlands",
-            location = { mapId = 1418, x = 0.036, y = 0.48 }
-        }
+        source = Q.Sources[228], -- Thunderheart
     },
     {
         id = 3907,
@@ -4041,12 +2696,7 @@ Q.Quests = {
         prerequisites = {
             { id = 3906, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Thunderheart",
-            zone = "Badlands",
-            location = { mapId = 1418, x = 0.036, y = 0.48 }
-        },
+        source = Q.Sources[228], -- Thunderheart
         instances = { Q.Instances["Blackrock Depths"] }
     },
     {
@@ -4058,12 +2708,7 @@ Q.Quests = {
         prerequisites = {
             { id = 3906, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Shadowmage Vivian Lagrave",
-            zone = "Badlands",
-            location = { mapId = 1418, x = 0.03, y = 0.476 }
-        },
+        source = Q.Sources[204], -- Shadowmage Vivian Lagrave
         instances = { Q.Instances["Blackrock Depths"] }
     },
     {
@@ -4072,12 +2717,7 @@ Q.Quests = {
         name = "Lost Thunderbrew Recipe",
         suggestedLevel = 55,
         requiredLevel = 50,
-        source = {
-            type = "npc",
-            name = "Shadowmage Vivian Lagrave",
-            zone = "Badlands",
-            location = { mapId = 1418, x = 0.03, y = 0.476 }
-        },
+        source = Q.Sources[204], -- Shadowmage Vivian Lagrave
         instances = { Q.Instances["Blackrock Depths"] }
     },
     {
@@ -4086,12 +2726,7 @@ Q.Quests = {
         name = "The Heart of the Mountain",
         suggestedLevel = 55,
         requiredLevel = 50,
-        source = {
-            type = "npc",
-            name = "Maxwort Uberglint",
-            zone = "Burning Steppes",
-            location = { mapId = 1428, x = 0.652, y = 0.238 }
-        },
+        source = Q.Sources[158], -- Maxwort Uberglint
         instances = { Q.Instances["Blackrock Depths"] }
     },
     {
@@ -4100,13 +2735,7 @@ Q.Quests = {
         name = "Attunement to the Core",
         suggestedLevel = 55,
         requiredLevel = 55,
-        source = {
-            type = "npc",
-            name = "Lothos Riftwaker",
-            zone = "Burning Steppes",
-            location = { mapId = 1428, x = 0.292, y = 0.382 },
-            text = "Found at the bottom of the chain inside the mountain on the way to the instance"
-        },
+        source = Q.Sources[143], -- Lothos Riftwaker
         instances = { Q.Instances["Blackrock Depths"] }
     },
     {
@@ -4115,12 +2744,7 @@ Q.Quests = {
         name = "The Smoldering Ruins of Thaurissan (1/2)",
         suggestedLevel = 54,
         requiredLevel = 50,
-        source = {
-            type = "npc",
-            name = "Royal Historian Archenosus",
-            zone = "Ironforge",
-            location = { mapId = 1455, x = 0.386, y = 0.554 }
-        }
+        source = Q.Sources[196], -- Royal Historian Archenosus
     },
     {
         id = 3701,
@@ -4131,12 +2755,7 @@ Q.Quests = {
         prerequisites = {
             { id = 3702, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Royal Historian Archenosus",
-            zone = "Ironforge",
-            location = { mapId = 1455, x = 0.386, y = 0.554 }
-        }
+        source = Q.Sources[196], -- Royal Historian Archenosus
     },
     {
         id = 4341,
@@ -4147,12 +2766,7 @@ Q.Quests = {
         prerequisites = {
             { id = 3701, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "King Magni Bronzebeard",
-            zone = "Ironforge",
-            location = { mapId = 1455, x = 0.384, y = 0.558 }
-        }
+        source = Q.Sources[127], -- King Magni Bronzebeard
     },
     {
         id = 4342,
@@ -4163,12 +2777,7 @@ Q.Quests = {
         prerequisites = {
             { id = 4341, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Kharan Mighthammer",
-            instance = Q.Instances["Blackrock Depths"],
-            text = "Located inside the instance"
-        }
+        source = Q.Sources[125], -- Kharan Mighthammer
     },
     {
         id = 4361,
@@ -4179,12 +2788,7 @@ Q.Quests = {
         prerequisites = {
             { id = 4342, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Kharan Mighthammer",
-            instance = Q.Instances["Blackrock Depths"],
-            text = "Located inside the instance"
-        }
+        source = Q.Sources[125], -- Kharan Mighthammer
     },
     {
         id = 4362,
@@ -4195,12 +2799,7 @@ Q.Quests = {
         prerequisites = {
             { id = 4361, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "King Magni Bronzebeard",
-            zone = "Ironforge",
-            location = { mapId = 1455, x = 0.384, y = 0.558 }
-        }
+        source = Q.Sources[127], -- King Magni Bronzebeard
     },
     {
         id = 4363,
@@ -4211,43 +2810,27 @@ Q.Quests = {
         prerequisites = {
             { id = 4362, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Princess Moira Bronzebeard",
-            instance = Q.Instances["Blackrock Depths"],
-            text =
-            "You must defeat Emperor Thaurissan without killing her and she'll become friendly and offer the quest"
-        },
+        source = Q.Sources[182], -- Princess Moira Bronzebeard
         instances = { Q.Instances["Blackrock Depths"] }
     },
     {
         id = 4324,
         faction = nil,
         name = "Yuka Screwspigot",
-        suggestedLevel = 48,
-        requiredLevel = 53,
-        source = {
-            type = "npc",
-            name = "Yorba Screwspigot",
-            zone = "Tanaris",
-            location = { mapId = 1446, x = 0.670, y = 0.24 }
-        }
+        suggestedLevel = 53,
+        requiredLevel = 48,
+        source = Q.Sources[258], -- Yorba Screwspigot
     },
     {
         id = 4136,
         faction = nil,
         name = "Ribbly Screwspigot",
-        suggestedLevel = 48,
-        requiredLevel = 53,
+        suggestedLevel = 53,
+        requiredLevel = 48,
         prerequisites = {
             { id = 4324, type = Q.PrerequisiteType.BREADCRUMB }
         },
-        source = {
-            type = "npc",
-            name = "Yuka Screwspigot",
-            zone = "Burning Steppes",
-            location = { mapId = 1428, x = 0.66, y = 0.22 }
-        },
+        source = Q.Sources[260], -- Yuka Screwspigot
         instances = { Q.Instances["Blackrock Depths"] }
     },
     {
@@ -4256,12 +2839,7 @@ Q.Quests = {
         name = "The Good Stuff",
         suggestedLevel = 56,
         requiredLevel = 50,
-        source = {
-            type = "npc",
-            name = "Oralius",
-            zone = "Burning Steppes",
-            location = { mapId = 1428, x = 0.846, y = 0.686 }
-        },
+        source = Q.Sources[177], -- Oralius
         instances = { Q.Instances["Blackrock Depths"] }
     },
     {
@@ -4270,12 +2848,7 @@ Q.Quests = {
         name = "Hurley Blackbreath",
         suggestedLevel = 55,
         requiredLevel = 50,
-        source = {
-            type = "npc",
-            name = "Ragnar Thunderbrew",
-            zone = "Dun Morogh",
-            location = { mapId = 1426, x = 0.468, y = 0.524 }
-        },
+        source = Q.Sources[188], -- Ragnar Thunderbrew
         instances = { Q.Instances["Blackrock Depths"] }
     },
     {
@@ -4284,14 +2857,7 @@ Q.Quests = {
         name = "Dark Iron Legacy (1/2)",
         suggestedLevel = 52,
         requiredLevel = 48,
-        source = {
-            type = "npc",
-            name = "Franclorn Forgewright",
-            zone = "Burning Steppes",
-            location = { mapId = 1428, x = 0.292, y = 0.382 },
-            text =
-            "You must be dead to speak to him, he's located in the middle of Blackrock Mountains inside the building"
-        }
+        source = Q.Sources[83], -- Franclorn Forgewright
     },
     {
         id = 3802,
@@ -4302,14 +2868,7 @@ Q.Quests = {
         prerequisites = {
             { id = 3801, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Franclorn Forgewright",
-            zone = "Burning Steppes",
-            location = { mapId = 1428, x = 0.292, y = 0.382 },
-            text =
-            "You must be dead to speak to him, he's located in the middle of Blackrock Mountains inside the building"
-        },
+        source = Q.Sources[83], -- Franclorn Forgewright
         instances = { Q.Instances["Blackrock Depths"] }
     },
     {
@@ -4318,12 +2877,7 @@ Q.Quests = {
         name = "The Love Potion",
         suggestedLevel = 54,
         requiredLevel = 50,
-        source = {
-            type = "npc",
-            name = "Mistress Nagmara",
-            instance = Q.Instances["Blackrock Depths"],
-            text = "Found in the bar inside the instance"
-        },
+        source = Q.Sources[164], -- Mistress Nagmara
         instances = { Q.Instances["Blackrock Depths"] }
     },
     --#endregion
@@ -4332,69 +2886,24 @@ Q.Quests = {
     {
         id = 7507,
         faction = nil,
-        class = "PALADIN",
+        classes = { "PALADIN", "WARRIOR" },
         name = "Nostro's Compendium",
         suggestedLevel = 60,
         requiredLevel = 60,
-        source = {
-            type = "item",
-            itemId = 18401,
-            name = "Nostro's Compendium of Dragon Slaying",
-            instance = Q.Instances["Dire Maul: North"],
-            text = "Looted from the red books in Dire Maul: North, or bought from the auction house"
-        },
-        instances = { Q.Instances["Dire Maul: West"] }
-    },
-    {
-        id = 7507,
-        faction = nil,
-        class = "WARRIOR",
-        name = "Nostro's Compendium",
-        suggestedLevel = 60,
-        requiredLevel = 60,
-        source = {
-            type = "item",
-            itemId = 18401,
-            name = "Nostro's Compendium of Dragon Slaying",
-            instance = Q.Instances["Dire Maul: North"],
-            text = "Looted from the red books in Dire Maul: North, or bought from the auction house"
-        },
+        source = Q.Sources[176], -- Nostro's Compendium of Dragon Slaying
         instances = { Q.Instances["Dire Maul: West"] }
     },
     {
         id = 7509,
         faction = nil,
-        class = "PALADIN",
+        classes = { "PALADIN", "WARRIOR" },
         name = "The Forging of Quel'Serrar",
         suggestedLevel = 60,
         requiredLevel = 60,
         prerequisites = {
             { id = 7507, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Lorekeeper Lydros",
-            instance = Q.Instances["Dire Maul: North"],
-            text = "Found inside DM: North"
-        },
-        instances = { Q.Instances["Dire Maul: North"] }
-    },
-    {
-        id = 7509,
-        faction = nil,
-        class = "WARRIOR",
-        name = "The Forging of Quel'Serrar",
-        suggestedLevel = 60,
-        requiredLevel = 60,
-        prerequisites = {
-            { id = 7507, type = Q.PrerequisiteType.CHAIN }
-        },
-        source = {
-            type = "npc",
-            name = "Lorekeeper Lydros",
-            instance = Q.Instances["Dire Maul: North"],
-            text = "Found inside DM: North"
-        },
+        source = Q.Sources[142], -- Lorekeeper Lydros
         instances = { Q.Instances["Dire Maul: North"] }
     },
     {
@@ -4403,12 +2912,7 @@ Q.Quests = {
         name = "The Madness Within",
         suggestedLevel = 58,
         requiredLevel = 56,
-        source = {
-            type = "npc",
-            name = "Shen'dralar Ancient",
-            instance = Q.Instances["Dire Maul: West"],
-            text = "Found inside DM: West"
-        },
+        source = Q.Sources[206], -- Shen'dralar Ancient
         instances = { Q.Instances["Dire Maul: West"] }
     },
     {
@@ -4420,12 +2924,7 @@ Q.Quests = {
         prerequisites = {
             { id = 7461, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Shen'dralar Ancient",
-            instance = Q.Instances["Dire Maul: West"],
-            text = "Found inside DM: West"
-        },
+        source = Q.Sources[206], -- Shen'dralar Ancient
         instances = { Q.Instances["Dire Maul: West"] }
     },
     {
@@ -4434,12 +2933,7 @@ Q.Quests = {
         name = "A Reliquary of Purity",
         suggestedLevel = 60,
         requiredLevel = 56,
-        source = {
-            type = "npc",
-            name = "Rabine Saturna",
-            zone = "Moonglade",
-            location = { mapId = 1450, x = 0.516, y = 0.448 }
-        }
+        source = Q.Sources[187], -- Rabine Saturna
     },
     {
         id = 5526,
@@ -4450,12 +2944,7 @@ Q.Quests = {
         prerequisites = {
             { id = 5527, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Rabine Saturna",
-            zone = "Moonglade",
-            location = { mapId = 1450, x = 0.516, y = 0.448 }
-        },
+        source = Q.Sources[187], -- Rabine Saturna
         instances = { Q.Instances["Dire Maul: East"] }
     },
     --#endregion
@@ -4467,12 +2956,7 @@ Q.Quests = {
         name = "Lethtendris's Web",
         suggestedLevel = 56,
         requiredLevel = 54,
-        source = {
-            type = "npc",
-            name = "Latronicus Moonspear",
-            zone = "Feralas",
-            location = { mapId = 1444, x = 0.304, y = 0.46 }
-        },
+        source = Q.Sources[133], -- Latronicus Moonspear
         instances = { Q.Instances["Dire Maul: East"] }
     },
     {
@@ -4481,12 +2965,7 @@ Q.Quests = {
         name = "Lethtendris's Web",
         suggestedLevel = 56,
         requiredLevel = 54,
-        source = {
-            type = "npc",
-            name = "Talo Thornhoof",
-            zone = "Feralas",
-            location = { mapId = 1444, x = 0.76, y = 0.43 }
-        },
+        source = Q.Sources[217], -- Talo Thornhoof
         instances = { Q.Instances["Dire Maul: East"] }
     },
     {
@@ -4495,12 +2974,7 @@ Q.Quests = {
         name = "Pusillin and the Elder Azj'Tordin",
         suggestedLevel = 56,
         requiredLevel = 54,
-        source = {
-            type = "npc",
-            name = "Azj'Tordin",
-            zone = "Feralas",
-            location = { mapId = 1444, x = 0.76, y = 0.37 }
-        },
+        source = Q.Sources[23], -- Azj'Tordin
         instances = { Q.Instances["Dire Maul: East"] }
     },
     --#endregion
@@ -4512,12 +2986,7 @@ Q.Quests = {
         name = "Free Knot!",
         suggestedLevel = 60,
         requiredLevel = 56,
-        source = {
-            type = "npc",
-            name = "Knot Thimblejack",
-            instance = Q.Instances["Dire Maul: North"],
-            text = "Located inside the instance"
-        },
+        source = Q.Sources[129], -- Knot Thimblejack
         instances = { Q.Instances["Dire Maul: North"] }
     },
     {
@@ -4526,12 +2995,7 @@ Q.Quests = {
         name = "The Gordok Ogre Suit",
         suggestedLevel = 60,
         requiredLevel = 56,
-        source = {
-            type = "npc",
-            name = "Knot Thimblejack",
-            instance = Q.Instances["Dire Maul: North"],
-            text = "Located inside the instance"
-        },
+        source = Q.Sources[129], -- Knot Thimblejack
         instances = { Q.Instances["Dire Maul: North"] }
     },
     {
@@ -4540,12 +3004,7 @@ Q.Quests = {
         name = "Unfinished Gordok Business",
         suggestedLevel = 60,
         requiredLevel = 56,
-        source = {
-            type = "npc",
-            name = "Captain Kromcrush",
-            instance = Q.Instances["Dire Maul: North"],
-            text = "Located inside the instance, you must use a Gordok Ogre Suit to acquire and turn in this quest"
-        },
+        source = Q.Sources[39], -- Captain Kromcrush
         instances = { Q.Instances["Dire Maul: North"] }
     },
     {
@@ -4554,12 +3013,7 @@ Q.Quests = {
         name = "Elven Legends",
         suggestedLevel = 56,
         requiredLevel = 54,
-        source = {
-            type = "npc",
-            name = "Sage Korolusk",
-            zone = "Feralas",
-            location = { mapId = 1444, x = 0.74, y = 0.43 }
-        },
+        source = Q.Sources[198], -- Sage Korolusk
         instances = { Q.Instances["Dire Maul: North"] }
     },
     {
@@ -4568,12 +3022,7 @@ Q.Quests = {
         name = "Elven Legends",
         suggestedLevel = 56,
         requiredLevel = 54,
-        source = {
-            type = "npc",
-            name = "Sage Korolusk",
-            zone = "Feralas",
-            location = { mapId = 1444, x = 0.318, y = 0.444 }
-        },
+        source = Q.Sources[198], -- Sage Korolusk
         instances = { Q.Instances["Dire Maul: North"] }
     },
     --#endregion
@@ -4588,12 +3037,7 @@ Q.Quests = {
         prerequisites = {
             { id = 3528, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Prospector Ironboot",
-            zone = "Tanaris",
-            location = { mapId = 1446, x = 0.668, y = 0.24 }
-        }
+        source = Q.Sources[184], -- Prospector Ironboot
     },
     {
         id = 4788,
@@ -4604,12 +3048,7 @@ Q.Quests = {
         prerequisites = {
             { id = 5065, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Prospector Ironboot",
-            zone = "Tanaris",
-            location = { mapId = 1446, x = 0.668, y = 0.24 }
-        },
+        source = Q.Sources[184], -- Prospector Ironboot
         instances = { Q.Instances["Lower Blackrock Spire"] }
     },
     {
@@ -4618,12 +3057,7 @@ Q.Quests = {
         name = "Bijou's Belongings",
         suggestedLevel = 59,
         requiredLevel = 55,
-        source = {
-            type = "npc",
-            name = "Bijou",
-            instance = Q.Instances["Lower Blackrock Spire"],
-            text = "Found on a ledge inside Lower Blackrock Spire"
-        }
+        source = Q.Sources[29], -- Bijou
     },
     {
         id = 5002,
@@ -4634,12 +3068,7 @@ Q.Quests = {
         prerequisites = {
             { id = 5001, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Bijou",
-            instance = Q.Instances["Lower Blackrock Spire"],
-            text = "Found on a ledge inside Lower Blackrock Spire"
-        }
+        source = Q.Sources[29], -- Bijou
     },
     {
         id = 5081,
@@ -4650,12 +3079,7 @@ Q.Quests = {
         prerequisites = {
             { id = 5002, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Marshal Maxwell",
-            zone = "Burning Steppes",
-            location = { mapId = 1428, x = 0.846, y = 0.688 }
-        },
+        source = Q.Sources[150], -- Marshal Maxwell
         instances = { Q.Instances["Lower Blackrock Spire"] }
     },
     {
@@ -4664,13 +3088,7 @@ Q.Quests = {
         name = "General Drakkisath's Command",
         suggestedLevel = 60,
         requiredLevel = 55,
-        source = {
-            type = "item",
-            itemId = 12780,
-            name = "General Drakkisath's Command",
-            instance = Q.Instances["Lower Blackrock Spire"],
-            text = "Dropped by General Drakkisath inside Lower Blackrock Spire"
-        },
+        source = Q.Sources[87], -- General Drakkisath's Command
         instances = { Q.Instances["Lower Blackrock Spire"] }
     },
     {
@@ -4679,12 +3097,7 @@ Q.Quests = {
         name = "En-Ay-Es-Tee-Why",
         suggestedLevel = 59,
         requiredLevel = 55,
-        source = {
-            type = "npc",
-            name = "Kibler",
-            zone = "Burning Steppes",
-            location = { mapId = 1428, x = 0.658, y = 0.22 }
-        },
+        source = Q.Sources[126], -- Kibler
         instances = { Q.Instances["Lower Blackrock Spire"] }
     },
     {
@@ -4693,12 +3106,7 @@ Q.Quests = {
         name = "The Pack Mistress",
         suggestedLevel = 60,
         requiredLevel = 55,
-        source = {
-            type = "npc",
-            name = "Galamav the Marksman",
-            zone = "Badlands",
-            location = { mapId = 1418, x = 0.06, y = 0.47 }
-        },
+        source = Q.Sources[85], -- Galamav the Marksman
         instances = { Q.Instances["Lower Blackrock Spire"] }
     },
     {
@@ -4707,12 +3115,7 @@ Q.Quests = {
         name = "Put Her Down",
         suggestedLevel = 59,
         requiredLevel = 55,
-        source = {
-            type = "npc",
-            name = "Helendis Riverhorn",
-            zone = "Burning Steppes",
-            location = { mapId = 1428, x = 0.856, y = 0.69 }
-        },
+        source = Q.Sources[106], -- Helendis Riverhorn
         instances = { Q.Instances["Lower Blackrock Spire"] }
     },
     {
@@ -4721,12 +3124,7 @@ Q.Quests = {
         name = "Operative Bijou",
         suggestedLevel = 59,
         requiredLevel = 55,
-        source = {
-            type = "npc",
-            name = "Lexlort",
-            zone = "Badlands",
-            location = { mapId = 1418, x = 0.05, y = 0.47 }
-        }
+        source = Q.Sources[135], -- Lexlort
     },
     {
         id = 4982,
@@ -4737,12 +3135,7 @@ Q.Quests = {
         prerequisites = {
             { id = 4981, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Bijou",
-            instance = Q.Instances["Lower Blackrock Spire"],
-            text = "Found on a ledge inside Lower Blackrock Spire"
-        },
+        source = Q.Sources[29], -- Bijou
         instances = { Q.Instances["Lower Blackrock Spire"] }
     },
     {
@@ -4751,12 +3144,7 @@ Q.Quests = {
         name = "Warlord's Command",
         suggestedLevel = 60,
         requiredLevel = 55,
-        source = {
-            type = "npc",
-            name = "Warlord Goretooth",
-            zone = "Badlands",
-            location = { mapId = 1418, x = 0.05, y = 0.47 }
-        },
+        source = Q.Sources[249], -- Warlord Goretooth
         instances = { Q.Instances["Lower Blackrock Spire"] }
     },
     {
@@ -4765,12 +3153,7 @@ Q.Quests = {
         name = "Kibler's Exotic Pets",
         suggestedLevel = 59,
         requiredLevel = 55,
-        source = {
-            type = "npc",
-            name = "Kibler",
-            zone = "Burning Steppes",
-            location = { mapId = 1428, x = 0.658, y = 0.22 }
-        },
+        source = Q.Sources[126], -- Kibler
         instances = { Q.Instances["Lower Blackrock Spire"] }
     },
     {
@@ -4779,13 +3162,7 @@ Q.Quests = {
         name = "Seal of Ascension",
         suggestedLevel = 60,
         requiredLevel = 57,
-        source = {
-            type = "item",
-            name = "Unadorned Seal of Ascension",
-            itemId = 12219,
-            instance = Q.Instances["Lower Blackrock Spire"],
-            text = "A random drop from mobs in Lower Blackrock Spire"
-        },
+        source = Q.Sources[239], -- Unadorned Seal of Ascension
         instances = { Q.Instances["Lower Blackrock Spire"] }
     },
     --#endregion
@@ -4797,13 +3174,7 @@ Q.Quests = {
         name = "Healthy Dragon Scale",
         suggestedLevel = 60,
         requiredLevel = 52,
-        source = {
-            type = "item",
-            itemId = 13920,
-            name = "Healthy Dragon Scale",
-            instance = Q.Instances["Scholomance"],
-            text = "Dropped by Plagued Hatchlings inside the instance"
-        },
+        source = Q.Sources[105], -- Healthy Dragon Scale
         instances = { Q.Instances["Scholomance"] }
     },
     {
@@ -4812,12 +3183,7 @@ Q.Quests = {
         name = "Barov Family Fortune",
         suggestedLevel = 60,
         requiredLevel = 52,
-        source = {
-            type = "npc",
-            name = "Alexi Barov",
-            zone = "Tirisfal Glades",
-            location = { mapId = 1420, x = 0.83, y = 0.716 }
-        },
+        source = Q.Sources[4], -- Alexi Barov
         instances = { Q.Instances["Scholomance"] }
     },
     {
@@ -4826,12 +3192,7 @@ Q.Quests = {
         name = "Barov Family Fortune",
         suggestedLevel = 60,
         requiredLevel = 52,
-        source = {
-            type = "npc",
-            name = "Weldon Barov",
-            zone = "Western Plaguelands",
-            location = { mapId = 1422, x = 0.436, y = 0.836 }
-        },
+        source = Q.Sources[250], -- Weldon Barov
         instances = { Q.Instances["Scholomance"] }
     },
     {
@@ -4840,12 +3201,7 @@ Q.Quests = {
         name = "Doctor Theolen Krastinov, the Butcher",
         suggestedLevel = 60,
         requiredLevel = 55,
-        source = {
-            type = "npc",
-            name = "Eva Sarkhoff",
-            zone = "Western Plaguelands",
-            location = { mapId = 1422, x = 0.702, y = 0.738 }
-        }
+        source = Q.Sources[79], -- Eva Sarkhoff
     },
     {
         id = 5515,
@@ -4856,12 +3212,7 @@ Q.Quests = {
         prerequisites = {
             { id = 5382, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Eva Sarkhoff",
-            zone = "Western Plaguelands",
-            location = { mapId = 1422, x = 0.702, y = 0.738 }
-        }
+        source = Q.Sources[79], -- Eva Sarkhoff
     },
     {
         id = 5384,
@@ -4872,12 +3223,7 @@ Q.Quests = {
         prerequisites = {
             { id = 5515, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Eva Sarkhoff",
-            zone = "Western Plaguelands",
-            location = { mapId = 1422, x = 0.702, y = 0.738 }
-        },
+        source = Q.Sources[79], -- Eva Sarkhoff
         instances = { Q.Instances["Scholomance"] }
     },
     {
@@ -4889,12 +3235,7 @@ Q.Quests = {
         prerequisites = {
             { id = 5384, type = Q.PrerequisiteType.REQUIRED }
         },
-        source = {
-            type = "npc",
-            name = "Magistrate Marduke",
-            zone = "Western Plaguelands",
-            location = { mapId = 1422, x = 0.70, y = 0.74 }
-        }
+        source = Q.Sources[146], -- Magistrate Marduke
     },
     {
         id = 5462,
@@ -4905,12 +3246,7 @@ Q.Quests = {
         prerequisites = {
             { id = 5461, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Magistrate Marduke",
-            zone = "Western Plaguelands",
-            location = { mapId = 1422, x = 0.70, y = 0.74 }
-        }
+        source = Q.Sources[146], -- Magistrate Marduke
     },
     {
         id = 5529,
@@ -4918,12 +3254,7 @@ Q.Quests = {
         name = "Plagued Hatchlings",
         suggestedLevel = 60,
         requiredLevel = 55,
-        source = {
-            type = "npc",
-            name = "Betina Bigglezink",
-            zone = "Eastern Plaguelands",
-            location = { mapId = 1423, x = 0.81, y = 0.59 }
-        },
+        source = Q.Sources[28], -- Betina Bigglezink
         instances = { Q.Instances["Scholomance"] }
     },
     {
@@ -4935,12 +3266,7 @@ Q.Quests = {
         prerequisites = {
             { id = 5465, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Magistrate Marduke",
-            zone = "Western Plaguelands",
-            location = { mapId = 1422, x = 0.70, y = 0.74 }
-        },
+        source = Q.Sources[146], -- Magistrate Marduke
         instances = { Q.Instances["Scholomance"] }
     },
     --#endregion
@@ -4952,12 +3278,7 @@ Q.Quests = {
         name = "Redemption",
         suggestedLevel = 56,
         requiredLevel = 52,
-        source = {
-            type = "npc",
-            name = "Tirion Fordring",
-            zone = "Eastern Plaguelands",
-            location = { mapId = 1423, x = 0.074, y = 0.436 }
-        }
+        source = Q.Sources[230], -- Tirion Fordring
     },
     {
         id = 5781,
@@ -4968,12 +3289,7 @@ Q.Quests = {
         prerequisites = {
             { id = 5742, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Tirion Fordring",
-            zone = "Eastern Plaguelands",
-            location = { mapId = 1423, x = 0.074, y = 0.436 }
-        }
+        source = Q.Sources[230], -- Tirion Fordring
     },
     {
         id = 5845,
@@ -4984,12 +3300,7 @@ Q.Quests = {
         prerequisites = {
             { id = 5781, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Tirion Fordring",
-            zone = "Eastern Plaguelands",
-            location = { mapId = 1423, x = 0.074, y = 0.436 }
-        }
+        source = Q.Sources[230], -- Tirion Fordring
     },
     {
         id = 5846,
@@ -5000,12 +3311,7 @@ Q.Quests = {
         prerequisites = {
             { id = 5845, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Tirion Fordring",
-            zone = "Eastern Plaguelands",
-            location = { mapId = 1423, x = 0.074, y = 0.436 }
-        }
+        source = Q.Sources[230], -- Tirion Fordring
     },
     {
         id = 5848,
@@ -5016,12 +3322,7 @@ Q.Quests = {
         prerequisites = {
             { id = 5846, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Artist Renfray",
-            zone = "Western Plaguelands",
-            location = { mapId = 1422, x = 0.656, y = 0.754 }
-        },
+        source = Q.Sources[18], -- Artist Renfray
         instances = { Q.Instances["Stratholme"] }
     },
     {
@@ -5030,12 +3331,7 @@ Q.Quests = {
         name = "The Great Ezra Grimm",
         suggestedLevel = 60,
         requiredLevel = 55,
-        source = {
-            type = "npc",
-            name = "Smokey LaRue",
-            zone = "Eastern Plaguelands",
-            location = { mapId = 1423, x = 0.80, y = 0.58 }
-        },
+        source = Q.Sources[210], -- Smokey LaRue
         instances = { Q.Instances["Stratholme"] }
     },
     {
@@ -5044,12 +3340,7 @@ Q.Quests = {
         name = "The Flesh Does Not Lie",
         suggestedLevel = 60,
         requiredLevel = 55,
-        source = {
-            type = "npc",
-            name = "Betina Bigglezink",
-            zone = "Eastern Plaguelands",
-            location = { mapId = 1423, x = 0.814, y = 0.596 }
-        },
+        source = Q.Sources[28], -- Betina Bigglezink
         instances = { Q.Instances["Stratholme"] }
     },
     {
@@ -5058,12 +3349,7 @@ Q.Quests = {
         name = "The Archivist",
         suggestedLevel = 60,
         requiredLevel = 55,
-        source = {
-            type = "npc",
-            name = "Duke Nicholas Zverenhoff",
-            zone = "Eastern Plaguelands",
-            location = { mapId = 1423, x = 0.81, y = 0.59 }
-        },
+        source = Q.Sources[72], -- Duke Nicholas Zverenhoff
     },
     {
         id = 5281,
@@ -5071,12 +3357,7 @@ Q.Quests = {
         name = "The Restless Souls (1/2)",
         suggestedLevel = 60,
         requiredLevel = 55,
-        source = {
-            type = "npc",
-            name = "Caretaker Alen",
-            zone = "Eastern Plaguelands",
-            location = { mapId = 1423, x = 0.794, y = 0.638 }
-        }
+        source = Q.Sources[41], -- Caretaker Alen
     },
     {
         id = 5282,
@@ -5087,12 +3368,7 @@ Q.Quests = {
         prerequisites = {
             { id = 5281, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Egan",
-            zone = "Eastern Plaguelands",
-            location = { mapId = 1423, x = 0.144, y = 0.336 }
-        },
+        source = Q.Sources[76], -- Egan
         instances = { Q.Instances["Stratholme"] }
     },
     {
@@ -5101,12 +3377,7 @@ Q.Quests = {
         name = "The Medallion of Faith",
         suggestedLevel = 60,
         requiredLevel = 55,
-        source = {
-            type = "npc",
-            name = "Aurius",
-            instance = Q.Instances["Stratholme"],
-            text = "Found inside Stratholme"
-        },
+        source = Q.Sources[21], -- Aurius
         instances = { Q.Instances["Stratholme"] }
     },
     {
@@ -5115,12 +3386,7 @@ Q.Quests = {
         name = "Houses of the Holy",
         suggestedLevel = 60,
         requiredLevel = 55,
-        source = {
-            type = "npc",
-            name = "Leonid Barthalomew the Revered",
-            zone = "Eastern Plaguelands",
-            location = { mapId = 1423, x = 0.81, y = 0.578 }
-        },
+        source = Q.Sources[134], -- Leonid Barthalomew the Revered
         instances = { Q.Instances["Stratholme"] }
     },
     {
@@ -5132,13 +3398,7 @@ Q.Quests = {
         prerequisites = {
             { id = 5251, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "item",
-            name = "Head of Balnazzar",
-            itemId = 13250,
-            instance = Q.Instances["Stratholme"],
-            text = "Dropped by Balnazzar in Stratholme"
-        }
+        source = Q.Sources[104], -- Head of Balnazzar
     },
     {
         id = 5263,
@@ -5149,12 +3409,7 @@ Q.Quests = {
         prerequisites = {
             { id = 5262, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Duke Nicholas Zverenhoff",
-            zone = "Eastern Plaguelands",
-            location = { mapId = 1423, x = 0.814, y = 0.598 }
-        },
+        source = Q.Sources[72], -- Duke Nicholas Zverenhoff
         instances = { Q.Instances["Stratholme"] }
     },
     {
@@ -5163,12 +3418,7 @@ Q.Quests = {
         name = "The Ranger Lord's Behest",
         suggestedLevel = 60,
         requiredLevel = 54,
-        source = {
-            type = "npc",
-            name = "Nathanos Blightcaller",
-            zone = "Eastern Plaguelands",
-            location = { mapId = 1423, x = 0.266, y = 0.748 }
-        }
+        source = Q.Sources[172], -- Nathanos Blightcaller
     },
     {
         id = 6135,
@@ -5179,12 +3429,7 @@ Q.Quests = {
         prerequisites = {
             { id = 6133, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Nathanos Blightcaller",
-            zone = "Eastern Plaguelands",
-            location = { mapId = 1423, x = 0.266, y = 0.748 }
-        }
+        source = Q.Sources[172], -- Nathanos Blightcaller
     },
     {
         id = 6163,
@@ -5195,12 +3440,7 @@ Q.Quests = {
         prerequisites = {
             { id = 6135, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Nathanos Blightcaller",
-            zone = "Eastern Plaguelands",
-            location = { mapId = 1423, x = 0.266, y = 0.748 }
-        },
+        source = Q.Sources[172], -- Nathanos Blightcaller
         instances = { Q.Instances["Stratholme"] }
     },
     {
@@ -5212,12 +3452,7 @@ Q.Quests = {
         prerequisites = {
             { id = 5462, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Leonid Barthalomew the Revered",
-            zone = "Eastern Plaguelands",
-            location = { mapId = 1423, x = 0.81, y = 0.578 }
-        }
+        source = Q.Sources[134], -- Leonid Barthalomew the Revered
     },
     {
         id = 5464,
@@ -5228,13 +3463,7 @@ Q.Quests = {
         prerequisites = {
             { id = 5463, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "object",
-            name = "Menethil's Gift",
-            zone = "Eastern Plaguelands",
-            location = { mapId = 1423, x = 0.81, y = 0.578 },
-            text = "Use the red circle on the floor in Baron Rivendares room"
-        },
+        source = Q.Sources[163], -- Menethil's Gift
         instances = { Q.Instances["Stratholme"] }
     },
     {
@@ -5246,12 +3475,7 @@ Q.Quests = {
         prerequisites = {
             { id = 5464, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Leonid Barthalomew the Revered",
-            zone = "Eastern Plaguelands",
-            location = { mapId = 1423, x = 0.81, y = 0.578 }
-        }
+        source = Q.Sources[134], -- Leonid Barthalomew the Revered
     },
     --#endregion
 
@@ -5265,12 +3489,7 @@ Q.Quests = {
         prerequisites = {
             { id = 4903, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Warlord Goretooth",
-            zone = "Badlands",
-            location = { mapId = 1418, x = 0.058, y = 0.474 }
-        }
+        source = Q.Sources[249], -- Warlord Goretooth
     },
     {
         id = 4974,
@@ -5281,12 +3500,7 @@ Q.Quests = {
         prerequisites = {
             { id = 4941, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Thrall",
-            zone = "Orgrimmar",
-            location = { mapId = 1454, x = 0.32, y = 0.378 }
-        },
+        source = Q.Sources[226], -- Thrall
         instances = { Q.Instances["Upper Blackrock Spire"] }
     },
     {
@@ -5298,12 +3512,7 @@ Q.Quests = {
         prerequisites = {
             { id = 5089, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Marshall Maxwell",
-            zone = "Burning Steppes",
-            location = { mapId = 1428, x = 0.846, y = 0.688 }
-        },
+        source = Q.Sources[151], -- Marshall Maxwell
         instances = { Q.Instances["Upper Blackrock Spire"] }
     },
     {
@@ -5312,12 +3521,7 @@ Q.Quests = {
         name = "Stormers and Rumblers",
         suggestedLevel = 57,
         requiredLevel = 55,
-        source = {
-            type = "npc",
-            name = "Duke Hydraxis",
-            zone = "Azshara",
-            location = { mapId = 1447, x = 0.792, y = 0.736 }
-        }
+        source = Q.Sources[71], -- Duke Hydraxis
     },
     {
         id = 6804,
@@ -5325,12 +3529,7 @@ Q.Quests = {
         name = "Poisoned Water",
         suggestedLevel = 56,
         requiredLevel = 55,
-        source = {
-            type = "npc",
-            name = "Duke Hydraxis",
-            zone = "Azshara",
-            location = { mapId = 1447, x = 0.792, y = 0.736 }
-        }
+        source = Q.Sources[71], -- Duke Hydraxis
     },
     {
         id = 6821,
@@ -5342,12 +3541,7 @@ Q.Quests = {
             { id = 6804, type = Q.PrerequisiteType.REQUIRED },
             { id = 6805, type = Q.PrerequisiteType.REQUIRED }
         },
-        source = {
-            type = "npc",
-            name = "Duke Hydraxis",
-            zone = "Azshara",
-            location = { mapId = 1447, x = 0.792, y = 0.736 }
-        },
+        source = Q.Sources[71], -- Duke Hydraxis
         instances = { Q.Instances["Upper Blackrock Spire"] }
     },
     {
@@ -5356,12 +3550,7 @@ Q.Quests = {
         name = "The Matron Protectorate",
         suggestedLevel = 60,
         requiredLevel = 57,
-        source = {
-            type = "npc",
-            name = "Awbee",
-            instance = Q.Instances["Upper Blackrock Spire"],
-            text = "Found through the door after the Rend"
-        },
+        source = Q.Sources[22], -- Awbee
         instances = { Q.Instances["Upper Blackrock Spire"] }
     },
     {
@@ -5370,12 +3559,7 @@ Q.Quests = {
         name = "Pip Quickwit, At Your Service!",
         suggestedLevel = 60,
         requiredLevel = 57,
-        source = {
-            type = "npc",
-            name = "Pip Quickwit",
-            instance = Q.Instances["Upper Blackrock Spire"],
-            text = "Spawns after killing and skinning The Beast (requires 315 skinning)"
-        },
+        source = Q.Sources[181], -- Pip Quickwit
         instances = { Q.Instances["Upper Blackrock Spire"] }
     },
     {
@@ -5384,14 +3568,7 @@ Q.Quests = {
         name = "Blackhand's Command",
         suggestedLevel = 60,
         requiredLevel = 55,
-        source = {
-            type = "item",
-            itemId = 18987,
-            name = "Blackhand's Command",
-            zone = "Burning Steppes",
-            location = { mapId = 1428, x = 0.292, y = 0.382 },
-            text = "Kill the Scarshield Quartermaster found outside the UBRS/LBRS entrance"
-        },
+        source = Q.Sources[30], -- Blackhand's Command
         instances = { Q.Instances["Upper Blackrock Spire"] }
     },
     {
@@ -5400,12 +3577,7 @@ Q.Quests = {
         name = "Mayara Brightwing",
         suggestedLevel = 60,
         requiredLevel = 57,
-        source = {
-            type = "npc",
-            name = "Count Remington Ridgewell",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.74, y = 0.30 }
-        },
+        source = Q.Sources[49], -- Count Remington Ridgewell
         instances = { Q.Instances["Upper Blackrock Spire"] }
     },
     {
@@ -5417,12 +3589,7 @@ Q.Quests = {
         prerequisites = {
             { id = 4766, type = Q.PrerequisiteType.BREADCRUMB }
         },
-        source = {
-            type = "npc",
-            name = "Mayara Brightwing",
-            zone = "Burning Steppes",
-            location = { mapId = 1428, x = 0.848, y = 0.69 }
-        },
+        source = Q.Sources[159], -- Mayara Brightwing
         instances = { Q.Instances["Upper Blackrock Spire"] }
     },
     {
@@ -5434,12 +3601,7 @@ Q.Quests = {
         prerequisites = {
             { id = 4769, type = Q.PrerequisiteType.BREADCRUMB }
         },
-        source = {
-            type = "npc",
-            name = "Shadowmage Vivian Lagrave",
-            zone = "Badlands",
-            location = { mapId = 1418, x = 0.030, y = 0.476 }
-        },
+        source = Q.Sources[204], -- Shadowmage Vivian Lagrave
         instances = { Q.Instances["Upper Blackrock Spire"] }
     },
     {
@@ -5448,12 +3610,7 @@ Q.Quests = {
         name = "Vivian Lagrave and the Darkstone Tablet",
         suggestedLevel = 60,
         requiredLevel = 57,
-        source = {
-            type = "npc",
-            name = "Apothecary Zinge",
-            zone = "Undercity",
-            location = { mapId = 1458, x = 0.50, y = 0.684 }
-        }
+        source = Q.Sources[11], -- Apothecary Zinge
     },
     --#endregion
 
@@ -5468,12 +3625,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1653, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Jordan Stilwell",
-            zone = "Ironforge",
-            location = { mapId = 1455, x = 0.52, y = 0.36 }
-        },
+        source = Q.Sources[120], -- Jordan Stilwell
         instances = { Q.Instances["Shadowfang Keep"], Q.Instances["The Deadmines"], Q.Instances["Blackfathom Deeps"] },
     },
     {
@@ -5483,12 +3635,7 @@ Q.Quests = {
         name = "The Tome of Valor (1/4)",
         suggestedLevel = 20,
         requiredLevel = 20,
-        source = {
-            type = "item",
-            name = "Tome of Valor",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.40, y = 0.29 }
-        },
+        source = Q.Sources[233], -- Tome of Valor
         text = "Speak to Duthorian Rall to receive the tome and start the quest"
     },
     {
@@ -5501,12 +3648,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1649, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Daphne Stilwell",
-            zone = "Westfall",
-            location = { mapId = 1436, x = 0.42, y = 0.88 }
-        },
+        source = Q.Sources[58], -- Daphne Stilwell
     },
     {
         id = 1651,
@@ -5518,12 +3660,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1650, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Daphne Stilwell",
-            zone = "Westfall",
-            location = { mapId = 1436, x = 0.42, y = 0.88 }
-        },
+        source = Q.Sources[58], -- Daphne Stilwell
     },
     {
         id = 1652,
@@ -5535,12 +3672,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1651, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Duthorian Rall",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.40, y = 0.29 }
-        },
+        source = Q.Sources[73], -- Duthorian Rall
     },
     {
         id = 1653,
@@ -5552,12 +3684,16 @@ Q.Quests = {
         prerequisites = {
             { id = 1652, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Duthorian Rall",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.40, y = 0.29 }
-        },
+        source = Q.Sources[73], -- Duthorian Rall
+    },
+    {
+        id = 7670,
+        faction = "Alliance",
+        class = "PALADIN",
+        name = "Lord Grayson Shadowbreaker",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        source = Q.Sources[279], -- Brandur Ironhammer
     },
     {
         id = 7638,
@@ -5566,12 +3702,7 @@ Q.Quests = {
         name = "Lord Grayson Shadowbreaker",
         suggestedLevel = 60,
         requiredLevel = 60,
-        source = {
-            type = "npc",
-            name = "Duthorian Rall",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.40, y = 0.29 }
-        },
+        source = Q.Sources[73], -- Duthorian Rall
     },
     {
         id = 7637,
@@ -5581,14 +3712,10 @@ Q.Quests = {
         suggestedLevel = 60,
         requiredLevel = 60,
         prerequisites = {
-            { id = 7638, type = Q.PrerequisiteType.REQUIRED }
+            { id = 7638, type = Q.PrerequisiteType.ANY },
+            { id = 7670, type = Q.PrerequisiteType.ANY }
         },
-        source = {
-            type = "npc",
-            name = "Lord Grayson Shadowbreaker",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.372, y = 0.33 }
-        },
+        source = Q.Sources[141], -- Lord Grayson Shadowbreaker
     },
     {
         id = 7639,
@@ -5598,14 +3725,9 @@ Q.Quests = {
         suggestedLevel = 60,
         requiredLevel = 60,
         prerequisites = {
-            { id = 7638, type = Q.PrerequisiteType.CHAIN }
+            { id = 7637, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "High Priest Rohan",
-            zone = "Ironforge",
-            location = { mapId = 1455, x = 0.268, y = 0.076 }
-        },
+        source = Q.Sources[110], -- High Priest Rohan
     },
     {
         id = 7640,
@@ -5617,12 +3739,7 @@ Q.Quests = {
         prerequisites = {
             { id = 7639, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Lord Grayson Shadowbreaker",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.372, y = 0.33 }
-        },
+        source = Q.Sources[141], -- Lord Grayson Shadowbreaker
     },
     {
         id = 7641,
@@ -5634,12 +3751,7 @@ Q.Quests = {
         prerequisites = {
             { id = 7640, type = Q.PrerequisiteType.REQUIRED }
         },
-        source = {
-            type = "npc",
-            name = "Lord Grayson Shadowbreaker",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.372, y = 0.33 }
-        },
+        source = Q.Sources[141], -- Lord Grayson Shadowbreaker
     },
     {
         id = 7642,
@@ -5651,12 +3763,7 @@ Q.Quests = {
         prerequisites = {
             { id = 7641, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Grimand Elmore",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.516, y = 0.122 }
-        },
+        source = Q.Sources[97], -- Grimand Elmore
     },
     {
         id = 7643,
@@ -5668,12 +3775,7 @@ Q.Quests = {
         prerequisites = {
             { id = 7642, type = Q.PrerequisiteType.REQUIRED }
         },
-        source = {
-            type = "npc",
-            name = "Lord Grayson Shadowbreaker",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.372, y = 0.33 }
-        },
+        source = Q.Sources[141], -- Lord Grayson Shadowbreaker
         instances = { Q.Instances["Dire Maul: West"] }
     },
     {
@@ -5686,12 +3788,7 @@ Q.Quests = {
         prerequisites = {
             { id = 7643, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Ancient Equine Spirit",
-            instance = Q.Instances["Dire Maul: West"],
-            text = "Found inside DM: West"
-        }
+        source = Q.Sources[6], -- Ancient Equine Spirit
     },
     {
         id = 7646,
@@ -5701,14 +3798,9 @@ Q.Quests = {
         suggestedLevel = 60,
         requiredLevel = 60,
         prerequisites = {
-            { id = 7643, type = Q.PrerequisiteType.CHAIN }
+            { id = 7644, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Lord Grayson Shadowbreaker",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.372, y = 0.33 }
-        },
+        source = Q.Sources[141], -- Lord Grayson Shadowbreaker
     },
     {
         id = 7647,
@@ -5720,12 +3812,7 @@ Q.Quests = {
         prerequisites = {
             { id = 7646, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Lord Grayson Shadowbreaker",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.372, y = 0.33 }
-        },
+        source = Q.Sources[141], -- Lord Grayson Shadowbreaker
         instances = { Q.Instances["Scholomance"] }
     },
     {
@@ -5735,12 +3822,7 @@ Q.Quests = {
         name = "Diplomatic Incident",
         suggestedLevel = 22,
         requiredLevel = 20,
-        source = {
-            type = "npc",
-            name = "Danitha Morr",
-            zone = "Tirisfal Glades",
-            location = { mapId = 1420, x = 0.22, y = 0.446 },
-        }
+        source = Q.Sources[57], -- Danitha Morr
     },
     {
         id = 91859,
@@ -5752,12 +3834,7 @@ Q.Quests = {
         prerequisites = {
             { id = 91858, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Trevan Rol",
-            zone = "Silverpine Forest",
-            location = { mapId = 1421, x = 0.434, y = 0.41 },
-        }
+        source = Q.Sources[238], -- Trevan Rol
     },
     {
         id = 91860,
@@ -5769,12 +3846,7 @@ Q.Quests = {
         prerequisites = {
             { id = 91859, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Deathguard Baldren",
-            zone = "Silverpine Forest",
-            location = { mapId = 1421, x = 0.456, y = 0.418 },
-        }
+        source = Q.Sources[63], -- Deathguard Baldren
     },
     {
         id = 91861,
@@ -5786,13 +3858,7 @@ Q.Quests = {
         prerequisites = {
             { id = 91860, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "object",
-            name = "Charred Remains",
-            zone = "Silverpine Forest",
-            location = { mapId = 1421, x = 0.65, y = 0.342 },
-            text = "Found on the floor"
-        }
+        source = Q.Sources[45], -- Charred Remains
     },
     {
         id = 91862,
@@ -5804,12 +3870,7 @@ Q.Quests = {
         prerequisites = {
             { id = 91861, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Lumina Windsinger",
-            zone = "Silverpine Forest",
-            location = { mapId = 1421, x = 0.657, y = 0.274 },
-        }
+        source = Q.Sources[145], -- Lumina Windsinger
     },
     {
         id = 96204,
@@ -5821,12 +3882,7 @@ Q.Quests = {
         prerequisites = {
             { id = 91862, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Lumina Windsinger",
-            zone = "Silverpine Forest",
-            location = { mapId = 1421, x = 0.657, y = 0.274 },
-        }
+        source = Q.Sources[145], -- Lumina Windsinger
     },
     {
         id = 95036,
@@ -5838,12 +3894,7 @@ Q.Quests = {
         prerequisites = {
             { id = 96204, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Lumina Windsinger",
-            zone = "Silverpine Forest",
-            location = { mapId = 1421, x = 0.657, y = 0.274 },
-        },
+        source = Q.Sources[145], -- Lumina Windsinger
         instances = { Q.Instances["Shadowfang Keep"], Q.Instances["The Deadmines"], Q.Instances["Blackfathom Deeps"] },
     },
     --#endregion
@@ -5856,12 +3907,7 @@ Q.Quests = {
         name = "The Orb of Soran'ruk",
         suggestedLevel = 25,
         requiredLevel = 20,
-        source = {
-            type = "npc",
-            name = "Doan Karhan",
-            zone = "The Barrens",
-            location = { mapId = 1413, x = 0.49, y = 0.57 }
-        },
+        source = Q.Sources[66], -- Doan Karhan
         instances = { Q.Instances["Shadowfang Keep"], Q.Instances["Blackfathom Deeps"] }
     },
     {
@@ -5872,34 +3918,10 @@ Q.Quests = {
         suggestedLevel = 60,
         requiredLevel = 60,
         sources = {
-            {
-                type = "npc",
-                faction = "Horde",
-                name = "Martha Strain",
-                zone = "Undercity",
-                location = { mapId = 1458, x = 0.858, y = 0.158 }
-            },
-            {
-                type = "npc",
-                faction = "Horde",
-                name = "Kurgul",
-                zone = "Orgrimmar",
-                location = { mapId = 1454, x = 0.476, y = 0.476 }
-            },
-            {
-                type = "npc",
-                faction = "Alliance",
-                name = "Jubahl Corpseseeker",
-                zone = "Ironforge",
-                location = { mapId = 1455, x = 0.532, y = 0.076 }
-            },
-            {
-                type = "npc",
-                faction = "Alliance",
-                name = "Spackle Thornberry",
-                zone = "Stormwind City",
-                location = { mapId = 1453, x = 0.258, y = 0.776 }
-            }
+            Q.Sources[267], -- Martha Strain
+            Q.Sources[268], -- Kurgul
+            Q.Sources[269], -- Jubahl Corpseseeker
+            Q.Sources[270] -- Spackle Thornberry
         },
     },
     {
@@ -5912,12 +3934,7 @@ Q.Quests = {
         prerequisites = {
             { id = 7562, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Mor'zul Bloodbringer",
-            zone = "Burning Steppes",
-            location = { mapId = 1428, x = 0.126, y = 0.316 }
-        }
+        source = Q.Sources[165], -- Mor'zul Bloodbringer
     },
     {
         id = 7564,
@@ -5929,12 +3946,7 @@ Q.Quests = {
         prerequisites = {
             { id = 7563, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Mor'zul Bloodbringer",
-            zone = "Burning Steppes",
-            location = { mapId = 1428, x = 0.126, y = 0.316 }
-        }
+        source = Q.Sources[165], -- Mor'zul Bloodbringer
     },
     {
         id = 7623,
@@ -5946,12 +3958,7 @@ Q.Quests = {
         prerequisites = {
             { id = 7564, type = Q.PrerequisiteType.REQUIRED }
         },
-        source = {
-            type = "npc",
-            name = "Gorzeeki Wildeyes",
-            zone = "Burning Steppes",
-            location = { mapId = 1428, x = 0.124, y = 0.316 }
-        }
+        source = Q.Sources[94], -- Gorzeeki Wildeyes
     },
     {
         id = 7624,
@@ -5963,12 +3970,7 @@ Q.Quests = {
         prerequisites = {
             { id = 7623, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Lord Banehollow",
-            zone = "Felwood",
-            location = { mapId = 1448, x = 0.36, y = 0.456 }
-        }
+        source = Q.Sources[140], -- Lord Banehollow
     },
     {
         id = 7625,
@@ -5980,12 +3982,7 @@ Q.Quests = {
         prerequisites = {
             { id = 7624, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Lord Banehollow",
-            zone = "Felwood",
-            location = { mapId = 1448, x = 0.36, y = 0.456 }
-        }
+        source = Q.Sources[140], -- Lord Banehollow
     },
     {
         id = 7629,
@@ -5998,12 +3995,7 @@ Q.Quests = {
             { id = 7630, type = Q.PrerequisiteType.REQUIRED },
             { id = 7625, type = Q.PrerequisiteType.REQUIRED }
         },
-        source = {
-            type = "npc",
-            name = "Gorzeeki Wildeyes",
-            zone = "Burning Steppes",
-            location = { mapId = 1428, x = 0.124, y = 0.316 }
-        },
+        source = Q.Sources[94], -- Gorzeeki Wildeyes
         instances = { Q.Instances["Scholomance"] }
     },
     {
@@ -6015,12 +4007,7 @@ Q.Quests = {
         prerequisites = {
             { id = 7629, type = Q.PrerequisiteType.REQUIRED }
         },
-        source = {
-            type = "npc",
-            name = "Mor'zul Bloodbringer",
-            zone = "Burning Steppes",
-            location = { mapId = 1428, x = 0.124, y = 0.316 }
-        },
+        source = Q.Sources[165], -- Mor'zul Bloodbringer
         instances = { Q.Instances["Dire Maul: West"] }
     },
     {
@@ -6035,12 +4022,7 @@ Q.Quests = {
             { id = 7628, type = Q.PrerequisiteType.REQUIRED },
             { id = 7627, type = Q.PrerequisiteType.REQUIRED }
         },
-        source = {
-            type = "npc",
-            name = "Gorzeeki Wildeyes",
-            zone = "Burning Steppes",
-            location = { mapId = 1428, x = 0.124, y = 0.316 }
-        }
+        source = Q.Sources[94], -- Gorzeeki Wildeyes
     },
     {
         id = 7628,
@@ -6052,12 +4034,7 @@ Q.Quests = {
         prerequisites = {
             { id = 7564, type = Q.PrerequisiteType.REQUIRED },
         },
-        source = {
-            type = "npc",
-            name = "Mor'zul Bloodbringer",
-            zone = "Burning Steppes",
-            location = { mapId = 1428, x = 0.126, y = 0.316 }
-        }
+        source = Q.Sources[165], -- Mor'zul Bloodbringer
     },
     {
         id = 7627,
@@ -6069,12 +4046,7 @@ Q.Quests = {
         prerequisites = {
             { id = 7564, type = Q.PrerequisiteType.REQUIRED },
         },
-        source = {
-            type = "npc",
-            name = "Mor'zul Bloodbringer",
-            zone = "Burning Steppes",
-            location = { mapId = 1428, x = 0.126, y = 0.316 }
-        }
+        source = Q.Sources[165], -- Mor'zul Bloodbringer
     },
     {
         id = 7626,
@@ -6086,12 +4058,7 @@ Q.Quests = {
         prerequisites = {
             { id = 7564, type = Q.PrerequisiteType.REQUIRED },
         },
-        source = {
-            type = "npc",
-            name = "Mor'zul Bloodbringer",
-            zone = "Burning Steppes",
-            location = { mapId = 1428, x = 0.126, y = 0.316 }
-        }
+        source = Q.Sources[165], -- Mor'zul Bloodbringer
     },
     --#endregion
 
@@ -6106,12 +4073,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1702, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Furen Longbeard",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.63, y = 0.33 }
-        },
+        source = Q.Sources[84], -- Furen Longbeard
         instances = { Q.Instances["Razorfen Kraul"] }
     },
     {
@@ -6121,12 +4083,7 @@ Q.Quests = {
         name = "The Rethban Gauntlet",
         suggestedLevel = 22,
         requiredLevel = 20,
-        source = {
-            type = "npc",
-            name = "Yorus Barleybrew",
-            zone = "Redridge Mountains",
-            location = { mapId = 1433, x = 0.27, y = 0.45 }
-        },
+        source = Q.Sources[259], -- Yorus Barleybrew
     },
     {
         id = 1702,
@@ -6138,12 +4095,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1699, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Furen Longbeard",
-            zone = "Stormwind City",
-            location = { mapId = 1453, x = 0.63, y = 0.33 }
-        },
+        source = Q.Sources[84], -- Furen Longbeard
     },
     {
         id = 1838,
@@ -6155,12 +4107,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1825, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Thun'grim Firegaze",
-            zone = "The Barrens",
-            location = { mapId = 1413, x = 0.57, y = 0.30 }
-        },
+        source = Q.Sources[227], -- Thun'grim Firegaze
         instances = { Q.Instances["Razorfen Kraul"] }
     },
     {
@@ -6171,24 +4118,9 @@ Q.Quests = {
         suggestedLevel = 20,
         requiredLevel = 20,
         sources = {
-            {
-                type = "npc",
-                name = "Sorek",
-                zone = "Orgrimmar",
-                location = { mapId = 1454, x = 0.804, y = 0.314 }
-            },
-            {
-                type = "npc",
-                name = "Torm Ragetotem",
-                zone = "Thunder Bluff",
-                location = { mapId = 1456, x = 0.576, y = 0.876 }
-            },
-            {
-                type = "npc",
-                name = "Baltus Fowler",
-                zone = "Undercity",
-                location = { mapId = 1458, x = 0.476, y = 0.168 }
-            }
+            Q.Sources[271], -- Sorek
+            Q.Sources[272], -- Torm Ragetotem
+            Q.Sources[273] -- Baltus Fowler
         },
     },
     {
@@ -6201,12 +4133,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1823, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Ruga Ragetotem",
-            zone = "The Barrens",
-            location = { mapId = 1413, x = 0.45, y = 0.59 }
-        },
+        source = Q.Sources[197], -- Ruga Ragetotem
     },
     {
         id = 1825,
@@ -6218,12 +4145,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1824, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Thun'grim Firegaze",
-            zone = "The Barrens",
-            location = { mapId = 1413, x = 0.57, y = 0.30 }
-        },
+        source = Q.Sources[227], -- Thun'grim Firegaze
     },
     --#endregion
 
@@ -6235,42 +4157,11 @@ Q.Quests = {
         suggestedLevel = 38,
         requiredLevel = 30,
         sources = {
-            {
-                type = "npc",
-                faction = "Horde",
-                name = "Ursyn Ghull",
-                zone = "Thunder Bluff",
-                location = { mapId = 1456, x = 0.256, y = 0.156 }
-            },
-            {
-                type = "npc",
-                faction = "Horde",
-                name = "Anastasia Hartwell",
-                zone = "Undercity",
-                location = { mapId = 1458, x = 0.85, y = 0.102 }
-            },
-            {
-                type = "npc",
-                faction = "Horde",
-                name = "Deino",
-                zone = "Orgrimmar",
-                location = { mapId = 1454, x = 0.386, y = 0.852 }
-            },
-            {
-                type = "npc",
-                faction = "Alliance",
-                name = "Jennea Cannon",
-                zone = "Stormwind City",
-                location = { mapId = 1453, x = 0.386, y = 0.796 }
-            }
-            ,
-            {
-                type = "npc",
-                faction = "Alliance",
-                name = "Bink",
-                zone = "Ironforge",
-                location = { mapId = 1455, x = 0.27, y = 0.082 }
-            }
+            Q.Sources[274], -- Ursyn Ghull
+            Q.Sources[263], -- Anastasia Hartwell
+            Q.Sources[266], -- Deino
+            Q.Sources[265], -- Jennea Cannon
+            Q.Sources[264] -- Bink
         }
     },
     {
@@ -6282,12 +4173,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1947, type = Q.PrerequisiteType.BREADCRUMB }
         },
-        source = {
-            type = "npc",
-            name = "Tabetha",
-            zone = "Dustwallow Marsh",
-            location = { mapId = 1445, x = 0.460, y = 0.570 }
-        },
+        source = Q.Sources[214], -- Tabetha
     },
     {
         id = 1950,
@@ -6298,12 +4184,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1949, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Magus Tirth",
-            zone = "Thousand Needles",
-            location = { mapId = 1441, x = 0.784, y = 0.754 }
-        },
+        source = Q.Sources[148], -- Magus Tirth
     },
     {
         id = 1953,
@@ -6312,42 +4193,11 @@ Q.Quests = {
         suggestedLevel = 40,
         requiredLevel = 35,
         sources = {
-            {
-                type = "npc",
-                faction = "Horde",
-                name = "Ursyn Ghull",
-                zone = "Thunder Bluff",
-                location = { mapId = 1456, x = 0.256, y = 0.156 }
-            },
-            {
-                type = "npc",
-                faction = "Horde",
-                name = "Anastasia Hartwell",
-                zone = "Undercity",
-                location = { mapId = 1458, x = 0.85, y = 0.102 }
-            },
-            {
-                type = "npc",
-                faction = "Horde",
-                name = "Deino",
-                zone = "Orgrimmar",
-                location = { mapId = 1454, x = 0.386, y = 0.852 }
-            },
-            {
-                type = "npc",
-                faction = "Alliance",
-                name = "Jennea Cannon",
-                zone = "Stormwind City",
-                location = { mapId = 1453, x = 0.386, y = 0.796 }
-            }
-            ,
-            {
-                type = "npc",
-                faction = "Alliance",
-                name = "Bink",
-                zone = "Ironforge",
-                location = { mapId = 1455, x = 0.27, y = 0.082 }
-            }
+            Q.Sources[274], -- Ursyn Ghull
+            Q.Sources[263], -- Anastasia Hartwell
+            Q.Sources[266], -- Deino
+            Q.Sources[265], -- Jennea Cannon
+            Q.Sources[264] -- Bink
         }
     },
     {
@@ -6359,12 +4209,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1953, type = Q.PrerequisiteType.BREADCRUMB }
         },
-        source = {
-            type = "npc",
-            name = "Tabetha",
-            zone = "Dustwallow Marsh",
-            location = { mapId = 1445, x = 0.460, y = 0.570 }
-        },
+        source = Q.Sources[214], -- Tabetha
     },
     {
         id = 1955,
@@ -6375,12 +4220,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1954, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Tabetha",
-            zone = "Dustwallow Marsh",
-            location = { mapId = 1445, x = 0.460, y = 0.570 }
-        },
+        source = Q.Sources[214], -- Tabetha
     },
     {
         id = 1956,
@@ -6391,12 +4231,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1955, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Tabetha",
-            zone = "Dustwallow Marsh",
-            location = { mapId = 1445, x = 0.460, y = 0.570 }
-        },
+        source = Q.Sources[214], -- Tabetha
         instances = { Q.Instances["Uldaman"] },
     },
     {
@@ -6408,12 +4243,7 @@ Q.Quests = {
         prerequisites = {
             { id = 1950, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Magus Tirth",
-            zone = "Thousand Needles",
-            location = { mapId = 1441, x = 0.784, y = 0.754 }
-        },
+        source = Q.Sources[148], -- Magus Tirth
         instances = { Q.Instances["Scarlet Monastery: Library"] },
     },
     {
@@ -6422,12 +4252,7 @@ Q.Quests = {
         name = "Arcane Refreshment",
         suggestedLevel = 60,
         requiredLevel = 60,
-        source = {
-            type = "npc",
-            name = "Lorekeeper Lydros",
-            instance = Q.Instances["Dire Maul: North"],
-            text = "Found inside DM: North"
-        },
+        source = Q.Sources[142], -- Lorekeeper Lydros
         instances = { Q.Instances["Dire Maul: East"] },
     },
     --#endregion
@@ -6439,12 +4264,7 @@ Q.Quests = {
         name = "Material Assistance",
         suggestedLevel = 60,
         requiredLevel = 58,
-        source = {
-            type = "npc",
-            name = "Sagorne Creststrider",
-            zone = "Orgrimmar",
-            location = { mapId = 1454, x = 0.386, y = 0.362 },
-        }
+        source = Q.Sources[200], -- Sagorne Creststrider
     },
     {
         id = 8258,
@@ -6455,12 +4275,7 @@ Q.Quests = {
         prerequisites = {
             { id = 7667, type = Q.PrerequisiteType.CHAIN }
         },
-        source = {
-            type = "npc",
-            name = "Sagorne Creststrider",
-            zone = "Orgrimmar",
-            location = { mapId = 1454, x = 0.386, y = 0.362 },
-        },
+        source = Q.Sources[200], -- Sagorne Creststrider
         instances = { Q.Instances["Scholomance"] }
     },
     {
@@ -6473,18 +4288,8 @@ Q.Quests = {
             { id = 1532, type = Q.PrerequisiteType.CHAIN }
         },
         sources = {
-            {
-                type = "npc",
-                name = "Rau Cliffrunner",
-                zone = "Thousand Needles",
-                location = { mapId = 1441, x = 0.46, y = 0.516 },
-            },
-            {
-                type = "npc",
-                name = "Prate Cloudseer",
-                zone = "Thousand Needles",
-                location = { mapId = 1441, x = 0.536, y = 0.428 },
-            }
+            Q.Sources[275], -- Rau Cliffrunner
+            Q.Sources[276] -- Prate Cloudseer
         },
         instances = { Q.Instances["Razorfen Kraul"] }
     },
@@ -6495,18 +4300,8 @@ Q.Quests = {
         suggestedLevel = 30,
         requiredLevel = 30,
         sources = {
-            {
-                type = "npc",
-                name = "Searn Firewarder",
-                zone = "Orgrimmar",
-                location = { mapId = 1454, x = 0.386, y = 0.376 },
-            },
-            {
-                type = "npc",
-                name = "Xanis Flameweaver",
-                zone = "Thunder Bluff",
-                location = { mapId = 1456, x = 0.252, y = 0.210 },
-            }
+            Q.Sources[277], -- Searn Firewarder
+            Q.Sources[278] -- Xanis Flameweaver
         }
     },
     --#endregion
@@ -6518,12 +4313,7 @@ Q.Quests = {
         name = "Lorax's Tale",
         suggestedLevel = 60,
         requiredLevel = 55,
-        source = {
-            type = "npc",
-            name = "Lorax",
-            zone = "Winterspring",
-            location = { mapId = 1452, x = 0.638, y = 0.738 },
-        }
+        source = Q.Sources[139], -- Lorax
     },
     {
         id = 5127,
@@ -6534,12 +4324,7 @@ Q.Quests = {
         prerequisites = {
             { id = 5126, type = Q.PrerequisiteType.REQUIRED }
         },
-        source = {
-            type = "npc",
-            name = "Lorax",
-            zone = "Winterspring",
-            location = { mapId = 1452, x = 0.638, y = 0.738 },
-        },
+        source = Q.Sources[139], -- Lorax
         instances = { Q.Instances["Upper Blackrock Spire"] }
     },
     --#endregion
@@ -6551,12 +4336,7 @@ Q.Quests = {
         name = "The Drowned City",
         suggestedLevel = 40,
         requiredLevel = 30,
-        source = {
-            type = "npc",
-            name = "Unknown",
-            zone = "Unknown",
-            location = { mapId = 0, x = 0, y = 0 },
-        },
+        source = Q.Sources[240], -- Unknown
         instances = { Q.Instances["The Drowned City"] }
     },
     {
@@ -6565,12 +4345,7 @@ Q.Quests = {
         name = "Take Two With Water",
         suggestedLevel = 40,
         requiredLevel = 30,
-        source = {
-            type = "npc",
-            name = "Unknown",
-            zone = "Unknown",
-            location = { mapId = 0, x = 0, y = 0 },
-        },
+        source = Q.Sources[240], -- Unknown
         instances = { Q.Instances["The Drowned City"] }
     },
     {
@@ -6579,12 +4354,7 @@ Q.Quests = {
         name = "Magic of the Drowned City",
         suggestedLevel = 40,
         requiredLevel = 30,
-        source = {
-            type = "npc",
-            name = "Unknown",
-            zone = "Unknown",
-            location = { mapId = 0, x = 0, y = 0 },
-        },
+        source = Q.Sources[240], -- Unknown
         instances = { Q.Instances["The Drowned City"] }
     },
     {
@@ -6593,12 +4363,7 @@ Q.Quests = {
         name = "Ancient Gurubashi Idol",
         suggestedLevel = 40,
         requiredLevel = 30,
-        source = {
-            type = "npc",
-            name = "Mazu'kon",
-            zone = "Mulgore",
-            location = { mapId = 1412, x = 0.326, y = 0.206 },
-        },
+        source = Q.Sources[160], -- Mazu'kon
         instances = { Q.Instances["The Drowned City"] }
     },
     {
@@ -6607,12 +4372,7 @@ Q.Quests = {
         name = "The Only Good Brinescale...",
         suggestedLevel = 38,
         requiredLevel = 30,
-        source = {
-            type = "npc",
-            name = "Unknown",
-            zone = "Unknown",
-            location = { mapId = 0, x = 0, y = 0 },
-        },
+        source = Q.Sources[240], -- Unknown
         instances = { Q.Instances["The Drowned City"] }
     },
     --#endregion
@@ -6623,14 +4383,7 @@ Q.Quests = {
         name = "The Eye of Bhossca",
         suggestedLevel = 35,
         requiredLevel = 30,
-        source = {
-            type = "npc",
-            name = "Dead Drop",
-            zone = "Silverpine Forest",
-            location = { mapId = 1421, x = 0.471, y = 0.711 },
-            text =
-            "You must visit a capital city once hitting level 30 for the letter to arrive before the quest is available from Dead Drop"
-        },
+        source = Q.Sources[61], -- Dead Drop
         instances = { Q.Instances["Scarlet Monastery: Library"], Q.Instances["Scarlet Monastery: Graveyard"] }
     },
     {
@@ -6639,14 +4392,7 @@ Q.Quests = {
         name = "The Horn of Xelthos",
         suggestedLevel = 23,
         requiredLevel = 20,
-        source = {
-            type = "npc",
-            name = "Dead Drop",
-            zone = "Silverpine Forest",
-            location = { mapId = 1421, x = 0.471, y = 0.711 },
-            text =
-            "You must visit a capital city once hitting level 20 for the letter to arrive before the quest is available from Dead Drop"
-        },
+        source = Q.Sources[62], -- Dead Drop
         instances = { Q.Instances["Shadowfang Keep"] }
     },
     --#endregion

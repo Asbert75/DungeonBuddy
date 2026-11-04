@@ -426,3 +426,11 @@ Q.Instances = {
     }
     --#endregion
 }
+
+-- Unknown keys (typos) return nil; record them so Validation.lua can report them.
+Q.MissingInstanceKeys = {}
+setmetatable(Q.Instances, {
+    __index = function(_, key)
+        Q.MissingInstanceKeys[#Q.MissingInstanceKeys + 1] = tostring(key)
+    end
+})
