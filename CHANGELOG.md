@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.2] - 2026-11-05
+
+### Fixed
+
+- Fixed an issue causing level up notifications not to show properly
+
 ## [2.0.1] - 2026-11-04
 
 ### Added
