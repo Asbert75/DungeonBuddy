@@ -310,12 +310,27 @@ function QuestLog:Create()
     return self.frame
 end
 
+-- True when at least one prerequisite of the quest would be listed under it (mirrors the filters in AppendRelatedRows).
+local function HasVisibleDependency(quest)
+    for _, prerequisite in ipairs(quest.prerequisites or {}) do
+        local dependency = Q.API:GetQuestById(prerequisite.id)
+        local isHiddenBreadcrumb = Q.API:IsQuestCompleted(quest.id) and
+            prerequisite.type == Q.PrerequisiteType.BREADCRUMB
+        if dependency and not isHiddenBreadcrumb and Q.API:PlayerHasProfession(dependency.profession)
+            and not (Q:GetSetting("HideCompletedQuests") and Q.API:IsQuestCompleted(dependency.id)) then
+            return true
+        end
+    end
+    return false
+end
+
 -- Instances and main quests (the final quest of a chain) can always be collapsed; chain steps only with the setting enabled.
+-- Quests without any visible child rows have nothing to collapse.
 function QuestLog.CanCollapse(row)
     if row.isInstance or row.isGroup then
         return true
     end
-    if row.isSharedSummary or #(row.prerequisites or {}) == 0 then
+    if row.isSharedSummary or #(row.prerequisites or {}) == 0 or not HasVisibleDependency(row) then
         return false
     end
     return row.isMainQuest or Q:GetSetting("CollapseEachChainStep") and true or false

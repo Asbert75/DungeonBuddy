@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.6] - 2026-11-05
+
+### Fixed
+
+- Collapse button is now hidden when the previous quest is hidden
+
 ## [2.0.5] - 2026-11-05
 
 ### Fixed
