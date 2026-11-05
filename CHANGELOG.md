@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.12] - 2026-11-05
+
+### Added
+
+- Added 2 new quests for The Drowned City (with unknown sources)
+
 ## [2.0.11] - 2026-11-05
 
 ### Fixed

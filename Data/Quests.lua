@@ -4373,6 +4373,22 @@ Q.Quests = {
         source = Q.Sources[240], -- Unknown
         instances = { Q.Instances["The Drowned City"] }
     },
+    {
+        id = 95789,
+        name = "Shady Saltseer",
+        suggestedLevel = 40,
+        requiredLevel = 34,
+        source = Q.Sources[240], -- Unknown
+        instances = { Q.Instances["The Drowned City"] }
+    },
+    {
+        id = 95791,
+        name = "The Saltseer Captain",
+        suggestedLevel = 40,
+        requiredLevel = 34,
+        source = Q.Sources[240], -- Unknown
+        instances = { Q.Instances["The Drowned City"] }
+    },
     --#endregion
     --#region Rogue Quests
     {
