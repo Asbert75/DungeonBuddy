@@ -522,7 +522,7 @@ Q.Quests = {
         faction = "Alliance",
         name = "Knowledge in the Deeps",
         suggestedLevel = 23,
-        requiredLevel = 10,
+        requiredLevel = 18,
         source = Q.Sources[88], -- Gerrig Bonegrip
         instances = { Q.Instances["Blackfathom Deeps"] },
     },

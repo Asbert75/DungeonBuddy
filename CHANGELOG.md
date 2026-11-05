@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.7] - 2026-11-05
+
+### Fixed
+
+- Updated the level requirement of "Knowledge in the Deep" to level 18 (was 10 in Classic)
+
 ## [2.0.6] - 2026-11-05
 
 ### Fixed
