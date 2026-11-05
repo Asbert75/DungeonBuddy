@@ -560,12 +560,12 @@ function Q.API:IsQuestAvailableToLevel(questId, playerInfo)
     return true
 end
 
-function Q.API:IsQuestAvailable(questId)
+function Q.API:IsQuestAvailable(questId, newLevel)
     if not self:GetQuestById(questId) then
         return false
     end
 
-    local playerInfo = Q.API:GetPlayerInfo()
+    local playerInfo = newLevel and { level = newLevel } or Q.API:GetPlayerInfo()
     local quest = self:GetQuestById(questId)
 
     return

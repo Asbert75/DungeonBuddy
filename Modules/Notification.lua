@@ -47,7 +47,12 @@ function Notification:LevelUpEventHandler(_, newLevel)
     self.queueIndex = 1
 
     for _, quest in ipairs(quests) do
-        if ((Q:GetSetting("ShowNotificationForAllQuests") and quest.instances and #quest.instances > 0) or Q.API:IsInstanceQuestChainStart(quest.id)) and quest.requiredLevel == newLevel and Q.API:IsQuestAvailable(quest.id) then
+        if (
+                (Q:GetSetting("ShowNotificationForAllQuests") and quest.instances and #quest.instances > 0)
+                or 
+                Q.API:IsInstanceQuestChainStart(quest.id)
+            ) and quest.requiredLevel == newLevel and Q.API:IsQuestAvailable(quest.id, newLevel)
+            then
             table.insert(self.queue, quest)
 
             if Q:GetSetting("AutoWaypoint") then
