@@ -256,7 +256,7 @@ Q.Quests = {
         source = Q.Sources[99], -- Gryan Stoutmantle
     },
     {
-        id = 155,
+        id = 132,
         faction = "Alliance",
         name = "The Defias Brotherhood (2/7)",
         suggestedLevel = 18,
@@ -264,23 +264,12 @@ Q.Quests = {
         prerequisites = {
             { id = 65, type = Q.PrerequisiteType.CHAIN }
         },
-        source = Q.Sources[99], -- Gryan Stoutmantle
-    },
-    {
-        id = 132,
-        faction = "Alliance",
-        name = "The Defias Brotherhood (3/7)",
-        suggestedLevel = 18,
-        requiredLevel = 14,
-        prerequisites = {
-            { id = 155, type = Q.PrerequisiteType.CHAIN }
-        },
         source = Q.Sources[252], -- Wiley the Black
     },
     {
         id = 135,
         faction = "Alliance",
-        name = "The Defias Brotherhood (4/7)",
+        name = "The Defias Brotherhood (3/7)",
         suggestedLevel = 18,
         requiredLevel = 14,
         prerequisites = {
@@ -291,7 +280,7 @@ Q.Quests = {
     {
         id = 141,
         faction = "Alliance",
-        name = "The Defias Brotherhood (5/7)",
+        name = "The Defias Brotherhood (4/7)",
         suggestedLevel = 18,
         requiredLevel = 14,
         prerequisites = {
@@ -302,13 +291,37 @@ Q.Quests = {
     {
         id = 142,
         faction = "Alliance",
-        name = "The Defias Brotherhood (6/7)",
+        name = "The Defias Brotherhood (5/7)",
         suggestedLevel = 18,
         requiredLevel = 14,
         prerequisites = {
             { id = 141, type = Q.PrerequisiteType.CHAIN }
         },
         source = Q.Sources[99], -- Gryan Stoutmantle
+    },
+    {
+        id = 155,
+        faction = "Alliance",
+        name = "The Defias Brotherhood (6/7)",
+        suggestedLevel = 18,
+        requiredLevel = 14,
+        prerequisites = {
+            { id = 142, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = Q.Sources[280], -- The Defias Traitor
+        instances = { Q.Instances["The Deadmines"] },
+    },
+    {
+        id = 166,
+        faction = "Alliance",
+        name = "The Defias Brotherhood (7/7)",
+        suggestedLevel = 18,
+        requiredLevel = 14,
+        prerequisites = {
+            { id = 155, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = Q.Sources[99], -- Gryan Stoutmantle
+        instances = { Q.Instances["The Deadmines"] },
     },
     {
         id = 168,
@@ -356,18 +369,6 @@ Q.Quests = {
         suggestedLevel = 16,
         requiredLevel = 16,
         source = Q.Sources[5], -- An Unsent Letter
-        instances = { Q.Instances["The Deadmines"] },
-    },
-    {
-        id = 166,
-        faction = "Alliance",
-        name = "The Defias Brotherhood (7/7)",
-        suggestedLevel = 18,
-        requiredLevel = 14,
-        prerequisites = {
-            { id = 142, type = Q.PrerequisiteType.CHAIN }
-        },
-        source = Q.Sources[99], -- Gryan Stoutmantle
         instances = { Q.Instances["The Deadmines"] },
     },
     --#endregion

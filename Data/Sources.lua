@@ -1477,7 +1477,7 @@ Q.Sources = {
         type = "npc",
         name = "Shoni the Shilent",
         zone = "Stormwind City",
-        location = { mapId = 1453, x = 0.55, y = 0.13 }
+        location = { mapId = 1453, x = 0.623, y = 0.341 }
     },
     [208] = {
         id = 208,
@@ -1795,7 +1795,7 @@ Q.Sources = {
         type = "npc",
         name = "Wilder Thistlenettle",
         zone = "Stormwind City",
-        location = { mapId = 1453, x = 0.65, y = 0.21 }
+        location = { mapId = 1453, x = 0.682, y = 0.436 }
     },
     [252] = {
         id = 252,
@@ -2002,6 +2002,13 @@ Q.Sources = {
         name = "Brandur Ironhammer",
         zone = "Ironforge",
         location = { mapId = 1455, x = 0.242, y = 0.068 }
+    },
+    [280] = {
+        id = 280,
+        type = "npc",
+        name = "The Defias Traitor",
+        zone = "Ironforge",
+        location = { mapId = 1436, x = 0.574, y = 0.474 }
     }
 }
 

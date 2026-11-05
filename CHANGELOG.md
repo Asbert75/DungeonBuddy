@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.8] - 2026-11-05
+
+### Fixed
+
+- Update quest giver locations for Deadmines quests
+- Corrected The Defias Brotherhood chain quest ids
+
 ## [2.0.7] - 2026-11-05
 
 ### Fixed
