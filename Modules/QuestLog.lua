@@ -600,7 +600,8 @@ end
 
 local function UpdateWaypointButton(frame)
     local row = frame.row
-    if not row.isGroup and not row.isSharedSummary and (row.isInstance or Q.API:IsQuestAvailable(row.id)) then
+    if not row.isGroup and not row.isSharedSummary
+        and (row.isInstance or (Q.API:IsQuestAvailable(row.id) and Q.API:HasWaypointSource(row))) then
         frame.waypointButton:Show()
     else
         frame.waypointButton:Hide()

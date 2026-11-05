@@ -338,6 +338,8 @@ local function UpdateClassIcon(questClass, questProfession)
 end
 
 local function UpdateActionButtons()
+    local hasWaypoint = Q.API:HasWaypointSource(Notification.quest)
+    Notification.waypointButton:SetShown(hasWaypoint)
     Notification.waypointButton.label:SetText("Set Waypoint")
     Notification.waypointButton:SetColor(Q.Theme.WaypointColor)
 
@@ -353,7 +355,7 @@ local function UpdateActionButtons()
         Notification.previousQuestButton:Show()
     end
 
-    if Q:GetSetting("AutoWaypoint") then
+    if hasWaypoint and Q:GetSetting("AutoWaypoint") then
         Notification.waypointButton.label:SetText("Waypoint Set")
         Notification.waypointButton:SetColor(Q.Theme.Status.Success)
     end

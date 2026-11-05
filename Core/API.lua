@@ -314,9 +314,21 @@ function Q.API:SetWaypoint(entity, isInstance)
 
     local added = false
     for _, source in ipairs(self:GetQuestSources(entity)) do
-        added = AddWaypoint(source.location, self:GetWaypointText(entity, source)) or added
+        if not source.instance then
+            added = AddWaypoint(source.location, self:GetWaypointText(entity, source)) or added
+        end
     end
     return added
+end
+
+-- Quests whose sources are all in-instance get no waypoint button; one outside source is enough to show it.
+function Q.API:HasWaypointSource(quest, faction)
+    for _, source in ipairs(self:GetQuestSources(quest, faction)) do
+        if not source.instance then
+            return true
+        end
+    end
+    return false
 end
 
 function Q.API:GetSourceIcon(source, faction, hasMultipleSources)

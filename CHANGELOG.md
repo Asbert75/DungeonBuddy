@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.9] - 2026-11-05
+
+### Changed
+
+- The Find Source and Set Waypoint buttons no longer show for quests that are located inside the dungeon to stop confusion
+
 ## [2.0.8] - 2026-11-05
 
 ### Fixed

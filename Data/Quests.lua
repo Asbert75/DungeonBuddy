@@ -309,7 +309,6 @@ Q.Quests = {
             { id = 142, type = Q.PrerequisiteType.CHAIN }
         },
         source = Q.Sources[280], -- The Defias Traitor
-        instances = { Q.Instances["The Deadmines"] },
     },
     {
         id = 166,
