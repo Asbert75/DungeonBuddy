@@ -356,7 +356,7 @@ Q.Quests = {
         suggestedLevel = 14,
         requiredLevel = 14,
         prerequisites = {
-            { id = 142, type = Q.PrerequisiteType.CHAIN }
+            { id = 155, type = Q.PrerequisiteType.CHAIN }
         },
         source = Q.Sources[202], -- Scout Riell
         instances = { Q.Instances["The Deadmines"] },
