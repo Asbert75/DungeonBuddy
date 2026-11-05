@@ -60,7 +60,6 @@ Q.Quests = {
         suggestedLevel = 15,
         requiredLevel = 9,
         source = Q.Sources[59], -- Dark Iron Map
-        instances = { Q.Instances["Hall of Thanes"] }
     },
     {
         id = 98423,

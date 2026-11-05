@@ -424,7 +424,7 @@ Q.Sources = {
         name = "Dark Iron Map",
         itemId = 274268,
         zone = "Dun Morogh",
-        location = { mapId = 1426, x = 0.65, y = 0.58 },
+        location = { mapId = 1426, x = 0.778, y = 0.626 },
         text = "Dropped by Captain Beld and Dark Iron spies"
     },
     [60] = {
