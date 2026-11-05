@@ -545,7 +545,6 @@ Q.Quests = {
         suggestedLevel = 24,
         requiredLevel = 18,
         source = Q.Sources[17], -- Argos Nightwhisper
-        instances = { Q.Instances["Blackfathom Deeps"] },
     },
     {
         id = 1199,

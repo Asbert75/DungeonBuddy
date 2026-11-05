@@ -119,7 +119,7 @@ Q.Sources = {
         type = "npc",
         name = "Argos Nightwhisper",
         zone = "Stormwind City",
-        location = { mapId = 1453, x = 0.21, y = 0.56 }
+        location = { mapId = 1453, x = 0.36, y = 0.66 }
     },
     [18] = {
         id = 18,
