@@ -22,6 +22,8 @@ local function GetRowMetrics()
     return rowHeight, rowHeight + instanceExtra, gap
 end
 local CONTAINER_WIDTH = 450
+local MIN_WIDTH = 250
+local MIN_HEIGHT = 200
 local QuestStatusColors = {
     completed = "QuestColorCompleted",
     inProgress = "QuestColorInProgress",
@@ -32,8 +34,12 @@ local QuestStatusColors = {
 function QuestLog:ResetPosition()
     Q:SetSetting("QuestLogFrame.x", 750)
     Q:SetSetting("QuestLogFrame.y", 0)
+    Q:SetSetting("QuestLogFrame.width", nil)
+    Q:SetSetting("QuestLogFrame.height", nil)
     if self.frame then
+        self.frame:SetSize(CONTAINER_WIDTH, 550)
         Q:SetPixelPerfectCenterPoint(self.frame, 750, 0)
+        self:RefreshAndPopulate()
     end
 end
 
@@ -193,6 +199,51 @@ function QuestLog:Create()
     self.contentContainer:SetScrollChild(self.scrollChild)
     self.contentContainer:SetScript("OnSizeChanged", function(self, width)
         QuestLog.scrollChild:SetWidth(width)
+        for _, rowFrame in pairs(QuestLog._frames or {}) do
+            rowFrame:SetWidth(width - 2)
+            if rowFrame.titleFrame then
+                rowFrame.titleFrame:SetWidth(width)
+            end
+        end
+    end)
+
+    --------------------------------------------------
+    -- Resize Grip
+    --------------------------------------------------
+    self.frame:SetResizable(true)
+    if self.frame.SetResizeBounds then
+        self.frame:SetResizeBounds(MIN_WIDTH, MIN_HEIGHT)
+    else
+        self.frame:SetMinResize(MIN_WIDTH, MIN_HEIGHT)
+    end
+    local savedWidth = Q:GetSetting("QuestLogFrame.width")
+    local savedHeight = Q:GetSetting("QuestLogFrame.height")
+    if savedWidth and savedHeight then
+        self.frame:SetSize(math.max(MIN_WIDTH, savedWidth), math.max(MIN_HEIGHT, savedHeight))
+    end
+
+    local grip = CreateFrame("Button", nil, self.frame)
+    grip:SetSize(16, 16)
+    grip:SetPoint("BOTTOMRIGHT", self.frame, "BOTTOMRIGHT", -2, 2)
+    grip:SetFrameLevel(self.contentContainer:GetFrameLevel() + 10)
+    grip:SetNormalTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up")
+    grip:SetHighlightTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Highlight")
+    grip:SetPushedTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Down")
+    grip:SetScript("OnMouseDown", function()
+        QuestLog.frame:StartSizing("BOTTOMRIGHT")
+    end)
+    grip:SetScript("OnMouseUp", function()
+        local f = QuestLog.frame
+        f:StopMovingOrSizing()
+        f:SetUserPlaced(false)
+        local x, y = f:GetCenter()
+        local centerX, centerY = UIParent:GetCenter()
+        Q:SetSetting("QuestLogFrame.x", Q:PixelPerfect(x - centerX))
+        Q:SetSetting("QuestLogFrame.y", Q:PixelPerfect(y - centerY))
+        Q:SetPixelPerfectCenterPoint(f, Q:GetSetting("QuestLogFrame.x"), Q:GetSetting("QuestLogFrame.y"))
+        Q:SetSetting("QuestLogFrame.width", f:GetWidth())
+        Q:SetSetting("QuestLogFrame.height", f:GetHeight())
+        QuestLog:RefreshAndPopulate()
     end)
 
     local scrollBar = _G[self.contentContainer:GetName() .. "ScrollBar"]
