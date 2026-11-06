@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.13] - 2026-011-06
+
+### Added
+
+- Added breadcrumb quest for Excavation Site: Wetlands quest Lost in the Thicket Things
+- Added new Ruins of Lordaeron chains
+
+### Changed
+
+- Updated auto reminder quest cooldown from 60 seconds to 15 minutes
+
 ## [2.0.12] - 2026-11-05
 
 ### Added

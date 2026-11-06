@@ -2009,6 +2009,27 @@ Q.Sources = {
         name = "The Defias Traitor",
         zone = "Ironforge",
         location = { mapId = 1436, x = 0.574, y = 0.474 }
+    },
+    [281] = {
+        id = 281,
+        type = "npc",
+        name = "Llana",
+        zone = "Ashenvale",
+        location = { mapId = 1440, x = 0.035, y = 0.048 }
+    },
+    [282] = {
+        id = 282,
+        type = "npc",
+        name = "Deathguard Linnea",
+        zone = "Ashenvale",
+        location = { mapId = 1420, x = 0.656, y = 0.602 }
+    },
+    [283] = {
+        id = 283,
+        type = "npc",
+        name = "Apothecary Renferrel",
+        zone = "Ruins of Lordaeron",
+        location = { mapId = 1421, x = 0.428, y = 0.408 }
     }
 }
 

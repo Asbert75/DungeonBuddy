@@ -3,7 +3,7 @@ local AutoReminder = Q.Addon:NewModule("AutoReminder", "AceEvent-3.0")
 Q.AutoReminder = AutoReminder
 AutoReminder.lastNotifiedAt = {}
 
-local REMINDER_COOLDOWN_SECONDS = 60
+local REMINDER_COOLDOWN_SECONDS = 900
 
 function AutoReminder:ZoneChangedEventHandler()
     local now = GetTime()

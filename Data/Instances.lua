@@ -144,7 +144,7 @@ Q.Instances = {
     },
     ["The Drowned City"] = {
         id = 30,
-        name = "The Drowned City",
+        name = "The Drowned City (INCOMPLETE)",
         continent = "Eastern Kingdoms",
         zone = "Stranglethorn Vale",
         location = { mapId = 1434, x = 0.214, y = 0.296 },
@@ -184,7 +184,7 @@ Q.Instances = {
     },
     ["Krol'dok Stronghold"] = {
         id = 32,
-        name = "Krol'dok Stronghold",
+        name = "Krol'dok Stronghold (INCOMPLETE)",
         continent = "Eastern Kingdoms",
         zone = "Riverglades",
         location = { mapId = 2548, x = 0.448, y = 0.27 },
@@ -214,7 +214,7 @@ Q.Instances = {
     },
     ["Alcaz Prison"] = {
         id = 33,
-        name = "Alcaz Prison",
+        name = "Alcaz Prison (INCOMPLETE)",
         continent = "Kalimdor",
         zone = "Dustwallow Marsh",
         location = { mapId = 1445, x = 0.755, y = 0.178 },
@@ -254,7 +254,7 @@ Q.Instances = {
     },
     ["Blackmaw Hold"] = {
         id = 34,
-        name = "Blackmaw Hold",
+        name = "Blackmaw Hold (INCOMPLETE)",
         continent = "Kalimdor",
         zone = "Azshara",
         location = { mapId = 1447, x = 0.393, y = 0.322 },
@@ -274,7 +274,7 @@ Q.Instances = {
     },
     ["Shaper's Terrace"] = {
         id = 35,
-        name = "Shaper's Terrace",
+        name = "Shaper's Terrace (INCOMPLETE)",
         continent = "Kalimdor",
         zone = "Un'Goro Crater",
         location = { mapId = 1449, x = 0.329, y = 0.197 },
@@ -376,7 +376,7 @@ Q.Instances = {
     },
     ["The Barrow Deeps"] = {
         id = 39,
-        name = "The Barrow Deeps",
+        name = "The Barrow Deeps (INCOMPLETE)",
         continent = "Kalimdor",
         zone = "Mount Hyjal",
         location = { mapId = 2482, x = 0.36, y = 0.68 },
@@ -386,7 +386,7 @@ Q.Instances = {
     },
     ["Hyjal Summit"] = {
         id = 40,
-        name = "Hyjal Summit",
+        name = "Hyjal Summit (INCOMPLETE)",
         continent = "Kalimdor",
         zone = "Mount Hyjal",
         location = { mapId = 2482, x = 0.36, y = 0.68 },

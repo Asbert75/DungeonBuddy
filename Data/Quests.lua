@@ -190,19 +190,76 @@ Q.Quests = {
         source = Q.Sources[166], -- Morbin Lightbane
         instances = { Q.Instances["Ruins of Lordaeron"] }
     },
+
+    {
+        id = 447,
+        faction = "Horde",
+        name = "A Recipe For Death (1/3)",
+        suggestedLevel = 22,
+        requiredLevel = 15,
+        source = Q.Sources[283], -- Apothecary Renferrel
+    },
+    {
+        id = 450,
+        faction = "Horde",
+        name = "A Recipe For Death (2/3)",
+        prerequisites = {
+            { id = 447, type = Q.PrerequisiteType.CHAIN }
+        },
+        suggestedLevel = 22,
+        requiredLevel = 15,
+        source = Q.Sources[153], -- Master Apothecary Faranell
+    },
+    {
+        id = 451,
+        faction = "Horde",
+        name = "A Recipe For Death (3/3)",
+        prerequisites = {
+            { id = 450, type = Q.PrerequisiteType.CHAIN }
+        },
+        suggestedLevel = 22,
+        requiredLevel = 15,
+        source = Q.Sources[283], -- Apothecary Renferrel
+    },
+
     {
         id = 95216,
         faction = "Horde",
         name = "The New Plague",
+        prerequisites = {
+            { id = 451, type = Q.PrerequisiteType.CHAIN }
+        },
         suggestedLevel = 22,
         requiredLevel = 15,
         source = Q.Sources[224], -- Theodore Griffs
         instances = { Q.Instances["Ruins of Lordaeron"] }
     },
     {
+        id = 356,
+        faction = "Horde",
+        name = "Rear Guard Patrol",
+        suggestedLevel = 11,
+        requiredLevel = 6,
+        source = Q.Sources[282], -- Deathguard Linnea
+    },
+    {
+        id = 99156,
+        faction = "Horde",
+        name = "Rear Guard Patrol",
+        prerequisites = {
+            { id = 356, type = Q.PrerequisiteType.CHAIN }
+        },
+        suggestedLevel = 13,
+        requiredLevel = 6,
+        source = Q.Sources[282], -- Deathguard Linnea
+    },
+    {
         id = 92422,
         faction = "Horde",
         name = "The Wrath of Rath'mael",
+        prerequisites = {
+            { id = 99156, type = Q.PrerequisiteType.CHAIN }
+        },
         suggestedLevel = 22,
         requiredLevel = 15,
         source = Q.Sources[64], -- Deathguard Kristof
@@ -808,11 +865,22 @@ Q.Quests = {
         instances = { Q.Instances["Excavation Site: Wetlands"] },
     },
     {
+        id = 95737,
+        faction = "Alliance",
+        name = "Seeking Caitlin",
+        suggestedLevel = 31,
+        requiredLevel = 24,
+        source = Q.Sources[281], -- Llana
+    },
+    {
         id = 95647,
         faction = "Alliance",
         name = "Lost in the Thicket Things",
         suggestedLevel = 31,
         requiredLevel = 24,
+        prerequisites = {
+            { id = 95737, type = Q.PrerequisiteType.BREADCRUMB }
+        },
         source = Q.Sources[38], -- Caitlin Grassman
         instances = { Q.Instances["Excavation Site: Wetlands"] },
     },
