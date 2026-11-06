@@ -858,6 +858,36 @@ Q.Quests = {
         instances = { Q.Instances["Excavation Site: Wetlands"] },
     },
     {
+        id = 276,
+        faction = "Alliance",
+        name = "Tramping Paws",
+        suggestedLevel = 21,
+        requiredLevel = 20,
+        source = Q.Sources[192], -- Rethiel the Greenwarden
+    },
+    {
+        id = 277,
+        faction = "Alliance",
+        name = "Fire Taboo",
+        suggestedLevel = 23,
+        requiredLevel = 20,
+        prerequisites = {
+            { id = 276, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = Q.Sources[192], -- Rethiel the Greenwarden
+    },
+    {
+        id = 275,
+        faction = "Alliance",
+        name = "Blisters on the Land",
+        suggestedLevel = 26,
+        requiredLevel = 20,
+        prerequisites = {
+            { id = 277, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = Q.Sources[192], -- Rethiel the Greenwarden
+    },
+    {
         id = 95772,
         faction = "Alliance",
         name = "Songblade Search",
@@ -872,6 +902,9 @@ Q.Quests = {
         name = "Horrors in the Highland",
         suggestedLevel = 24,
         requiredLevel = 24,
+        prerequisites = {
+            { id = 275, type = Q.PrerequisiteType.CHAIN }
+        },
         source = Q.Sources[192], -- Rethiel the Greenwarden
         instances = { Q.Instances["Excavation Site: Wetlands"] },
     },

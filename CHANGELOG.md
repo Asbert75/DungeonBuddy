@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.15] - 2026-11-06
+
+### Fixed
+
+- Added quest line required for Horror in the Highlands (Excavation Site: Wetlands)
+
 ## [2.0.14] - 2026-11-06
 
 ### Changed

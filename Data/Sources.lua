@@ -492,7 +492,7 @@ Q.Sources = {
         type = "npc",
         name = "Dorin Songblade",
         zone = "Redridge Mountains",
-        location = { mapId = 1433, x = 0.308, y = 0.466 }
+        location = { mapId = 1433, x = 0.257, y = 0.465 }
     },
     [69] = {
         id = 69,
@@ -728,7 +728,7 @@ Q.Sources = {
         type = "npc",
         name = "Guard Berton",
         zone = "Redridge Mountains",
-        location = { mapId = 1433, x = 0.26, y = 0.46 }
+        location = { mapId = 1433, x = 0.212, y = 0.467 }
     },
     [102] = {
         id = 102,
