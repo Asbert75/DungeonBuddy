@@ -838,9 +838,20 @@ Q.Quests = {
         instances = { Q.Instances["Excavation Site: Wetlands"] },
     },
     {
+        id = 484,
+        faction = "Alliance",
+        name = "Young Crocolisk Skins",
+        suggestedLevel = 22,
+        requiredLevel = 18,
+        source = Q.Sources[117], -- James Halloran
+    },
+    {
         id = 98815,
         faction = "Alliance",
         name = "Highland Hides",
+        prerequisites = {
+            { id = 484, type = Q.PrerequisiteType.CHAIN }
+        },
         suggestedLevel = 28,
         requiredLevel = 24,
         source = Q.Sources[117], -- James Halloran

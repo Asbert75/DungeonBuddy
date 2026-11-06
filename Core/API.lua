@@ -467,7 +467,7 @@ function Q.API:GetRelevantQuestsForZone()
             playerInfo.level <= (quest.suggestedLevel or quest.requiredLevel or 0) + 3 -- Allow a buffer of 3 levels above the suggested level before it doesn't count as "relevant" anymore
         then
             for _, source in ipairs(self:GetQuestSources(quest, playerInfo.faction)) do
-                if source.zone == zone or (source.instance and source.instance.name == zone) then
+                if not source.instance and source.zone == zone then
                     table.insert(quests, quest)
                     break
                 end

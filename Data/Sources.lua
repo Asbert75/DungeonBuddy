@@ -1244,7 +1244,8 @@ Q.Sources = {
         type = "npc",
         name = "Nikova Raskol",
         zone = "Stormwind City",
-        location = { mapId = 1453, x = 0.73, y = 0.50 }
+        text = "Patrols around the Old Town",
+        location = { mapId = 1453, x = 0.75, y = 0.62 }
     },
     [175] = {
         id = 175,

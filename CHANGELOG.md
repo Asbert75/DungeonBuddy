@@ -7,7 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [2.0.13] - 2026-011-06
+## [2.0.14] - 2026-11-06
+
+### Changed
+
+- Notifications no longer automatically pop up for quests started within a dungeon
+
+### Fixed
+
+- Added the missing Young Crocolisk Skins prerequisite for Highlands Hides in Excavation Site: Wetlands
+- Updated Nikova Raskol location and info text
+
+## [2.0.13] - 2026-11-06
 
 ### Added
 
