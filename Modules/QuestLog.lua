@@ -2,6 +2,29 @@ local _, Q = ...
 local QuestLog = Q.Addon:NewModule("QuestLog", "AceEvent-3.0", "AceConsole-3.0")
 Q.QuestLog = QuestLog
 
+local breadcrumbQuestsToHide = {}
+
+local function IsBreadcrumbQuestHidden(questId)
+    return breadcrumbQuestsToHide[questId] == true
+end
+
+local function UpdateBreadcrumbQuestsToHide()
+    wipe(breadcrumbQuestsToHide)
+    for _, quest in ipairs(Q.Quests) do
+        local isInQuestLog
+        for _, prerequisite in ipairs(quest.prerequisites or {}) do
+            if prerequisite.type == Q.PrerequisiteType.BREADCRUMB then
+                if isInQuestLog == nil then
+                    isInQuestLog = Q.API:IsQuestInQuestLog(quest.id)
+                end
+                if isInQuestLog then
+                    breadcrumbQuestsToHide[prerequisite.id] = true
+                end
+            end
+        end
+    end
+end
+
 local DB_ROW_HEIGHT = Q.Theme.FontSize.XL + 12
 local INSTANCE_ROW_EXTRA_HEIGHT = 14
 local ROW_GAP = 2
@@ -316,7 +339,8 @@ local function HasVisibleDependency(quest)
         local dependency = Q.API:GetQuestById(prerequisite.id)
         local isHiddenBreadcrumb = Q.API:IsQuestCompleted(quest.id) and
             prerequisite.type == Q.PrerequisiteType.BREADCRUMB
-        if dependency and not isHiddenBreadcrumb and Q.API:PlayerHasProfession(dependency.profession)
+        if dependency and not isHiddenBreadcrumb and not IsBreadcrumbQuestHidden(dependency.id)
+            and Q.API:PlayerHasProfession(dependency.profession)
             and not (Q:GetSetting("HideCompletedQuests") and Q.API:IsQuestCompleted(dependency.id)) then
             return true
         end
@@ -413,7 +437,7 @@ local function AppendRelatedRows(quest, depth, visited, parentCollapseKey)
     visited = visited or { [quest.id] = true }
 
     local function AddDependency(dependency, dependencyType)
-        if not Q.API:PlayerHasProfession(dependency.profession) then
+        if IsBreadcrumbQuestHidden(dependency.id) or not Q.API:PlayerHasProfession(dependency.profession) then
             return
         end
 
@@ -1243,15 +1267,17 @@ local function AppendInstanceRows(entry)
     end
 
     for _, quest in ipairs(entry.quests) do
-        local questRow = CopyRow(quest)
-        questRow.isMainQuest = true
-        questRow.collapseKey = string.format("instance:%s/quest:%s", tostring(instance.id), tostring(quest.id))
-        local questIsCollapsed = IsRowCollapsed(questRow)
-        local isHidden = Q:GetSetting("HideCompletedQuests") and Q.API:IsQuestCompleted(quest.id)
-        if not isHidden then
-            table.insert(QuestLog.rows, questRow)
-            if not questIsCollapsed then
-                AppendRelatedRows(quest, 0, nil, questRow.collapseKey)
+        if not IsBreadcrumbQuestHidden(quest.id) then
+            local questRow = CopyRow(quest)
+            questRow.isMainQuest = true
+            questRow.collapseKey = string.format("instance:%s/quest:%s", tostring(instance.id), tostring(quest.id))
+            local questIsCollapsed = IsRowCollapsed(questRow)
+            local isHidden = Q:GetSetting("HideCompletedQuests") and Q.API:IsQuestCompleted(quest.id)
+            if not isHidden then
+                table.insert(QuestLog.rows, questRow)
+                if not questIsCollapsed then
+                    AppendRelatedRows(quest, 0, nil, questRow.collapseKey)
+                end
             end
         end
     end
@@ -1272,16 +1298,23 @@ local function GetVisibleInstanceEntries(playerInfo)
             if Q:GetSetting("ShowAllQuestsForAvailableInstance") then
                 quests = {}
                 for _, quest in ipairs(Q.API:GetQuestsByInstanceId(instance.id)) do
-                    if Q.API:PlayerHasProfession(quest.profession) then
+                    if not IsBreadcrumbQuestHidden(quest.id) and Q.API:PlayerHasProfession(quest.profession) then
                         table.insert(quests, quest)
                     end
                 end
             else
                 quests = Q.API:GetAvailableQuestsByInstanceId(instance.id, playerInfo)
+                for index = #quests, 1, -1 do
+                    if IsBreadcrumbQuestHidden(quests[index].id) then
+                        table.remove(quests, index)
+                    end
+                end
             end
 
-            Q.API:SortQuests(quests, questSort.Key, questSort.Ascending)
-            table.insert(entries, { instance = instance, quests = quests })
+            if #quests > 0 then
+                Q.API:SortQuests(quests, questSort.Key, questSort.Ascending)
+                table.insert(entries, { instance = instance, quests = quests })
+            end
         end
     end
 
@@ -1333,6 +1366,7 @@ function QuestLog:RefreshAndPopulate()
     local totalOffset = 0
     local playerInfo = Q.API:GetPlayerInfo()
 
+    UpdateBreadcrumbQuestsToHide()
     BuildRows(GetVisibleInstanceEntries(playerInfo))
     CreateOrUpdateNoQuestsFoundFrame()
 

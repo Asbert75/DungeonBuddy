@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.16] - 2026-11-06
+
+### Fixed
+
+- Updated location for High Sorcerer Andromath
+- Updated Elemental Aid to support faction specific versions so that dwarf shamans version is correctly reflected in the log
+
+### Changed
+
+- Breadcrumb quests are now hidden in the tracker when the player has the followup quest in their quest log
+
+### Added
+
+- Added new WoW Forever Deadmines questline Destruction in Deadmines
+
 ## [2.0.15] - 2026-11-06
 
 ### Fixed

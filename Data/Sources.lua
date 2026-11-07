@@ -799,7 +799,7 @@ Q.Sources = {
         type = "npc",
         name = "High Sorcerer Andromath",
         zone = "Stormwind City",
-        location = { mapId = 1453, x = 0.376, y = 0.816 }
+        location = { mapId = 1453, x = 0.386, y = 0.794 }
     },
     [112] = {
         id = 112,
@@ -2031,6 +2031,37 @@ Q.Sources = {
         name = "Apothecary Renferrel",
         zone = "Ruins of Lordaeron",
         location = { mapId = 1421, x = 0.428, y = 0.408 }
+    },
+    [284] = {
+        id = 284,
+        type = "npc",
+        name = "Eldrun Stormbreaker",
+        zone = "Ironforge",
+        location = { mapId = 1455, x = 0.478, y = 0.124 }
+    },
+    [285] = {
+        id = 285,
+        type = "npc",
+        faction = "Alliance",
+        name = "Alba Fairmoon",
+        zone = "Westfall",
+        location = { mapId = 1436, x = 0.525, y = 0.530 }
+    },
+    [286] = {
+        id = 286,
+        type = "npc",
+        faction = "Alliance",
+        name = "Sprite Jumpsprocket",
+        zone = "Stormwind City",
+        location = { mapId = 1453, x = 0.620, y = 0.340 }
+    },
+    [287] = {
+        id = 287,
+        type = "npc",
+        faction = "Alliance",
+        name = "Jasper Fel",
+        zone = "Stormwind City",
+        location = { mapId = 1453, x = 0.80, y = 0.70 }
     }
 }
 

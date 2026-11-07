@@ -427,6 +427,106 @@ Q.Quests = {
         source = Q.Sources[5], -- An Unsent Letter
         instances = { Q.Instances["The Deadmines"] },
     },
+    -- Toxic Soil questline (WoW Forever)
+    {
+        id = 92742,
+        faction = "Alliance",
+        name = "Testing the Wells",
+        suggestedLevel = 12,
+        requiredLevel = 9,
+        source = Q.Sources[285], -- Alba Fairmoon
+    },
+    {
+        id = 92744,
+        faction = "Alliance",
+        name = "Murloc Gills",
+        suggestedLevel = 13,
+        requiredLevel = 9,
+        prerequisites = { { id = 92742, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[285], -- Alba Fairmoon
+    },
+    {
+        id = 92745,
+        faction = "Alliance",
+        name = "The State of the Mines",
+        suggestedLevel = 15,
+        requiredLevel = 9,
+        prerequisites = { { id = 92744, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[285], -- Alba Fairmoon
+    },
+    {
+        id = 92747,
+        faction = "Alliance",
+        name = "Moonbrook Espionage",
+        suggestedLevel = 16,
+        requiredLevel = 9,
+        prerequisites = { { id = 92745, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[285], -- Alba Fairmoon
+    },
+    {
+        id = 92748,
+        faction = "Alliance",
+        name = "Explosive Consultation",
+        suggestedLevel = 16,
+        requiredLevel = 9,
+        prerequisites = { { id = 92747, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[285], -- Alba Fairmoon
+    },
+    {
+        id = 92749,
+        faction = "Alliance",
+        name = "A Dynamite Plan",
+        suggestedLevel = 16,
+        requiredLevel = 9,
+        prerequisites = { { id = 92748, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[286], -- Sprite Jumpsprocket
+    },
+    {
+        id = 92750,
+        faction = "Alliance",
+        name = "Detonation at a Distance (1/2)",
+        suggestedLevel = 17,
+        requiredLevel = 9,
+        prerequisites = { { id = 92749, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[286], -- Sprite Jumpsprocket
+    },
+    {
+        id = 92751,
+        faction = "Alliance",
+        name = "Detonation at a Distance (2/2)",
+        suggestedLevel = 17,
+        requiredLevel = 9,
+        prerequisites = { { id = 92750, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[287], -- Jasper Fel
+    },
+    {
+        id = 92752,
+        faction = "Alliance",
+        name = "Explosive Consultation (2/2)",
+        suggestedLevel = 17,
+        requiredLevel = 9,
+        prerequisites = { { id = 92751, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[286], -- Sprite Jumpsprocket
+    },
+    {
+        id = 92753,
+        faction = "Alliance",
+        name = "Destruction in Deadmines (1/2)",
+        suggestedLevel = 18,
+        requiredLevel = 9,
+        prerequisites = { { id = 92752, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[285], -- Alba Fairmoon
+    },
+    {
+        id = 92819,
+        faction = "Alliance",
+        name = "Destruction in Deadmines (2/2)",
+        suggestedLevel = 18,
+        requiredLevel = 9,
+        prerequisites = { { id = 92753, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[285], -- Alba Fairmoon
+        instances = { Q.Instances["The Deadmines"] },
+    },
     --#endregion
 
     --#region Wailing Caverns
@@ -4389,7 +4489,22 @@ Q.Quests = {
         instances = { Q.Instances["Scholomance"] }
     },
     {
+        id = 96264,
+        faction = "Alliance",
+        class = "SHAMAN",
+        name = "Elemental Aid ",
+        suggestedLevel = 33,
+        requiredLevel = 30,
+        prerequisites = {
+            { id = 94789, type = Q.PrerequisiteType.CHAIN }
+        },
+        sources = {
+            Q.Sources[284] -- Eldrun Stormbreaker
+        }
+    },
+    {
         id = 79360,
+        faction = "Horde",
         class = "SHAMAN",
         name = "Elemental Aid ",
         suggestedLevel = 33,
