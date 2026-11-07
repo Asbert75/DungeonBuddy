@@ -29,19 +29,17 @@ function Q:CreateMinimapButton()
         end,
     })
 
-    LibDBIcon:Register(
-        "DungeonBuddy",
-        self.dataObject,
-        self.DB.profile.MinimapButton
-    )
-
-    if Q:GetSetting("MinimapButton.Hide") then
-        LibDBIcon:Hide("DungeonBuddy")
-    end
+    local minimapSettings = self.DB.profile.MinimapButton
+    -- LibDBIcon checks the lowercase `hide` field at PLAYER_LOGIN. Keep it in
+    -- sync with DungeonBuddy's existing setting before registering the button.
+    minimapSettings.hide = Q:GetSetting("MinimapButton.Hide") and true or false
+    LibDBIcon:Register("DungeonBuddy", self.dataObject, minimapSettings)
 end
 
 function Q.MinimapButton:SetHidden(hidden)
+    hidden = hidden and true or false
     Q:SetSetting("MinimapButton.Hide", hidden)
+    Q.DB.profile.MinimapButton.hide = hidden
     if hidden then
         LibDBIcon:Hide("DungeonBuddy")
     else
