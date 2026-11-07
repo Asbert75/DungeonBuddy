@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.18] - 2026-11-07
+
+### Fixed
+
+- Removed dungeon status for quest 'The Day After' which is just a prequest
+- Corrected the location of Brother Crowley in SW
+
 ## [2.0.17] - 2026-11-07
 
 ### Fixed

@@ -263,7 +263,7 @@ Q.Sources = {
         type = "npc",
         name = "Brother Crowley",
         zone = "Stormwind City",
-        location = { mapId = 1453, x = 0.432, y = 0.242 }
+        location = { mapId = 1453, x = 0.52, y = 0.47 }
     },
     [38] = {
         id = 38,
@@ -2062,6 +2062,14 @@ Q.Sources = {
         name = "Jasper Fel",
         zone = "Stormwind City",
         location = { mapId = 1453, x = 0.80, y = 0.70 }
+    },
+    [288] = {
+        id = 288,
+        type = "npc",
+        faction = "Alliance",
+        name = "Archmage Timear",
+        zone = "Stormwind City",
+        location = { mapId = 1416, x = 0.154, y = 0.74 }
     }
 }
 

@@ -1138,7 +1138,6 @@ Q.Quests = {
         suggestedLevel = 27,
         requiredLevel = 20,
         source = Q.Sources[93], -- Gnoarn
-        instances = { Q.Instances["Gnomeregan"] },
     },
     {
         id = 2931,
@@ -4580,6 +4579,15 @@ Q.Quests = {
         suggestedLevel = 40,
         requiredLevel = 30,
         source = Q.Sources[240], -- Unknown
+        instances = { Q.Instances["The Drowned City"] }
+    },
+    {
+        id = 97130,
+        faction = "Alliance",
+        name = "Ancient Gurubashi Idol",
+        suggestedLevel = 40,
+        requiredLevel = 34,
+        source = Q.Sources[288], -- Archmage Timear
         instances = { Q.Instances["The Drowned City"] }
     },
     {
