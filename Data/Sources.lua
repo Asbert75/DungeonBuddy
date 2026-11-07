@@ -2068,7 +2068,23 @@ Q.Sources = {
         type = "npc",
         faction = "Alliance",
         name = "Archmage Timear",
-        zone = "Stormwind City",
+        zone = "Alterac Mountains",
+        location = { mapId = 1416, x = 0.154, y = 0.74 }
+    },
+    [289] = {
+        id = 289,
+        type = "npc",
+        faction = "Alliance",
+        name = "Archmage Lan'dalock",
+        zone = "Alterac Mountains",
+        location = { mapId = 1416, x = 0.154, y = 0.74 }
+    },
+    [290] = {
+        id = 290,
+        type = "npc",
+        faction = "Alliance",
+        name = "Ranath Nightstride",
+        zone = "Alterac Mountains",
         location = { mapId = 1416, x = 0.154, y = 0.74 }
     }
 }

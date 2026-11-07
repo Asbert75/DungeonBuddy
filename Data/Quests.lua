@@ -1623,6 +1623,24 @@ Q.Quests = {
 
     --#region Razorfen Downs
     {
+        id = 97196,
+        faction = "Horde",
+        name = "The Coldbringer's Eye",
+        suggestedLevel = 41,
+        requiredLevel = 34,
+        source = Q.Sources[240], -- Unknown
+        instances = { Q.Instances["Razorfen Downs"] },
+    },
+    {
+        id = 96773,
+        faction = "Alliance",
+        name = "The Coldbringer's Eye",
+        suggestedLevel = 41,
+        requiredLevel = 34,
+        source = Q.Sources[289], -- Archmage Lan'dalock
+        instances = { Q.Instances["Razorfen Downs"] },
+    },
+    {
         id = 3341,
         faction = "Horde",
         name = "Bring the End",
@@ -4645,4 +4663,13 @@ Q.Quests = {
         instances = { Q.Instances["Shadowfang Keep"] }
     },
     --#endregion
+     {
+        id = 96771,
+        faction = "Alliance",
+        name = "Vengeance of the Highborne",
+        suggestedLevel = 45,
+        requiredLevel = 37,
+        source = Q.Sources[290], -- Ranath Nightstride
+        instances = { Q.Instances["Krol'dok Stronghold"] }
+    },
 }
