@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.20] - 2026-11-08
+
+### Fixed
+
+- The faction for quest Vorrel's Revenge is now correctly Horde-only
+
 ## [2.0.19] - 2026-11-08
 
 ### Added

@@ -1496,7 +1496,7 @@ Q.Quests = {
     --#region SM: Graveyard
     {
         id = 1051,
-        faction = nil,
+        faction = "Horde",
         name = "Vorrel's Revenge",
         suggestedLevel = 30,
         requiredLevel = 25,
