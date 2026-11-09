@@ -147,7 +147,7 @@ Q.Instances = {
         name = "The Drowned City (INCOMPLETE)",
         continent = "Eastern Kingdoms",
         zone = "Stranglethorn Vale",
-        location = { mapId = 1434, x = 0.214, y = 0.296 },
+        location = { mapId = 1434, x = 0.215, y = 0.278 },
         minLevel = 35,
         suggestedLevel = 37,
         maxLevel = 40

@@ -2086,6 +2086,22 @@ Q.Sources = {
         name = "Ranath Nightstride",
         zone = "Alterac Mountains",
         location = { mapId = 1416, x = 0.154, y = 0.74 }
+    },
+    [291] = {
+        id = 291,
+        type = "npc",
+        faction = "Alliance",
+        name = "Brother Nimetz",
+        zone = "Stranglethorn Vale",
+        location = { mapId = 1434, x = 0.378, y = 0.036 }
+    },
+    [292] = {
+        id = 292,
+        type = "npc",
+        faction = "Horde",
+        name = "Commander Aggro'gosh",
+        zone = "Stranglethorn Vale",
+        location = { mapId = 1434, x = 0.322, y = 0.288 }
     }
 }
 

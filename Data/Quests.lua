@@ -4573,6 +4573,36 @@ Q.Quests = {
 
     --#region The Drowned City
     {
+        id = 207,
+        faction = "Alliance",
+        name = "Kurzen's Mystery",
+        suggestedLevel = 38,
+        requiredLevel = 30,
+        source = Q.Sources[291], -- Brother Nimetz
+    },
+    {
+        id = 205,
+        faction = "Alliance",
+        name = "Troll Witchery",
+        prerequisites = {
+            { id = 207, type = Q.PrerequisiteType.REQUIRED }
+        },
+        suggestedLevel = 40,
+        requiredLevel = 30,
+        source = Q.Sources[291], -- Brother Nimetz
+    },
+    {
+        id = 95786,
+        faction = "Alliance",
+        name = "An Acquaintance in Southshore",
+        prerequisites = {
+            { id = 205, type = Q.PrerequisiteType.REQUIRED }
+        },
+        suggestedLevel = 40,
+        requiredLevel = 30,
+        source = Q.Sources[291], -- Brother Nimetz
+    },
+    {
         id = 95775,
         faction = "Horde",
         name = "The Drowned City",
@@ -4585,15 +4615,21 @@ Q.Quests = {
         id = 95787,
         faction = "Alliance",
         name = "Take Two With Water",
+        prerequisites = {
+            { id = 95786, type = Q.PrerequisiteType.REQUIRED }
+        },
         suggestedLevel = 40,
         requiredLevel = 30,
         source = Q.Sources[240], -- Unknown
         instances = { Q.Instances["The Drowned City"] }
     },
     {
-        id = 95778,
+        id = 95788,
         faction = "Alliance",
         name = "Magic of the Drowned City",
+        prerequisites = {
+            { id = 95786, type = Q.PrerequisiteType.REQUIRED }
+        },
         suggestedLevel = 40,
         requiredLevel = 30,
         source = Q.Sources[240], -- Unknown
@@ -4623,7 +4659,7 @@ Q.Quests = {
         name = "The Only Good Brinescale...",
         suggestedLevel = 38,
         requiredLevel = 30,
-        source = Q.Sources[240], -- Unknown
+        source = Q.Sources[292], -- Commander Aggro'gosh
         instances = { Q.Instances["The Drowned City"] }
     },
     {
@@ -4631,7 +4667,7 @@ Q.Quests = {
         name = "Shady Saltseer",
         suggestedLevel = 40,
         requiredLevel = 34,
-        source = Q.Sources[240], -- Unknown
+        source = Q.Sources[130], -- Krazek
         instances = { Q.Instances["The Drowned City"] }
     },
     {
@@ -4639,7 +4675,7 @@ Q.Quests = {
         name = "The Saltseer Captain",
         suggestedLevel = 40,
         requiredLevel = 34,
-        source = Q.Sources[240], -- Unknown
+        source = Q.Sources[130], -- Krazek
         instances = { Q.Instances["The Drowned City"] }
     },
     --#endregion
@@ -4671,5 +4707,5 @@ Q.Quests = {
         requiredLevel = 37,
         source = Q.Sources[290], -- Ranath Nightstride
         instances = { Q.Instances["Krol'dok Stronghold"] }
-    },
+    }
 }
