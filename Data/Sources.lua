@@ -2170,10 +2170,11 @@ Q.Sources = {
     },
     [301] = {
         id = 301,
-        type = "npc",
-        name = "Tunk",
+        type = "item",
+        itemId = 267137,
+        name = "Krol'dok Moulding",
         instance = Q.Instances["Krol'dok Stronghold"],
-        text = "Drops the quest-starting moulding, found inside the instance"
+        text = "Drops from Tunk inside the instance"
     },
     [302] = {
         id = 302,

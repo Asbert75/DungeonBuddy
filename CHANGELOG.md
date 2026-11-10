@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.23] - 2026-11-11
+
+### Fixed
+
+- Updated source for Krol'dok Moulding, and added prerequisite for alliance quest Eye of Mugg
+
+## [2.0.22] - 2026-11-10
+
 ### Added
 
 - Added a new icon on available quests that can be shared

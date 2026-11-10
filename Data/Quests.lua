@@ -4710,9 +4710,42 @@ Q.Quests = {
     --#endregion
     --#region Krol'dok Stronghold Prerequisites
     {
+        id = 94879,
+        faction = "Alliance",
+        name = "Scraps of Knowledge",
+        suggestedLevel = 40,
+        requiredLevel = 36,
+        source = Q.Sources[296], -- Ashe Amberhall
+    },
+    {
+        id = 94886,
+        faction = "Alliance",
+        name = "The Western Front",
+        prerequisites = {
+            { id = 94879, type = Q.PrerequisiteType.CHAIN }
+        },
+        suggestedLevel = 44,
+        requiredLevel = 38,
+        source = Q.Sources[294] -- Demar Brant
+    },
+    {
+        id = 94889,
+        faction = "Alliance",
+        name = "Carving a Path",
+        prerequisites = {
+            { id = 94886, type = Q.PrerequisiteType.CHAIN }
+        },
+        suggestedLevel = 44,
+        requiredLevel = 38,
+        source = Q.Sources[297], -- Sergeant Riftan
+    },
+    {
         id = 94890,
         faction = "Alliance",
         name = "Bring Me His Head",
+        prerequisites = {
+            { id = 94889, type = Q.PrerequisiteType.CHAIN }
+        },
         suggestedLevel = 46,
         requiredLevel = 38,
         source = Q.Sources[297], -- Sergeant Riftan
@@ -4796,6 +4829,9 @@ Q.Quests = {
         id = 94982,
         faction = "Alliance",
         name = "Eye of Mugg",
+        prerequisites = {
+            { id = 94890, type = Q.PrerequisiteType.REQUIRED }
+        },
         suggestedLevel = 45,
         requiredLevel = 40,
         source = Q.Sources[294], -- Demar Brant
@@ -4874,7 +4910,7 @@ Q.Quests = {
         name = "Krol'dok Moulding",
         suggestedLevel = 41,
         requiredLevel = 38,
-        source = Q.Sources[301], -- Tunk
+        source = Q.Sources[301], -- Krol'dok Moulding
         instances = { Q.Instances["Krol'dok Stronghold"] }
     },
     {
@@ -4883,7 +4919,7 @@ Q.Quests = {
         name = "Krol'dok Moulding",
         suggestedLevel = 41,
         requiredLevel = 38,
-        source = Q.Sources[301], -- Tunk
+        source = Q.Sources[301], -- Krol'dok Moulding
         instances = { Q.Instances["Krol'dok Stronghold"] }
     },
     {
