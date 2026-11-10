@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added a new icon on available quests that can be shared
+- Added a right-click to open in quest log option for tracker rows
+- Added Krol'dok Stronghold quests
+
+### Changed
+
+- Icons on a quest row now align to the right of the row instead of being placed after the quest name
+
 ## [2.0.21] - 2026-11-08
 
 ### Added

@@ -91,7 +91,7 @@ Q.Theme = {
     Status = {
         Success = HexToColor("#639745"),
         Error   = HexToColor("#C24439"),
-        Info    = HexToColor("#4287f5"),
+        Info    = HexToColor("#42BCF5"),
     },
     WaypointColor = HexToColor("#DDAB41"),
     DifficultyColors = {

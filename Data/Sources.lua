@@ -92,7 +92,7 @@ Q.Sources = {
         type = "npc",
         name = "Archbishop Benedictus",
         zone = "Stormwind City",
-        location = { mapId = 1453, x = 0.39, y = 0.27 }
+        location = { mapId = 1453, x = 0.503, y = 0.455 }
     },
     [14] = {
         id = 14,
@@ -379,7 +379,8 @@ Q.Sources = {
         type = "object",
         name = "Crumpled Map",
         zone = "Badlands",
-        location = { mapId = 1418, x = 0.53, y = 0.341 }
+        location = { mapId = 1418, x = 0.53, y = 0.341 },
+        text = "Found on the ground under the table, next to the quarry"
     },
     [54] = {
         id = 54,
@@ -2102,6 +2103,85 @@ Q.Sources = {
         name = "Commander Aggro'gosh",
         zone = "Stranglethorn Vale",
         location = { mapId = 1434, x = 0.322, y = 0.288 }
+    },
+    [293] = {
+        id = 293,
+        type = "npc",
+        faction = "Horde",
+        name = "Krom'rosh",
+        zone = "Riverglades",
+        location = { mapId = 2548, x = 0.40, y = 0.31 }
+    },
+    [294] = {
+        id = 294,
+        type = "npc",
+        faction = "Alliance",
+        name = "Demar Brant",
+        zone = "Riverglades",
+        location = { mapId = 2548, x = 0.666, y = 0.81 }
+    },
+    [295] = {
+        id = 295,
+        type = "npc",
+        faction = "Horde",
+        name = "Tran'gul",
+        zone = "Riverglades",
+        location = { mapId = 2548, x = 0.594, y = 0.44 }
+    },
+    [296] = {
+        id = 296,
+        type = "npc",
+        faction = "Alliance",
+        name = "Ashe Amberhall",
+        zone = "Riverglades",
+        location = { mapId = 2548, x = 0.666, y = 0.81 }
+    },
+    [297] = {
+        id = 297,
+        type = "npc",
+        faction = "Alliance",
+        name = "Sergeant Riftan",
+        zone = "Riverglades",
+        location = { mapId = 2548, x = 0.306, y = 0.49 }
+    },
+    [298] = {
+        id = 298,
+        type = "npc",
+        faction = "Alliance",
+        name = "Melanie Sable",
+        zone = "Riverglades",
+        location = { mapId = 2548, x = 0.662, y = 0.832 }
+    },
+    [299] = {
+        id = 299,
+        type = "npc",
+        faction = "Horde",
+        name = "Kreza Darkthorn",
+        zone = "Riverglades",
+        location = { mapId = 2548, x = 0.598, y = 0.46 }
+    },
+    [300] = {
+        id = 300,
+        type = "npc",
+        faction = "Alliance",
+        name = "Alphonse Dumas",
+        zone = "Riverglades",
+        location = { mapId = 2548, x = 0.644, y = 0.82 }
+    },
+    [301] = {
+        id = 301,
+        type = "npc",
+        name = "Tunk",
+        instance = Q.Instances["Krol'dok Stronghold"],
+        text = "Drops the quest-starting moulding, found inside the instance"
+    },
+    [302] = {
+        id = 302,
+        type = "npc",
+        faction = "Horde",
+        name = "Da'grosh",
+        zone = "Riverglades",
+        location = { mapId = 2548, x = 0.33, y = 0.38 }
     }
 }
 

@@ -515,7 +515,7 @@ local function UpdateClassIcon(frame)
         questClass = Q.API:GetQuestClass(frame.row)
         questProfession = frame.row.profession
     end
-    local hasClassIcon, hasProfessionIcon = Q:UpdateQuestIcons(
+    Q:UpdateQuestIcons(
         frame.titleFrame.classIcon,
         frame.titleFrame.classIconBorder,
         frame.titleFrame.professionIcon,
@@ -524,15 +524,27 @@ local function UpdateClassIcon(frame)
         questProfession,
         frame.titleFrame.title
     )
+end
 
-    local trackedIcon = frame.titleFrame.trackedIcon
-    trackedIcon:ClearAllPoints()
-    if hasProfessionIcon then
-        Q:SetPixelPerfectPoint(trackedIcon, "LEFT", frame.titleFrame.professionIcon, "RIGHT", 2, 0)
-    elseif hasClassIcon then
-        Q:SetPixelPerfectPoint(trackedIcon, "LEFT", frame.titleFrame.classIcon, "RIGHT", 2, 0)
-    else
-        Q:SetPixelPerfectPoint(trackedIcon, "LEFT", frame.titleFrame.title, "RIGHT", 2, 0)
+local function PositionQuestIcons(frame, rightInset)
+    local icons = {
+        frame.titleFrame.classIcon,
+        frame.titleFrame.professionIcon,
+        frame.titleFrame.trackedIcon,
+        frame.titleFrame.shareIcon,
+    }
+    local rightmostIcon
+    for index = #icons, 1, -1 do
+        local icon = icons[index]
+        icon:ClearAllPoints()
+        if icon:IsShown() then
+            if rightmostIcon then
+                Q:SetPixelPerfectPoint(icon, "RIGHT", rightmostIcon, "LEFT", -2, 0)
+            else
+                Q:SetPixelPerfectPoint(icon, "RIGHT", frame.titleFrame, "RIGHT", -rightInset, 0)
+            end
+            rightmostIcon = icon
+        end
     end
 end
 
@@ -644,6 +656,20 @@ local function RemoveLastUTF8Character(text)
     return string.sub(text, 1, index - 1)
 end
 
+local function IsShareIconVisibleForQuest(questId)
+    if not Q.API:IsQuestShareable(questId) then
+        return false
+    end
+
+    local quest = Q.API:GetQuestById(questId)
+    for _, prerequisite in ipairs(quest and quest.prerequisites or {}) do
+        if prerequisite.type ~= Q.PrerequisiteType.BREADCRUMB then
+            return false
+        end
+    end
+    return true
+end
+
 local function UpdateRowText(frame)
     local row = frame.row
     local pixelPerfect = Q:PixelPerfect(1)
@@ -691,11 +717,14 @@ local function UpdateRowText(frame)
 
     frame.titleFrame.trackedIcon:SetShown(isQuestRow and
         Q.API:IsQuestInQuestLog(row.id) and Q.API:IsQuestWatched(row.id))
+    frame.titleFrame.shareIcon:SetShown(isQuestRow and IsShareIconVisibleForQuest(row.id))
 
-    -- Keep the text and any icons after it clear of the right-aligned row buttons.
+    -- Keep the title and right-aligned icons clear of the row buttons.
     local rightInset = frame.collapseButton:GetWidth() + frame.waypointButton:GetWidth() + (Q.Theme.Padding.L + 4)
+    PositionQuestIcons(frame, rightInset)
     local suffixWidth = frame.titleFrame.level:GetStringWidth()
-    for _, icon in ipairs({ frame.titleFrame.classIcon, frame.titleFrame.professionIcon, frame.titleFrame.trackedIcon }) do
+    for _, icon in ipairs({ frame.titleFrame.classIcon, frame.titleFrame.professionIcon, frame.titleFrame.trackedIcon,
+        frame.titleFrame.shareIcon }) do
         if icon:IsShown() then
             suffixWidth = suffixWidth + icon:GetWidth() + 2
         end
@@ -870,6 +899,11 @@ local function ShowInstanceTooltip(frame)
     AddCountLine("Prerequisite Not Met", unavailable, Q:GetSetting("QuestColorUnavailable"))
     AddCountLine("In Quest Log", inLog, Q:GetSetting("QuestColorInProgress"))
     AddCountLine("Completed", completed, Q:GetSetting("QuestColorCompleted"))
+    if frame.collapseButton:IsShown() then
+        tooltip:AddLine(" ")
+        tooltip:AddLine("Click: Expand/collapse", Q.Theme.Text.Secondary[1], Q.Theme.Text.Secondary[2],
+            Q.Theme.Text.Secondary[3], true)
+    end
     tooltip:Show()
 end
 
@@ -928,6 +962,12 @@ local function CreateRowFrame(index, row)
     frame.titleFrame.trackedIcon:SetTexture("Interface\\Buttons\\UI-CheckBox-Check")
     Q:SetPixelPerfectSize(frame.titleFrame.trackedIcon, DB_ROW_HEIGHT - 2, DB_ROW_HEIGHT - 2)
     frame.titleFrame.trackedIcon:Hide()
+
+    frame.titleFrame.shareIcon = frame.titleFrame:CreateTexture(nil, "ARTWORK")
+    frame.titleFrame.shareIcon:SetTexture("Interface\\FriendsFrame\\UI-Toast-ChatInviteIcon")
+    frame.titleFrame.shareIcon:SetVertexColor(unpack(Q.Theme.Status.Info))
+    Q:SetPixelPerfectSize(frame.titleFrame.shareIcon, DB_ROW_HEIGHT - 2, DB_ROW_HEIGHT - 2)
+    frame.titleFrame.shareIcon:Hide()
 
     frame.titleFrame.level = Q:CreateText(nil, frame.titleFrame, "", Q.Theme.FontSize.L)
     frame.titleFrame.level:SetPoint("LEFT", frame.titleFrame.title, "RIGHT", 2, 0)
@@ -1044,7 +1084,25 @@ local function CreateRowFrame(index, row)
     frame.titleHover:EnableMouse(true)
     frame.titleHover:SetScript("OnMouseUp", function(_, button)
         local clickedRow = frame.row
-        if button ~= "LeftButton" or not clickedRow or clickedRow.isSharedSummary then
+        if not clickedRow or clickedRow.isSharedSummary then
+            return
+        end
+
+        if button == "RightButton" then
+            if clickedRow.isInstance or clickedRow.isGroup or not Q.API:IsQuestInQuestLog(clickedRow.id) then
+                return
+            end
+
+            if Q.API:IsQuestWatched(clickedRow.id) then
+                C_QuestLog.RemoveQuestWatch(clickedRow.id)
+            else
+                C_QuestLog.AddQuestWatch(clickedRow.id)
+            end
+            QuestLog:RefreshAndPopulate()
+            return
+        end
+
+        if button ~= "LeftButton" then
             return
         end
 
@@ -1064,13 +1122,24 @@ local function CreateRowFrame(index, row)
             return
         end
 
-        -- Shift-click -> Toggle quest tracking
-        if Q.API:IsQuestWatched(clickedRow.id) then
-            C_QuestLog.RemoveQuestWatch(clickedRow.id)
+        -- Shift-click -> Open the selected quest in Blizzard's quest log.
+        local questIndex = C_QuestLog.GetLogIndexForQuestID and
+            C_QuestLog.GetLogIndexForQuestID(clickedRow.id)
+        if questIndex and QuestLog_OpenToQuest then
+            QuestLog_OpenToQuest(questIndex)
         else
-            C_QuestLog.AddQuestWatch(clickedRow.id)
+            if QuestLogFrame then
+                ShowUIPanel(QuestLogFrame)
+            elseif ToggleQuestLog then
+                ToggleQuestLog()
+            end
+
+            if questIndex and SelectQuestLogEntry then
+                SelectQuestLogEntry(questIndex)
+            else
+                C_QuestLog.SetSelectedQuest(clickedRow.id)
+            end
         end
-        QuestLog:RefreshAndPopulate()
     end)
 
     frame.hoverHighlight = frame:CreateTexture(nil, "BACKGROUND", nil, 2)
@@ -1079,8 +1148,23 @@ local function CreateRowFrame(index, row)
     frame.hoverHighlight:SetAlpha(0.03)
     frame.hoverHighlight:Hide()
     frame.titleHover:SetScript("OnEnter", function()
-        if frame.row.isSharedSummary or frame.row.isGroup then
+        if frame.row.isSharedSummary then
             frame.hoverHighlight:Show()
+            return
+        end
+
+        if frame.row.isGroup then
+            frame.hoverHighlight:Show()
+            local tooltip = Q:GetTooltip()
+            tooltip:SetOwner(frame.titleFrame, "ANCHOR_LEFT", -5, 5)
+            tooltip:SetText(frame.row.name, Q.Theme.Text.Accent[1], Q.Theme.Text.Accent[2],
+                Q.Theme.Text.Accent[3])
+            if frame.collapseButton:IsShown() then
+                tooltip:AddLine(" ")
+                tooltip:AddLine("Click: Expand/collapse", Q.Theme.Text.Secondary[1], Q.Theme.Text.Secondary[2],
+                    Q.Theme.Text.Secondary[3], true)
+            end
+            tooltip:Show()
             return
         end
 
@@ -1123,18 +1207,20 @@ local function CreateRowFrame(index, row)
         end
 
         tooltip:SetText(hoveredRow.name, Q.Theme.Text.Accent[1], Q.Theme.Text.Accent[2], Q.Theme.Text.Accent[3])
-        tooltip:AddLine(tooltipStatus, tooltipStatusColor.r, tooltipStatusColor.g, tooltipStatusColor.b)
+        if not isQuestInLog then
+            tooltip:AddLine(tooltipStatus, tooltipStatusColor.r, tooltipStatusColor.g, tooltipStatusColor.b)
+        end
+        if Q.API:IsQuestShareable(hoveredRow.id) then
+            tooltip:AddLine("Can be shared", Q.Theme.Status.Info[1], Q.Theme.Status.Info[2],
+                Q.Theme.Status.Info[3])
+        end
 
         --------------------------------------------------
         -- Determine tooltip content
         --------------------------------------------------
 
-        -- Player has the quest in their quest log
-        if isQuestInLog then
-            tooltip:AddLine("Shift-click to toggle tracking this quest", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary
-                [2], Q.Theme.Text.Primary[3], true)
-            -- Player does not meet the quest prerequisites (Too low level, prequests not completed, wrong class etc)
-        elseif questStatus ~= "completed" and not meetsPrerequisites then
+        -- Add prerequisite or source details for quests that are not already in progress.
+        if not isQuestInLog and questStatus ~= "completed" and not meetsPrerequisites then
             if not Q.API:IsQuestAvailableToLevel(hoveredRow.id) then
                 tooltip:AddLine("Requires level " .. hoveredRow.requiredLevel, Q.Theme.Text.Disabled[1],
                     Q.Theme.Text.Disabled[2], Q.Theme.Text.Disabled[3])
@@ -1243,6 +1329,21 @@ local function CreateRowFrame(index, row)
             tooltip:AddLine("Breadcrumb", Q.Theme.Status.Info[1], Q.Theme.Status.Info[2], Q.Theme.Status.Info[3], true)
             tooltip:AddLine("Not required to unlock the next quest.", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2],
                 Q.Theme.Text.Primary[3], true)
+        end
+
+        local canCollapse = frame.collapseButton:IsShown()
+        if canCollapse or isQuestInLog then
+            tooltip:AddLine(" ")
+            if canCollapse then
+                tooltip:AddLine("Click: Expand/collapse", Q.Theme.Text.Secondary[1], Q.Theme.Text.Secondary[2],
+                    Q.Theme.Text.Secondary[3], true)
+            end
+            if isQuestInLog then
+                tooltip:AddLine("Shift-click: Open in Quest Log", Q.Theme.Text.Secondary[1], Q.Theme.Text.Secondary[2],
+                    Q.Theme.Text.Secondary[3], true)
+                tooltip:AddLine("Right-click: Toggle tracking", Q.Theme.Text.Secondary[1],
+                    Q.Theme.Text.Secondary[2], Q.Theme.Text.Secondary[3], true)
+            end
         end
 
         tooltip:Show()

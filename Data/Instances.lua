@@ -187,7 +187,7 @@ Q.Instances = {
         name = "Krol'dok Stronghold (INCOMPLETE)",
         continent = "Eastern Kingdoms",
         zone = "Riverglades",
-        location = { mapId = 2548, x = 0.448, y = 0.27 },
+        location = { mapId = 2548, x = 0.40, y = 0.31 },
         minLevel = 40,
         suggestedLevel = 42,
         maxLevel = 45

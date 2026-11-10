@@ -2156,9 +2156,18 @@ Q.Quests = {
         suggestedLevel = 45,
         requiredLevel = 40,
         prerequisites = {
-            { id = 2861, type = Q.PrerequisiteType.CHAIN }
+            { id = 2861, type = Q.PrerequisiteType.BREADCRUMB }
         },
         source = Q.Sources[214], -- Tabetha
+        instances = { Q.Instances["Zul'Farrak"] },
+    },
+     {
+        id = 96770,
+        faction = "Alliance",
+        name = "The Witch Doctor's Head",
+        suggestedLevel = 46,
+        requiredLevel = 39,
+        source = Q.Sources[289], -- Archmage Lan'dock
         instances = { Q.Instances["Zul'Farrak"] },
     },
     {
@@ -4699,7 +4708,185 @@ Q.Quests = {
         instances = { Q.Instances["Shadowfang Keep"] }
     },
     --#endregion
-     {
+    --#region Krol'dok Stronghold Prerequisites
+    {
+        id = 94890,
+        faction = "Alliance",
+        name = "Bring Me His Head",
+        suggestedLevel = 46,
+        requiredLevel = 38,
+        source = Q.Sources[297], -- Sergeant Riftan
+    },
+    {
+        id = 94744,
+        faction = "Horde",
+        name = "The Wayward Warrior",
+        suggestedLevel = 43,
+        requiredLevel = 38,
+        source = Q.Sources[302], -- Da'grosh
+    },
+    {
+        id = 94748,
+        faction = "Horde",
+        name = "Break Their Chains",
+        prerequisites = {
+            { id = 94744, type = Q.PrerequisiteType.CHAIN }
+        },
+        suggestedLevel = 44,
+        requiredLevel = 38,
+        source = Q.Sources[302], -- Da'grosh
+    },
+    {
+        id = 94745,
+        faction = "Horde",
+        name = "Carving a Path",
+        prerequisites = {
+            { id = 94744, type = Q.PrerequisiteType.CHAIN }
+        },
+        suggestedLevel = 44,
+        requiredLevel = 38,
+        source = Q.Sources[302], -- Da'grosh
+    },
+    {
+        id = 95432,
+        faction = "Horde",
+        name = "Rise Up!",
+        suggestedLevel = 43,
+        requiredLevel = 38,
+        source = Q.Sources[240], -- Unknown
+    },
+    {
+        id = 94768,
+        faction = "Horde",
+        name = "Bring Me His Head",
+        prerequisites = {
+            { id = 94748, type = Q.PrerequisiteType.REQUIRED },
+            { id = 94745, type = Q.PrerequisiteType.REQUIRED },
+            { id = 95432, type = Q.PrerequisiteType.REQUIRED }
+        },
+        suggestedLevel = 46,
+        requiredLevel = 38,
+        source = Q.Sources[302], -- Da'grosh
+    },
+    {
+        id = 95278,
+        faction = "Horde",
+        name = "It Is Time, Brother...",
+        prerequisites = {
+            { id = 94768, type = Q.PrerequisiteType.CHAIN }
+        },
+        suggestedLevel = 45,
+        requiredLevel = 38,
+        source = Q.Sources[240], -- Unknown; starts from the Blood and Battle item
+    },
+    --#endregion
+    {
+        id = 94968,
+        faction = "Horde",
+        name = "Eye of Mugg",
+        prerequisites = {
+            { id = 95278, type = Q.PrerequisiteType.REQUIRED }
+        },
+        suggestedLevel = 45,
+        requiredLevel = 40,
+        source = Q.Sources[293], -- Krom'rosh
+        instances = { Q.Instances["Krol'dok Stronghold"] }
+    },
+    {
+        id = 94982,
+        faction = "Alliance",
+        name = "Eye of Mugg",
+        suggestedLevel = 45,
+        requiredLevel = 40,
+        source = Q.Sources[294], -- Demar Brant
+        instances = { Q.Instances["Krol'dok Stronghold"] }
+    },
+    {
+        id = 94881,
+        faction = "Alliance",
+        name = "Curious Trinkets",
+        suggestedLevel = 39,
+        requiredLevel = 36,
+        source = Q.Sources[296], -- Ashe Amberhall
+    },
+    {
+        id = 94907,
+        faction = "Alliance",
+        name = "A Small Favor",
+        prerequisites = {
+            { id = 94881, type = Q.PrerequisiteType.REQUIRED }
+        },
+        suggestedLevel = 44,
+        requiredLevel = 36,
+        source = Q.Sources[296], -- Ashe Amberhall
+    },
+    {
+        id = 94972,
+        faction = "Horde",
+        name = "Tome of Twilight",
+        prerequisites = {
+            { id = 95278, type = Q.PrerequisiteType.REQUIRED }
+        },
+        suggestedLevel = 44,
+        requiredLevel = 39,
+        source = Q.Sources[295], -- Tran'gul
+        instances = { Q.Instances["Krol'dok Stronghold"] }
+    },
+    {
+        id = 94984,
+        faction = "Alliance",
+        name = "Tome of Twilight",
+        prerequisites = {
+            { id = 94907, type = Q.PrerequisiteType.REQUIRED }
+        },
+        suggestedLevel = 44,
+        requiredLevel = 39,
+        source = Q.Sources[296], -- Ashe Amberhall
+        instances = { Q.Instances["Krol'dok Stronghold"] }
+    },
+    {
+        id = 94975,
+        faction = "Horde",
+        name = "A Token of Vengeance",
+        prerequisites = {
+            { id = 94768, type = Q.PrerequisiteType.REQUIRED }
+        },
+        suggestedLevel = 42,
+        requiredLevel = 38,
+        source = Q.Sources[240], -- Unknown
+        instances = { Q.Instances["Krol'dok Stronghold"] }
+    },
+    {
+        id = 94983,
+        faction = "Alliance",
+        name = "Twilight Mementos",
+        prerequisites = {
+            { id = 94890, type = Q.PrerequisiteType.REQUIRED }
+        },
+        suggestedLevel = 42,
+        requiredLevel = 38,
+        source = Q.Sources[297], -- Sergeant Riftan
+        instances = { Q.Instances["Krol'dok Stronghold"] }
+    },
+    {
+        id = 94973,
+        faction = "Horde",
+        name = "Krol'dok Moulding",
+        suggestedLevel = 41,
+        requiredLevel = 38,
+        source = Q.Sources[301], -- Tunk
+        instances = { Q.Instances["Krol'dok Stronghold"] }
+    },
+    {
+        id = 94980,
+        faction = "Alliance",
+        name = "Krol'dok Moulding",
+        suggestedLevel = 41,
+        requiredLevel = 38,
+        source = Q.Sources[301], -- Tunk
+        instances = { Q.Instances["Krol'dok Stronghold"] }
+    },
+    {
         id = 96771,
         faction = "Alliance",
         name = "Vengeance of the Highborne",

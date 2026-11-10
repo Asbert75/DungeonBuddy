@@ -560,6 +560,10 @@ function Q.API:IsQuestInQuestLog(questId)
     return C_QuestLog.IsOnQuest(questId)
 end
 
+function Q.API:IsQuestShareable(questId)
+    return C_QuestLog.IsPushableQuest and C_QuestLog.IsPushableQuest(questId) or false
+end
+
 function Q.API:IsQuestAvailableToLevel(questId, playerInfo)
     local quest = self:GetQuestById(questId)
     if not quest then
