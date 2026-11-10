@@ -2183,6 +2183,14 @@ Q.Sources = {
         name = "Da'grosh",
         zone = "Riverglades",
         location = { mapId = 2548, x = 0.33, y = 0.38 }
+    },
+    [303] = {
+        id = 303,
+        type = "npc",
+        faction = "Alliance",
+        name = "Sergeant Yohwa",
+        zone = "Stranglethorn Vale",
+        location = { mapId = 1434, x = 0.378, y = 0.036 }
     }
 }
 

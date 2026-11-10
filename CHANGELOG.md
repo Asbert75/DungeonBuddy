@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.24] - 2026-11-10
+
+### Fixed
+
+- Added 2 required pre-quests for Kurzen's Mystery
+
 ## [2.0.23] - 2026-11-11
 
 ### Fixed

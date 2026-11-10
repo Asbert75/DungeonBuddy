@@ -4582,9 +4582,29 @@ Q.Quests = {
 
     --#region The Drowned City
     {
+        id = 203,
+        faction = "Alliance",
+        name = "The Second Rebellion",
+        suggestedLevel = 34,
+        requiredLevel = 30,
+        source = Q.Sources[303], -- Sergeant Yohwa
+    },
+    {
+        id = 204,
+        faction = "Alliance",
+        name = "Bad Medicine",
+        suggestedLevel = 34,
+        requiredLevel = 30,
+        source = Q.Sources[303], -- Sergeant Yohwa
+    },
+    {
         id = 207,
         faction = "Alliance",
         name = "Kurzen's Mystery",
+        prerequisites = {
+            { id = 204, type = Q.PrerequisiteType.REQUIRED },
+            { id = 203, type = Q.PrerequisiteType.REQUIRED }
+        },
         suggestedLevel = 38,
         requiredLevel = 30,
         source = Q.Sources[291], -- Brother Nimetz
