@@ -80,22 +80,10 @@ local function GetSectionSettings(sectionName)
         {
             section = Sections.QuestLog.name,
             type = "checkbox",
-            path = "ShowAllQuestsForAvailableInstance",
-            title = "Instantly show all instance quests when one is available",
+            path = "HideQuestsAboveCurrentLevel",
+            title = "Hide quests where I have not reached a high enough level",
             description =
-            "Enable showing all quests for a instance as soon as you have a single quest available in that instance.",
-            onChange = function()
-                if Q.QuestLog and Q.QuestLog.frame then
-                    Q.QuestLog:RefreshAndPopulate()
-                end
-            end,
-        },
-        {
-            section = Sections.QuestLog.name,
-            type = "checkbox",
-            path = "CollapseEachChainStep",
-            title = "Enable collapsing each step in a chain",
-            description = "Allow every quest in a chain to be collapsed, not just the final quest.",
+            "When checked, hide all quests in dungeons where you are not high enough level yet. Otherwise, all quests for a dungeon will be visible once a single one is available.",
             onChange = function()
                 if Q.QuestLog and Q.QuestLog.frame then
                     Q.QuestLog:RefreshAndPopulate()

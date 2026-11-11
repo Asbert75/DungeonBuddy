@@ -2191,6 +2191,22 @@ Q.Sources = {
         name = "Sergeant Yohwa",
         zone = "Stranglethorn Vale",
         location = { mapId = 1434, x = 0.378, y = 0.036 }
+    },
+    [304] = {
+        id = 304,
+        type = "npc",
+        faction = "Horde",
+        name = "Sergeant Ulka",
+        zone = "Dustwallow Marsh",
+        location = { mapId = 1445, x = 0.704, y = 0.19 }
+    },
+    [305] = {
+        id = 305,
+        type = "npc",
+        faction = "Horde",
+        name = "Commander Folkar",
+        instance = Q.Instances["Alcaz Prison"],
+        text = "Inside the prison, in a cell"
     }
 }
 

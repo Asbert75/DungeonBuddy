@@ -4950,5 +4950,174 @@ Q.Quests = {
         requiredLevel = 37,
         source = Q.Sources[290], -- Ranath Nightstride
         instances = { Q.Instances["Krol'dok Stronghold"] }
+    },
+
+    --#region Alcaz Prison
+    -- Horde rescue chain
+    {
+        id = 95309,
+        faction = "Horde",
+        name = "No Orc Left Behind",
+        suggestedLevel = 53,
+        requiredLevel = 48,
+        source = Q.Sources[304], -- Sergeant Ulka
+        instances = { Q.Instances["Alcaz Prison"] }
+    },
+    {
+        id = 95454,
+        faction = "Horde",
+        name = "The Honor of the Kor'kron",
+        prerequisites = {
+            { id = 95309, type = Q.PrerequisiteType.CHAIN }
+        },
+        suggestedLevel = 53,
+        requiredLevel = 48,
+        source = Q.Sources[305], -- Commander Folkar
+        instances = { Q.Instances["Alcaz Prison"] }
+    },
+    {
+        id = 96369,
+        faction = "Horde",
+        name = "Bad News for Folkar",
+        prerequisites = {
+            { id = 95454, type = Q.PrerequisiteType.CHAIN }
+        },
+        suggestedLevel = 53,
+        requiredLevel = 48,
+        source = Q.Sources[240], -- Unknown; starts from the Perfumed Note
+        instances = { Q.Instances["Alcaz Prison"] }
+    },
+    {
+        id = 95483,
+        faction = "Horde",
+        name = "Thrall Needs to Know",
+        prerequisites = {
+            { id = 96369, type = Q.PrerequisiteType.CHAIN }
+        },
+        suggestedLevel = 53,
+        requiredLevel = 48,
+        source = Q.Sources[305], -- Commander Folkar
+        instances = { Q.Instances["Alcaz Prison"] }
+    },
+    {
+        id = 96334,
+        faction = "Horde",
+        name = "Blood Red Bandanas",
+        suggestedLevel = 53,
+        requiredLevel = 48,
+        source = Q.Sources[240], -- Unknown
+        instances = { Q.Instances["Alcaz Prison"] }
+    },
+    {
+        id = 96332,
+        faction = "Horde",
+        name = "A Little Payback",
+        suggestedLevel = 53,
+        requiredLevel = 48,
+        source = Q.Sources[304], -- Sergeant Ulka
+        instances = { Q.Instances["Alcaz Prison"] }
+    },
+
+    -- Alliance lead-in to The Secret Prison
+    {
+        id = 95194,
+        faction = "Alliance",
+        name = "Our Man in Theramore",
+        suggestedLevel = 53,
+        requiredLevel = 48,
+        source = Q.Sources[240], -- Unknown
+    },
+    {
+        id = 95196,
+        faction = "Alliance",
+        name = "Watch Yer Back",
+        prerequisites = {
+            { id = 95194, type = Q.PrerequisiteType.CHAIN }
+        },
+        suggestedLevel = 53,
+        requiredLevel = 48,
+        source = Q.Sources[240], -- Unknown
+    },
+    {
+        id = 95198,
+        faction = "Alliance",
+        name = "The Return of the King?",
+        prerequisites = {
+            { id = 95196, type = Q.PrerequisiteType.CHAIN }
+        },
+        suggestedLevel = 53,
+        requiredLevel = 48,
+        source = Q.Sources[240], -- Unknown
+    },
+    {
+        id = 95262,
+        faction = "Alliance",
+        name = "The Secret Prison",
+        prerequisites = {
+            { id = 95198, type = Q.PrerequisiteType.CHAIN }
+        },
+        suggestedLevel = 53,
+        requiredLevel = 48,
+        source = Q.Sources[240], -- Unknown
+        instances = { Q.Instances["Alcaz Prison"] }
+    },
+    {
+        id = 96335,
+        name = "The Man in the Iron Chains",
+        prerequisites = {
+            { id = 95262, type = Q.PrerequisiteType.CHAIN }
+        },
+        suggestedLevel = 53,
+        requiredLevel = 48,
+        source = Q.Sources[240], -- Unknown
+        instances = { Q.Instances["Alcaz Prison"] }
+    },
+    {
+        id = 96337,
+        name = "More Valuable Than Gold",
+        prerequisites = {
+            { id = 96335, type = Q.PrerequisiteType.CHAIN }
+        },
+        suggestedLevel = 53,
+        requiredLevel = 48,
+        source = Q.Sources[240], -- Unknown
+        instances = { Q.Instances["Alcaz Prison"] }
+    },
+    {
+        id = 96381,
+        faction = "Alliance",
+        name = "A Bit of Wet Work",
+        suggestedLevel = 53,
+        requiredLevel = 48,
+        source = Q.Sources[240], -- Unknown
+        instances = { Q.Instances["Alcaz Prison"] }
+    },
+    {
+        id = 96772,
+        faction = "Alliance",
+        name = "The Dragon's Journal",
+        suggestedLevel = 53,
+        requiredLevel = 46,
+        source = Q.Sources[289], -- Archmage Lan'dalock
+        instances = { Q.Instances["Alcaz Prison"] }
+    },
+    {
+        id = 96376,
+        faction = "Horde",
+        name = "State Secrets",
+        suggestedLevel = 53,
+        requiredLevel = 48,
+        source = Q.Sources[240], -- Unknown
+        instances = { Q.Instances["Alcaz Prison"] }
+    },
+    {
+        id = 96377,
+        faction = "Alliance",
+        name = "State Secrets",
+        suggestedLevel = 53,
+        requiredLevel = 48,
+        source = Q.Sources[240], -- Unknown
+        instances = { Q.Instances["Alcaz Prison"] }
     }
+    --#endregion
 }

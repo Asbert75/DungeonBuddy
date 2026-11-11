@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.25] - 2026-11-11
+
+### Added
+
+- Added Alcaz Prison quests
+
+### Changed
+
+- The old setting "Instantly show all instance quests when one is available" has been renamed "Hide quests where I have not reached a high enough level" and the default-state is now to show all quests once a single one is available, to make it harder to miss quests because you went into a dungeon earlier than expected.
+- Collapsing is now limited to top-level quests, instances and continents. Collapsing a quest chain now collapses the entire chain, you can not collapse a sub-quest in a chain anymore.
+
 ## [2.0.24] - 2026-11-10
 
 ### Fixed

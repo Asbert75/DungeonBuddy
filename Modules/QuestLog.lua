@@ -348,7 +348,7 @@ local function HasVisibleDependency(quest)
     return false
 end
 
--- Instances and main quests (the final quest of a chain) can always be collapsed; chain steps only with the setting enabled.
+-- Only top-level rows (groups, instances, and main quests) can be collapsed.
 -- Quests without any visible child rows have nothing to collapse.
 function QuestLog.CanCollapse(row)
     if row.isInstance or row.isGroup then
@@ -357,7 +357,7 @@ function QuestLog.CanCollapse(row)
     if row.isSharedSummary or #(row.prerequisites or {}) == 0 or not HasVisibleDependency(row) then
         return false
     end
-    return row.isMainQuest or Q:GetSetting("CollapseEachChainStep") and true or false
+    return row.isMainQuest
 end
 
 local function IsRowCollapsed(row)
@@ -365,7 +365,7 @@ local function IsRowCollapsed(row)
         return Q:GetSetting("CollapsedGroups")[row.id] or false
     elseif row.isInstance then
         return Q:GetSetting("CollapsedInstances")[row.id] or false
-    elseif not row.isMainQuest and not Q:GetSetting("CollapseEachChainStep") then
+    elseif not row.isMainQuest then
         return false
     else
         local collapsedQuests = Q:GetSetting("CollapsedQuests")
@@ -1396,7 +1396,7 @@ local function GetVisibleInstanceEntries(playerInfo)
             and Q.API:InstanceHasAvailableQuests(instance.id, playerInfo)
             and playerInfo.level <= instance.maxLevel then
             local quests
-            if Q:GetSetting("ShowAllQuestsForAvailableInstance") then
+            if not Q:GetSetting("HideQuestsAboveCurrentLevel") then
                 quests = {}
                 for _, quest in ipairs(Q.API:GetQuestsByInstanceId(instance.id)) do
                     if not IsBreadcrumbQuestHidden(quest.id) and Q.API:PlayerHasProfession(quest.profession) then

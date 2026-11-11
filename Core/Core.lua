@@ -17,6 +17,17 @@ Q.Debug = {
 
 function Addon:OnInitialize()
     Q.DB = LibStub("AceDB-3.0"):New("DungeonBuddyCharDB", Q.GetDefaultDB())
+    -- Preserve the old setting's behavior when upgrading to the inverted checkbox.
+    local function MigrateQuestVisibilitySetting(profile)
+        if profile.ShowAllQuestsForAvailableInstance ~= nil then
+            profile.HideQuestsAboveCurrentLevel = not profile.ShowAllQuestsForAvailableInstance
+            profile.ShowAllQuestsForAvailableInstance = nil
+        end
+    end
+    MigrateQuestVisibilitySetting(Q.DB.profile)
+    for _, profile in pairs(Q.DB.profiles) do
+        MigrateQuestVisibilitySetting(profile)
+    end
     Q:LoadTheme()
 
     Addon:RegisterChatCommand("db", "HandleCommand")

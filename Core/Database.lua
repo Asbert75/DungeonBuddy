@@ -28,12 +28,11 @@ local SharedDefaults = {
     -- Settings
     ShowNotificationOnLevelUp = true,
     ShowNotificationForAllQuests = false,
-    ShowAllQuestsForAvailableInstance = false,
+    HideQuestsAboveCurrentLevel = false,
     RemindOnZoneChange = true,
     HideCompletedQuests = true,
     AutoWaypoint = false,
     ShowSuggestedQuestLevel = false,
-    CollapseEachChainStep = false,
     ShowChainGuides = true,
     Theme = nil, -- Chosen from the character's faction on first load, see Q:LoadTheme
 
