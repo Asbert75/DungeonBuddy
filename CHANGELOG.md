@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.27] - 2026-11-12
+
+### Fixed
+
+- Updated "In Search of Thaelrid" to not show twice
+- Updated "The Corruption Abroad" to correctly be a breadcrumb quest
+
 ## [2.0.26] - 2026-11-12
 
 ### Fixed

@@ -144,7 +144,7 @@ Q.Instances = {
     },
     ["The Drowned City"] = {
         id = 30,
-        name = "The Drowned City (INCOMPLETE)",
+        name = "The Drowned City",
         continent = "Eastern Kingdoms",
         zone = "Stranglethorn Vale",
         location = { mapId = 1434, x = 0.215, y = 0.278 },
@@ -184,7 +184,7 @@ Q.Instances = {
     },
     ["Krol'dok Stronghold"] = {
         id = 32,
-        name = "Krol'dok Stronghold (INCOMPLETE)",
+        name = "Krol'dok Stronghold",
         continent = "Eastern Kingdoms",
         zone = "Riverglades",
         location = { mapId = 2548, x = 0.40, y = 0.31 },
@@ -214,7 +214,7 @@ Q.Instances = {
     },
     ["Alcaz Prison"] = {
         id = 33,
-        name = "Alcaz Prison (INCOMPLETE)",
+        name = "Alcaz Prison",
         continent = "Kalimdor",
         zone = "Dustwallow Marsh",
         location = { mapId = 1445, x = 0.755, y = 0.178 },
@@ -254,7 +254,7 @@ Q.Instances = {
     },
     ["Blackmaw Hold"] = {
         id = 34,
-        name = "Blackmaw Hold (INCOMPLETE)",
+        name = "Blackmaw Hold",
         continent = "Kalimdor",
         zone = "Azshara",
         location = { mapId = 1447, x = 0.393, y = 0.322 },

@@ -690,7 +690,7 @@ Q.Quests = {
         suggestedLevel = 24,
         requiredLevel = 18,
         prerequisites = {
-            { id = 3765, type = Q.PrerequisiteType.CHAIN }
+            { id = 3765, type = Q.PrerequisiteType.BREADCRUMB }
         },
         source = Q.Sources[89], -- Gershala Nightwhisper
         instances = { Q.Instances["Blackfathom Deeps"] },
@@ -769,7 +769,6 @@ Q.Quests = {
         suggestedLevel = 24,
         requiredLevel = 18,
         source = Q.Sources[60], -- Dawnwatcher Shaedlass
-        instances = { Q.Instances["Blackfathom Deeps"] },
     },
     {
         id = 6561,
