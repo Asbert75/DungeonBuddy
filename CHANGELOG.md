@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.26] - 2026-11-12
+
+### Fixed
+
+- Corrected an issue causing scroll using mouse wheel to not work as intended
+
 ## [2.0.25] - 2026-11-11
 
 ### Added
