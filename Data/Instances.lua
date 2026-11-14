@@ -10,7 +10,7 @@ Q.Instances = {
         location = { mapId = 1455, x = 0.466, y = 0.522 },
         minLevel = 13,
         suggestedLevel = 14,
-        maxLevel = 18
+        maxLevel = 20
     },
     ["Ragefire Chasm"] = {
         id = 2,
@@ -19,8 +19,8 @@ Q.Instances = {
         zone = "Orgrimmar",
         location = { mapId = 1454, x = 0.53, y = 0.50 },
         minLevel = 13,
-        suggestedLevel = 12,
-        maxLevel = 19
+        suggestedLevel = 13,
+        maxLevel = 18
     },
     ["Ruins of Lordaeron"] = {
         id = 3,
@@ -30,7 +30,7 @@ Q.Instances = {
         location = { mapId = 1420, x = 0.61, y = 0.60 },
         minLevel = 15,
         suggestedLevel = 17,
-        maxLevel = 20
+        maxLevel = 22
     },
     ["The Deadmines"] = {
         id = 4,
@@ -38,9 +38,9 @@ Q.Instances = {
         continent = "Eastern Kingdoms",
         zone = "Westfall",
         location = { mapId = 1436, x = 0.42, y = 0.71 },
-        minLevel = 18,
-        suggestedLevel = 17,
-        maxLevel = 24
+        minLevel = 17,
+        suggestedLevel = 18,
+        maxLevel = 26
     },
     ["Wailing Caverns"] = {
         id = 5,
@@ -48,9 +48,9 @@ Q.Instances = {
         continent = "Kalimdor",
         zone = "The Barrens",
         location = { mapId = 1413, x = 0.465, y = 0.36 },
-        minLevel = 19,
+        minLevel = 15,
         suggestedLevel = 18,
-        maxLevel = 25
+        maxLevel = 24
     },
     ["Shadowfang Keep"] = {
         id = 6,
@@ -58,9 +58,9 @@ Q.Instances = {
         continent = "Eastern Kingdoms",
         zone = "Silverpine Forest",
         location = { mapId = 1421, x = 0.45, y = 0.68 },
-        minLevel = 23,
+        minLevel = 20,
         suggestedLevel = 22,
-        maxLevel = 29
+        maxLevel = 30
     },
     ["Excavation Site: Wetlands"] = {
         id = 7,
@@ -70,7 +70,7 @@ Q.Instances = {
         location = { mapId = 1437, x = 0.385, y = 0.470 },
         minLevel = 24,
         suggestedLevel = 26,
-        maxLevel = 29
+        maxLevel = 33
     },
     ["Blackfathom Deeps"] = {
         id = 8,
@@ -78,9 +78,9 @@ Q.Instances = {
         continent = "Kalimdor",
         zone = "Ashenvale",
         location = { mapId = 1440, x = 0.14, y = 0.15 },
-        minLevel = 25,
+        minLevel = 24,
         suggestedLevel = 27,
-        maxLevel = 31
+        maxLevel = 32
     },
     ["The Stockade"] = {
         id = 9,
@@ -88,7 +88,7 @@ Q.Instances = {
         continent = "Eastern Kingdoms",
         zone = "Stormwind City",
         location = { mapId = 1453, x = 0.422, y = 0.590 },
-        minLevel = 26,
+        minLevel = 24,
         suggestedLevel = 26,
         maxLevel = 32
     },
@@ -108,9 +108,9 @@ Q.Instances = {
         continent = "Kalimdor",
         zone = "The Barrens",
         location = { mapId = 1413, x = 0.43, y = 0.90 },
-        minLevel = 30,
+        minLevel = 29,
         suggestedLevel = 29,
-        maxLevel = 36
+        maxLevel = 38
     },
     ["Gnomeregan"] = {
         id = 12,
@@ -118,9 +118,9 @@ Q.Instances = {
         continent = "Eastern Kingdoms",
         zone = "Dun Morogh",
         location = { mapId = 1426, x = 0.245, y = 0.396 },
-        minLevel = 31,
-        suggestedLevel = 30,
-        maxLevel = 37
+        minLevel = 29,
+        suggestedLevel = 31,
+        maxLevel = 38
     },
     ["Scarlet Monastery: Graveyard"] = {
         id = 13,
@@ -128,9 +128,9 @@ Q.Instances = {
         continent = "Eastern Kingdoms",
         zone = "Tirisfal Glades",
         location = { mapId = 1420, x = 0.825, y = 0.336 },
-        minLevel = 31,
-        suggestedLevel = 30,
-        maxLevel = 37
+        minLevel = 30,
+        suggestedLevel = 31,
+        maxLevel = 38
     },
     ["Scarlet Monastery: Library"] = {
         id = 14,
@@ -138,9 +138,9 @@ Q.Instances = {
         continent = "Eastern Kingdoms",
         zone = "Tirisfal Glades",
         location = { mapId = 1420, x = 0.825, y = 0.336 },
-        minLevel = 34,
+        minLevel = 33,
         suggestedLevel = 33,
-        maxLevel = 40
+        maxLevel = 41
     },
     ["The Drowned City"] = {
         id = 30,
@@ -158,9 +158,9 @@ Q.Instances = {
         continent = "Eastern Kingdoms",
         zone = "Tirisfal Glades",
         location = { mapId = 1420, x = 0.825, y = 0.336 },
-        minLevel = 37,
-        suggestedLevel = 36,
-        maxLevel = 43
+        minLevel = 34,
+        suggestedLevel = 37,
+        maxLevel = 42
     },
     ["Razorfen Downs"] = {
         id = 16,
@@ -168,9 +168,9 @@ Q.Instances = {
         continent = "Kalimdor",
         zone = "The Barrens",
         location = { mapId = 1413, x = 0.489, y = 0.936 },
-        minLevel = 38,
-        suggestedLevel = 37,
-        maxLevel = 44
+        minLevel = 37,
+        suggestedLevel = 39,
+        maxLevel = 46
     },
     ["Scarlet Monastery: Cathedral"] = {
         id = 17,
@@ -178,8 +178,8 @@ Q.Instances = {
         continent = "Eastern Kingdoms",
         zone = "Tirisfal Glades",
         location = { mapId = 1420, x = 0.825, y = 0.336 },
-        minLevel = 39,
-        suggestedLevel = 38,
+        minLevel = 36,
+        suggestedLevel = 39,
         maxLevel = 45
     },
     ["Krol'dok Stronghold"] = {
@@ -198,9 +198,9 @@ Q.Instances = {
         continent = "Eastern Kingdoms",
         zone = "Badlands",
         location = { mapId = 1418, x = 0.42, y = 0.10 },
-        minLevel = 44,
+        minLevel = 38,
         suggestedLevel = 43,
-        maxLevel = 50
+        maxLevel = 48
     },
     ["Zul'Farrak"] = {
         id = 19,
@@ -208,9 +208,9 @@ Q.Instances = {
         continent = "Kalimdor",
         zone = "Tanaris",
         location = { mapId = 1446, x = 0.39, y = 0.21 },
-        minLevel = 45,
-        suggestedLevel = 44,
-        maxLevel = 51
+        minLevel = 43,
+        suggestedLevel = 45,
+        maxLevel = 50
     },
     ["Alcaz Prison"] = {
         id = 33,
@@ -228,9 +228,9 @@ Q.Instances = {
         continent = "Kalimdor",
         zone = "Desolace",
         location = { mapId = 1443, x = 0.29, y = 0.62 },
-        minLevel = 48,
+        minLevel = 45,
         suggestedLevel = 48,
-        maxLevel = 54
+        maxLevel = 52
     },
     ["Temple of Atal'Hakkar"] = {
         id = 21,
@@ -238,9 +238,9 @@ Q.Instances = {
         continent = "Eastern Kingdoms",
         zone = "Swamp of Sorrows",
         location = { mapId = 1435, x = 0.69, y = 0.54 },
-        minLevel = 52,
+        minLevel = 49,
         suggestedLevel = 51,
-        maxLevel = 58
+        maxLevel = 56
     },
     ["Blackrock Depths"] = {
         id = 22,

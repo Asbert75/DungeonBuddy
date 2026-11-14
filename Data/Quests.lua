@@ -1620,6 +1620,57 @@ Q.Quests = {
     },
     --#endregion
 
+    --#region Shen'dralas to Maraudon and Razorfen Downs
+    {
+        id = 92914,
+        name = "Strange Pylons",
+        suggestedLevel = 43,
+        requiredLevel = 35,
+        source = Q.Sources[306], -- Shen'dralar Pylon
+    },
+    {
+        id = 93341,
+        name = "Forlorn Gardens",
+        suggestedLevel = 43,
+        requiredLevel = 35,
+        prerequisites = {
+            { id = 92914, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = Q.Sources[307], -- Mithera
+    },
+    {
+        id = 93594,
+        name = "Word of the Woods",
+        suggestedLevel = 43,
+        requiredLevel = 35,
+        prerequisites = {
+            { id = 93341, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = Q.Sources[307], -- Mithera
+    },
+    {
+        id = 93404,
+        name = "Rot and Regret",
+        suggestedLevel = 49,
+        requiredLevel = 35,
+        prerequisites = {
+            { id = 93594, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = Q.Sources[308], -- Woodwyrd
+        instances = { Q.Instances["Maraudon"] },
+    },
+    {
+        id = 93601,
+        name = "Passing the Blame",
+        suggestedLevel = 45,
+        requiredLevel = 35,
+        prerequisites = {
+            { id = 93404, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = Q.Sources[308], -- Woodwyrd
+    },
+    --#endregion
+
     --#region Razorfen Downs
     {
         id = 97196,
@@ -1697,6 +1748,17 @@ Q.Quests = {
         suggestedLevel = 37,
         requiredLevel = 32,
         source = Q.Sources[27], -- Belnistrasz
+    },
+    {
+        id = 93604,
+        name = "Agamaggan's Blood",
+        suggestedLevel = 45,
+        requiredLevel = 35,
+        prerequisites = {
+            { id = 93601, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = Q.Sources[309], -- Kog'thug the Brave
+        instances = { Q.Instances["Razorfen Downs"] },
     },
     --#endregion
 
@@ -1966,7 +2028,7 @@ Q.Quests = {
         name = "Ironband Wants You!",
         suggestedLevel = 37,
         requiredLevel = 30,
-        source = Q.Sources[183], -- Prospector Ironband
+        source = Q.Sources[186], -- Prospector Stormpike
     },
     {
         id = 704,
@@ -5024,7 +5086,7 @@ Q.Quests = {
         name = "Our Man in Theramore",
         suggestedLevel = 53,
         requiredLevel = 48,
-        source = Q.Sources[240], -- Unknown
+        source = Q.Sources[155], -- Master Mathias Shaw
     },
     {
         id = 95196,
@@ -5035,7 +5097,7 @@ Q.Quests = {
         },
         suggestedLevel = 53,
         requiredLevel = 48,
-        source = Q.Sources[240], -- Unknown
+        source = Q.Sources[310], -- Sully McCleary
     },
     {
         id = 95198,
@@ -5046,7 +5108,7 @@ Q.Quests = {
         },
         suggestedLevel = 53,
         requiredLevel = 48,
-        source = Q.Sources[240], -- Unknown
+        source = Q.Sources[310], -- Sully McCleary
     },
     {
         id = 95262,
@@ -5057,18 +5119,15 @@ Q.Quests = {
         },
         suggestedLevel = 53,
         requiredLevel = 48,
-        source = Q.Sources[240], -- Unknown
+        source = Q.Sources[310], -- Sully McCleary
         instances = { Q.Instances["Alcaz Prison"] }
     },
     {
         id = 96335,
         name = "The Man in the Iron Chains",
-        prerequisites = {
-            { id = 95262, type = Q.PrerequisiteType.CHAIN }
-        },
         suggestedLevel = 53,
         requiredLevel = 48,
-        source = Q.Sources[240], -- Unknown
+        source = Q.Sources[313], -- Mason Connery
         instances = { Q.Instances["Alcaz Prison"] }
     },
     {
@@ -5079,16 +5138,19 @@ Q.Quests = {
         },
         suggestedLevel = 53,
         requiredLevel = 48,
-        source = Q.Sources[240], -- Unknown
+        source = Q.Sources[313], -- Mason Connery
         instances = { Q.Instances["Alcaz Prison"] }
     },
     {
         id = 96381,
         faction = "Alliance",
         name = "A Bit of Wet Work",
+        prerequisites = {
+            { id = 95198, type = Q.PrerequisiteType.REQUIRED }
+        },
         suggestedLevel = 53,
         requiredLevel = 48,
-        source = Q.Sources[240], -- Unknown
+        source = Q.Sources[310], -- Sully McCleary
         instances = { Q.Instances["Alcaz Prison"] }
     },
     {
@@ -5106,16 +5168,19 @@ Q.Quests = {
         name = "State Secrets",
         suggestedLevel = 53,
         requiredLevel = 48,
-        source = Q.Sources[240], -- Unknown
+        source = Q.Sources[312], -- Rix Xizzix
         instances = { Q.Instances["Alcaz Prison"] }
     },
     {
         id = 96377,
         faction = "Alliance",
         name = "State Secrets",
+        prerequisites = {
+            { id = 96337, type = Q.PrerequisiteType.CHAIN }
+        },
         suggestedLevel = 53,
         requiredLevel = 48,
-        source = Q.Sources[240], -- Unknown
+        source = Q.Sources[311], -- Renzik "The Shiv"
         instances = { Q.Instances["Alcaz Prison"] }
     }
     --#endregion

@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.28] - 2026-11-14
+
+### Added
+
+- Added new quest chain Razorfen Downs and Maraudon
+
+### Changed
+
+- Changed the Share icon to now be a clickable button that shares the quest with your party
+
+### Fixed
+
+- Updated sources for Alcaz Prison quests
+- Updated location of multiple NPCs
+- Updated level ranges for multiple dungeons
+
 ## [2.0.27] - 2026-11-12
 
 ### Fixed

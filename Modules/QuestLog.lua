@@ -529,7 +529,7 @@ local function PositionQuestIcons(frame, rightInset)
         frame.titleFrame.classIcon,
         frame.titleFrame.professionIcon,
         frame.titleFrame.trackedIcon,
-        frame.titleFrame.shareIcon,
+        -- frame.titleFrame.dungeonIcon
     }
     local rightmostIcon
     for index = #icons, 1, -1 do
@@ -654,7 +654,7 @@ local function RemoveLastUTF8Character(text)
     return string.sub(text, 1, index - 1)
 end
 
-local function IsShareIconVisibleForQuest(questId)
+local function CanShareQuest(questId)
     if not Q.API:IsQuestShareable(questId) then
         return false
     end
@@ -666,6 +666,15 @@ local function IsShareIconVisibleForQuest(questId)
         end
     end
     return true
+end
+
+local function ShareQuest(questId)
+    if QuestMapQuestOptions_ShareQuest then
+        QuestMapQuestOptions_ShareQuest(questId)
+    elseif C_QuestLog.SetSelectedQuest and QuestLogPushQuest then
+        C_QuestLog.SetSelectedQuest(questId)
+        QuestLogPushQuest()
+    end
 end
 
 local function UpdateRowText(frame)
@@ -715,14 +724,28 @@ local function UpdateRowText(frame)
 
     frame.titleFrame.trackedIcon:SetShown(isQuestRow and
         Q.API:IsQuestInQuestLog(row.id) and Q.API:IsQuestWatched(row.id))
-    frame.titleFrame.shareIcon:SetShown(isQuestRow and IsShareIconVisibleForQuest(row.id))
+    -- frame.titleFrame.dungeonIcon:SetShown(isQuestRow and row.chainDepth and row.chainDepth > 1)
+
+    if row.id == 4136 then
+        -- Custom handling for quest ID 4136 can be added here
+        print("Custom handling for quest ID 4136")
+        print("isQuestRow: "..tostring(isQuestRow)) 
+        print("isQuestShareable: "..tostring(Q.API:IsQuestShareable(row.id)))
+        print("canShare: "..tostring(CanShareQuest(row.id)))
+        print("hasQuest: "..tostring(Q.API:IsQuestInQuestLog(row.id)))
+    end
+
+    local canShare = isQuestRow and CanShareQuest(row.id)
+    local hasQuest = isQuestRow and Q.API:IsQuestInQuestLog(row.id)
+    frame.shareButton:SetShown(canShare)
+    frame.shareButton:SetAlpha(hasQuest and 1 or 0.6)
 
     -- Keep the title and right-aligned icons clear of the row buttons.
-    local rightInset = frame.collapseButton:GetWidth() + frame.waypointButton:GetWidth() + (Q.Theme.Padding.L + 4)
+    local rightInset = frame.collapseButton:GetWidth() + frame.waypointButton:GetWidth() + frame.shareButton:GetWidth()
+        + (Q.Theme.Padding.L + 4)
     PositionQuestIcons(frame, rightInset)
     local suffixWidth = frame.titleFrame.level:GetStringWidth()
-    for _, icon in ipairs({ frame.titleFrame.classIcon, frame.titleFrame.professionIcon, frame.titleFrame.trackedIcon,
-        frame.titleFrame.shareIcon }) do
+    for _, icon in ipairs({ frame.titleFrame.classIcon, frame.titleFrame.professionIcon, frame.titleFrame.trackedIcon }) do
         if icon:IsShown() then
             suffixWidth = suffixWidth + icon:GetWidth() + 2
         end
@@ -961,12 +984,6 @@ local function CreateRowFrame(index, row)
     Q:SetPixelPerfectSize(frame.titleFrame.trackedIcon, DB_ROW_HEIGHT - 2, DB_ROW_HEIGHT - 2)
     frame.titleFrame.trackedIcon:Hide()
 
-    frame.titleFrame.shareIcon = frame.titleFrame:CreateTexture(nil, "ARTWORK")
-    frame.titleFrame.shareIcon:SetTexture("Interface\\FriendsFrame\\UI-Toast-ChatInviteIcon")
-    frame.titleFrame.shareIcon:SetVertexColor(unpack(Q.Theme.Status.Info))
-    Q:SetPixelPerfectSize(frame.titleFrame.shareIcon, DB_ROW_HEIGHT - 2, DB_ROW_HEIGHT - 2)
-    frame.titleFrame.shareIcon:Hide()
-
     frame.titleFrame.level = Q:CreateText(nil, frame.titleFrame, "", Q.Theme.FontSize.L)
     frame.titleFrame.level:SetPoint("LEFT", frame.titleFrame.title, "RIGHT", 2, 0)
     frame.titleFrame.level:SetJustifyH("LEFT")
@@ -981,6 +998,12 @@ local function CreateRowFrame(index, row)
     Q:SetPixelPerfectSize(frame.titleFrame.professionIcon, DB_ROW_HEIGHT - 8, DB_ROW_HEIGHT - 8)
     frame.titleFrame.professionIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
     frame.titleFrame.professionIconBorder = Q:CreateIconBorder(frame.titleFrame, frame.titleFrame.professionIcon)
+
+    -- frame.titleFrame.dungeonIcon = frame.titleFrame:CreateTexture(nil, "ARTWORK")
+    -- frame.titleFrame.dungeonIcon:SetTexture("Interface\\Addons\\DungeonBuddy\\Media\\Icons\\DungeonPortal.png")
+    -- frame.titleFrame.dungeonIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+    -- Q:SetPixelPerfectSize(frame.titleFrame.dungeonIcon, 15, 15)
+    -- frame.titleFrame.dungeonIcon:Hide()
 
     --------------------------------------------------
     -- Create Action Buttons
@@ -1075,10 +1098,45 @@ local function CreateRowFrame(index, row)
     frame.waypointButton.icon:SetPoint("CENTER")
     frame.waypointButton:SetPoint("RIGHT", frame.collapseButton, "LEFT", -2, 0)
 
+    local shareButtonHandlers = {
+        OnClick = function()
+            local row = frame.row
+            if row and Q.API:IsQuestInQuestLog(row.id) and CanShareQuest(row.id) then
+                ShareQuest(row.id)
+            end
+        end,
+        OnMouseEnter = function(self)
+            local row = frame.row
+            local hasQuest = row and Q.API:IsQuestInQuestLog(row.id)
+            local tooltip = Q:GetTooltip()
+            local r, g, b = unpack(Q.Theme.Text.Primary)
+            tooltip:SetOwner(self, "ANCHOR_TOPLEFT", 5, 5)
+            if hasQuest then
+                tooltip:SetText("Share Quest", unpack(Q.Theme.Text.Accent))
+                tooltip:AddLine("Share this quest with your party.", r, g, b, true)
+            else
+                tooltip:SetText("Can't Share Quest", unpack(Q.Theme.Text.Accent))
+                tooltip:AddLine("You need to have this quest in your quest log to share it.", r, g, b, true)
+            end
+            tooltip:Show()
+        end,
+        OnMouseLeave = function()
+            Q:GetTooltip():Hide()
+        end,
+    }
+    frame.shareButton = Q:CreateButton(nil, frame, "", DB_ROW_HEIGHT - 8, DB_ROW_HEIGHT - 8,
+        Q.Theme.FontSize.M, Q.Theme.Status.Info, shareButtonHandlers)
+    frame.shareButton.icon = frame.shareButton:CreateTexture(nil, "ARTWORK")
+    frame.shareButton.icon:SetTexture("Interface\\FriendsFrame\\UI-Toast-ChatInviteIcon")
+    frame.shareButton.icon:SetVertexColor(unpack(Q.Theme.Status.Info))
+    Q:SetPixelPerfectSize(frame.shareButton.icon, (DB_ROW_HEIGHT - 8) * 0.9, (DB_ROW_HEIGHT - 8) * 0.9)
+    frame.shareButton.icon:SetPoint("CENTER")
+    frame.shareButton:SetPoint("RIGHT", frame.waypointButton, "LEFT", -2, 0)
+
     frame.titleHover = CreateFrame("Frame", nil, frame)
     frame.titleHover:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
     -- End the hoverable area before the action buttons so they remain clickable.
-    frame.titleHover:SetPoint("BOTTOMRIGHT", frame.waypointButton, "BOTTOMLEFT", -2, 0)
+    frame.titleHover:SetPoint("BOTTOMRIGHT", frame.shareButton, "BOTTOMLEFT", -2, 0)
     frame.titleHover:EnableMouse(true)
     frame.titleHover:SetScript("OnMouseUp", function(_, button)
         local clickedRow = frame.row
@@ -1208,11 +1266,11 @@ local function CreateRowFrame(index, row)
         if not isQuestInLog then
             tooltip:AddLine(tooltipStatus, tooltipStatusColor.r, tooltipStatusColor.g, tooltipStatusColor.b)
         end
+
         if Q.API:IsQuestShareable(hoveredRow.id) then
             tooltip:AddLine("Can be shared", Q.Theme.Status.Info[1], Q.Theme.Status.Info[2],
                 Q.Theme.Status.Info[3])
         end
-
         --------------------------------------------------
         -- Determine tooltip content
         --------------------------------------------------
@@ -1489,7 +1547,7 @@ function QuestLog:RefreshAndPopulate()
         frame.titleHover:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
         frame.titleHover:SetPoint(
             "BOTTOMRIGHT",
-            frame.waypointButton,
+            frame.shareButton,
             "BOTTOMLEFT",
             -2,
             row.isInstance and -(INSTANCE_ROW_EXTRA_HEIGHT / 2) or 0

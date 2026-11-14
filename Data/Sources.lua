@@ -328,7 +328,7 @@ Q.Sources = {
         type = "npc",
         name = "Chief Engineer Bilgewhizzle",
         zone = "Tanaris",
-        location = { mapId = 1446, x = 0.52, y = 0.28 }
+        location = { mapId = 1446, x = 0.524, y = 0.285 }
     },
     [47] = {
         id = 47,
@@ -800,7 +800,7 @@ Q.Sources = {
         type = "npc",
         name = "High Sorcerer Andromath",
         zone = "Stormwind City",
-        location = { mapId = 1453, x = 0.386, y = 0.794 }
+        location = { mapId = 1453, x = 0.710, y = 0.634 }
     },
     [112] = {
         id = 112,
@@ -1111,7 +1111,7 @@ Q.Sources = {
         type = "npc",
         name = "Master Mathias Shaw",
         zone = "Stormwind City",
-        location = { mapId = 1453, x = 0.75, y = 0.60 }
+        location = { mapId = 1453, x = 0.784, y = 0.707 }
     },
     [156] = {
         id = 156,
@@ -1681,7 +1681,7 @@ Q.Sources = {
         type = "npc",
         name = "Tran'rek",
         zone = "Tanaris",
-        location = { mapId = 1446, x = 0.514, y = 0.268 }
+        location = { mapId = 1446, x = 0.515, y = 0.2678 }
     },
     [236] = {
         id = 236,
@@ -1696,7 +1696,7 @@ Q.Sources = {
         type = "npc",
         name = "Trenton Lighthammer",
         zone = "Tanaris",
-        location = { mapId = 1446, x = 0.51, y = 0.28 }
+        location = { mapId = 1446, x = 0.514, y = 0.287 }
     },
     [238] = {
         id = 238,
@@ -1839,7 +1839,7 @@ Q.Sources = {
         type = "npc",
         name = "Yeh'kinya",
         zone = "Tanaris",
-        location = { mapId = 1446, x = 0.67, y = 0.22 }
+        location = { mapId = 1446, x = 0.670, y = 0.224 }
     },
     [258] = {
         id = 258,
@@ -2207,6 +2207,62 @@ Q.Sources = {
         name = "Commander Folkar",
         instance = Q.Instances["Alcaz Prison"],
         text = "Inside the prison, in a cell"
+    },
+    [306] = {
+        id = 306,
+        type = "object",
+        name = "Shen'dralar Pylon",
+        zone = "Shen'dralas",
+        location = { mapId = 2652, x = 0.437, y = 0.352 }
+    },
+    [307] = {
+        id = 307,
+        type = "npc",
+        name = "Mithera",
+        zone = "Shen'dralas",
+        location = { mapId = 2652, x = 0.532, y = 0.759 }
+    },
+    [308] = {
+        id = 308,
+        type = "npc",
+        name = "Woodwyrd",
+        zone = "Shen'dralas",
+        location = { mapId = 2652, x = 0.695, y = 0.719 }
+    },
+    [309] = {
+        id = 309,
+        type = "npc",
+        name = "Kog'thug the Brave",
+        zone = "Shen'dralas",
+        location = { mapId = 2652, x = 0.726, y = 0.314 }
+    },
+    [310] = {
+        id = 310,
+        type = "npc",
+        name = "Sully McCleary",
+        zone = "Dustwallow Marsh",
+        location = { mapId = 1445, x = 0.662, y = 0.452 }
+    },
+    [311] = {
+        id = 311,
+        type = "npc",
+        name = "Renzik \"The Shiv\"",
+        zone = "Stormwind City",
+        location = { mapId = 1453, x = 0.788, y = 0.708 }
+    },
+    [312] = {
+        id = 312,
+        type = "npc",
+        name = "Rix XIzzix",
+        zone = "Stranglethorn Vale",
+        location = { mapId = 1434, x = 0.284, y = 0.758 }
+    },
+    [313] = {
+        id = 313,
+        type = "npc",
+        name = "Mason Connery",
+        instance = Q.Instances["Alcaz Prison"],
+        text = "You must NOT kill 'The Questioner' to complete the quest that Mason gives."
     }
 }
 
