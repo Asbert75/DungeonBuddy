@@ -726,14 +726,14 @@ local function UpdateRowText(frame)
         Q.API:IsQuestInQuestLog(row.id) and Q.API:IsQuestWatched(row.id))
     -- frame.titleFrame.dungeonIcon:SetShown(isQuestRow and row.chainDepth and row.chainDepth > 1)
 
-    if row.id == 4136 then
-        -- Custom handling for quest ID 4136 can be added here
-        print("Custom handling for quest ID 4136")
-        print("isQuestRow: "..tostring(isQuestRow)) 
-        print("isQuestShareable: "..tostring(Q.API:IsQuestShareable(row.id)))
-        print("canShare: "..tostring(CanShareQuest(row.id)))
-        print("hasQuest: "..tostring(Q.API:IsQuestInQuestLog(row.id)))
-    end
+    -- if row.id == 4136 then
+    --     -- Custom handling for quest ID 4136 can be added here
+    --     print("Custom handling for quest ID 4136")
+    --     print("isQuestRow: "..tostring(isQuestRow)) 
+    --     print("isQuestShareable: "..tostring(Q.API:IsQuestShareable(row.id)))
+    --     print("canShare: "..tostring(CanShareQuest(row.id)))
+    --     print("hasQuest: "..tostring(Q.API:IsQuestInQuestLog(row.id)))
+    -- end
 
     local canShare = isQuestRow and CanShareQuest(row.id)
     local hasQuest = isQuestRow and Q.API:IsQuestInQuestLog(row.id)
