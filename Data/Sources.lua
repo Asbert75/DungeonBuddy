@@ -305,7 +305,7 @@ Q.Sources = {
         name = "Celebras the Redeemed",
         zone = "Desolace",
         location = { mapId = 1443, x = 0.38, y = 0.58 },
-        text = "Inside the instance, spawns after killing Celebras the Cursed"
+        text = "Spawns after killing Celebras the Cursed"
     },
     [44] = {
         id = 44,
@@ -564,7 +564,7 @@ Q.Sources = {
         name = "Essence of Eranikus",
         itemId = 10454,
         instance = Q.Instances["Temple of Atal'Hakkar"],
-        text = "Dropped by Shade of Eranikus inside the instance"
+        text = "Dropped by Shade of Eranikus"
     },
     [79] = {
         id = 79,
@@ -630,7 +630,7 @@ Q.Sources = {
         itemId = 12780,
         name = "General Drakkisath's Command",
         instance = Q.Instances["Lower Blackrock Spire"],
-        text = "Dropped by General Drakkisath inside Lower Blackrock Spire"
+        text = "Dropped by General Drakkisath"
     },
     [88] = {
         id = 88,
@@ -665,7 +665,7 @@ Q.Sources = {
         name = "Glowing Shard",
         itemId = 10441,
         instance = Q.Instances["Wailing Caverns"],
-        text = "Dropped by Mutanus the Devourer at the end of the instance"
+        text = "Dropped by Mutanus the Devourer"
     },
     [93] = {
         id = 93,
@@ -708,7 +708,7 @@ Q.Sources = {
         name = "Grime-Encrusted Ring",
         itemId = 9326,
         instance = Q.Instances["Gnomeregan"],
-        text = "Dropped by Dark Iron Agents inside the instance"
+        text = "Dropped by Dark Iron Agents"
     },
     [99] = {
         id = 99,
@@ -735,8 +735,7 @@ Q.Sources = {
         id = 102,
         type = "npc",
         name = "Hammertoe Grez",
-        instance = Q.Instances["Uldaman"],
-        text = "Found inside the instance"
+        instance = Q.Instances["Uldaman"]
     },
     [103] = {
         id = 103,
@@ -751,7 +750,7 @@ Q.Sources = {
         name = "Head of Balnazzar",
         itemId = 13250,
         instance = Q.Instances["Stratholme"],
-        text = "Dropped by Balnazzar in Stratholme"
+        text = "Dropped by Balnazzar"
     },
     [105] = {
         id = 105,
@@ -759,7 +758,7 @@ Q.Sources = {
         itemId = 13920,
         name = "Healthy Dragon Scale",
         instance = Q.Instances["Scholomance"],
-        text = "Dropped by Plagued Hatchlings inside the instance"
+        text = "Dropped by Plagued Hatchlings"
     },
     [106] = {
         id = 106,
@@ -891,7 +890,7 @@ Q.Sources = {
         type = "npc",
         name = "Kernobee",
         instance = Q.Instances["Gnomeregan"],
-        text = "Found inside the instance in the room right of the Clean Room"
+        text = "Found in one of the rooms to the right of the Clean Room"
     },
     [125] = {
         id = 125,
@@ -925,8 +924,7 @@ Q.Sources = {
         id = 129,
         type = "npc",
         name = "Knot Thimblejack",
-        instance = Q.Instances["Dire Maul: North"],
-        text = "Located inside the instance"
+        instance = Q.Instances["Dire Maul: North"]
     },
     [130] = {
         id = 130,
@@ -1866,9 +1864,9 @@ Q.Sources = {
         id = 261,
         type = "npc",
         name = "Zaetar's Spirit",
-        zone = "Desolace",
+        instance = Q.Instances["Maraudon"],
         location = { mapId = 1443, x = 0.38, y = 0.58 },
-        text = "Inside the instance, spawns after killing Princess Theradras"
+        text = "Spawns after killing Princess Theradras"
     },
     [262] = {
         id = 262,
@@ -2262,6 +2260,13 @@ Q.Sources = {
         type = "npc",
         name = "Mason Connery",
         instance = Q.Instances["Alcaz Prison"],
+        text = "You must NOT kill 'The Questioner' to complete the quest that Mason gives."
+    },
+    [314] = {
+        id = 314,
+        type = "npc",
+        name = "Mordent Evenshade",
+        location = { mapId = 2652, x = 0.35, y = 0.466 },
         text = "You must NOT kill 'The Questioner' to complete the quest that Mason gives."
     }
 }

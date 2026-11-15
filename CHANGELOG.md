@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.31] - 2026-11-15
+
+### Fixed
+
+- Updated quest chain for Maraudon/RFD quest chain Rot And Regret / Agamaggan's Blood
+
 ## [2.0.30] - 2026-11-15
 
 ### Added

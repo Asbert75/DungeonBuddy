@@ -1629,12 +1629,52 @@ Q.Quests = {
         source = Q.Sources[306], -- Shen'dralar Pylon
     },
     {
+        id = 96010,
+        name = "Fragments of the Pylons",
+        suggestedLevel = 41,
+        requiredLevel = 35,
+        prerequisites = {
+            { id = 92914, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = Q.Sources[314], -- Mordent Evershade
+    },
+    {
+        id = 96018,
+        name = "Powering the Pylons",
+        suggestedLevel = 43,
+        requiredLevel = 35,
+        prerequisites = {
+            { id = 96010, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = Q.Sources[314], -- Mordent Evershade
+    },
+    {
+        id = 93016,
+        name = "A Brief History Lesson",
+        suggestedLevel = 43,
+        requiredLevel = 35,
+        prerequisites = {
+            { id = 96018, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = Q.Sources[314], -- Mordent Evershade
+    },
+    {
+        id = 93394,
+        name = "Meeting the Magister",
+        suggestedLevel = 43,
+        requiredLevel = 35,
+        prerequisites = {
+            { id = 93016, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = Q.Sources[314], -- Mordent Evershade
+    },
+    {
         id = 93341,
         name = "Forlorn Gardens",
         suggestedLevel = 43,
         requiredLevel = 35,
         prerequisites = {
-            { id = 92914, type = Q.PrerequisiteType.CHAIN }
+            { id = 93394, type = Q.PrerequisiteType.CHAIN }
         },
         source = Q.Sources[307], -- Mithera
     },
@@ -5127,8 +5167,7 @@ Q.Quests = {
         name = "The Man in the Iron Chains",
         suggestedLevel = 53,
         requiredLevel = 48,
-        source = Q.Sources[313], -- Mason Connery
-        instances = { Q.Instances["Alcaz Prison"] }
+        source = Q.Sources[313] -- Mason Connery
     },
     {
         id = 96337,
@@ -5139,7 +5178,6 @@ Q.Quests = {
         suggestedLevel = 53,
         requiredLevel = 48,
         source = Q.Sources[313], -- Mason Connery
-        instances = { Q.Instances["Alcaz Prison"] }
     },
     {
         id = 96381,
