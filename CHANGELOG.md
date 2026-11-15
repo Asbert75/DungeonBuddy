@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.30] - 2026-11-15
+
+### Added
+
+- Quest XP is now displayed in the tooltip next to the name
+- A text under the quest name is now shown when you have the quest in your log
+
+### Changed
+
+- Share button is now shown for chain quests that can be shared as well
+
+### Fixed
+
+- Shift-clicking a quest now correctly opens the specific quest in your quest log
+
 ## [2.0.28] - 2026-11-14
 
 ### Added

@@ -603,6 +603,11 @@ function Q.API:GetQuestStatus(questId)
     return "unavailable"
 end
 
+function Q.API:GetQuestLogRewardXP(questId)
+    local xp = GetQuestLogRewardXP(questId)
+    return xp or 0
+end
+
 function Q.API:GetRandomQuest()
     local chainStartQuests = {}
     for _, quest in ipairs(self:GetQuests()) do

@@ -1,8 +1,8 @@
-## Interface: 16001, 16000, 120005
+## Interface: 16001, 16000
 ## Title: DungeonBuddy
 ## Notes: Reminds you of quest chains that lead into instance quests and tracks them by instance.
 ## Author: Wicked
-## Version: 2.0.28
+## Version: 2.0.30
 ## X-Curse-Project-ID: 1730648
 ## Category: Quests & Leveling
 ## SavedVariablesPerCharacter: DungeonBuddyCharDB

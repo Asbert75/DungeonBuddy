@@ -654,20 +654,6 @@ local function RemoveLastUTF8Character(text)
     return string.sub(text, 1, index - 1)
 end
 
-local function CanShareQuest(questId)
-    if not Q.API:IsQuestShareable(questId) then
-        return false
-    end
-
-    local quest = Q.API:GetQuestById(questId)
-    for _, prerequisite in ipairs(quest and quest.prerequisites or {}) do
-        if prerequisite.type ~= Q.PrerequisiteType.BREADCRUMB then
-            return false
-        end
-    end
-    return true
-end
-
 local function ShareQuest(questId)
     if QuestMapQuestOptions_ShareQuest then
         QuestMapQuestOptions_ShareQuest(questId)
@@ -726,16 +712,17 @@ local function UpdateRowText(frame)
         Q.API:IsQuestInQuestLog(row.id) and Q.API:IsQuestWatched(row.id))
     -- frame.titleFrame.dungeonIcon:SetShown(isQuestRow and row.chainDepth and row.chainDepth > 1)
 
-    -- if row.id == 4136 then
-    --     -- Custom handling for quest ID 4136 can be added here
-    --     print("Custom handling for quest ID 4136")
+    -- if row.id == 95250 then
+    --     -- Custom handling for quest ID 96381 can be added here
+    --     print("Custom handling for quest ID 96381")
     --     print("isQuestRow: "..tostring(isQuestRow)) 
     --     print("isQuestShareable: "..tostring(Q.API:IsQuestShareable(row.id)))
-    --     print("canShare: "..tostring(CanShareQuest(row.id)))
+    --     print("canShare: "..tostring(Q.API:IsQuestShareable(row.id)))
     --     print("hasQuest: "..tostring(Q.API:IsQuestInQuestLog(row.id)))
     -- end
 
-    local canShare = isQuestRow and CanShareQuest(row.id)
+    local canShare = isQuestRow and Q.API:GetQuestStatus(row.id) ~= "unavailable" and
+        Q.API:IsQuestShareable(row.id)
     local hasQuest = isQuestRow and Q.API:IsQuestInQuestLog(row.id)
     frame.shareButton:SetShown(canShare)
     frame.shareButton:SetAlpha(hasQuest and 1 or 0.6)
@@ -1101,7 +1088,7 @@ local function CreateRowFrame(index, row)
     local shareButtonHandlers = {
         OnClick = function()
             local row = frame.row
-            if row and Q.API:IsQuestInQuestLog(row.id) and CanShareQuest(row.id) then
+            if row and Q.API:IsQuestInQuestLog(row.id) and Q.API:IsQuestShareable(row.id) then
                 ShareQuest(row.id)
             end
         end,
@@ -1115,7 +1102,7 @@ local function CreateRowFrame(index, row)
                 tooltip:SetText("Share Quest", unpack(Q.Theme.Text.Accent))
                 tooltip:AddLine("Share this quest with your party.", r, g, b, true)
             else
-                tooltip:SetText("Can't Share Quest", unpack(Q.Theme.Text.Accent))
+                tooltip:SetText("Share Quest", unpack(Q.Theme.Status.Error))
                 tooltip:AddLine("You need to have this quest in your quest log to share it.", r, g, b, true)
             end
             tooltip:Show()
@@ -1179,23 +1166,7 @@ local function CreateRowFrame(index, row)
         end
 
         -- Shift-click -> Open the selected quest in Blizzard's quest log.
-        local questIndex = C_QuestLog.GetLogIndexForQuestID and
-            C_QuestLog.GetLogIndexForQuestID(clickedRow.id)
-        if questIndex and QuestLog_OpenToQuest then
-            QuestLog_OpenToQuest(questIndex)
-        else
-            if QuestLogFrame then
-                ShowUIPanel(QuestLogFrame)
-            elseif ToggleQuestLog then
-                ToggleQuestLog()
-            end
-
-            if questIndex and SelectQuestLogEntry then
-                SelectQuestLogEntry(questIndex)
-            else
-                C_QuestLog.SetSelectedQuest(clickedRow.id)
-            end
-        end
+        QuestMapFrame_OpenToQuestDetails(clickedRow.id)
     end)
 
     frame.hoverHighlight = frame:CreateTexture(nil, "BACKGROUND", nil, 2)
@@ -1253,7 +1224,7 @@ local function CreateRowFrame(index, row)
         if questStatus == "completed" then
             tooltipStatus = "Completed"
         elseif isQuestInLog then
-            tooltipStatus = "Track Quest"
+            tooltipStatus = "You are on this quest"
         elseif not meetsPrerequisites then
             tooltipStatus = "Prerequisite Not Met"
         elseif isQuestAvailable then
@@ -1262,7 +1233,7 @@ local function CreateRowFrame(index, row)
             tooltipStatus = "Unavailable"
         end
 
-        tooltip:SetText(hoveredRow.name, Q.Theme.Text.Accent[1], Q.Theme.Text.Accent[2], Q.Theme.Text.Accent[3])
+        tooltip:AddDoubleLine(hoveredRow.name, "+"..Q.API:GetQuestLogRewardXP(hoveredRow.id).."xp", Q.Theme.Text.Accent[1], Q.Theme.Text.Accent[2], Q.Theme.Text.Accent[3], Q.Theme.QuestColorInProgress.r, Q.Theme.QuestColorInProgress.g, Q.Theme.QuestColorInProgress.b)
         if not isQuestInLog then
             tooltip:AddLine(tooltipStatus, tooltipStatusColor.r, tooltipStatusColor.g, tooltipStatusColor.b)
         end
@@ -1271,6 +1242,7 @@ local function CreateRowFrame(index, row)
             tooltip:AddLine("Can be shared", Q.Theme.Status.Info[1], Q.Theme.Status.Info[2],
                 Q.Theme.Status.Info[3])
         end
+
         --------------------------------------------------
         -- Determine tooltip content
         --------------------------------------------------
