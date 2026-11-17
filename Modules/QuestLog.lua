@@ -4,6 +4,23 @@ Q.QuestLog = QuestLog
 
 local breadcrumbQuestsToHide = {}
 
+function Q:InsertQuestLink(questID)
+    if not questID then
+        return false
+    end
+
+    if not ChatEdit_GetActiveWindow() then
+        return false
+    end
+
+    local questLink = GetQuestLink(questID)
+    if questLink then
+        return ChatFrameUtil.InsertLink(questLink)
+    end
+
+    return false
+end
+
 local function IsBreadcrumbQuestHidden(questId)
     return breadcrumbQuestsToHide[questId] == true
 end
@@ -710,18 +727,9 @@ local function UpdateRowText(frame)
 
     frame.titleFrame.trackedIcon:SetShown(isQuestRow and
         Q.API:IsQuestInQuestLog(row.id) and Q.API:IsQuestWatched(row.id))
-    -- frame.titleFrame.dungeonIcon:SetShown(isQuestRow and row.chainDepth and row.chainDepth > 1)
+    -- frame.titleFrame.dungeonIcon:SetShown(isQuestRow and row.chainDepth and row.chainDepth > 0 and row.instances and #row.instances > 0)
 
-    -- if row.id == 95250 then
-    --     -- Custom handling for quest ID 96381 can be added here
-    --     print("Custom handling for quest ID 96381")
-    --     print("isQuestRow: "..tostring(isQuestRow)) 
-    --     print("isQuestShareable: "..tostring(Q.API:IsQuestShareable(row.id)))
-    --     print("canShare: "..tostring(Q.API:IsQuestShareable(row.id)))
-    --     print("hasQuest: "..tostring(Q.API:IsQuestInQuestLog(row.id)))
-    -- end
-
-    local canShare = isQuestRow and Q.API:GetQuestStatus(row.id) ~= "unavailable" and
+    local canShare = isQuestRow and Q.API:GetQuestStatus(row.id) ~= "unavailable" and Q.API:GetQuestStatus(row.id) ~= "completed" and
         Q.API:IsQuestShareable(row.id)
     local hasQuest = isQuestRow and Q.API:IsQuestInQuestLog(row.id)
     frame.shareButton:SetShown(canShare)
@@ -732,7 +740,7 @@ local function UpdateRowText(frame)
         + (Q.Theme.Padding.L + 4)
     PositionQuestIcons(frame, rightInset)
     local suffixWidth = frame.titleFrame.level:GetStringWidth()
-    for _, icon in ipairs({ frame.titleFrame.classIcon, frame.titleFrame.professionIcon, frame.titleFrame.trackedIcon }) do
+    for _, icon in ipairs({ frame.titleFrame.classIcon, frame.titleFrame.professionIcon, frame.titleFrame.trackedIcon, frame.titleFrame.dungeonIcon }) do
         if icon:IsShown() then
             suffixWidth = suffixWidth + icon:GetWidth() + 2
         end
@@ -986,11 +994,11 @@ local function CreateRowFrame(index, row)
     frame.titleFrame.professionIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
     frame.titleFrame.professionIconBorder = Q:CreateIconBorder(frame.titleFrame, frame.titleFrame.professionIcon)
 
-    -- frame.titleFrame.dungeonIcon = frame.titleFrame:CreateTexture(nil, "ARTWORK")
-    -- frame.titleFrame.dungeonIcon:SetTexture("Interface\\Addons\\DungeonBuddy\\Media\\Icons\\DungeonPortal.png")
-    -- frame.titleFrame.dungeonIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-    -- Q:SetPixelPerfectSize(frame.titleFrame.dungeonIcon, 15, 15)
-    -- frame.titleFrame.dungeonIcon:Hide()
+    frame.titleFrame.dungeonIcon = frame.titleFrame:CreateTexture(nil, "ARTWORK")
+    frame.titleFrame.dungeonIcon:SetTexture("Interface\\Addons\\DungeonBuddy\\Media\\Icons\\DungeonPortal.png")
+    frame.titleFrame.dungeonIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+    Q:SetPixelPerfectSize(frame.titleFrame.dungeonIcon, 15, 15)
+    frame.titleFrame.dungeonIcon:Hide()
 
     --------------------------------------------------
     -- Create Action Buttons
@@ -1123,9 +1131,13 @@ local function CreateRowFrame(index, row)
     frame.titleHover = CreateFrame("Frame", nil, frame)
     frame.titleHover:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
     -- End the hoverable area before the action buttons so they remain clickable.
-    frame.titleHover:SetPoint("BOTTOMRIGHT", frame.shareButton, "BOTTOMLEFT", -2, 0)
+    frame.titleHover:SetPoint("BOTTOMRIGHT", frame.shareButton, "BOTTOMLEFT", -2, 0) -- TODO, make buttons a list to automatically update this point when adding new buttons, or just TODO: Update this when adding new buttons
     frame.titleHover:EnableMouse(true)
     frame.titleHover:SetScript("OnMouseUp", function(_, button)
+        -- if Q:InsertQuestLink(frame.row.id) then
+        --     return
+        -- end
+
         local clickedRow = frame.row
         if not clickedRow or clickedRow.isSharedSummary then
             return
@@ -1233,14 +1245,27 @@ local function CreateRowFrame(index, row)
             tooltipStatus = "Unavailable"
         end
 
-        tooltip:AddDoubleLine(hoveredRow.name, "+"..Q.API:GetQuestLogRewardXP(hoveredRow.id).."xp", Q.Theme.Text.Accent[1], Q.Theme.Text.Accent[2], Q.Theme.Text.Accent[3], Q.Theme.QuestColorInProgress.r, Q.Theme.QuestColorInProgress.g, Q.Theme.QuestColorInProgress.b)
+        if questStatus ~= "completed" then
+            tooltip:AddDoubleLine(
+                hoveredRow.name, 
+                "+"..Q.API:GetQuestLogRewardXP(hoveredRow.id).."xp", 
+                Q.Theme.Text.Accent[1], Q.Theme.Text.Accent[2], Q.Theme.Text.Accent[3], 
+                Q.Theme.QuestColorInProgress.r, Q.Theme.QuestColorInProgress.g, Q.Theme.QuestColorInProgress.b
+            )
+        else
+            tooltip:AddLine(hoveredRow.name, Q.Theme.Text.Accent[1], Q.Theme.Text.Accent[2], Q.Theme.Text.Accent[3])
+        end
+
+        if hoveredRow.instances and #hoveredRow.instances > 0 then
+            tooltip:AddTexture("Interface\\Addons\\DungeonBuddy\\Media\\Icons\\DungeonPortal.png", { width = 15, height = 15, verticalOffset = 2, texCoords = {0.1, 0.9, 0.1, 0.9}})
+        end
+        
         if not isQuestInLog then
             tooltip:AddLine(tooltipStatus, tooltipStatusColor.r, tooltipStatusColor.g, tooltipStatusColor.b)
         end
 
-        if Q.API:IsQuestShareable(hoveredRow.id) then
-            tooltip:AddLine("Can be shared", Q.Theme.Status.Info[1], Q.Theme.Status.Info[2],
-                Q.Theme.Status.Info[3])
+        if Q.API:IsQuestShareable(hoveredRow.id) and questStatus ~= "completed" then
+            tooltip:AddLine("Can be shared", Q.Theme.Status.Info[1], Q.Theme.Status.Info[2], Q.Theme.Status.Info[3])
         end
 
         --------------------------------------------------
@@ -1357,6 +1382,10 @@ local function CreateRowFrame(index, row)
             tooltip:AddLine("Breadcrumb", Q.Theme.Status.Info[1], Q.Theme.Status.Info[2], Q.Theme.Status.Info[3], true)
             tooltip:AddLine("Not required to unlock the next quest.", Q.Theme.Text.Primary[1], Q.Theme.Text.Primary[2],
                 Q.Theme.Text.Primary[3], true)
+        end
+
+        if hoveredRow.text and (isQuestInLog or isQuestAvailable) then
+            tooltip:AddLine(hoveredRow.text, Q.Theme.Status.Info[1], Q.Theme.Status.Info[2], Q.Theme.Status.Info[3], true)
         end
 
         local canCollapse = frame.collapseButton:IsShown()

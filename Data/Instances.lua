@@ -274,7 +274,7 @@ Q.Instances = {
     },
     ["Shaper's Terrace"] = {
         id = 35,
-        name = "Shaper's Terrace (INCOMPLETE)",
+        name = "Shaper's Terrace",
         continent = "Kalimdor",
         zone = "Un'Goro Crater",
         location = { mapId = 1449, x = 0.329, y = 0.197 },

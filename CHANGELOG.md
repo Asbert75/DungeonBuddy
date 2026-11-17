@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added Shaper's Terrace quests
+
+## [2.0.32] - 2026-11-17
+
+### Fixed
+
+- Removed unused A Taste of Flame quest and changed the remaining one to be REQUIRED instead of OPTIONAL
+
+### Added
+
+- Added Blackmaw Hold quests
+
 ## [2.0.31] - 2026-11-15
 
 ### Fixed

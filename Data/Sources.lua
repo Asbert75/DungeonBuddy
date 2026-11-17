@@ -210,9 +210,9 @@ Q.Sources = {
         type = "item",
         itemId = 18987,
         name = "Blackhand's Command",
-        zone = "Burning Steppes",
+        zone = "Blackrock Mountain",
         location = { mapId = 1428, x = 0.292, y = 0.382 },
-        text = "Kill the Scarshield Quartermaster found outside the UBRS/LBRS entrance"
+        text = "Dropped by Scarshield Quartermaster found outside the UBRS/LBRS entrance"
     },
     [31] = {
         id = 31,
@@ -277,7 +277,7 @@ Q.Sources = {
         type = "npc",
         name = "Captain Kromcrush",
         instance = Q.Instances["Dire Maul: North"],
-        text = "Located inside the instance, you must use a Gordok Ogre Suit to acquire and turn in this quest"
+        text = "Located inside the instance, you must use a Gordok Ogre Suit to speak to him"
     },
     [40] = {
         id = 40,
@@ -440,18 +440,7 @@ Q.Sources = {
         type = "npc",
         name = "Dead Drop",
         zone = "Silverpine Forest",
-        location = { mapId = 1421, x = 0.471, y = 0.711 },
-        text =
-        "You must visit a capital city once hitting level 30 for the letter to arrive before the quest is available from Dead Drop"
-    },
-    [62] = {
-        id = 62,
-        type = "npc",
-        name = "Dead Drop",
-        zone = "Silverpine Forest",
-        location = { mapId = 1421, x = 0.471, y = 0.711 },
-        text =
-        "You must visit a capital city once hitting level 20 for the letter to arrive before the quest is available from Dead Drop"
+        location = { mapId = 1421, x = 0.471, y = 0.711 }
     },
     [63] = {
         id = 63,
@@ -598,7 +587,7 @@ Q.Sources = {
         id = 83,
         type = "npc",
         name = "Franclorn Forgewright",
-        zone = "Burning Steppes",
+        zone = "Blackrock Mountain",
         location = { mapId = 1428, x = 0.292, y = 0.382 },
         text =
         "You must be dead to speak to him, he's located in the middle of Blackrock Mountains inside the building"
@@ -1023,7 +1012,7 @@ Q.Sources = {
         id = 143,
         type = "npc",
         name = "Lothos Riftwaker",
-        zone = "Burning Steppes",
+        zone = "Blackrock Mountain",
         location = { mapId = 1428, x = 0.292, y = 0.382 },
         text = "Found at the bottom of the chain inside the mountain on the way to the instance"
     },
@@ -1073,13 +1062,6 @@ Q.Sources = {
         id = 150,
         type = "npc",
         name = "Marshal Maxwell",
-        zone = "Burning Steppes",
-        location = { mapId = 1428, x = 0.846, y = 0.688 }
-    },
-    [151] = {
-        id = 151,
-        type = "npc",
-        name = "Marshall Maxwell",
         zone = "Burning Steppes",
         location = { mapId = 1428, x = 0.846, y = 0.688 }
     },
@@ -2251,7 +2233,7 @@ Q.Sources = {
     [312] = {
         id = 312,
         type = "npc",
-        name = "Rix XIzzix",
+        name = "Rix Xizzix",
         zone = "Stranglethorn Vale",
         location = { mapId = 1434, x = 0.284, y = 0.758 }
     },
@@ -2266,9 +2248,116 @@ Q.Sources = {
         id = 314,
         type = "npc",
         name = "Mordent Evenshade",
-        location = { mapId = 2652, x = 0.35, y = 0.466 },
-        text = "You must NOT kill 'The Questioner' to complete the quest that Mason gives."
+        zone = "Shen'dralas",
+        location = { mapId = 2652, x = 0.35, y = 0.466 }
+    },
+    [315] = {
+        id = 315,
+        type = "npc",
+        name = "Muln Earthfury",
+        zone = "Mulgore",
+        location = { mapId = 1412, x = 0.334, y = 0.226 }
+    },
+    [316] = {
+        id = 316,
+        type = "npc",
+        name = "Ekkal",
+        zone = "Azshara",
+        location = { mapId = 1447, x = 0.420, y = 0.388 }
+    },
+    [317] = {
+        id = 317,
+        type = "npc",
+        name = "Mathrengyl Bearwalker",
+        zone = "Darnassus",
+        location = { mapId = 1457, x = 0.352, y = 0.086 }
+    },
+    [318] = {
+        id = 318,
+        type = "npc",
+        name = "Jediga",
+        zone = "Azshara",
+        location = { mapId = 1447, x = 0.224, y = 0.514 }
+    },
+    [319] = {
+        id = 319,
+        type = "item",
+        itemId = 249698,
+        name = "Feathered Charm Necklace",
+        instance = Q.Instances["Blackmaw Hold"],
+        text = "Requires you to be Neutral with Timbermaw Hold before it can drop"
+    },
+    [320] = {
+        id = 320,
+        type = "npc",
+        name = "Ogtinc",
+        zone = "Azshara",
+        location = { mapId = 1447, x = 0.424, y = 0.426 }
+    },
+    [321] = {
+        id = 321,
+        type = "npc",
+        name = "Lorekeeper Nok",
+        zone = "Azshara",
+        location = { mapId = 1447, x = 0.414, y = 0.20 }
+    },
+    [322] = {
+        id = 322,
+        type = "npc",
+        name = "Korsa",
+        zone = "Azshara",
+        location = { mapId = 1447, x = 0.630, y = 0.216 }
+    },
+    [323] = {
+        id = 323,
+        type = "npc",
+        name = "Gatekeeper Rageroar",
+        zone = "Azshara",
+        location = { mapId = 1447, x = 0.424, y = 0.202 }
+    },
+    [324] = {
+        id = 324,
+        type = "npc",
+        name = "Gorn One Eye",
+        zone = "Felwood",
+        location = { mapId = 1448, x = 0.656, y = 0.008 }
+    },
+    [325] = {
+        id = 325,
+        type = "npc",
+        name = "Graal",
+        zone = "Azshara",
+        location = { mapId = 1447, x = 0.658, y = 0.148 }
+    },
+    [326] = {
+        id = 326,
+        type = "npc",
+        name = "Mayena Earthseeker",
+        zone = "Mulgore",
+        location = { mapId = 1412, x = 0.349, y = 0.221 }
+    },
+    [327] = {
+        id = 327,
+        type = "npc",
+        name = "Chemist Fuely",
+        zone = "Undercity",
+        location = { mapId = 1458, x = 0.475, y = 0.733 }
+    },
+    [328] = {
+        id = 328,
+        type = "npc",
+        name = "Curator Thorius",
+        zone = "Ironforge",
+        location = { mapId = 1455, x = 0.715, y = 0.157 }
+    },
+    [329] = {
+        id = 329,
+        type = "npc",
+        name = "Enohar Thunderbrew",
+        zone = "Blasted Lands",
+        location = { mapId = 1419, x = 0.636, y = 0.206 }
     }
+    
 }
 
 -- Unknown keys (typos) return nil; record them so Validation.lua can report them.

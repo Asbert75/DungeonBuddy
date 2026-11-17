@@ -2709,6 +2709,7 @@ Q.Quests = {
         },
         source = Q.Sources[152], -- Marvon Rivetseeker
         instances = { Q.Instances["Temple of Atal'Hakkar"] },
+        text = "You must bring the 'Atal'ai Stone Circle' with you to turn the quest in."
     },
     {
         id = 3447,
@@ -2973,25 +2974,13 @@ Q.Quests = {
         source = Q.Sources[54], -- Cyrus Therepentous
     },
     {
-        id = 4023,
-        faction = nil,
-        name = "A Taste of Flame",
-        suggestedLevel = 58,
-        requiredLevel = 52,
-        prerequisites = {
-            { id = 3481, type = Q.PrerequisiteType.CHAIN }
-        },
-        source = Q.Sources[54], -- Cyrus Therepentous
-    },
-    {
         id = 4024,
         faction = nil,
         name = "A Taste of Flame",
         suggestedLevel = 58,
         requiredLevel = 52,
         prerequisites = {
-            { id = 4023, type = Q.PrerequisiteType.ANY },
-            { id = 4022, type = Q.PrerequisiteType.ANY },
+            { id = 4022, type = Q.PrerequisiteType.CHAIN },
         },
         source = Q.Sources[54], -- Cyrus Therepentous
         instances = { Q.Instances["Blackrock Depths"] }
@@ -3180,9 +3169,21 @@ Q.Quests = {
         instances = { Q.Instances["Blackrock Depths"] }
     },
     {
+        id = 4128,
+        faction = "Alliance",
+        name = "Ragnar Thunderbrew",
+        suggestedLevel = 55,
+        requiredLevel = 50,
+        source = Q.Sources[329], -- Enohar Thunderbrew
+        instances = { Q.Instances["Blackrock Depths"] }
+    },
+    {
         id = 4126,
         faction = "Alliance",
         name = "Hurley Blackbreath",
+        prerequisites = {
+            { id = 4128, type = Q.PrerequisiteType.BREADCRUMB }
+        },
         suggestedLevel = 55,
         requiredLevel = 50,
         source = Q.Sources[188], -- Ragnar Thunderbrew
@@ -3849,7 +3850,7 @@ Q.Quests = {
         prerequisites = {
             { id = 5089, type = Q.PrerequisiteType.CHAIN }
         },
-        source = Q.Sources[151], -- Marshall Maxwell
+        source = Q.Sources[150], -- Marshall Maxwell
         instances = { Q.Instances["Upper Blackrock Spire"] }
     },
     {
@@ -4817,7 +4818,8 @@ Q.Quests = {
         suggestedLevel = 35,
         requiredLevel = 30,
         source = Q.Sources[61], -- Dead Drop
-        instances = { Q.Instances["Scarlet Monastery: Library"], Q.Instances["Scarlet Monastery: Graveyard"] }
+        instances = { Q.Instances["Scarlet Monastery: Library"], Q.Instances["Scarlet Monastery: Graveyard"] },
+        text = "You must visit a capital city once hitting level 30 for the letter to arrive before the quest is available from Dead Drop"
     },
     {
         id = 78261,
@@ -4825,8 +4827,9 @@ Q.Quests = {
         name = "The Horn of Xelthos",
         suggestedLevel = 23,
         requiredLevel = 20,
-        source = Q.Sources[62], -- Dead Drop
-        instances = { Q.Instances["Shadowfang Keep"] }
+        source = Q.Sources[61], -- Dead Drop
+        instances = { Q.Instances["Shadowfang Keep"] },
+        text = "You must visit a capital city once hitting level 20 for the letter to arrive before the quest is available from Dead Drop"
     },
     --#endregion
     --#region Krol'dok Stronghold Prerequisites
@@ -5220,6 +5223,239 @@ Q.Quests = {
         requiredLevel = 48,
         source = Q.Sources[311], -- Renzik "The Shiv"
         instances = { Q.Instances["Alcaz Prison"] }
+    },
+    --#endregion
+    --#region Shaper's Terrace
+    {
+        id = 95928,
+        faction = "Horde",
+        name = "Crystalline Elements",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        source = Q.Sources[326], -- Mayena Earthseeker
+        instances = { Q.Instances["Shaper's Terrace"] }
+    },
+    {
+        id = 95790,
+        faction = "Alliance",
+        name = "Digestible Research",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        source = Q.Sources[240], -- Unknown; quest record has no known giver
+        instances = { Q.Instances["Shaper's Terrace"] }
+    },
+    {
+        id = 97049,
+        faction = "Horde",
+        name = "Essence of Seeping Slimes",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        source = Q.Sources[327], -- Chemist Fuely
+        instances = { Q.Instances["Shaper's Terrace"] }
+    },
+    {
+        id = 95925,
+        faction = "Alliance",
+        name = "Mapping the Way Forward",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        source = Q.Sources[328], -- Curator Thorius
+        instances = { Q.Instances["Shaper's Terrace"] }
+    },
+    {
+        id = 95924,
+        faction = "Alliance",
+        name = "Panic at the Digsite",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        source = Q.Sources[328], -- Curator Thorius
+        instances = { Q.Instances["Shaper's Terrace"] }
+    },
+    {
+        id = 95926,
+        faction = "Horde",
+        name = "The Dark Crystal",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        source = Q.Sources[153], -- Master Apothecary Faranell
+        instances = { Q.Instances["Shaper's Terrace"] }
+    },
+    --#endregion
+    --#region Blackmaw Hold
+    {
+        id = 97173,
+        faction = "Alliance",
+        name = "Blackmaw Magic",
+        suggestedLevel = 59,
+        requiredLevel = 52,
+        source = Q.Sources[288], -- Archmage Timear
+        instances = { Q.Instances["Blackmaw Hold"] }
+    },
+    {
+        id = 97198,
+        faction = "Horde",
+        name = "Blackmaw Magic",
+        suggestedLevel = 59,
+        requiredLevel = 52,
+        source = Q.Sources[315], -- Muln Earthfury
+        instances = { Q.Instances["Blackmaw Hold"] }
+    },
+    {
+        id = 97327,
+        name = "Blackmaw Pouches",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        source = Q.Sources[316], -- Ekkal
+        instances = { Q.Instances["Blackmaw Hold"] }
+    },
+    {
+        id = 92344,
+        faction = "Alliance",
+        name = "Get to the Roots of It",
+        suggestedLevel = 55,
+        requiredLevel = 45,
+        source = Q.Sources[317], -- Mathrengyl Bearwalker
+        instances = { Q.Instances["Blackmaw Hold"] }
+    },
+    {
+        id = 92346,
+        faction = "Horde",
+        name = "Beneath Nordrassil",
+        suggestedLevel = 55,
+        requiredLevel = 45,
+        source = Q.Sources[318], -- Jediga
+    },
+    {
+        id = 92343,
+        faction = "Horde",
+        name = "Get to the Roots of It",
+        prerequisites = {
+            { id = 92346, type = Q.PrerequisiteType.CHAIN }
+        },
+        suggestedLevel = 55,
+        requiredLevel = 45,
+        source = Q.Sources[171], -- Nara Wildmane
+        instances = { Q.Instances["Blackmaw Hold"] }
+    },
+    {
+        id = 92070,
+        name = "A Lost Memento",
+        suggestedLevel = 55,
+        requiredLevel = 47,
+        source = Q.Sources[319], -- Feathered Charm Necklace
+        instances = { Q.Instances["Blackmaw Hold"] }
+    },
+    {
+        id = 92069,
+        name = "Claws That Rend, Tusks that Gore",
+        suggestedLevel = 55,
+        requiredLevel = 45,
+        source = Q.Sources[320], -- Ogtinc
+        instances = { Q.Instances["Blackmaw Hold"] }
+    },
+    {
+        id = 92066,
+        name = "The Twin Bears",
+        suggestedLevel = 55,
+        requiredLevel = 45,
+        source = Q.Sources[321], -- Lorekeeper Nok
+        instances = { Q.Instances["Blackmaw Hold"] },
+        text = "You must be Neutral with Timbermaw Hold to pick up this quest"
+    },
+
+
+    {
+        id = 86746,
+        name = "The Legashi Threat",
+        suggestedLevel = 53,
+        requiredLevel = 47,
+        source = Q.Sources[316], -- Ekkal
+    },
+    {
+        id = 86777,
+        name = "Master Feardred",
+        prerequisites = {
+            { id = 86746, type = Q.PrerequisiteType.CHAIN }
+        },
+        suggestedLevel = 53,
+        requiredLevel = 47,
+        source = Q.Sources[322], -- Korsa
+    },
+    {
+        id = 86792,
+        name = "Thinning Their Forces",
+        prerequisites = {
+            { id = 86746, type = Q.PrerequisiteType.CHAIN }
+        },
+        suggestedLevel = 53,
+        requiredLevel = 47,
+        source = Q.Sources[322], -- Korsa
+    },
+    {
+        id = 86796,
+        name = "Later, Satyr",
+        prerequisites = {
+            { id = 86746, type = Q.PrerequisiteType.CHAIN }
+        },
+        suggestedLevel = 53,
+        requiredLevel = 47,
+        source = Q.Sources[325], -- Graal
+    },
+    {
+        id = 86797,
+        name = "Return to Rageroar",
+        prerequisites = {
+            { id = 86777, type = Q.PrerequisiteType.REQUIRED },
+            { id = 86792, type = Q.PrerequisiteType.REQUIRED },
+            { id = 86796, type = Q.PrerequisiteType.REQUIRED }
+        },
+        suggestedLevel = 53,
+        requiredLevel = 47,
+        source = Q.Sources[322], -- Korsa
+    },
+    {
+        id = 86798,
+        name = "Timbermaw Reinforcements",
+        prerequisites = {
+            { id = 86797, type = Q.PrerequisiteType.CHAIN },
+
+        },
+        suggestedLevel = 53,
+        requiredLevel = 47,
+        source = Q.Sources[323], -- Gatekeeper Rageroar
+    },
+    {
+        id = 87346,
+        name = "Chieftain Bloodmaw",
+        prerequisites = {
+            { id = 86798, type = Q.PrerequisiteType.CHAIN },
+
+        },
+        suggestedLevel = 53,
+        requiredLevel = 47,
+        source = Q.Sources[324], -- Gorn One Eye
+    },
+    {
+        id = 86814,
+        name = "Blackmaw Counter-Offensive",
+        prerequisites = {
+            { id = 87346, type = Q.PrerequisiteType.CHAIN },
+
+        },
+        suggestedLevel = 55,
+        requiredLevel = 47,
+        source = Q.Sources[324], -- Gorn One Eye
+    },
+    {
+        id = 92065,
+        name = "Blackmaw Reclamation",
+        prerequisites = {
+            { id = 86814, type = Q.PrerequisiteType.CHAIN }
+        },
+        suggestedLevel = 60,
+        requiredLevel = 47,
+        source = Q.Sources[323], -- Gatekeeper Rageroar
+        instances = { Q.Instances["Blackmaw Hold"] }
     }
     --#endregion
 }
