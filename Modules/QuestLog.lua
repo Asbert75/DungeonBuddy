@@ -1260,9 +1260,7 @@ local function CreateRowFrame(index, row)
             tooltip:AddTexture("Interface\\Addons\\DungeonBuddy\\Media\\Icons\\DungeonPortal.png", { width = 15, height = 15, verticalOffset = 2, texCoords = {0.1, 0.9, 0.1, 0.9}})
         end
         
-        if not isQuestInLog then
-            tooltip:AddLine(tooltipStatus, tooltipStatusColor.r, tooltipStatusColor.g, tooltipStatusColor.b)
-        end
+        tooltip:AddLine(tooltipStatus, tooltipStatusColor.r, tooltipStatusColor.g, tooltipStatusColor.b)
 
         if Q.API:IsQuestShareable(hoveredRow.id) and questStatus ~= "completed" then
             tooltip:AddLine("Can be shared", Q.Theme.Status.Info[1], Q.Theme.Status.Info[2], Q.Theme.Status.Info[3])

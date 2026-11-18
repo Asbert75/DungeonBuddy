@@ -234,7 +234,7 @@ Q.Instances = {
     },
     ["Temple of Atal'Hakkar"] = {
         id = 21,
-        name = "Temple of Atal'Hakkar",
+        name = "Sunken Temple",
         continent = "Eastern Kingdoms",
         zone = "Swamp of Sorrows",
         location = { mapId = 1435, x = 0.69, y = 0.54 },
@@ -255,6 +255,7 @@ Q.Instances = {
     ["Blackmaw Hold"] = {
         id = 34,
         name = "Blackmaw Hold",
+
         continent = "Kalimdor",
         zone = "Azshara",
         location = { mapId = 1447, x = 0.393, y = 0.322 },

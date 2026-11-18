@@ -1718,7 +1718,7 @@ Q.Quests = {
         name = "The Coldbringer's Eye",
         suggestedLevel = 41,
         requiredLevel = 34,
-        source = Q.Sources[240], -- Unknown
+        source = Q.Sources[368], -- Sutara Plainstalker
         instances = { Q.Instances["Razorfen Downs"] },
     },
     {
@@ -2247,7 +2247,7 @@ Q.Quests = {
             Q.Sources[263], -- Anastasia Hartwell
             Q.Sources[264], -- Bink
             Q.Sources[265], -- Jennea Cannon
-            Q.Sources[266] -- Deino
+            Q.Sources[266]  -- Deino
         }
     },
     {
@@ -2262,7 +2262,7 @@ Q.Quests = {
         source = Q.Sources[214], -- Tabetha
         instances = { Q.Instances["Zul'Farrak"] },
     },
-     {
+    {
         id = 96770,
         faction = "Alliance",
         name = "The Witch Doctor's Head",
@@ -2723,6 +2723,375 @@ Q.Quests = {
         source = Q.Sources[152], -- Marvon Rivetseeker
         instances = { Q.Instances["Temple of Atal'Hakkar"] },
     },
+
+    --#region Class quests
+    -- These level 50 class chains all lead into Sunken Temple. The generic
+    -- source is used for class trainers and quest givers not yet mapped here.
+    {
+        id = 9063,
+        class = "DRUID",
+        name = "Torwa Pathfinder",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        sources = {
+            Q.Sources[333], -- Turak Runetotem
+            Q.Sources[317], -- Mathrengyl Bearwalker
+            Q.Sources[332], -- Theridran
+            Q.Sources[331], -- Loganaar
+        }
+    },
+    {
+        id = 9052,
+        class = "DRUID",
+        name = "Bloodpetal Poison",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        prerequisites = { { id = 9063, type = Q.PrerequisiteType.BREADCRUMB } },
+        source = Q.Sources[330], -- Torwa Pathfinder
+    },
+    {
+        id = 9051,
+        class = "DRUID",
+        name = "Toxic Test",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        prerequisites = { { id = 9052, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[330], -- Torwa Pathfinder
+    },
+    {
+        id = 9053,
+        class = "DRUID",
+        name = "A Better Ingredient",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        prerequisites = { { id = 9051, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[330], -- Torwa Pathfinder
+        instances = { Q.Instances["Temple of Atal'Hakkar"] },
+    },
+    {
+        id = 8151,
+        class = "HUNTER",
+        name = "The Hunter's Charm",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        sources = {
+            Q.Sources[334], -- Holt Thunderhorn
+            Q.Sources[335], -- Ormak Grimshot
+            Q.Sources[336], -- Dorion
+            Q.Sources[337], -- Olmin Burningbeard
+            Q.Sources[338], -- Ulfir Ironbeard
+        },
+    },
+    {
+        id = 8153,
+        class = "HUNTER",
+        name = "Courser Antlers",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        prerequisites = { { id = 8151, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[320], -- Ogtinc
+    },
+    {
+        id = 8231,
+        class = "HUNTER",
+        name = "Wavethrashing",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        prerequisites = { { id = 8153, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[320], -- Ogtinc
+    },
+    {
+        id = 8232,
+        class = "HUNTER",
+        name = "The Green Drake",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        prerequisites = { { id = 8231, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[320], -- Ogtinc
+        instances = { Q.Instances["Temple of Atal'Hakkar"] },
+    },
+    {
+        id = 8250,
+        class = "MAGE",
+        name = "Magecraft",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        sources = {
+            Q.Sources[339], -- Maginor Dumas
+            Q.Sources[340], -- Archmage Shymm
+            Q.Sources[341], -- Pierce Shackleton
+            Q.Sources[241], -- Uthel'nay
+            Q.Sources[342], -- Dink
+        },
+    },
+    {
+        id = 8251,
+        class = "MAGE",
+        name = "Magic Dust",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        prerequisites = { { id = 8250, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[343], -- Archmage Xylem
+    },
+    {
+        id = 8252,
+        class = "MAGE",
+        name = "The Siren's Coral",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        prerequisites = { { id = 8251, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[343], -- Archmage Xylem
+    },
+    {
+        id = 8253,
+        class = "MAGE",
+        name = "Destroy Morphaz",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        prerequisites = { { id = 8252, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[343], -- Archmage Xylem
+        instances = { Q.Instances["Temple of Atal'Hakkar"] },
+    },
+    {
+        id = 8415,
+        faction = "Alliance",
+        class = "PALADIN",
+        name = "Chillwind Point",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        sources = {
+            Q.Sources[141], -- Lord Grayson Shadowbreaker
+            Q.Sources[279], -- Brandur Ironhammer
+        },
+    },
+    {
+        id = 8414,
+        faction = "Alliance",
+        class = "PALADIN",
+        name = "Dispelling Evil",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        prerequisites = { { id = 8415, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[355], -- Commander Ashlam Valorfist
+    },
+    {
+        id = 8416,
+        faction = "Alliance",
+        class = "PALADIN",
+        name = "Inert Scourgestones",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        prerequisites = { { id = 8414, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[356], -- High Priest Thel'danis
+    },
+    {
+        id = 8418,
+        faction = "Alliance",
+        class = "PALADIN",
+        name = "Forging the Mightstone",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        prerequisites = { { id = 8416, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[355], -- Commander Ashlam Valorfist
+        instances = { Q.Instances["Temple of Atal'Hakkar"] },
+    },
+    {
+        id = 8254,
+        class = "PRIEST",
+        name = "Cenarion Aid",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        sources = {
+            Q.Sources[357], -- Brother Joshua
+            Q.Sources[358], -- Ur'kyo
+            Q.Sources[110], -- High Priest Rohan
+        },
+    },
+    {
+        id = 8255,
+        class = "PRIEST",
+        name = "Of Coursers We Know",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        prerequisites = { { id = 8254, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[320], -- Ogtinc
+    },
+    {
+        id = 8256,
+        class = "PRIEST",
+        name = "The Ichor of Undeath",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        prerequisites = { { id = 8255, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[320], -- Ogtinc
+    },
+    {
+        id = 8257,
+        class = "PRIEST",
+        name = "Blood of Morphaz",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        prerequisites = { { id = 8256, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[320], -- Ogtinc
+        instances = { Q.Instances["Temple of Atal'Hakkar"] },
+    },
+    {
+        id = 8233,
+        class = "ROGUE",
+        name = "A Simple Request",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        sources = {
+            Q.Sources[365], -- Osborne the Night Man
+            Q.Sources[360], -- Ormok
+            Q.Sources[366], -- Syurna
+            Q.Sources[362], -- Miles Dexter
+            Q.Sources[367], -- Hulfdan Blackbeard
+        }
+    },
+    {
+        id = 8234,
+        class = "ROGUE",
+        name = "Sealed Azure Bag",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        prerequisites = { { id = 8233, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[359], -- Lord Jorach Ravenholdt
+    },
+    {
+        id = 8235,
+        class = "ROGUE",
+        name = "Encoded Fragments",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        prerequisites = { { id = 8234, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[343], -- Archmage Xylem
+    },
+    {
+        id = 8236,
+        class = "ROGUE",
+        name = "The Azure Key",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        prerequisites = { { id = 8235, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[343], -- Archmage Xylem
+        instances = { Q.Instances["Temple of Atal'Hakkar"] },
+    },
+    {
+        id = 8411,
+        class = "SHAMAN",
+        name = "Mastering the Elements",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        source = Q.Sources[340], -- Bath'rah the Windwatcher
+        text = "You can bring 1 of each to turn the quest in immediately: Elemental Air, Fire, Water, and Earth."
+    },
+    {
+        id = 8412,
+        class = "SHAMAN",
+        name = "Spirit Totem",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        prerequisites = { { id = 8410, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[340], -- Bath'rah the Windwatcher
+    },
+    {
+        id = 8413,
+        class = "SHAMAN",
+        name = "Da Voodoo",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        prerequisites = { { id = 8412, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[340], -- Bath'rah the Windwatcher
+        instances = { Q.Instances["Temple of Atal'Hakkar"] },
+    },
+    {
+        id = 8419,
+        class = "WARLOCK",
+        name = "An Imp's Request",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        sources = {
+            Q.Sources[345], -- Demisette Cloyce
+            Q.Sources[346], -- Zevrost
+            Q.Sources[347], -- Kaal Soulreaper
+            Q.Sources[348], -- Briarthorn
+        },
+    },
+    {
+        id = 8420,
+        class = "WARLOCK",
+        name = "Hot and Itchy",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        source = Q.Sources[349], -- Impsy
+    },
+    {
+        id = 8421,
+        class = "WARLOCK",
+        name = "The Wrong Stuff",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        prerequisites = { 
+            { id = 8419, type = Q.PrerequisiteType.OPTIONAL },
+            { id = 8420, type = Q.PrerequisiteType.OPTIONAL } 
+        },
+        source = Q.Sources[349], -- Impsy
+    },
+    {
+        id = 8422,
+        class = "WARLOCK",
+        name = "Trolls of a Feather",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        prerequisites = { { id = 8421, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[349], -- Impsy
+        instances = { Q.Instances["Temple of Atal'Hakkar"] },
+    },
+    {
+        id = 8417,
+        class = "WARRIOR",
+        name = "A Troubled Spirit",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        sources = {
+            Q.Sources[272], -- Torm Ragetotem
+            Q.Sources[271], -- Sorek
+            Q.Sources[350], -- Christoph Walker
+            Q.Sources[351], -- Kelv Sternhammer
+            Q.Sources[352], -- Wu Shen
+            Q.Sources[353], -- Darnath Bladesinger
+        },
+    },
+    {
+        id = 8423,
+        class = "WARRIOR",
+        name = "Warrior Kinship",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        prerequisites = { { id = 8417, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[354], -- Fallen Hero of the Horde
+    },
+    {
+        id = 8424,
+        class = "WARRIOR",
+        name = "War on the Shadowsworn",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        prerequisites = { { id = 8423, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[354], -- Fallen Hero of the Horde
+    },
+    {
+        id = 8425,
+        class = "WARRIOR",
+        name = "Voodoo Feathers",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        prerequisites = { { id = 8424, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[354], -- Fallen Hero of the Horde
+        instances = { Q.Instances["Temple of Atal'Hakkar"] },
+    },
+    --#endregion
     --#endregion
 
     --#region Blackrock Depths
@@ -4259,7 +4628,7 @@ Q.Quests = {
             Q.Sources[267], -- Martha Strain
             Q.Sources[268], -- Kurgul
             Q.Sources[269], -- Jubahl Corpseseeker
-            Q.Sources[270] -- Spackle Thornberry
+            Q.Sources[270]  -- Spackle Thornberry
         },
     },
     {
@@ -4458,7 +4827,7 @@ Q.Quests = {
         sources = {
             Q.Sources[271], -- Sorek
             Q.Sources[272], -- Torm Ragetotem
-            Q.Sources[273] -- Baltus Fowler
+            Q.Sources[273]  -- Baltus Fowler
         },
     },
     {
@@ -4499,7 +4868,7 @@ Q.Quests = {
             Q.Sources[263], -- Anastasia Hartwell
             Q.Sources[266], -- Deino
             Q.Sources[265], -- Jennea Cannon
-            Q.Sources[264] -- Bink
+            Q.Sources[264]  -- Bink
         }
     },
     {
@@ -4535,7 +4904,7 @@ Q.Quests = {
             Q.Sources[263], -- Anastasia Hartwell
             Q.Sources[266], -- Deino
             Q.Sources[265], -- Jennea Cannon
-            Q.Sources[264] -- Bink
+            Q.Sources[264]  -- Bink
         }
     },
     {
@@ -4642,7 +5011,7 @@ Q.Quests = {
         },
         sources = {
             Q.Sources[275], -- Rau Cliffrunner
-            Q.Sources[276] -- Prate Cloudseer
+            Q.Sources[276]  -- Prate Cloudseer
         },
         instances = { Q.Instances["Razorfen Kraul"] }
     },
@@ -4654,7 +5023,7 @@ Q.Quests = {
         requiredLevel = 30,
         sources = {
             Q.Sources[277], -- Searn Firewarder
-            Q.Sources[278] -- Xanis Flameweaver
+            Q.Sources[278]  -- Xanis Flameweaver
         }
     },
     --#endregion
@@ -4739,7 +5108,7 @@ Q.Quests = {
         name = "The Drowned City",
         suggestedLevel = 40,
         requiredLevel = 30,
-        source = Q.Sources[240], -- Unknown
+        source = Q.Sources[369], -- Kin'weelay
         instances = { Q.Instances["The Drowned City"] }
     },
     {
@@ -4751,7 +5120,7 @@ Q.Quests = {
         },
         suggestedLevel = 40,
         requiredLevel = 30,
-        source = Q.Sources[240], -- Unknown
+        source = Q.Sources[370], -- Loremaster Dibbs
         instances = { Q.Instances["The Drowned City"] }
     },
     {
@@ -4763,7 +5132,7 @@ Q.Quests = {
         },
         suggestedLevel = 40,
         requiredLevel = 30,
-        source = Q.Sources[240], -- Unknown
+        source = Q.Sources[370], -- Loremaster Dibbs
         instances = { Q.Instances["The Drowned City"] }
     },
     {
@@ -4819,7 +5188,8 @@ Q.Quests = {
         requiredLevel = 30,
         source = Q.Sources[61], -- Dead Drop
         instances = { Q.Instances["Scarlet Monastery: Library"], Q.Instances["Scarlet Monastery: Graveyard"] },
-        text = "You must visit a capital city once hitting level 30 for the letter to arrive before the quest is available from Dead Drop"
+        text =
+        "You must visit a capital city once hitting level 30 for the letter to arrive before the quest is available from Dead Drop"
     },
     {
         id = 78261,
@@ -4829,7 +5199,8 @@ Q.Quests = {
         requiredLevel = 20,
         source = Q.Sources[61], -- Dead Drop
         instances = { Q.Instances["Shadowfang Keep"] },
-        text = "You must visit a capital city once hitting level 20 for the letter to arrive before the quest is available from Dead Drop"
+        text =
+        "You must visit a capital city once hitting level 20 for the letter to arrive before the quest is available from Dead Drop"
     },
     --#endregion
     --#region Krol'dok Stronghold Prerequisites
@@ -4910,7 +5281,7 @@ Q.Quests = {
         name = "Rise Up!",
         suggestedLevel = 43,
         requiredLevel = 38,
-        source = Q.Sources[240], -- Unknown
+        source = Q.Sources[371], -- Crag'rog
     },
     {
         id = 94768,
@@ -4934,7 +5305,7 @@ Q.Quests = {
         },
         suggestedLevel = 45,
         requiredLevel = 38,
-        source = Q.Sources[240], -- Unknown; starts from the Blood and Battle item
+        source = Q.Sources[372], -- Da'Grosh
     },
     --#endregion
     {
@@ -5013,7 +5384,7 @@ Q.Quests = {
         },
         suggestedLevel = 42,
         requiredLevel = 38,
-        source = Q.Sources[240], -- Unknown
+        source = Q.Sources[372], -- Da'Grosh
         instances = { Q.Instances["Krol'dok Stronghold"] }
     },
     {
@@ -5109,7 +5480,7 @@ Q.Quests = {
         name = "Blood Red Bandanas",
         suggestedLevel = 53,
         requiredLevel = 48,
-        source = Q.Sources[240], -- Unknown
+        source = Q.Sources[304], -- Sergeant Ulka
         instances = { Q.Instances["Alcaz Prison"] }
     },
     {

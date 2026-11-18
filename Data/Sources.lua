@@ -2356,6 +2356,317 @@ Q.Sources = {
         name = "Enohar Thunderbrew",
         zone = "Blasted Lands",
         location = { mapId = 1419, x = 0.636, y = 0.206 }
+    },
+    [330] = {
+        id = 330,
+        type = "npc",
+        name = "Torwa Pathfinder",
+        zone = "Un'Goro Crater",
+        location = { mapId = 1449, x = 0.716, y = 0.760 }
+    },
+    [331] = {
+        id = 331,
+        type = "npc",
+        name = "Loganaar",
+        zone = "Moonglade",
+        location = { mapId = 1450, x = 0.525, y = 0.406 }
+    },
+    [332] = {
+        id = 332,
+        type = "npc",
+        name = "Theridran",
+        faction = "Alliance",
+        zone = "Stormwind City",
+        location = { mapId = 1453, x = 0.361, y = 0.644 }
+    },
+    [333] = {
+        id = 333,
+        type = "npc",
+        name = "Turak Runetotem",
+        faction = "Horde",
+        zone = "Thunder Bluff",
+        location = { mapId = 1456, x = 0.765, y = 0.274 }
+    },
+    [334] = {
+        id = 334,
+        type = "npc",
+        name = "Holt Thunderhorn",
+        faction = "Horde",
+        zone = "Thunder Bluff",
+        location = { mapId = 1456, x = 0.585, y = 0.883 }
+    },
+    [335] = {
+        id = 335,
+        type = "npc",
+        name = "Ormak Grimshot",
+        faction = "Horde",
+        zone = "Orgrimmar",
+        location = { mapId = 1454, x = 0.672, y = 0.202 }
+    },
+    [336] = {
+        id = 336,
+        type = "npc",
+        name = "Dorion",
+        faction = "Alliance",
+        zone = "Darnassus",
+        location = { mapId = 1457, x = 0.422, y = 0.073 }
+    },
+    [337] = {
+        id = 337,
+        type = "npc",
+        name = "Olmin Burningbeard",
+        faction = "Alliance",
+        zone = "Ironforge",
+        location = { mapId = 1455, x = 0.709, y = 0.836 }
+    },
+    [338] = {
+        id = 338,
+        type = "npc",
+        name = "Ulfir Ironbeard",
+        faction = "Alliance",
+        zone = "Stormwind City",
+        location = { mapId = 1453, x = 0.676, y = 0.358 }
+    },
+    [339] = {
+        id = 339,
+        type = "npc",
+        name = "Maginor Dumas",
+        faction = "Alliance",
+        zone = "Stormwind City",
+        location = { mapId = 1453, x = 0.492, y = 0.878 }
+    },
+    [340] = {
+        id = 340,
+        type = "npc",
+        name = "Archmage Shymm",
+        faction = "Horde",
+        zone = "Thunder Bluff",
+        location = { mapId = 1456, x = 0.228, y = 0.145 }
+    },
+    [341] = {
+        id = 341,
+        type = "npc",
+        name = "Pierce Shackleton",
+        faction = "Horde",
+        zone = "Undercity",
+        location = { mapId = 1458, x = 0.855, y = 0.135 }
+    },
+    [342] = {
+        id = 342,
+        type = "npc",
+        name = "Dink",
+        faction = "Alliance",
+        zone = "Ironforge",
+        location = { mapId = 1455, x = 0.272, y = 0.086 }
+    },
+    [343] = {
+        id = 343,
+        type = "npc",
+        name = "Archmage Xylem",
+        zone = "Azshara",
+        location = { mapId = 1444, x = 0.296, y = 0.406 }
+    },
+    [344] = {
+        id = 344,
+        type = "npc",
+        name = "Bath'rah the Windwatcher",
+        zone = "Alterac Mountains",
+        location = { mapId = 1416, x = 0.804, y = 0.668 }
+    },
+    [345] = {
+        id = 345,
+        type = "npc",
+        name = "Demisette Cloyce",
+        faction = "Alliance",
+        zone = "Stormwind City",
+        location = { mapId = 1453, x = 0.392, y = 0.850 }
+    },
+    [346] = {
+        id = 346,
+        type = "npc",
+        name = "Zevrost",
+        faction = "Horde",
+        zone = "Orgrimmar",
+        location = { mapId = 1454, x = 0.485, y = 0.454 }
+    },
+    [347] = {
+        id = 347,
+        type = "npc",
+        name = "Kaal Soulreaper",
+        faction = "Horde",
+        zone = "Undercity",
+        location = { mapId = 1458, x = 0.862, y = 0.159 }
+    },
+    [348] = {
+        id = 348,
+        type = "npc",
+        name = "Briarthorn",
+        faction = "Alliance",
+        zone = "Ironforge",
+        location = { mapId = 1455, x = 0.503, y = 0.057 }
+    },
+    [349] = {
+        id = 349,
+        type = "npc",
+        name = "Impsy",
+        zone = "Felwood",
+        location = { mapId = 1448, x = 0.416, y = 0.448 }
+    },
+    [350] = {
+        id = 350,
+        type = "npc",
+        faction = "Horde",
+        name = "Christoph Walker",
+        zone = "Undercity",
+        location = { mapId = 1458, x = 0.469, y = 0.152 }
+    },
+    [351] = {
+        id = 351,
+        type = "npc",
+        faction = "Alliance",
+        name = "Kelv Sternhammer",
+        zone = "Ironforge",
+        location = { mapId = 1455, x = 0.703, y = 0.907 }
+    },
+    [352] = {
+        id = 352,
+        type = "npc",
+        faction = "Alliance",
+        name = "Wu Shen",
+        zone = "Stormwind City",
+        location = { mapId = 1453, x = 0.805, y = 0.599 }
+    },
+    [353] = {
+        id = 353,
+        type = "npc",
+        faction = "Alliance",
+        name = "Darnath Bladesinger",
+        zone = "Darnassus",
+        location = { mapId = 1457, x = 0.589, y = 0.354 }
+    },
+    [354] = {
+        id = 354,
+        type = "npc",
+        name = "Fallen Hero of the Horde",
+        zone = "Swamp of Sorrows",
+        location = { mapId = 1435, x = 0.342, y = 0.660 }
+    },
+    [355] = {
+        id = 355,
+        type = "npc",
+        name = "Commander Ashlam Valorfist",
+        zone = "Western Plaguelands",
+        location = { mapId = 1426, x = 0.428, y = 0.84 }
+    },
+    [356] = {
+        id = 356,
+        type = "npc",
+        name = "High Priest Thel'danis",
+        zone = "Western Plaguelands",
+        location = { mapId = 1426, x = 0.52, y = 0.828 }
+    },
+    [357] = {
+        id = 357,
+        type = "npc",
+        faction = "Alliance",
+        name = "Brother Joshua",
+        zone = "Stormwind City",
+        location = { mapId = 1453, x = 0.495, y = 0.452 }
+    },
+    [358] = {
+        id = 358,
+        type = "npc",
+        faction = "Horde",
+        name = "Ur'kyo",
+        zone = "Orgrimmar",
+        location = { mapId = 1454, x = 0.356, y = 0.878 }
+    },
+    [359] = {
+        id = 359,
+        type = "npc",
+        name = "Lord Jorach Ravenholdt",
+        zone = "Alterac Mountains",
+        location = { mapId = 1427, x = 0.86, y = 0.79 }
+    },
+    [360] = {
+        id = 360,
+        type = "npc",
+        faction = "Horde",
+        name = "Ormok",
+        zone = "Orgrimmar",
+        location = { mapId = 1454, x = 0.439, y = 0.546 }
+    },
+    [362] = {
+        id = 362,
+        type = "npc",
+        faction = "Horde",
+        name = "Miles Dexter",
+        zone = "Undercity",
+        location = { mapId = 1458, x = 0.852, y = 0.716 }
+    },
+    [365] = {
+        id = 365,
+        type = "npc",
+        faction = "Alliance",
+        name = "Osborne the Night Man",
+        zone = "Stormwind City",
+        location = { mapId = 1453, x = 0.774, y = 0.653 }
+    },
+    [366] = {
+        id = 366,
+        type = "npc",
+        faction = "Alliance",
+        name = "Syurna",
+        zone = "Darnassus",
+        location = { mapId = 1457, x = 0.370, y = 0.219 }
+    },
+    [367] = {
+        id = 367,
+        type = "npc",
+        faction = "Alliance",
+        name = "Hulfdan Blackbeard",
+        zone = "Ironforge",
+        location = { mapId = 1455, x = 0.520, y = 0.148 }
+    },
+    [368] = {
+        id = 368,
+        type = "npc",
+        faction = "Horde",
+        name = "Sutara Plainstalker",
+        zone = "Mulgore",
+        location = { mapId = 1412, x = 0.346, y = 0.228 }
+    },
+    [369] = {
+        id = 369,
+        type = "npc",
+        faction = "Horde",
+        name = "Kin'weelay",
+        zone = "Stranglethorn Vale",
+        location = { mapId = 1434, x = 0.322, y = 0.278 }
+    },
+    [370] = {
+        id = 370,
+        type = "npc",
+        faction = "Alliance",
+        name = "Loremaster Dibbs",
+        zone = "Hillsbrad Foothills",
+        location = { mapId = 1424, x = 0.504, y = 0.570 }
+    },
+    [371] = {
+        id = 371,
+        type = "npc",
+        faction = "Horde",
+        name = "Crag'rog",
+        zone = "Riverglades",
+        location = { mapId = 2548, x = 0.274, y = 0.37 }
+    },
+    [372] = {
+        id = 372,
+        type = "npc",
+        faction = "Horde",
+        name = "Da'Grosh",
+        zone = "Riverglades",
+        location = { mapId = 2548, x = 0.334, y = 0.38 }
     }
     
 }
