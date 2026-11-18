@@ -1989,7 +1989,7 @@ Q.Sources = {
         id = 280,
         type = "npc",
         name = "The Defias Traitor",
-        zone = "Ironforge",
+        zone = "Westfall",
         location = { mapId = 1436, x = 0.574, y = 0.474 }
     },
     [281] = {
@@ -2004,13 +2004,13 @@ Q.Sources = {
         type = "npc",
         name = "Deathguard Linnea",
         zone = "Ashenvale",
-        location = { mapId = 1420, x = 0.656, y = 0.602 }
+        location = { mapId = 1440, x = 0.656, y = 0.602 }
     },
     [283] = {
         id = 283,
         type = "npc",
         name = "Apothecary Renferrel",
-        zone = "Ruins of Lordaeron",
+        zone = "Silverpine Forest",
         location = { mapId = 1421, x = 0.428, y = 0.408 }
     },
     [284] = {
@@ -2123,30 +2123,6 @@ Q.Sources = {
         name = "Sergeant Riftan",
         zone = "Riverglades",
         location = { mapId = 2548, x = 0.306, y = 0.49 }
-    },
-    [298] = {
-        id = 298,
-        type = "npc",
-        faction = "Alliance",
-        name = "Melanie Sable",
-        zone = "Riverglades",
-        location = { mapId = 2548, x = 0.662, y = 0.832 }
-    },
-    [299] = {
-        id = 299,
-        type = "npc",
-        faction = "Horde",
-        name = "Kreza Darkthorn",
-        zone = "Riverglades",
-        location = { mapId = 2548, x = 0.598, y = 0.46 }
-    },
-    [300] = {
-        id = 300,
-        type = "npc",
-        faction = "Alliance",
-        name = "Alphonse Dumas",
-        zone = "Riverglades",
-        location = { mapId = 2548, x = 0.644, y = 0.82 }
     },
     [301] = {
         id = 301,
@@ -2464,7 +2440,7 @@ Q.Sources = {
         type = "npc",
         name = "Archmage Xylem",
         zone = "Azshara",
-        location = { mapId = 1444, x = 0.296, y = 0.406 }
+        location = { mapId = 1447, x = 0.296, y = 0.406 }
     },
     [344] = {
         id = 344,
@@ -2556,14 +2532,14 @@ Q.Sources = {
         type = "npc",
         name = "Commander Ashlam Valorfist",
         zone = "Western Plaguelands",
-        location = { mapId = 1426, x = 0.428, y = 0.84 }
+        location = { mapId = 1422, x = 0.428, y = 0.84 }
     },
     [356] = {
         id = 356,
         type = "npc",
         name = "High Priest Thel'danis",
         zone = "Western Plaguelands",
-        location = { mapId = 1426, x = 0.52, y = 0.828 }
+        location = { mapId = 1422, x = 0.52, y = 0.828 }
     },
     [357] = {
         id = 357,
@@ -2586,7 +2562,7 @@ Q.Sources = {
         type = "npc",
         name = "Lord Jorach Ravenholdt",
         zone = "Alterac Mountains",
-        location = { mapId = 1427, x = 0.86, y = 0.79 }
+        location = { mapId = 1416, x = 0.86, y = 0.79 }
     },
     [360] = {
         id = 360,

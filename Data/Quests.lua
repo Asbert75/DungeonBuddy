@@ -2983,7 +2983,7 @@ Q.Quests = {
         name = "Mastering the Elements",
         suggestedLevel = 52,
         requiredLevel = 50,
-        source = Q.Sources[340], -- Bath'rah the Windwatcher
+        source = Q.Sources[344], -- Bath'rah the Windwatcher
         text = "You can bring 1 of each to turn the quest in immediately: Elemental Air, Fire, Water, and Earth."
     },
     {
@@ -2992,8 +2992,8 @@ Q.Quests = {
         name = "Spirit Totem",
         suggestedLevel = 52,
         requiredLevel = 50,
-        prerequisites = { { id = 8410, type = Q.PrerequisiteType.CHAIN } },
-        source = Q.Sources[340], -- Bath'rah the Windwatcher
+        prerequisites = { { id = 8411, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[344], -- Bath'rah the Windwatcher
     },
     {
         id = 8413,
@@ -3002,7 +3002,7 @@ Q.Quests = {
         suggestedLevel = 52,
         requiredLevel = 50,
         prerequisites = { { id = 8412, type = Q.PrerequisiteType.CHAIN } },
-        source = Q.Sources[340], -- Bath'rah the Windwatcher
+        source = Q.Sources[344], -- Bath'rah the Windwatcher
         instances = { Q.Instances["Temple of Atal'Hakkar"] },
     },
     {
@@ -3033,8 +3033,8 @@ Q.Quests = {
         suggestedLevel = 52,
         requiredLevel = 50,
         prerequisites = { 
-            { id = 8419, type = Q.PrerequisiteType.OPTIONAL },
-            { id = 8420, type = Q.PrerequisiteType.OPTIONAL } 
+            { id = 8419, type = Q.PrerequisiteType.ANY },
+            { id = 8420, type = Q.PrerequisiteType.ANY } 
         },
         source = Q.Sources[349], -- Impsy
     },
@@ -3579,7 +3579,7 @@ Q.Quests = {
         instances = { Q.Instances["Blackrock Depths"] }
     },
     {
-        id = 5201,
+        id = 4201,
         faction = nil,
         name = "The Love Potion",
         suggestedLevel = 54,
@@ -4989,21 +4989,20 @@ Q.Quests = {
         id = 96264,
         faction = "Alliance",
         class = "SHAMAN",
-        name = "Elemental Aid ",
+        name = "Elemental Aid",
         suggestedLevel = 33,
         requiredLevel = 30,
         prerequisites = {
             { id = 94789, type = Q.PrerequisiteType.CHAIN }
         },
-        sources = {
-            Q.Sources[284] -- Eldrun Stormbreaker
-        }
+        source = Q.Sources[284], -- Eldrun Stormbreaker
+        instances = { Q.Instances["Razorfen Kraul"] }
     },
     {
         id = 79360,
         faction = "Horde",
         class = "SHAMAN",
-        name = "Elemental Aid ",
+        name = "Elemental Aid",
         suggestedLevel = 33,
         requiredLevel = 30,
         prerequisites = {
@@ -5018,6 +5017,7 @@ Q.Quests = {
     {
         id = 1532,
         class = "SHAMAN",
+        faction = "Horde",
         name = "Call of Air",
         suggestedLevel = 30,
         requiredLevel = 30,
@@ -5025,6 +5025,16 @@ Q.Quests = {
             Q.Sources[277], -- Searn Firewarder
             Q.Sources[278]  -- Xanis Flameweaver
         }
+    },
+    {
+        id = 94789,
+        class = "SHAMAN",
+        faction = "Alliance",
+        name = "Call of Air",
+        suggestedLevel = 30,
+        requiredLevel = 30,
+        source = Q.Sources[284], -- Eldrun Stormbreaker
+
     },
     --#endregion
 
@@ -5126,7 +5136,7 @@ Q.Quests = {
     {
         id = 95788,
         faction = "Alliance",
-        name = "Magic of the Drowned City",
+        name = "Magics of the Drowned City",
         prerequisites = {
             { id = 95786, type = Q.PrerequisiteType.REQUIRED }
         },
@@ -5138,7 +5148,7 @@ Q.Quests = {
     {
         id = 97130,
         faction = "Alliance",
-        name = "Ancient Gurubashi Idol",
+        name = "Ancient Gurubashi Secrets",
         suggestedLevel = 40,
         requiredLevel = 34,
         source = Q.Sources[288], -- Archmage Timear
@@ -5164,7 +5174,7 @@ Q.Quests = {
     },
     {
         id = 95789,
-        name = "Shady Saltseer",
+        name = "Shady Saltseers",
         suggestedLevel = 40,
         requiredLevel = 34,
         source = Q.Sources[130], -- Krazek
