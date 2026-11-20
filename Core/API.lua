@@ -54,12 +54,13 @@ function Q.API:BuildLookupTables()
     wipe(Q.QuestsByInstanceId)
     wipe(Q.InstanceByQuestId)
 
-    -- Filter out quests that do not match the player's faction and class, we do this when building lookups so that we can completely ignore faction/class in all other functions
+    -- Filter out quests that do not match the player's faction, class, or race, we do this when building lookups so that we can completely ignore them in all other functions
     local playerFaction = self:GetPlayerFaction()
     local playerClass = self:GetPlayerClass()
+    local playerRace = self:GetPlayerRace()
     FilterArray(Q.Quests, function(quest)
         return quest and (quest.faction == playerFaction or not quest.faction) and
-            self:IsQuestAvailableToClass(quest, playerClass)
+            self:IsQuestAvailableToClass(quest, playerClass) and self:IsQuestAvailableToRace(quest, playerRace)
     end)
 
     for _, quest in ipairs(Q.Quests) do
@@ -120,6 +121,22 @@ end
 function Q.API:GetPlayerClass()
     return Q.Debug.Enabled and Q.Debug.Class or select(2, UnitClass("player"))
 end
+
+function Q.API:GetPlayerRace()
+    return Q.Debug.Enabled and Q.Debug.Race or select(2, UnitRace("player"))
+end
+
+function Q.API:IsQuestAvailableToRace(quest, race)
+    if quest.races then
+        for _, questRace in ipairs(quest.races) do
+            if questRace == race then
+                return true
+            end
+        end
+        return false
+    end
+    return true
+end
 function Q.API:IsQuestAvailableToClass(quest, class)
     if quest.classes then
         for _, questClass in ipairs(quest.classes) do
@@ -145,6 +162,7 @@ function Q.API:GetPlayerInfo()
         level = self:GetPlayerLevel(),
         faction = self:GetPlayerFaction(),
         class = self:GetPlayerClass(),
+        race = self:GetPlayerRace(),
     }
 end
 

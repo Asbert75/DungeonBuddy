@@ -8,7 +8,7 @@ local FACTIONS = { "Alliance", "Horde" }
 local NO_CLASS = "NONE" -- stands in for a class that no quest is restricted to
 
 local QUEST_FIELDS = {
-    id = true, faction = true, class = true, classes = true, name = true, suggestedLevel = true,
+    id = true, faction = true, class = true, classes = true, races = true, name = true, suggestedLevel = true,
     requiredLevel = true, prerequisites = true, source = true, sources = true, instances = true,
     profession = true, text = true,
 }

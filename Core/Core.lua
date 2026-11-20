@@ -63,6 +63,7 @@ function Addon:HandleDebugCommand(input)
             Q:PrettyPrint("Level: " .. tostring(Q.Debug.Level))
             Q:PrettyPrint("Faction: " .. tostring(Q.Debug.Faction))
             Q:PrettyPrint("Class: " .. tostring(Q.Debug.Class))
+            Q:PrettyPrint("Races: " .. tostring(Q.Debug.Races))
         else
             Q:PrettyPrint("Debug mode is currently disabled")
         end
@@ -86,6 +87,11 @@ function Addon:HandleDebugCommand(input)
             Q.Debug.Class = arg2:upper()
         end
         Q:PrettyPrint("Debug class set to " .. tostring(Q.Debug.Class))
+    elseif arg1 == "race" then
+         if arg2 ~= "" then
+            Q.Debug.Race = arg2
+        end
+        Q:PrettyPrint("Debug race set to " .. tostring(Q.Debug.Race))
     else
         Q.Debug.Enabled = not Q.Debug.Enabled
         Q:PrettyPrint("Debug mode " .. (Q.Debug.Enabled and "enabled" or "disabled"))

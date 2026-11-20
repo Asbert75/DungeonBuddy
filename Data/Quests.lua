@@ -1517,6 +1517,7 @@ Q.Quests = {
     {
         id = 1049,
         faction = "Horde",
+        races = { "Orc", "Troll", "Tauren", "Skyborne" },
         name = "Compendium of the Fallen",
         suggestedLevel = 38,
         requiredLevel = 28,
@@ -3658,11 +3659,26 @@ Q.Quests = {
 
     --#region Dire Maul: East
     {
+        id = 7494,
+        faction = "Alliance",
+        name = "Feathermoon Stronghold",
+        suggestedLevel = 57,
+        requiredLevel = 54,
+        sources = {
+            Q.Sources[373], -- Crier Goodman
+            Q.Sources[374], -- Courier Hammerfall
+            Q.Sources[375], -- Herald Moonstalker
+        }
+    },
+    {
         id = 7488,
         faction = "Alliance",
         name = "Lethtendris's Web",
         suggestedLevel = 56,
         requiredLevel = 54,
+        prerequisites = {
+            { id = 7494, type = Q.PrerequisiteType.BREADCRUMB }
+        },
         source = Q.Sources[133], -- Latronicus Moonspear
         instances = { Q.Instances["Dire Maul: East"] }
     },
@@ -4966,7 +4982,31 @@ Q.Quests = {
 
     --#region Shaman Quests
     {
+        id = 97168,
+        faction = "Alliance",
+        class = "SHAMAN",
+        name = "Material Assistance",
+        suggestedLevel = 60,
+        requiredLevel = 58,
+        source = Q.Sources[284], -- Eldrun Stormbreaker
+    },
+    {
+        id = 97169,
+        faction = "Alliance",
+        class = "SHAMAN",
+        name = "The Darkreaver Menace",
+        suggestedLevel = 60,
+        requiredLevel = 58,
+        prerequisites = {
+            { id = 97168, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = Q.Sources[284], -- Eldrun Stormbreaker
+        instances = { Q.Instances["Scholomance"] }
+    },
+
+    {
         id = 7667,
+        faction = "Horde",
         class = "SHAMAN",
         name = "Material Assistance",
         suggestedLevel = 60,
@@ -4975,6 +5015,7 @@ Q.Quests = {
     },
     {
         id = 8258,
+        faction = "Horde",
         class = "SHAMAN",
         name = "The Darkreaver Menace",
         suggestedLevel = 60,

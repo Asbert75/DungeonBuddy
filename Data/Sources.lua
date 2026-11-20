@@ -2643,6 +2643,33 @@ Q.Sources = {
         name = "Da'Grosh",
         zone = "Riverglades",
         location = { mapId = 2548, x = 0.334, y = 0.38 }
+    },
+    [373] = {
+        id = 373,
+        type = "npc",
+        faction = "Alliance",
+        name = "Crier Goodman",
+        zone = "Stormwind City",
+        location = { mapId = 1453, x = 0.626, y = 0.726 },
+        text = "Walks around the city"
+    },
+    [374] = {
+        id = 374,
+        type = "npc",
+        faction = "Alliance",
+        name = "Courier Hammerfall",
+        zone = "Ironforge",
+        location = { mapId = 1455, x = 0.320, y = 0.676 },
+        text = "Walks around the city"
+    },
+    [375] = {
+        id = 375,
+        type = "npc",
+        faction = "Alliance",
+        name = "Herald Moonstalker",
+        zone = "Riverglades",
+        location = { mapId = 1457, x = 0.612, y = 0.404 },
+        text = "Walks around the city"
     }
     
 }

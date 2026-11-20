@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.35] - 2026-11-20
+
+## Added
+
+- Added a race-check to ensure race specific quests are hidden if not available (For example Compendium of the Fallen should be hidden for Undeads)
+
+## Fixed
+
+- Corrected Shaman level 58 class quest by adding alliance version
+
 ## [2.0.34] - 2026-11-18
 
 ### Fixed
