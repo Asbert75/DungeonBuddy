@@ -2670,8 +2670,113 @@ Q.Sources = {
         zone = "Riverglades",
         location = { mapId = 1457, x = 0.612, y = 0.404 },
         text = "Walks around the city"
+    },
+    [376] = {
+        id = 376,
+        type = "npc",
+        faction = "Alliance",
+        name = "Magistrate Solomon",
+        zone = "Redridge Mountains",
+        location = { mapId = 1433, x = 0.30, y = 0.442 }
+    },
+    [377] = {
+        id = 377,
+        type = "npc",
+        faction = "Alliance",
+        name = "Highlord Bolvar Fordragon",
+        zone = "Stormwind City",
+        location = { mapId = 1453, x = 0.78, y = 0.18 }
+    },
+    [378] = {
+        id = 378,
+        type = "npc",
+        faction = "Alliance",
+        name = "Lady Katrana Prestor",
+        zone = "Stormwind City",
+        location = { mapId = 1453, x = 0.78, y = 0.178 }
+    },
+    [379] = {
+        id = 379,
+        type = "npc",
+        faction = "Alliance",
+        name = "Ragged John",
+        zone = "Burning Steppes",
+        location = { mapId = 1428, x = 0.65, y = 0.236 }
+    },
+    [380] = {
+        id = 380,
+        type = "npc",
+        faction = "Alliance",
+        name = "Marshal Windsor",
+        instance = Q.Instances["Blackrock Depths"]
+    },
+    [381] = {
+        id = 381,
+        type = "item",
+        faction = "Alliance",
+        name = "A Crumpled Up Note",
+        itemId = 11446,
+        instance = Q.Instances["Blackrock Depths"],
+        text = "Drops from creatures in and around Blackrock Depths"
+    },
+    [382] = {
+        id = 382,
+        type = "npc",
+        faction = "Alliance",
+        name = "Squire Rowe",
+        zone = "Stormwind City",
+        location = { mapId = 1453, x = 0.704, y = 0.856 }
+    },
+    [383] = {
+        id = 383,
+        type = "npc",
+        faction = "Alliance",
+        name = "Reginald Windsor",
+        zone = "Stormwind City",
+        location = { mapId = 1453, x = 0.70, y = 0.85 },
+        text = "Patrols from the city gates to Stormwind Keep"
+    },
+    [384] = {
+        id = 384,
+        type = "npc",
+        faction = "Alliance",
+        name = "Haleh",
+        zone = "Winterspring",
+        location = { mapId = 1452, x = 0.546, y = 0.512 }
+    },
+    [385] = {
+        id = 385,
+        type = "npc",
+        faction = "Horde",
+        name = "Eitrigg",
+        zone = "Orgrimmar",
+        location = { mapId = 1454, x = 0.344, y = 0.384 }
+    },
+    [386] = {
+        id = 386,
+        type = "npc",
+        faction = "Horde",
+        name = "Rexxar",
+        zone = "Desolace",
+        location = { mapId = 1443, x = 0.45, y = 0.40 },
+        text = "Patrols between Desolace and Stonetalon Mountains"
+    },
+    [387] = {
+        id = 387,
+        type = "npc",
+        faction = "Horde",
+        name = "Myranda the Hag",
+        zone = "Western Plaguelands",
+        location = { mapId = 1422, x = 0.508, y = 0.778 }
+    },
+    [388] = {
+        id = 388,
+        type = "npc",
+        faction = "Horde",
+        name = "Emberstrife",
+        zone = "Dustwallow Marsh",
+        location = { mapId = 1445, x = 0.568, y = 0.874 }
     }
-    
 }
 
 -- Unknown keys (typos) return nil; record them so Validation.lua can report them.

@@ -3463,6 +3463,7 @@ Q.Quests = {
             { id = 3701, type = Q.PrerequisiteType.CHAIN }
         },
         source = Q.Sources[127], -- King Magni Bronzebeard
+        instances = { Q.Instances["Blackrock Depths"] }
     },
     {
         id = 4342,
@@ -3496,6 +3497,7 @@ Q.Quests = {
             { id = 4361, type = Q.PrerequisiteType.CHAIN }
         },
         source = Q.Sources[127], -- King Magni Bronzebeard
+        instances = { Q.Instances["Blackrock Depths"] }
     },
     {
         id = 4363,
@@ -3781,6 +3783,7 @@ Q.Quests = {
         suggestedLevel = 59,
         requiredLevel = 55,
         source = Q.Sources[29], -- Bijou
+        instances = { Q.Instances["Lower Blackrock Spire"] }
     },
     {
         id = 5002,
@@ -5878,6 +5881,260 @@ Q.Quests = {
         requiredLevel = 47,
         source = Q.Sources[323], -- Gatekeeper Rageroar
         instances = { Q.Instances["Blackmaw Hold"] }
+    },
+    --#region Onyxia attunement (Alliance)
+    {
+        id = 4182,
+        faction = "Alliance",
+        name = "Dragonkin Menace",
+        suggestedLevel = 54,
+        requiredLevel = 48,
+        source = Q.Sources[106], -- Helendis Riverhorn
+    },
+    {
+        id = 4183,
+        faction = "Alliance",
+        name = "The True Masters (1/6)",
+        suggestedLevel = 54,
+        requiredLevel = 48,
+        prerequisites = { { id = 4182, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[106], -- Helendis Riverhorn
+    },
+    {
+        id = 4184,
+        faction = "Alliance",
+        name = "The True Masters (2/6)",
+        suggestedLevel = 54,
+        requiredLevel = 48,
+        prerequisites = { { id = 4183, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[376], -- Magistrate Solomon
+    },
+    {
+        id = 4185,
+        faction = "Alliance",
+        name = "The True Masters (3/6)",
+        suggestedLevel = 54,
+        requiredLevel = 48,
+        prerequisites = { { id = 4184, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[377], -- Highlord Bolvar Fordragon
+    },
+    {
+        id = 4186,
+        faction = "Alliance",
+        name = "The True Masters (4/6)",
+        suggestedLevel = 54,
+        requiredLevel = 48,
+        prerequisites = { { id = 4185, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[377], -- Highlord Bolvar Fordragon
+    },
+    {
+        id = 4223,
+        faction = "Alliance",
+        name = "The True Masters (5/6)",
+        suggestedLevel = 54,
+        requiredLevel = 48,
+        prerequisites = { { id = 4186, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[376], -- Magistrate Solomon
+    },
+    {
+        id = 4224,
+        faction = "Alliance",
+        name = "The True Masters (6/6)",
+        suggestedLevel = 54,
+        requiredLevel = 48,
+        prerequisites = { { id = 4223, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[150], -- Marshal Maxwell
+    },
+    {
+        id = 4241,
+        faction = "Alliance",
+        name = "Marshal Windsor",
+        suggestedLevel = 58,
+        requiredLevel = 54,
+        prerequisites = { { id = 4224, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[150], -- Marshal Maxwell
+        instances = { Q.Instances["Blackrock Depths"] }
+    },
+    {
+        id = 4242,
+        faction = "Alliance",
+        name = "Abandoned Hope",
+        suggestedLevel = 58,
+        requiredLevel = 54,
+        prerequisites = { { id = 4241, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[380], -- Marshal Windsor
+    },
+    {
+        id = 4264,
+        faction = "Alliance",
+        name = "A Crumpled Up Note",
+        suggestedLevel = 58,
+        requiredLevel = 54,
+        prerequisites = { { id = 4242, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[381], -- A Crumpled Up Note
+        instances = { Q.Instances["Blackrock Depths"] }
+    },
+    {
+        id = 4282,
+        faction = "Alliance",
+        name = "A Shred of Hope",
+        suggestedLevel = 58,
+        requiredLevel = 54,
+        prerequisites = { { id = 4264, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[380], -- Marshal Windsor
+        instances = { Q.Instances["Blackrock Depths"] }
+    },
+    {
+        id = 4322,
+        faction = "Alliance",
+        name = "Jail Break!",
+        suggestedLevel = 58,
+        requiredLevel = 54,
+        prerequisites = { { id = 4282, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[380], -- Marshal Windsor
+        instances = { Q.Instances["Blackrock Depths"] }
+    },
+    {
+        id = 6402,
+        faction = "Alliance",
+        name = "Stormwind Rendezvous",
+        suggestedLevel = 60,
+        requiredLevel = 56,
+        prerequisites = { { id = 4322, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[150], -- Marshal Maxwell
+    },
+    {
+        id = 6403,
+        faction = "Alliance",
+        name = "The Great Masquerade",
+        suggestedLevel = 60,
+        requiredLevel = 56,
+        prerequisites = { { id = 6402, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[383], -- Reginald Windsor
+    },
+    {
+        id = 6501,
+        faction = "Alliance",
+        name = "The Dragon's Eye",
+        suggestedLevel = 60,
+        requiredLevel = 56,
+        prerequisites = { { id = 6403, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[377], -- Highlord Bolvar Fordragon
+    },
+    {
+        id = 6502,
+        faction = "Alliance",
+        name = "Drakefire Amulet",
+        suggestedLevel = 60,
+        requiredLevel = 56,
+        prerequisites = { { id = 6501, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[384], -- Haleh
+        instances = { Q.Instances["Upper Blackrock Spire"] }
+    },
+    --#region Onyxia attunement (Horde)
+    {
+        id = 6566,
+        faction = "Horde",
+        name = "What the Wind Carries",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        prerequisites = { { id = 4974, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[226], -- Thrall
+    },
+    {
+        id = 6567,
+        faction = "Horde",
+        name = "The Champion of the Horde",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        prerequisites = { { id = 6566, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[226], -- Thrall
+    },
+    {
+        id = 6568,
+        faction = "Horde",
+        name = "The Testament of Rexxar",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        prerequisites = { { id = 6567, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[386], -- Rexxar
+    },
+    {
+        id = 6569,
+        faction = "Horde",
+        name = "Oculus Illusions",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        prerequisites = { { id = 6568, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[387], -- Myranda the Hag
+    },
+    {
+        id = 6570,
+        faction = "Horde",
+        name = "Emberstrife",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        prerequisites = { { id = 6569, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[387], -- Myranda the Hag
+    },
+    {
+        id = 6584,
+        faction = "Horde",
+        name = "The Test of Skulls, Chronalis",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        prerequisites = { { id = 6570, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[388], -- Emberstrife
+    },
+    {
+        id = 6582,
+        faction = "Horde",
+        name = "The Test of Skulls, Scryer",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        prerequisites = { { id = 6570, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[388], -- Emberstrife
+    },
+    {
+        id = 6583,
+        faction = "Horde",
+        name = "The Test of Skulls, Somnus",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        prerequisites = { { id = 6570, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[388], -- Emberstrife
+    },
+    {
+        id = 6585,
+        faction = "Horde",
+        name = "The Test of Skulls, Axtroz",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        prerequisites = {
+            { id = 6584, type = Q.PrerequisiteType.REQUIRED },
+            { id = 6582, type = Q.PrerequisiteType.REQUIRED },
+            { id = 6583, type = Q.PrerequisiteType.REQUIRED },
+        },
+        source = Q.Sources[388], -- Emberstrife
+    },
+    {
+        id = 6601,
+        faction = "Horde",
+        name = "Ascension...",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        prerequisites = { { id = 6585, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[388], -- Emberstrife
+    },
+    {
+        id = 6602,
+        faction = "Horde",
+        name = "Blood of the Black Dragon Champion",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        prerequisites = { { id = 6601, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[386], -- Rexxar
+        instances = { Q.Instances["Upper Blackrock Spire"] }
     }
     --#endregion
 }

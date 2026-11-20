@@ -546,7 +546,7 @@ local function PositionQuestIcons(frame, rightInset)
         frame.titleFrame.classIcon,
         frame.titleFrame.professionIcon,
         frame.titleFrame.trackedIcon,
-        -- frame.titleFrame.dungeonIcon
+        frame.titleFrame.dungeonIcon,
     }
     local rightmostIcon
     for index = #icons, 1, -1 do
@@ -727,7 +727,8 @@ local function UpdateRowText(frame)
 
     frame.titleFrame.trackedIcon:SetShown(isQuestRow and
         Q.API:IsQuestInQuestLog(row.id) and Q.API:IsQuestWatched(row.id))
-    -- frame.titleFrame.dungeonIcon:SetShown(isQuestRow and row.chainDepth and row.chainDepth > 0 and row.instances and #row.instances > 0)
+    frame.titleFrame.dungeonIcon:SetShown(isQuestRow and row.chainDepth and row.chainDepth > 0 and
+        row.instances and #row.instances > 0)
 
     local canShare = isQuestRow and Q.API:GetQuestStatus(row.id) ~= "unavailable" and Q.API:GetQuestStatus(row.id) ~= "completed" and
         Q.API:IsQuestShareable(row.id)
@@ -737,7 +738,7 @@ local function UpdateRowText(frame)
 
     -- Keep the title and right-aligned icons clear of the row buttons.
     local rightInset = frame.collapseButton:GetWidth() + frame.waypointButton:GetWidth() + frame.shareButton:GetWidth()
-        + (Q.Theme.Padding.L + 4)
+        + (Q.Theme.Padding.L + 8)
     PositionQuestIcons(frame, rightInset)
     local suffixWidth = frame.titleFrame.level:GetStringWidth()
     for _, icon in ipairs({ frame.titleFrame.classIcon, frame.titleFrame.professionIcon, frame.titleFrame.trackedIcon, frame.titleFrame.dungeonIcon }) do
@@ -1411,7 +1412,36 @@ local function CreateRowFrame(index, row)
     return frame
 end
 
--- Appends the instance row and, unless collapsed, its main quests and their chains.
+local function HasRequiredPrerequisite(quest, targetQuestId, visited)
+    if not quest or visited[quest.id] then
+        return false
+    end
+    visited[quest.id] = true
+
+    for _, prerequisite in ipairs(quest.prerequisites or {}) do
+        if prerequisite.type == Q.PrerequisiteType.CHAIN or prerequisite.type == Q.PrerequisiteType.REQUIRED then
+            if prerequisite.id == targetQuestId or
+                HasRequiredPrerequisite(Q.API:GetQuestById(prerequisite.id), targetQuestId, visited) then
+                return true
+            end
+        end
+    end
+
+    return false
+end
+
+local function IsEarlierQuestInSameInstanceChain(quest, instanceQuests)
+    for _, laterQuest in ipairs(instanceQuests) do
+        local isHiddenCompleted = Q:GetSetting("HideCompletedQuests") and Q.API:IsQuestCompleted(laterQuest.id)
+        if laterQuest.id ~= quest.id and not isHiddenCompleted and
+            HasRequiredPrerequisite(laterQuest, quest.id, {}) then
+            return true
+        end
+    end
+    return false
+end
+
+-- Appends the instance row and, unless collapsed, its final same-instance quests and their chains.
 local function AppendInstanceRows(entry)
     local instance = entry.instance
     local instanceRow = CopyRow(instance)
@@ -1423,7 +1453,8 @@ local function AppendInstanceRows(entry)
     end
 
     for _, quest in ipairs(entry.quests) do
-        if not IsBreadcrumbQuestHidden(quest.id) then
+        if not IsBreadcrumbQuestHidden(quest.id) and
+            not IsEarlierQuestInSameInstanceChain(quest, entry.quests) then
             local questRow = CopyRow(quest)
             questRow.isMainQuest = true
             questRow.collapseKey = string.format("instance:%s/quest:%s", tostring(instance.id), tostring(quest.id))

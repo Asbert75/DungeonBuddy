@@ -7,13 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.0]
+
+### Added
+
+- Added Onyxia PreQ for Horde/Alliance
+- A new Dungeon Portal icon is now displayed in the tooltip when hovering quests that are inside a dungeon, as well as on quest rows for dungeon quests in a chain.
+
+### Changed
+
+- Only the final quest in a chain is now visible at a top-level view even if multiple quests in the chain are inside the dungeon. 
+
 ## [2.0.35] - 2026-11-20
 
-## Added
+### Added
 
 - Added a race-check to ensure race specific quests are hidden if not available (For example Compendium of the Fallen should be hidden for Undeads)
 
-## Fixed
+### Fixed
 
 - Corrected Shaman level 58 class quest by adding alliance version
 
