@@ -150,6 +150,7 @@ Q.Quests = {
         suggestedLevel = 16,
         requiredLevel = 9,
         source = Q.Sources[189], -- Rahauro
+        instances = { Q.Instances["Ragefire Chasm"] }
     },
     --#endregion
 
@@ -516,6 +517,7 @@ Q.Quests = {
         requiredLevel = 9,
         prerequisites = { { id = 92752, type = Q.PrerequisiteType.CHAIN } },
         source = Q.Sources[285], -- Alba Fairmoon
+        instances = { Q.Instances["The Deadmines"] },
     },
     {
         id = 92819,
@@ -769,6 +771,7 @@ Q.Quests = {
         suggestedLevel = 24,
         requiredLevel = 18,
         source = Q.Sources[60], -- Dawnwatcher Shaedlass
+        instances = { Q.Instances["Blackfathom Deeps"] },
     },
     {
         id = 6561,
@@ -1295,6 +1298,7 @@ Q.Quests = {
             { id = 92434, type = Q.PrerequisiteType.CHAIN }
         },
         source = Q.Sources[115], -- Image of Archmage Modera
+        instances = { Q.Instances["City of Dalaran"] },
     },
     {
         id = 92457,
@@ -1789,6 +1793,7 @@ Q.Quests = {
         suggestedLevel = 37,
         requiredLevel = 32,
         source = Q.Sources[27], -- Belnistrasz
+        instances = { Q.Instances["Razorfen Downs"] },
     },
     {
         id = 93604,
@@ -1833,6 +1838,7 @@ Q.Quests = {
         },
         source = Q.Sources[90], -- Ghak Healtouch
         instances = { Q.Instances["Uldaman"] },
+        text = "This is completed in the cave on the way to the dungeon"
     },
     {
         id = 2339,
@@ -1963,6 +1969,7 @@ Q.Quests = {
         },
         source = Q.Sources[2], -- Advisor Belgrum
         instances = { Q.Instances["Uldaman"] },
+        text = "The tablet is found inside the cave, but outside the dungeon"
     },
     {
         id = 2198,
@@ -1994,6 +2001,7 @@ Q.Quests = {
             { id = 2199, type = Q.PrerequisiteType.CHAIN }
         },
         source = Q.Sources[218], -- Talvash del Kissel
+        instances = { Q.Instances["Uldaman"] },
     },
     {
         id = 2201,
@@ -2005,6 +2013,7 @@ Q.Quests = {
             { id = 2200, type = Q.PrerequisiteType.CHAIN }
         },
         source = Q.Sources[191], -- Remains of a Paladin
+        instances = { Q.Instances["Uldaman"] },
     },
     {
         id = 2204,
@@ -2025,6 +2034,19 @@ Q.Quests = {
         suggestedLevel = 40,
         requiredLevel = 35,
         source = Q.Sources[186], -- Prospector Stormpike
+        instances = { Q.Instances["Uldaman"] },
+    },
+    {
+        id = 2240,
+        faction = "Alliance",
+        name = "The Lost Dwarves",
+        suggestedLevel = 40,
+        requiredLevel = 35,
+        prerequisites = {
+            { id = 2398, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = Q.Sources[24], -- Baelog
+        instances = { Q.Instances["Uldaman"] },
     },
     {
         id = 2500,
@@ -2045,6 +2067,7 @@ Q.Quests = {
         },
         source = Q.Sources[118], -- Jarkal Mossmeld
         instances = { Q.Instances["Uldaman"] },
+        text = "This is completed in the cave on the way to the dungeon"
     },
     {
         id = 2258,
@@ -2082,6 +2105,7 @@ Q.Quests = {
         },
         source = Q.Sources[183], -- Prospector Ironband
         instances = { Q.Instances["Uldaman"] },
+        text = "This is completed in the cave on the way to the dungeon"
     },
     {
         id = 739,
@@ -2123,6 +2147,7 @@ Q.Quests = {
             { id = 2283, type = Q.PrerequisiteType.CHAIN }
         },
         source = Q.Sources[70], -- Dran Droffers
+        instances = { Q.Instances["Uldaman"] }
     },
     {
         id = 2318,
@@ -2134,6 +2159,7 @@ Q.Quests = {
             { id = 2284, type = Q.PrerequisiteType.CHAIN }
         },
         source = Q.Sources[191], -- Remains of a Paladin
+        instances = { Q.Instances["Uldaman"] }
     },
     {
         id = 2338,
@@ -2145,6 +2171,7 @@ Q.Quests = {
             { id = 2318, type = Q.PrerequisiteType.CHAIN }
         },
         source = Q.Sources[118], -- Jarkal Mossmeld
+        instances = { Q.Instances["Uldaman"] }
     },
     {
         id = 709,
@@ -2381,6 +2408,7 @@ Q.Quests = {
         suggestedLevel = 49,
         requiredLevel = 41,
         source = Q.Sources[42], -- Cavindra
+        instances = { Q.Instances["Maraudon"] },
     },
     {
         id = 7029,
@@ -3106,6 +3134,7 @@ Q.Quests = {
             { id = 3906, type = Q.PrerequisiteType.CHAIN }
         },
         source = Q.Sources[85], -- Galamav the Marksman
+        instances = { Q.Instances["Blackrock Depths"] }
     },
     {
         id = 3982,
@@ -3117,6 +3146,7 @@ Q.Quests = {
             { id = 3981, type = Q.PrerequisiteType.CHAIN }
         },
         source = Q.Sources[47], -- Commander Gor'shak
+        instances = { Q.Instances["Blackrock Depths"] }
     },
     {
         id = 4001,
@@ -3128,6 +3158,7 @@ Q.Quests = {
             { id = 3982, type = Q.PrerequisiteType.CHAIN }
         },
         source = Q.Sources[47], -- Commander Gor'shak
+        instances = { Q.Instances["Blackrock Depths"] }
     },
     {
         id = 4002,
@@ -3362,6 +3393,7 @@ Q.Quests = {
         suggestedLevel = 56,
         requiredLevel = 48,
         source = Q.Sources[116], -- Jalinda Sprig
+        text = "Found just outside the entrance to the Blackrock Depths dungeon"
     },
     {
         id = 4263,
@@ -3425,15 +3457,15 @@ Q.Quests = {
         source = Q.Sources[158], -- Maxwort Uberglint
         instances = { Q.Instances["Blackrock Depths"] }
     },
-    {
-        id = 7848,
-        faction = nil,
-        name = "Attunement to the Core",
-        suggestedLevel = 55,
-        requiredLevel = 55,
-        source = Q.Sources[143], -- Lothos Riftwaker
-        instances = { Q.Instances["Blackrock Depths"] }
-    },
+    -- {
+    --     id = 7848,
+    --     faction = nil,
+    --     name = "Attunement to the Core",
+    --     suggestedLevel = 55,
+    --     requiredLevel = 55,
+    --     source = Q.Sources[143], -- Lothos Riftwaker
+    --     instances = { Q.Instances["Blackrock Depths"] }
+    -- },
     {
         id = 3702,
         faction = "Alliance",
@@ -3475,6 +3507,7 @@ Q.Quests = {
             { id = 4341, type = Q.PrerequisiteType.CHAIN }
         },
         source = Q.Sources[125], -- Kharan Mighthammer
+        instances = { Q.Instances["Blackrock Depths"] }
     },
     {
         id = 4361,
@@ -3547,7 +3580,6 @@ Q.Quests = {
         suggestedLevel = 55,
         requiredLevel = 50,
         source = Q.Sources[329], -- Enohar Thunderbrew
-        instances = { Q.Instances["Blackrock Depths"] }
     },
     {
         id = 4126,
@@ -3644,6 +3676,7 @@ Q.Quests = {
         suggestedLevel = 60,
         requiredLevel = 56,
         source = Q.Sources[187], -- Rabine Saturna
+        text = "Wowhead comments say you may have to enter Dire Maul: East once before this quest will be offered to you"
     },
     {
         id = 5526,
@@ -3754,6 +3787,13 @@ Q.Quests = {
 
     --#region Lower Blackrock Spire
     {
+        id = 4867,
+        name = "Urok Doomhowl",
+        suggestedLevel = 60,
+        requiredLevel = 55,
+        source = Q.Sources[W], -- Warosh
+    },
+    {
         id = 5065,
         faction = nil,
         name = "The Lost Tablets of Mosh'aru",
@@ -3851,6 +3891,7 @@ Q.Quests = {
         suggestedLevel = 59,
         requiredLevel = 55,
         source = Q.Sources[135], -- Lexlort
+        instances = { Q.Instances["Lower Blackrock Spire"] }
     },
     {
         id = 4982,
@@ -3889,7 +3930,8 @@ Q.Quests = {
         suggestedLevel = 60,
         requiredLevel = 57,
         source = Q.Sources[239], -- Unadorned Seal of Ascension
-        instances = { Q.Instances["Lower Blackrock Spire"] }
+        instances = { Q.Instances["Lower Blackrock Spire"] },
+        text = "After looting the Unadorned Seal of Ascension, you can walk to the Scarshield Infiltrator and he turns into Vaelan. Talk to him and he will let you start the quest"
     },
     --#endregion
 
@@ -3928,6 +3970,7 @@ Q.Quests = {
         suggestedLevel = 60,
         requiredLevel = 55,
         source = Q.Sources[79], -- Eva Sarkhoff
+        instances = { Q.Instances["Scholomance"] }
     },
     {
         id = 5515,
@@ -3939,6 +3982,7 @@ Q.Quests = {
             { id = 5382, type = Q.PrerequisiteType.CHAIN }
         },
         source = Q.Sources[79], -- Eva Sarkhoff
+        instances = { Q.Instances["Scholomance"] }
     },
     {
         id = 5384,
@@ -4076,6 +4120,7 @@ Q.Quests = {
         suggestedLevel = 60,
         requiredLevel = 55,
         source = Q.Sources[72], -- Duke Nicholas Zverenhoff
+        instances = { Q.Instances["Stratholme"] }
     },
     {
         id = 5281,
@@ -4125,6 +4170,7 @@ Q.Quests = {
             { id = 5251, type = Q.PrerequisiteType.CHAIN }
         },
         source = Q.Sources[104], -- Head of Balnazzar
+        instances = { Q.Instances["Stratholme"] }
     },
     {
         id = 5263,
@@ -4179,6 +4225,7 @@ Q.Quests = {
             { id = 5462, type = Q.PrerequisiteType.CHAIN }
         },
         source = Q.Sources[134], -- Leonid Barthalomew the Revered
+        instances = { Q.Instances["Stratholme"] }
     },
     {
         id = 5464,
@@ -4539,6 +4586,92 @@ Q.Quests = {
             { id = 7646, type = Q.PrerequisiteType.CHAIN }
         },
         source = Q.Sources[141], -- Lord Grayson Shadowbreaker
+        instances = { Q.Instances["Scholomance"] }
+    },
+    {
+        id = 97174,
+        faction = "Horde",
+        class = "PALADIN",
+        name = "A Worthy Endeavor",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        sources = {
+            Q.Sources[389], -- Alodan the Hopeful
+            Q.Sources[390], -- Breton Samuels
+            Q.Sources[391]  -- Garen Largo
+        }
+    },
+    {
+        id = 97175,
+        faction = "Horde",
+        class = "PALADIN",
+        name = "Due Sacrifice",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        prerequisites = { { id = 97174, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[57], -- Danitha Morr
+    },
+    {
+        id = 97177,
+        faction = "Horde",
+        class = "PALADIN",
+        name = "Acts of Mercy",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        prerequisites = { { id = 97175, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[57], -- Danitha Morr
+    },
+    {
+        id = 97176,
+        faction = "Horde",
+        class = "PALADIN",
+        name = "Exorcising Terrordale",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        prerequisites = { { id = 97177, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[57], -- Danitha Morr
+    },
+    {
+        id = 97182,
+        faction = "Horde",
+        class = "PALADIN",
+        name = "An Offering of Vengeance",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        prerequisites = { { id = 97176, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[57], -- Danitha Morr
+        instances = { Q.Instances["Dire Maul: West"] }
+    },
+    {
+        id = 97183,
+        faction = "Horde",
+        class = "PALADIN",
+        name = "Blessed Arcanite Barding",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        prerequisites = { { id = 97182, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[6], -- Ancient Equine Spirit
+        instances = { Q.Instances["Dire Maul: West"] }
+    },
+    {
+        id = 97184,
+        faction = "Horde",
+        class = "PALADIN",
+        name = "The Divination Scryer",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        prerequisites = { { id = 97183, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[57], -- Danitha Morr
+    },
+    {
+        id = 97185,
+        faction = "Horde",
+        class = "PALADIN",
+        name = "Justice and Retribution",
+        suggestedLevel = 60,
+        requiredLevel = 60,
+        prerequisites = { { id = 97184, type = Q.PrerequisiteType.CHAIN } },
+        source = Q.Sources[57], -- Danitha Morr
         instances = { Q.Instances["Scholomance"] }
     },
     {
@@ -5595,7 +5728,8 @@ Q.Quests = {
         name = "The Man in the Iron Chains",
         suggestedLevel = 53,
         requiredLevel = 48,
-        source = Q.Sources[313] -- Mason Connery
+        source = Q.Sources[313], -- Mason Connery
+        instances = { Q.Instances["Alcaz Prison"] }
     },
     {
         id = 96337,
@@ -5647,7 +5781,8 @@ Q.Quests = {
         suggestedLevel = 53,
         requiredLevel = 48,
         source = Q.Sources[311], -- Renzik "The Shiv"
-        instances = { Q.Instances["Alcaz Prison"] }
+        instances = { Q.Instances["Alcaz Prison"] },
+        text = "Can only be completed if you did not vendor the item received from the previous quest (More Valuable Than Gold)"
     },
     --#endregion
     --#region Shaper's Terrace
@@ -5784,8 +5919,7 @@ Q.Quests = {
         suggestedLevel = 55,
         requiredLevel = 45,
         source = Q.Sources[321], -- Lorekeeper Nok
-        instances = { Q.Instances["Blackmaw Hold"] },
-        text = "You must be Neutral with Timbermaw Hold to pick up this quest"
+        instances = { Q.Instances["Blackmaw Hold"] }
     },
 
 

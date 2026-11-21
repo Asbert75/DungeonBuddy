@@ -619,7 +619,7 @@ Q.Sources = {
         itemId = 12780,
         name = "General Drakkisath's Command",
         instance = Q.Instances["Lower Blackrock Spire"],
-        text = "Dropped by General Drakkisath"
+        text = "Dropped by Overlord Wyrmthalak"
     },
     [88] = {
         id = 88,
@@ -2275,14 +2275,16 @@ Q.Sources = {
         type = "npc",
         name = "Lorekeeper Nok",
         zone = "Azshara",
-        location = { mapId = 1447, x = 0.414, y = 0.20 }
+        location = { mapId = 1447, x = 0.414, y = 0.20 },
+        text = "You need to be Neutral with Timbermaw Hold to interact with him"
     },
     [322] = {
         id = 322,
         type = "npc",
         name = "Korsa",
         zone = "Azshara",
-        location = { mapId = 1447, x = 0.630, y = 0.216 }
+        location = { mapId = 1447, x = 0.630, y = 0.216 },
+        text = "You need to be Neutral with Timbermaw Hold to interact with him"
     },
     [323] = {
         id = 323,
@@ -2303,7 +2305,8 @@ Q.Sources = {
         type = "npc",
         name = "Graal",
         zone = "Azshara",
-        location = { mapId = 1447, x = 0.658, y = 0.148 }
+        location = { mapId = 1447, x = 0.658, y = 0.148 },
+        text = "You need to be Neutral with Timbermaw Hold to interact with him"
     },
     [326] = {
         id = 326,
@@ -2776,6 +2779,36 @@ Q.Sources = {
         name = "Emberstrife",
         zone = "Dustwallow Marsh",
         location = { mapId = 1445, x = 0.568, y = 0.874 }
+    },
+    [389] = {
+        id = 389,
+        type = "npc",
+        faction = "Horde",
+        name = "Alodan the Hopeful",
+        zone = "Thunder Bluff",
+        location = { mapId = 1456, x = 0.253, y = 0.146 }
+    },
+    [390] = {
+        id = 390,
+        type = "npc",
+        faction = "Horde",
+        name = "Breton Samuels",
+        zone = "Tirisfal Glades",
+        location = { mapId = 1420, x = 0.218, y = 0.452 }
+    },
+    [391] = {
+        id = 391,
+        type = "npc",
+        faction = "Horde",
+        name = "Garen Largo",
+        zone = "Undercity",
+        location = { mapId = 1458, x = 0.475, y = 0.15 }
+    },
+    [392] = {
+        id = 392,
+        type = "npc",
+        name = "Warosh",
+        instance = Q.Instances["Lower Blackrock Spire"]
     }
 }
 

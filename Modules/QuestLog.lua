@@ -1246,7 +1246,7 @@ local function CreateRowFrame(index, row)
             tooltipStatus = "Unavailable"
         end
 
-        if questStatus ~= "completed" then
+        if questStatus ~= "completed" and Q.API:GetPlayerLevel() ~= 60 then
             tooltip:AddDoubleLine(
                 hoveredRow.name, 
                 "+"..Q.API:GetQuestLogRewardXP(hoveredRow.id).."xp", 
