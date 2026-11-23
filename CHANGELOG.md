@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.2] 
+
+### Fixed
+
+- Corrected the prerequisites for "Redemption" from Tirion to include the 3 quests he offers initially
+
+### Added
+
+- Updated some quests with relevant help text
+
 ## [2.1.1]
 
 ### Added

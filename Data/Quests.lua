@@ -831,6 +831,7 @@ Q.Quests = {
         requiredLevel = 20,
         source = Q.Sources[161], -- Mebok Mizzyrix
         instances = { Q.Instances["Razorfen Kraul"] },
+        text = "Don't forget to pick up the items next to him"
     },
     {
         id = 1142,
@@ -3970,7 +3971,8 @@ Q.Quests = {
         suggestedLevel = 60,
         requiredLevel = 55,
         source = Q.Sources[79], -- Eva Sarkhoff
-        instances = { Q.Instances["Scholomance"] }
+        instances = { Q.Instances["Scholomance"] },
+        text = "You must click through her gossip options to unlock the quest"
     },
     {
         id = 5515,
@@ -4006,6 +4008,7 @@ Q.Quests = {
             { id = 5384, type = Q.PrerequisiteType.REQUIRED }
         },
         source = Q.Sources[146], -- Magistrate Marduke
+        text = "You must have the Spectrawl Essence trinket equipped and talk to him to unlock the quest"
     },
     {
         id = 5462,
@@ -4028,6 +4031,117 @@ Q.Quests = {
         instances = { Q.Instances["Scholomance"] }
     },
     {
+        id = 4726,
+        faction = nil,
+        name = "Broodling Essence",
+        suggestedLevel = 52,
+        requiredLevel = 50,
+        source = Q.Sources[394], -- Tinkee Steamboil
+    },
+    {
+        id = 4808,
+        faction = nil,
+        name = "Felnok Steelspring",
+        suggestedLevel = 54,
+        requiredLevel = 50,
+        prerequisites = {
+            { id = 4726, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = Q.Sources[394], -- Tinkee Steamboil
+    },
+    {
+        id = 4809,
+        faction = nil,
+        name = "Chillwind Horns",
+        suggestedLevel = 54,
+        requiredLevel = 50,
+        prerequisites = {
+            { id = 4808, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = Q.Sources[393], -- Felnok Steelspring
+    },
+    {
+        id = 4810,
+        faction = nil,
+        name = "Return to Tinkee",
+        suggestedLevel = 54,
+        requiredLevel = 50,
+        prerequisites = {
+            { id = 4809, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = Q.Sources[393], -- Felnok Steelspring
+    },
+    {
+        id = 4907,
+        faction = nil,
+        name = "Tinkee Steamboil",
+        suggestedLevel = 60,
+        requiredLevel = 57,
+        prerequisites = {
+            { id = 4810, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = Q.Sources[393], -- Felnok Steelspring
+    },
+    {
+        id = 4734,
+        faction = nil,
+        name = "Egg Freezing",
+        suggestedLevel = 60,
+        requiredLevel = 57,
+        prerequisites = {
+            { id = 4810, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = Q.Sources[394], -- Tinkee Steamboil
+        instances = { Q.Instances["Upper Blackrock Spire"] }
+    },
+    {
+        id = 4735,
+        faction = nil,
+        name = "Egg Collection",
+        suggestedLevel = 60,
+        requiredLevel = 57,
+        prerequisites = {
+            { id = 4734, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = Q.Sources[394], -- Tinkee Steamboil
+        instances = { Q.Instances["Upper Blackrock Spire"] }
+    },
+    {
+        id = 5522,
+        faction = nil,
+        name = "Leonid Barthalomew",
+        suggestedLevel = 60,
+        requiredLevel = 57,
+        prerequisites = {
+            { id = 4734, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = Q.Sources[394], -- Tinkee Steamboil
+    },
+    {
+        id = 5531,
+        faction = nil,
+        name = "Betina Bigglezink",
+        suggestedLevel = 60,
+        requiredLevel = 57,
+        prerequisites = {
+            { id = 5522, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = Q.Sources[134], -- Leonid Barthalomew the Revered
+    },
+    {
+        id = 4771,
+        faction = nil,
+        name = "Dawn's Gambit",
+        suggestedLevel = 60,
+        requiredLevel = 57,
+        prerequisites = {
+            { id = 5531, type = Q.PrerequisiteType.CHAIN }
+        },
+        source = Q.Sources[28], -- Betina Bigglezink
+        instances = { Q.Instances["Scholomance"] },
+        text = "The bosses Vectus and Marduk Blackpool can only be engaged if somebody is on this quest"
+    },
+    {
         id = 5466,
         faction = nil,
         name = "The Lich, Ras Frostwhisper",
@@ -4043,11 +4157,40 @@ Q.Quests = {
 
     --#region Stratholme
     {
+        id = 5543,
+        faction = nil,
+        name = "Blood Tinged Skies",
+        suggestedLevel = 56,
+        requiredLevel = 52,
+        source = Q.Sources[230], -- Tirion Fordring
+    },
+    {
+        id = 5544,
+        faction = nil,
+        name = "Carrion Grubbage",
+        suggestedLevel = 56,
+        requiredLevel = 52,
+        source = Q.Sources[230], -- Tirion Fordring
+    },
+    {
+        id = 5542,
+        faction = nil,
+        name = "Demon Dogs",
+        suggestedLevel = 56,
+        requiredLevel = 52,
+        source = Q.Sources[230], -- Tirion Fordring
+    },
+    {
         id = 5742,
         faction = nil,
         name = "Redemption",
         suggestedLevel = 56,
         requiredLevel = 52,
+        prerequisites = {
+            { id = 5543, type = Q.PrerequisiteType.REQUIRED },
+            { id = 5544, type = Q.PrerequisiteType.REQUIRED },
+            { id = 5542, type = Q.PrerequisiteType.REQUIRED }
+        },
         source = Q.Sources[230], -- Tirion Fordring
     },
     {

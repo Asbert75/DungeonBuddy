@@ -1132,8 +1132,7 @@ Q.Sources = {
         type = "npc",
         name = "Mebok Mizzyrix",
         zone = "The Barrens",
-        location = { mapId = 1413, x = 0.62, y = 0.38 },
-        text = "Don't forget to pick up the items next to him"
+        location = { mapId = 1413, x = 0.62, y = 0.38 }
     },
     [162] = {
         id = 162,
@@ -2809,6 +2808,20 @@ Q.Sources = {
         type = "npc",
         name = "Warosh",
         instance = Q.Instances["Lower Blackrock Spire"]
+    },
+    [393] = {
+        id = 393,
+        type = "npc",
+        name = "Felnok Steelspring",
+        zone = "Winterspring",
+        location = { mapId = 1452, x = 0.616, y = 0.386 }
+    },
+    [394] = {
+        id = 394,
+        type = "npc",
+        name = "Tinkee Steamboil",
+        zone = "Burning Steppes",
+        location = { mapId = 1428, x = 0.652, y = 0.240 }
     }
 }
 
